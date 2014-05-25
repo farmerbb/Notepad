@@ -16,6 +16,8 @@ Notepad is a simple, bare-bones, no-frills note taking app. Simplify and organiz
 
 &bull; Keyboard shortcuts for common actions
 
+&bull; Integration with Google Now
+
 &bull; Zero permissions and absolutely zero ads
 
 &bull; Open-source

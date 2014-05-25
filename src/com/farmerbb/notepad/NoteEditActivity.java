@@ -76,6 +76,17 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 				}
 			}
 		}
+		
+		// Intent sent through Google Now "note to self"
+		if("com.google.android.gm.action.AUTO_SEND".equals(action) && type != null) {
+			if("text/plain".equals(type)) {
+				String external = intent.getStringExtra(Intent.EXTRA_TEXT);
+				if(external != null) {
+					noteContents.setText(external);
+					isShareIntent = true;
+				}
+			}
+		}
 
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);

@@ -63,7 +63,7 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 			// Show welcome dialog
 			DialogFragment firstRun = new FirstRunDialogFragment();
 			firstRun.show(getFragmentManager(), "firstrunfragment");
-			
+
 			// Set first-run preference to 1; we don't need to show the dialog anymore
 			SharedPreferences.Editor editor = sharedPref.edit();
 			editor.putInt("first-run", 1);
@@ -120,10 +120,10 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 			sortByFragment.show(getFragmentManager(), "sort");
 			return true;
 
-			// About button
-		case R.id.action_about:
-			DialogFragment aboutFragment = new AboutDialogFragment();
-			aboutFragment.show(getFragmentManager(), "about");
+			// Settings button
+		case R.id.action_settings:
+			Intent intent = new Intent (this, SettingsActivity.class);
+			startActivity(intent);
 			return true;            
 		default:
 			return super.onOptionsItemSelected(item);
@@ -151,7 +151,7 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 	private void editDraft() {		
 		// Notify the user that a draft is being restored
 		showToast(R.string.draft_restored);
-		
+
 		Intent intent = new Intent (this, NoteEditActivity.class);
 		// Get filename of selected note
 		intent.putExtra(FILENAME, "draft");
@@ -303,7 +303,7 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 			@Override
 			public void onItemCheckedStateChanged(ActionMode mode, int position,
 					long id, boolean checked) {
-				
+
 				// Add/remove filenames to cab array as they are checked/unchecked
 				if(checked) {
 					if(sortBy == 0)

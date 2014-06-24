@@ -166,7 +166,6 @@ public class NoteViewActivity extends Activity implements DeleteDialogFragment.N
 
 			// Delete button
 		case R.id.action_delete:
-			// Show delete dialog
 			DialogFragment deleteFragment = new DeleteDialogFragment();
 			deleteFragment.show(getFragmentManager(), "back");
 			return true;

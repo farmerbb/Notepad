@@ -76,7 +76,7 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 				}
 			}
 		}
-		
+
 		// Intent sent through Google Now "note to self"
 		if("com.google.android.gm.action.AUTO_SEND".equals(action) && type != null) {
 			if("text/plain".equals(type)) {
@@ -173,7 +173,7 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 				event.isCtrlPressed()){
 			final int keyCode = event.getKeyCode();
 			switch(keyCode){
-	
+
 			// CTRL+S: Save
 			case KeyEvent.KEYCODE_S:
 				try {
@@ -184,19 +184,19 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 					showToast(R.string.failed_to_save);
 				}
 				break;
-	
+
 				// CTRL+D: Delete
 			case KeyEvent.KEYCODE_D:
 				// Show delete dialog
 				DialogFragment deleteFragment = new DeleteDialogFragment();
 				deleteFragment.show(getFragmentManager(), "back");
 				break;
-	
+
 				// CTRL+H: Share
 			case KeyEvent.KEYCODE_H:
 				// Set current note contents to a String
 				contents = noteContents.getText().toString();
-	
+
 				// If EditText is empty, show toast informing user to enter some text
 				if(contents.equals(""))
 					showToast(R.string.empty_note);
@@ -206,7 +206,7 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 					intent.setAction(Intent.ACTION_SEND);
 					intent.putExtra(Intent.EXTRA_TEXT, contents);
 					intent.setType("text/plain");
-	
+
 					// Verify that the intent will resolve to an activity, and send
 					if (intent.resolveActivity(getPackageManager()) != null)
 						startActivity(Intent.createChooser(intent, getResources().getText(R.string.send_to)));
@@ -228,9 +228,20 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 			if(noteContents.getText().toString().isEmpty())
 				finish();
 			else {
-				// Show back button dialog
-				DialogFragment backFragment = new BackButtonDialogFragment();
-				backFragment.show(getFragmentManager(), "back");
+				SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
+				if(pref.getBoolean("show_dialogs", true)) {
+					try {
+						saveNote();
+						finish();
+					} catch (IOException e) {
+						// Show error message as toast if file fails to save
+						showToast(R.string.failed_to_save);
+					}
+				} else {
+					// Show back button dialog
+					DialogFragment backFragment = new BackButtonDialogFragment();
+					backFragment.show(getFragmentManager(), "back");
+				}
 			}
 		}
 	}
@@ -269,9 +280,25 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 					finish();
 					overridePendingTransition(0, 0);
 				} else {
-					// Show save button dialog
-					DialogFragment saveFragment = new SaveButtonDialogFragment();
-					saveFragment.show(getFragmentManager(), "back");
+					SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
+					if(pref.getBoolean("show_dialogs", true)) {
+						try {
+							saveNote();
+							Intent intentView = new Intent (this, NoteViewActivity.class);
+							// Get filename of selected note
+							intentView.putExtra(MainActivity.FILENAME, filename);
+							startActivity(intentView);
+							finish();
+							overridePendingTransition(0, 0);
+						} catch (IOException e) {
+							// Show error message as toast if file fails to save
+							showToast(R.string.failed_to_save);
+						}
+					} else {
+						// Show save button dialog
+						DialogFragment saveFragment = new SaveButtonDialogFragment();
+						saveFragment.show(getFragmentManager(), "back");
+					}
 				}
 			}
 			return true;
@@ -316,15 +343,15 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 
 	// Loads note from /data/data/com.farmerbb.notepad/files
 	private StringBuffer loadNote(String filename) throws IOException {
-	
+
 		// Initialize StringBuffer which will contain note
 		StringBuffer note = new StringBuffer("");
-	
+
 		// Open the file on disk
 		FileInputStream input = openFileInput(filename);
 		InputStreamReader reader = new InputStreamReader(input);
 		BufferedReader buffer = new BufferedReader(reader);
-	
+
 		// Load the file
 		String line = buffer.readLine();		
 		while (line != null ) {
@@ -333,14 +360,14 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 			if(line != null)
 				note.append("\n");
 		}
-	
+
 		// Close file on disk
 		reader.close();
-	
+
 		// Write contents to variable to compare when discarding changes
 		contentsOnLoad = note.toString();
 		length = contentsOnLoad.length();
-	
+
 		return(note);		
 	}
 
@@ -349,34 +376,34 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 		// Set current note contents to a String
 		noteContents = (EditText) findViewById(R.id.editText1);
 		contents = noteContents.getText().toString(); 
-	
+
 		// Write the String to a new file with filename of current milliseconds of Unix time
 		if(contents.equals("") && filename.equals("draft"))
 			finish();
 		else {
-	
+
 			// Set a new filename if this is not a draft
 			String newFilename;
 			if(filename.equals("draft"))
 				newFilename = filename;
 			else 
 				newFilename = String.valueOf(System.currentTimeMillis());
-	
+
 			// Write note to disk
 			FileOutputStream output = openFileOutput(newFilename, Context.MODE_PRIVATE);
 			output.write(contents.getBytes());
 			output.close();
-	
+
 			// Delete old file
 			if(filename.equals("draft")) {} else
 				deleteNote(filename);
-	
+
 			// Show toast notification
 			if(filename.equals("draft"))
 				showToast(R.string.draft_saved);
 			else
 				showToast(R.string.note_saved);
-	
+
 			// Old file is no more
 			if(filename.equals("draft")) {} else {
 				filename = newFilename;

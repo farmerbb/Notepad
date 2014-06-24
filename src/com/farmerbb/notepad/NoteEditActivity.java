@@ -230,6 +230,10 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 			else {
 				SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
 				if(pref.getBoolean("show_dialogs", true)) {
+					// Show back button dialog
+					DialogFragment backFragment = new BackButtonDialogFragment();
+					backFragment.show(getFragmentManager(), "back");
+				} else {
 					try {
 						saveNote();
 						finish();
@@ -237,10 +241,6 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 						// Show error message as toast if file fails to save
 						showToast(R.string.failed_to_save);
 					}
-				} else {
-					// Show back button dialog
-					DialogFragment backFragment = new BackButtonDialogFragment();
-					backFragment.show(getFragmentManager(), "back");
 				}
 			}
 		}
@@ -282,6 +282,10 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 				} else {
 					SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
 					if(pref.getBoolean("show_dialogs", true)) {
+						// Show save button dialog
+						DialogFragment saveFragment = new SaveButtonDialogFragment();
+						saveFragment.show(getFragmentManager(), "back");
+					} else {
 						try {
 							saveNote();
 							Intent intentView = new Intent (this, NoteViewActivity.class);
@@ -294,10 +298,6 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 							// Show error message as toast if file fails to save
 							showToast(R.string.failed_to_save);
 						}
-					} else {
-						// Show save button dialog
-						DialogFragment saveFragment = new SaveButtonDialogFragment();
-						saveFragment.show(getFragmentManager(), "back");
 					}
 				}
 			}

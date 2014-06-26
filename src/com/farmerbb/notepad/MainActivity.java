@@ -43,13 +43,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements SortByDialogFragment.NoticeDialogListener {
+public class MainActivity extends Activity {
 
 	public static final String FILENAME = "com.farmerbb.notepad.NAME";
 	static Context context;
 	String filename;
-	int sortBy;
-	int firstRun;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,17 +55,39 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 		setContentView(R.layout.activity_main);
 
 		// Show a toast message if this is the user's first time running Notepad
-		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-		firstRun = sharedPref.getInt("first-run", 0);
-		if(firstRun == 0) {
+		SharedPreferences prefMain = getPreferences(Context.MODE_PRIVATE);
+		if(prefMain.getInt("first-run", 0) == 0) {
 			// Show welcome dialog
 			DialogFragment firstRun = new FirstRunDialogFragment();
 			firstRun.show(getFragmentManager(), "firstrunfragment");
 
 			// Set first-run preference to 1; we don't need to show the dialog anymore
-			SharedPreferences.Editor editor = sharedPref.edit();
+			SharedPreferences.Editor editor = prefMain.edit();
 			editor.putInt("first-run", 1);
 			editor.apply();
+		} else {
+			SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
+
+			// Convert from old sort-by preference to new one
+			if(prefMain.getInt("sort-by", -1) == 0) {
+				SharedPreferences.Editor editor = pref.edit();
+				SharedPreferences.Editor editorMain = prefMain.edit();
+				
+				editor.putString("sort_by", "date");
+				editor.apply();
+
+				editorMain.putInt("sort-by", -1);
+				editorMain.apply();
+			} else if(prefMain.getInt("sort-by", -1) == 1) {
+				SharedPreferences.Editor editor = pref.edit();
+				SharedPreferences.Editor editorMain = prefMain.edit();
+				
+				editor.putString("sort_by", "name");
+				editor.apply();
+
+				editorMain.putInt("sort-by", -1);
+				editorMain.apply();
+			}
 		}
 	}
 
@@ -112,12 +132,6 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 		// New button
 		case R.id.action_new:
 			newNote();
-			return true;
-
-			// Sort by button
-		case R.id.action_sort_by:
-			DialogFragment sortByFragment = new SortByDialogFragment();
-			sortByFragment.show(getFragmentManager(), "sort");
 			return true;
 
 			// Settings button
@@ -172,14 +186,10 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 	}
 
 	private void listNotes() {
+		SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
 
 		// Declare ListView
 		final ListView listView = (ListView) findViewById(R.id.listView1);
-
-		// Get sort-by preference
-		// 0: "by date", 1: "by name"
-		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-		sortBy = sharedPref.getInt("sort-by", 0);
 
 		// Get number of notes saved
 		int numOfFiles = getNumOfFiles(this.getFilesDir());
@@ -200,7 +210,7 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 		}
 
 		// If sort-by is "by date", sort in reverse order			
-		if(sortBy == 0)
+		if(pref.getString("sort_by", "date").equals("date"))
 			Arrays.sort(listOfNotesByDate, Collections.reverseOrder());
 
 		// Get array of first lines of each note
@@ -213,7 +223,7 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 		}
 
 		// If sort-by is "by name", sort alphabetically
-		if(sortBy == 1) {
+		if(pref.getString("sort_by", "date").equals("name")) {
 
 			// Copy titles array
 			for(int i = 0; i < numOfFiles; i++)
@@ -242,9 +252,9 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 
 		// Populate ArrayList with notes, showing name as first line of the notes
 		for(int i = 0; i < numOfFiles; i++ ) {
-			if(sortBy == 0)
+			if(pref.getString("sort_by", "date").equals("date"))
 				list.add(" " + listOfTitlesByDate[i]);
-			if(sortBy == 1)
+			if(pref.getString("sort_by", "date").equals("name"))
 				list.add(" " + listOfTitlesByName[i]);
 		}
 
@@ -263,9 +273,10 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				if(sortBy == 0)
+				SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
+				if(pref.getString("sort_by", "date").equals("date"))
 					viewNote(finalListByDate[position]);
-				if(sortBy == 1)
+				if(pref.getString("sort_by", "date").equals("name"))
 					viewNote(finalListByName[position]);
 			}
 		});
@@ -301,19 +312,19 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 			public void onDestroyActionMode(ActionMode mode) {}
 
 			@Override
-			public void onItemCheckedStateChanged(ActionMode mode, int position,
-					long id, boolean checked) {
+			public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+				SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
 
 				// Add/remove filenames to cab array as they are checked/unchecked
 				if(checked) {
-					if(sortBy == 0)
+					if(pref.getString("sort_by", "date").equals("date"))
 						cab.add(finalListByDate[position]);
-					if(sortBy == 1)
+					if(pref.getString("sort_by", "date").equals("name"))
 						cab.add(finalListByName[position]);
 				} else {
-					if(sortBy == 0)
+					if(pref.getString("sort_by", "date").equals("date"))
 						cab.remove(finalListByDate[position]);
-					if(sortBy == 1)
+					if(pref.getString("sort_by", "date").equals("name"))
 						cab.remove(finalListByName[position]);
 				}
 
@@ -380,11 +391,5 @@ public class MainActivity extends Activity implements SortByDialogFragment.Notic
 		// Get filename of selected note
 		intent.putExtra(FILENAME, filename);
 		startActivity(intent);
-	}
-
-	@Override
-	public void onSortOptionSelect(DialogFragment dialog) {
-		// Refresh notes list to reflect new sorting order
-		listNotes();		
 	}
 }

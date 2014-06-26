@@ -21,13 +21,6 @@
         android:icon="@drawable/ic_action_new"
         android:showAsAction="always|withText"
         android:title="@string/action_new" />
-
-    <!-- Sort by button -->
-   <item
-       android:id="@+id/action_sort_by"
-       android:icon="@drawable/ic_action_import_export"
-       android:showAsAction="ifRoom|withText"
-       android:title="@string/action_sort_by" />
        
     <!-- Settings button -->
     <item

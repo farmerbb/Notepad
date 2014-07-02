@@ -19,7 +19,7 @@
 
 <resources>
 
-    <style name="Theme.Holoyolo" parent="@android:style/Theme.Holo.Light.DarkActionBar">
+    <style name="Theme.Holoyolo" parent="@android:style/Theme.DeviceDefault.Light.DarkActionBar">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_holoyolo</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Holoyolo</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Holoyolo</item>
@@ -40,6 +40,11 @@
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_holoyolo</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_holoyolo</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Holoyolo</item>
+        <item name="android:titleTextStyle">@style/ActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="ActionBar.Transparent.Holoyolo" parent="@android:style/Widget.Holo.ActionBar">

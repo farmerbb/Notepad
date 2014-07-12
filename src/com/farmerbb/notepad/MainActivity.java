@@ -15,15 +15,6 @@
 
 package com.farmerbb.notepad;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -43,11 +34,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 public class MainActivity extends Activity {
 
 	public static final String FILENAME = "com.farmerbb.notepad.NAME";
-	static Context context;
-	String filename;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +145,7 @@ public class MainActivity extends Activity {
 	private void deleteNote(Object[] filesToDelete) {
 		// Build the pathname to delete each file, them perform delete operation
 		for(int i = 0; i < filesToDelete.length; i++) {
-			File fileToDelete = new File(getFilesDir().getAbsolutePath().toString() + "/" + filesToDelete[i]);
+			File fileToDelete = new File(getFilesDir().getAbsolutePath() + "/" + filesToDelete[i]);
 			fileToDelete.delete();
 		}
 
@@ -175,14 +173,12 @@ public class MainActivity extends Activity {
 
 	// Returns list of filenames in /data/data/com.farmerbb.notepad/files/
 	private static String[] getListOfNotes(File file) {	
-		String[] list = file.list();
-		return list;
+		return file.list();
 	}
 
 	// Returns an integer with number of files in /data/data/com.farmerbb.notepad/files/
 	private static int getNumOfFiles(File file){
-		int files = new File(file.getPath()).list().length;
-		return files;
+		return new File(file.getPath()).list().length;
 	}
 
 	private void listNotes() {

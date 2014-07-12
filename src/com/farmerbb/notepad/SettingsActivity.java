@@ -72,11 +72,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 			} else if (preference instanceof RingtonePreference) {
 				// For ringtone preferences, look up the correct display value
 				// using RingtoneManager.
-				if (TextUtils.isEmpty(stringValue)) {
-					// Empty values correspond to 'silent' (no ringtone).
-					//					preference.setSummary(R.string.pref_ringtone_silent);
-
-				} else {
+				if (!TextUtils.isEmpty(stringValue)) {
 					Ringtone ringtone = RingtoneManager.getRingtone(
 							preference.getContext(), Uri.parse(stringValue));
 

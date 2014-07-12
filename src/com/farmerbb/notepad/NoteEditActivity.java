@@ -15,13 +15,6 @@
 
 package com.farmerbb.notepad;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -34,10 +27,16 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class NoteEditActivity extends Activity implements BackButtonDialogFragment.NoticeDialogListener, DeleteDialogFragment.NoticeDialogListener, SaveButtonDialogFragment.NoticeDialogListener {
 
 	private EditText noteContents;
-	static Context context;
 	String filename = String.valueOf(System.currentTimeMillis());
 	String contentsOnLoad = "";
 	int length = 0;
@@ -62,7 +61,7 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 		// Intent sent through MainActivity or NoteViewActivity
 		if(intent.getStringExtra(MainActivity.FILENAME) != null) {
 			filename = intent.getStringExtra(MainActivity.FILENAME);
-			if(filename.equals("draft")) {} else
+			if(!filename.equals("draft"))
 				isSavedNote = true;
 		}
 
@@ -72,6 +71,7 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 				String external = intent.getStringExtra(Intent.EXTRA_TEXT);
 				if(external != null) {
 					noteContents.setText(external);
+                    noteContents.setSelection(external.length(), external.length());
 					isShareIntent = true;
 				}
 			}
@@ -83,7 +83,16 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 				String external = intent.getStringExtra(Intent.EXTRA_TEXT);
 				if(external != null) {
 					noteContents.setText(external);
+                    noteContents.setSelection(external.length(), external.length());
 					isShareIntent = true;
+
+                    try {
+                        saveNote();
+                        finish();
+                    } catch (IOException e) {
+                        // Show error message as toast if file fails to save
+                        showToast(R.string.failed_to_save);
+                    }
 				}
 			}
 		}
@@ -108,7 +117,7 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 		super.onPause();
 
 		// Disable saving drafts if user launched Notepad through a share intent
-		if(isShareIntent) {} else {
+		if(!isShareIntent) {
 
 			// Delete any drafts if user is finishing the activity (through successful save/discard/delete)
 			if(super.isFinishing())
@@ -138,7 +147,7 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 		super.onResume();
 
 		// Disable restoring drafts if user launched Notepad through a share intent
-		if(isShareIntent) {} else if(filename.equals("draft")){
+		if(filename.equals("draft") && !isShareIntent) {
 
 			// Restore draft preferences 
 			SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
@@ -170,9 +179,9 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 	public boolean dispatchKeyShortcutEvent(KeyEvent event) {
 		super.dispatchKeyShortcutEvent(event);
 		if(event.getAction() == KeyEvent.ACTION_DOWN &&
-				event.isCtrlPressed()){
+				event.isCtrlPressed()) {
 			final int keyCode = event.getKeyCode();
-			switch(keyCode){
+			switch(keyCode) {
 
 			// CTRL+S: Save
 			case KeyEvent.KEYCODE_S:
@@ -287,13 +296,18 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 						saveFragment.show(getFragmentManager(), "back");
 					} else {
 						try {
-							saveNote();
-							Intent intentView = new Intent (this, NoteViewActivity.class);
-							// Get filename of selected note
-							intentView.putExtra(MainActivity.FILENAME, filename);
-							startActivity(intentView);
-							finish();
-							overridePendingTransition(0, 0);
+                            saveNote();
+
+                            if(isShareIntent)
+                                finish();
+                            else {
+                                Intent intentView = new Intent(this, NoteViewActivity.class);
+                                // Get filename of selected note
+                                intentView.putExtra(MainActivity.FILENAME, filename);
+                                startActivity(intentView);
+                                finish();
+                                overridePendingTransition(0, 0);
+                            }
 						} catch (IOException e) {
 							// Show error message as toast if file fails to save
 							showToast(R.string.failed_to_save);
@@ -337,7 +351,7 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 
 	private void deleteNote(String filename) {		
 		// Build the pathname to delete file, then perform delete operation
-		File fileToDelete = new File(getFilesDir().getAbsolutePath().toString() + "/" + filename);
+		File fileToDelete = new File(getFilesDir().getAbsolutePath() + "/" + filename);
 		fileToDelete.delete();
 	}
 
@@ -395,7 +409,7 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 			output.close();
 
 			// Delete old file
-			if(filename.equals("draft")) {} else
+			if(!filename.equals("draft"))
 				deleteNote(filename);
 
 			// Show toast notification
@@ -405,7 +419,7 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 				showToast(R.string.note_saved);
 
 			// Old file is no more
-			if(filename.equals("draft")) {} else {
+			if(!filename.equals("draft")) {
 				filename = newFilename;
 				contentsOnLoad = contents;
 				length = contentsOnLoad.length();
@@ -472,12 +486,17 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 		// User touched the dialog's positive button
 		try {
 			saveNote();
-			Intent intentView = new Intent (this, NoteViewActivity.class);
-			// Get filename of selected note
-			intentView.putExtra(MainActivity.FILENAME, filename);
-			startActivity(intentView);
-			finish();
-			overridePendingTransition(0, 0);
+
+            if(isShareIntent)
+                finish();
+            else {
+                Intent intentView = new Intent(this, NoteViewActivity.class);
+                // Get filename of selected note
+                intentView.putExtra(MainActivity.FILENAME, filename);
+                startActivity(intentView);
+                finish();
+                overridePendingTransition(0, 0);
+            }
 		} catch (IOException e) {
 			// Show error message as toast if file fails to save
 			showToast(R.string.failed_to_save);

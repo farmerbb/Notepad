@@ -15,12 +15,6 @@
 
 package com.farmerbb.notepad;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -34,10 +28,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class NoteViewActivity extends Activity implements DeleteDialogFragment.NoticeDialogListener {
 
 	private TextView noteContents;
-	static Context context;
 	String filename = "new";
 	String contentsOnLoad = "";
 	int firstLoad;
@@ -193,7 +192,7 @@ public class NoteViewActivity extends Activity implements DeleteDialogFragment.N
 
 	private void deleteNote(String filename) {		
 		// Build the pathname to delete file, then perform delete operation
-		File fileToDelete = new File(getFilesDir().getAbsolutePath().toString() + "/" + filename);
+		File fileToDelete = new File(getFilesDir().getAbsolutePath() + "/" + filename);
 		fileToDelete.delete();
 	}
 

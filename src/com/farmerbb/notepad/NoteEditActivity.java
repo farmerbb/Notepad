@@ -237,7 +237,7 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 			if(noteContents.getText().toString().isEmpty())
 				finish();
 			else {
-				SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
+				SharedPreferences pref = getSharedPreferences(getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
 				if(pref.getBoolean("show_dialogs", true)) {
 					// Show back button dialog
 					DialogFragment backFragment = new BackButtonDialogFragment();
@@ -289,7 +289,7 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 					finish();
 					overridePendingTransition(0, 0);
 				} else {
-					SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
+					SharedPreferences pref = getSharedPreferences(getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
 					if(pref.getBoolean("show_dialogs", true)) {
 						// Show save button dialog
 						DialogFragment saveFragment = new SaveButtonDialogFragment();

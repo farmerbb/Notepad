@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
 			editor.putInt("first-run", 1);
 			editor.apply();
 		} else {
-			SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
+			SharedPreferences pref = getSharedPreferences(getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
 
 			// Convert from old sort-by preference to new one
 			if(prefMain.getInt("sort-by", -1) == 0) {
@@ -182,7 +182,12 @@ public class MainActivity extends Activity {
 	}
 
 	private void listNotes() {
-		SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
+		SharedPreferences pref = getSharedPreferences(getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+
+        // Bugfix for Galaxy S5
+        File rList = new File(getFilesDir().getAbsolutePath() + "/rList");
+        if(rList.exists())
+            rList.delete();
 
 		// Declare ListView
 		final ListView listView = (ListView) findViewById(R.id.listView1);
@@ -269,7 +274,7 @@ public class MainActivity extends Activity {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
+				SharedPreferences pref = getSharedPreferences(getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
 				if(pref.getString("sort_by", "date").equals("date"))
 					viewNote(finalListByDate[position]);
 				if(pref.getString("sort_by", "date").equals("name"))
@@ -309,7 +314,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-				SharedPreferences pref = getSharedPreferences("com.farmerbb.notepad_preferences", Context.MODE_PRIVATE);
+				SharedPreferences pref = getSharedPreferences(getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
 
 				// Add/remove filenames to cab array as they are checked/unchecked
 				if(checked) {

@@ -27,7 +27,7 @@
         android:gravity="center_vertical"
         android:maxLines="1"
         android:paddingBottom="10dp"
-        android:paddingLeft="5dp"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:text=""
         android:textColor="#000000"

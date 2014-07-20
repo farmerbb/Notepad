@@ -185,13 +185,21 @@ public class NoteEditActivity extends Activity implements BackButtonDialogFragme
 
 			// CTRL+S: Save
 			case KeyEvent.KEYCODE_S:
-				try {
-					// Keyboard shortcut just saves the note; no dialog shown
-					saveNote();
-				} catch (IOException e) {
-					// Show error message as toast if file fails to save
-					showToast(R.string.failed_to_save);
-				}
+                // Set current note contents to a String
+                contents = noteContents.getText().toString();
+
+                // If EditText is empty, show toast informing user to enter some text
+                if(contents.equals(""))
+                    showToast(R.string.empty_note);
+                else {
+                    try {
+                        // Keyboard shortcut just saves the note; no dialog shown
+                        saveNote();
+                    } catch (IOException e) {
+                        // Show error message as toast if file fails to save
+                        showToast(R.string.failed_to_save);
+                    }
+                }
 				break;
 
 				// CTRL+D: Delete

@@ -67,6 +67,8 @@ public class MainActivity extends Activity {
 			SharedPreferences pref = getSharedPreferences(getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
 
 			// Convert from old sort-by preference to new one
+            // (this code is only present to support existing users of Notepad on Google Play
+            //  and can be removed if using this source code for a different app)
 			if(prefMain.getInt("sort-by", -1) == 0) {
 				SharedPreferences.Editor editor = pref.edit();
 				SharedPreferences.Editor editorMain = prefMain.edit();
@@ -100,16 +102,14 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean dispatchKeyShortcutEvent(KeyEvent event) {
 		super.dispatchKeyShortcutEvent(event);
-		if(event.getAction()==KeyEvent.ACTION_DOWN &&
-				event.isCtrlPressed()){
+		if(event.getAction() == KeyEvent.ACTION_DOWN &&
+				event.isCtrlPressed()) {
 			final int keyCode = event.getKeyCode();
-			switch(keyCode){
-
-			// CTRL+N: New Note
-			case KeyEvent.KEYCODE_N:
-				newNote();
-				break;
-
+			switch(keyCode) {
+			    // CTRL+N: New Note
+			    case KeyEvent.KEYCODE_N:
+				    newNote();
+				    break;
 			}
 			return true;
 		}
@@ -143,11 +143,11 @@ public class MainActivity extends Activity {
 	}
 
 	private void deleteNote(Object[] filesToDelete) {
-		// Build the pathname to delete each file, them perform delete operation
-		for(int i = 0; i < filesToDelete.length; i++) {
-			File fileToDelete = new File(getFilesDir().getAbsolutePath() + "/" + filesToDelete[i]);
-			fileToDelete.delete();
-		}
+        // Build the pathname to delete each file, them perform delete operation
+        for(Object file : filesToDelete) {
+            File fileToDelete = new File(getFilesDir().getAbsolutePath() + "/" + file);
+            fileToDelete.delete();
+        }
 
 		// Show toast notification
 		if(filesToDelete.length == 1)
@@ -225,10 +225,8 @@ public class MainActivity extends Activity {
 
 		// If sort-by is "by name", sort alphabetically
 		if(pref.getString("sort_by", "date").equals("name")) {
-
 			// Copy titles array
-			for(int i = 0; i < numOfFiles; i++)
-				listOfTitlesByName[i] = listOfTitlesByDate[i];
+            System.arraycopy(listOfTitlesByDate, 0, listOfTitlesByName, 0, numOfFiles);
 
 			// Sort titles
 			Arrays.sort(listOfTitlesByName);
@@ -249,15 +247,11 @@ public class MainActivity extends Activity {
 					}
 				}
 			}
-		}
 
-		// Populate ArrayList with notes, showing name as first line of the notes
-		for(int i = 0; i < numOfFiles; i++ ) {
-			if(pref.getString("sort_by", "date").equals("date"))
-				list.add(" " + listOfTitlesByDate[i]);
-			if(pref.getString("sort_by", "date").equals("name"))
-				list.add(" " + listOfTitlesByName[i]);
-		}
+            // Populate ArrayList with notes, showing name as first line of the notes
+            list.addAll(Arrays.asList(listOfTitlesByName));
+		} else if(pref.getString("sort_by", "date").equals("date"))
+            list.addAll(Arrays.asList(listOfTitlesByDate));
 
 		// Create the custom adapter to bind the array to the ListView
 		final NoteListAdapter adapter = new NoteListAdapter(this, list);

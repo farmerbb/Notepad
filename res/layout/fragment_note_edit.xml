@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2014 Braden Farmer
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +14,8 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layoutMain"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutNoteEdit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099CC"
@@ -23,18 +23,30 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical" >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/noteViewEdit"
+    <!-- View containing note contents -->
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:ems="10"
+        android:hint="@string/edit_text"
+        android:inputType="textMultiLine|textCapSentences"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:textColor="#000000" >
+
+        <requestFocus />
+    </EditText>
+
+    <!-- View created purely to show additional whitespace in the layout -->
+    <TextView
+        android:id="@+id/textView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#FFFFFF" />
+        android:background="#FFFFFF"
+        android:text="" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/noteList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#FFFFFF" />
-
-    </LinearLayout>
+</LinearLayout>

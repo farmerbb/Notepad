@@ -12,7 +12,8 @@
      distributed under the License is distributed on an "AS IS" BASIS,
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
-     limitations under the License.
+     limitations under the License.
+
 -->
 
 <resources>
@@ -39,6 +40,7 @@
     <string name="dialog_save_changes">Do you want to save your changes?</string>
     <string name="draft_restored">Draft restored</string>
     <string name="draft_saved">Draft saved</string>
+	<string name="edit_note">Edit Note</string>
     <string name="edit_text">Type to add text</string>
     <string name="empty_note">Please enter some text!</string>
     <string name="error_loading_list">Error loading list of notes!</string>
@@ -49,7 +51,6 @@
     <string name="no_notes_found">No notes found</string>
     <string name="note_deleted">Note deleted</string>
     <string name="note_saved">Note saved</string>
-    <string name="note_view_error">To view a saved note, select it from within the Notepad app.</string>
     <string name="notes_deleted">Notes deleted</string>
     <string name="pref_title_show_dialogs">Ask before saving</string>
     <string name="send_to">Share note using&#8230;</string>

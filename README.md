@@ -1,10 +1,12 @@
-Notepad is a simple, bare-bones, no-frills note taking app. Simplify and organize your life!
+A simple, bare-bones, no-frills note taking app
 
 <b>Features:</b>
 
 &bull; Quickly create and save plain-text notes
 
 &bull; Beautiful, easy-to-use UI - optimized for KitKat
+
+&bull; Dual-pane view for tablets
 
 &bull; Share notes to and receive text from other apps
 
@@ -17,6 +19,8 @@ Notepad is a simple, bare-bones, no-frills note taking app. Simplify and organiz
 &bull; Keyboard shortcuts for common actions (see below)
 
 &bull; Integration with Google Now "note to self"
+
+&bull; Android Wear support (with additional plugin)
 
 &bull; Zero permissions and absolutely zero ads
 

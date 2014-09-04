@@ -25,28 +25,27 @@ import android.os.Bundle;
 
 public class DeleteDialogFragment extends DialogFragment {
 
-	/* The activity that creates an instance of this dialog fragment must
-	 * implement this interface in order to receive event call backs.
-	 * Each method passes the DialogFragment in case the host needs to query it. */
-	public interface NoticeDialogListener {
-		public void onDeleteDialogPositiveClick(DialogFragment dialog);
+	/* The activity that creates an instance of this fragment must
+	 * implement this interface in order to receive event call backs. */
+	public interface Listener {
+		public void onDeleteDialogPositiveClick();
 	}
 
 	// Use this instance of the interface to deliver action events
-	NoticeDialogListener listener;
+	Listener listener;
 
-	// Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
+	// Override the Fragment.onAttach() method to instantiate the Listener
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
 		// Verify that the host activity implements the callback interface
 		try {
-			// Instantiate the NoticeDialogListener so we can send events to the host
-			listener = (NoticeDialogListener) activity;
+			// Instantiate the Listener so we can send events to the host
+			listener = (Listener) activity;
 		} catch (ClassCastException e) {
 			// The activity doesn't implement the interface, throw exception
 			throw new ClassCastException(activity.toString()
-					+ " must implement NoticeDialogListener");
+					+ " must implement Listener");
 		}
 	}	
 
@@ -58,7 +57,7 @@ public class DeleteDialogFragment extends DialogFragment {
 		.setTitle(R.string.dialog_delete_button_title)
 		.setPositiveButton(R.string.action_delete, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				listener.onDeleteDialogPositiveClick(DeleteDialogFragment.this);
+				listener.onDeleteDialogPositiveClick();
 			}
 		})
 		.setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {

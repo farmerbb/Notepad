@@ -15,7 +15,7 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layoutMain"
+    android:id="@+id/layoutNoteList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099CC"
@@ -23,18 +23,26 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical" >
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/noteViewEdit"
+    <!-- List of notes -->
+    <ListView
+        android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#FFFFFF" />
+        android:background="#FFFFFF"
+        android:choiceMode="multipleChoiceModal"
+        android:drawSelectorOnTop="false"
+        android:textColor="#000000" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/noteList"
+    <!-- Message shown when no notes are found -->
+    <TextView
+        android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#FFFFFF" />
+        android:background="#FFFFFF"
+        android:fontFamily="sans-serif-thin"
+        android:gravity="center"
+        android:text="@string/no_notes_found"
+        android:textColor="#0099CC"
+        android:textSize="30sp" />
 
-    </LinearLayout>
+</LinearLayout>

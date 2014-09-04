@@ -15,10 +15,30 @@ limitations under the License.
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/noteViewEdit"
+    android:id="@+id/layoutMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099CC"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    android:orientation="vertical" />
+    android:orientation="horizontal" >
+	
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/noteList"
+		android:tag="NoteListFragment"
+		android:layout_weight="1"
+		android:layout_width="0dp"
+		android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="#FFFFFF" />
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		android:id="@+id/noteViewEdit"
+		android:layout_weight="2"
+		android:layout_width="0dp"
+		android:layout_height="match_parent"
+		android:layout_marginLeft="2dp" 
+		android:background="#FFFFFF"
+        android:orientation="horizontal" />
+	
+</LinearLayout>

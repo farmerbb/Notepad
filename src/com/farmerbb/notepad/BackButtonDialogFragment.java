@@ -28,8 +28,8 @@ public class BackButtonDialogFragment extends DialogFragment {
 	/* The activity that creates an instance of this fragment must
 	 * implement this interface in order to receive event call backs. */
 	public interface Listener {
-		public void onBackDialogPositiveClick();
-		public void onBackDialogNegativeClick();
+		public void onBackDialogPositiveClick(String filename);
+		public void onBackDialogNegativeClick(String filename);
 	}
 
 	// Use this instance of the interface to deliver action events
@@ -58,12 +58,12 @@ public class BackButtonDialogFragment extends DialogFragment {
 		.setTitle(R.string.dialog_save_button_title)
 		.setPositiveButton(R.string.action_save, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				listener.onBackDialogPositiveClick();
+				listener.onBackDialogPositiveClick(getArguments().getString("filename"));
 			}
 		})
 		.setNegativeButton(R.string.action_discard, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
-				listener.onBackDialogNegativeClick();
+				listener.onBackDialogNegativeClick(getArguments().getString("filename"));
 			}
 		});
 

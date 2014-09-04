@@ -92,7 +92,7 @@ NoteViewFragment.Listener {
 			fragment.onBackPressed();
 		} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
 			NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-			fragment.onBackPressed();
+			fragment.onBackPressed(null);
 		}
 	}
 
@@ -100,6 +100,23 @@ NoteViewFragment.Listener {
     // Method used by selecting a existing note from the ListView in NoteViewFragment
     // We need this method in MainActivity because sometimes getFragmentManager() is null
     public void viewNote(String filename) {
+		
+		String currentFilename;
+		
+		if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+			NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+			currentFilename = fragment.getFilename();
+		} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
+			NoteViewFragment fragment = (NoteViewFragment) getFragmentManager().findFragmentByTag("NoteViewFragment");
+			currentFilename = fragment.getFilename();
+		} else
+			currentFilename = " ";
+		
+		if(!currentFilename.equals(filename)) {
+		if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+			NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+			fragment.switchNotes(filename);
+		} else {
         Bundle bundle = new Bundle();
         bundle.putString("filename", filename);
 
@@ -112,19 +129,20 @@ NoteViewFragment.Listener {
                 .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
-
-    }
-
-	@Override
-	public void onBackDialogNegativeClick() {
-		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onBackDialogNegativeClick();
+    	}
+		}
 	}
 
 	@Override
-	public void onBackDialogPositiveClick() {
+	public void onBackDialogNegativeClick(String filename) {
 		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onBackDialogPositiveClick();
+		fragment.onBackDialogNegativeClick(filename);
+	}
+
+	@Override
+	public void onBackDialogPositiveClick(String filename) {
+		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+		fragment.onBackDialogPositiveClick(filename);
 	}
 
 	@Override
@@ -140,8 +158,12 @@ NoteViewFragment.Listener {
 	}
 
 	@Override
-	public void showBackButtonDialog() {
+	public void showBackButtonDialog(String filename) {
+		Bundle bundle = new Bundle();
+		bundle.putString("filename", filename);
+
 		DialogFragment backFragment = new BackButtonDialogFragment();
+		backFragment.setArguments(bundle);
 		backFragment.show(getFragmentManager(), "back");
 	}
 

@@ -120,19 +120,19 @@ String external;
 	@Override
 	public void onBackPressed() {
 		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onBackPressed();
+		fragment.onBackPressed(null);
 	}
 
 	@Override
-	public void onBackDialogNegativeClick() {
+	public void onBackDialogNegativeClick(String filename) {
 		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onBackDialogNegativeClick();
+		fragment.onBackDialogNegativeClick(null);
 	}
 
 	@Override
-	public void onBackDialogPositiveClick() {
+	public void onBackDialogPositiveClick(String filename) {
 		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onBackDialogPositiveClick();
+		fragment.onBackDialogPositiveClick(null);
 	}
 
 	@Override
@@ -154,7 +154,7 @@ String external;
 	}
 	
 	@Override
-	public void showBackButtonDialog() {
+	public void showBackButtonDialog(String filename) {
 		DialogFragment backFragment = new BackButtonDialogFragment();
 		backFragment.show(getFragmentManager(), "back");
 	}

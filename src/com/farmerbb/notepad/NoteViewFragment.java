@@ -19,8 +19,10 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -45,6 +47,27 @@ public class NoteViewFragment extends Fragment {
 	String filename = "";
 	String contentsOnLoad = "";
 	int firstLoad;
+
+    // Receiver used to close fragment when a note is deleted
+    public class DeleteNotesReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String[] filesToDelete = intent.getStringArrayExtra("files");
+
+            for(Object file : filesToDelete) {
+                if(filename.equals(file))
+                    // Add NoteListFragment
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment")
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                            .commit();
+            }
+        }
+    }
+
+    IntentFilter filter = new IntentFilter("com.farmerbb.notepad.DELETE_NOTES");
+    DeleteNotesReceiver receiver = new DeleteNotesReceiver();
 	
 	/* The activity that creates an instance of this fragment must
 	 * implement this interface in order to receive event call backs. */
@@ -140,6 +163,21 @@ public class NoteViewFragment extends Fragment {
 			}
 		});
 	}
+
+    // Register and unregister DeleteNotesReceiver
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        getActivity().registerReceiver(receiver, filter);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        getActivity().unregisterReceiver(receiver);
+    }
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -299,4 +337,8 @@ public class NoteViewFragment extends Fragment {
 				.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
 				.commit();
 		}
+		
+	public String getFilename() {
+		return getArguments().getString("filename");
+	}
 }

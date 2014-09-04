@@ -230,6 +230,17 @@ public class NoteListFragment extends Fragment {
             fileToDelete.delete();
         }
 
+        if(getId() == R.id.noteList) {
+            String[] filesToDelete2 = new String[filesToDelete.length];
+            Arrays.asList(filesToDelete).toArray(filesToDelete2);
+
+            // Send broadcast to NoteViewFragment and NoteEditFragment
+            Intent deleteIntent = new Intent();
+            deleteIntent.setAction("com.farmerbb.notepad.DELETE_NOTES");
+            deleteIntent.putExtra("files", filesToDelete2);
+            getActivity().sendBroadcast(deleteIntent);
+        }
+
         // Show toast notification
         if(filesToDelete.length == 1)
             showToast(R.string.note_deleted);
@@ -348,7 +359,8 @@ public class NoteListFragment extends Fragment {
                 switch (item.getItemId()) {
                     case R.id.action_delete:
                         mode.finish(); // Action picked, so close the CAB
-                        deleteNote(cab.toArray());
+                        if(isAdded())
+                            deleteNote(cab.toArray());
                         return true;
                     default:
                         return false;
@@ -382,12 +394,14 @@ public class NoteListFragment extends Fragment {
                 }
 
                 // Update the title in CAB
-                if(cab.size() == 0)
-                    mode.setTitle("");
-                else if(cab.size() == 1)
-                    mode.setTitle("1 " + getResources().getString(R.string.cab_note_selected));
-                else
-                    mode.setTitle(cab.size() + " " + getResources().getString(R.string.cab_notes_selected));
+                if(isAdded()) {
+                    if(cab.size() == 0)
+                        mode.setTitle("");
+                    else if(cab.size() == 1)
+                        mode.setTitle("1 " + getResources().getString(R.string.cab_note_selected));
+                    else
+                        mode.setTitle(cab.size() + " " + getResources().getString(R.string.cab_notes_selected));
+                }
             }
 
             @Override

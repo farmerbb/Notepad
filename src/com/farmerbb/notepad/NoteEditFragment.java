@@ -18,8 +18,10 @@ package com.farmerbb.notepad;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -50,10 +52,37 @@ public class NoteEditFragment extends Fragment {
 	boolean isSavedNote = false;
 	String contents;
 
+    // Receiver used to close fragment when a note is deleted
+    public class DeleteNotesReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String[] filesToDelete = intent.getStringArrayExtra("files");
+
+            for(Object file : filesToDelete) {
+                if(filename.equals(file)) {
+                    // Hide soft keyboard
+                    EditText editText = (EditText) getActivity().findViewById(R.id.editText1);
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+
+                    // Add NoteListFragment
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment")
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                            .commit();
+                }
+            }
+        }
+    }
+
+    IntentFilter filter = new IntentFilter("com.farmerbb.notepad.DELETE_NOTES");
+    DeleteNotesReceiver receiver = new DeleteNotesReceiver();
+
 	/* The activity that creates an instance of this fragment must
 	 * implement this interface in order to receive event call backs. */
 	public interface Listener {
-		public void showBackButtonDialog();
+		public void showBackButtonDialog(String filename);
 		public void showDeleteDialog();
 		public void showSaveButtonDialog();
 		public boolean isShareIntent();
@@ -114,7 +143,7 @@ public class NoteEditFragment extends Fragment {
 				noteContents.setSelection(length, length);
 			} catch (IOException e) {
 				showToast(R.string.error_loading_note);
-                finish();
+                finish(null);
 			}		
 		} else if(filename.equals("draft")) {
             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
@@ -140,7 +169,7 @@ public class NoteEditFragment extends Fragment {
             contents = noteContents.getText().toString();
 
             if(contents.equals(""))
-                finish();
+                finish(null);
             else {
                 SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
@@ -182,7 +211,7 @@ public class NoteEditFragment extends Fragment {
                         loadNote(filename);
                     } catch (IOException e) {
                         showToast(R.string.error_loading_note);
-                        finish();
+                        finish(null);
                     }
                 } else
                     contentsOnLoad = "";
@@ -205,6 +234,23 @@ public class NoteEditFragment extends Fragment {
 		else
 			getActivity().setTitle(getResources().getString(R.string.action_new));
 	}
+
+    // Register and unregister DeleteNotesReceiver
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if(!listener.isShareIntent())
+            getActivity().registerReceiver(receiver, filter);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if(!listener.isShareIntent())
+            getActivity().unregisterReceiver(receiver);
+    }
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -213,7 +259,6 @@ public class NoteEditFragment extends Fragment {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
         // Hide soft keyboard
 		EditText editText = (EditText) getActivity().findViewById(R.id.editText1);
 		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -354,7 +399,7 @@ public class NoteEditFragment extends Fragment {
 
 		// Write the String to a new file with filename of current milliseconds of Unix time
 		if(contents.equals("") && filename.equals("draft"))
-			finish();
+			finish(null);
 		else {
 
 			// Set a new filename if this is not a draft
@@ -399,17 +444,17 @@ public class NoteEditFragment extends Fragment {
         toast.show();
     }
 
-	public void onBackDialogNegativeClick() {
+	public void onBackDialogNegativeClick(String filename) {
 		// User touched the dialog's negative button
 		showToast(R.string.changes_discarded);
-		finish();
+		finish(filename);
 	}
 
-	public void onBackDialogPositiveClick() {
+	public void onBackDialogPositiveClick(String filename) {
 		// User touched the dialog's positive button
 		try {
 			saveNote();
-			finish();
+			finish(filename);
 		} catch (IOException e) {
 			// Show error message as toast if file fails to save
 			showToast(R.string.failed_to_save);
@@ -420,7 +465,7 @@ public class NoteEditFragment extends Fragment {
 		// User touched the dialog's positive button
 		deleteNote(filename);
 		showToast(R.string.note_deleted);
-		finish();
+		finish(null);
 	}
 
 	public void onSaveDialogNegativeClick() {
@@ -440,7 +485,7 @@ public class NoteEditFragment extends Fragment {
                     .commit();
 		} else {
 			showToast(R.string.changes_discarded);
-			finish();
+			finish(null);
 		}
 	}
 
@@ -450,7 +495,7 @@ public class NoteEditFragment extends Fragment {
 			saveNote();
 
             if(listener.isShareIntent())
-				finish();
+				finish(null);
             else {
                 Bundle bundle = new Bundle();
                 bundle.putString("filename", filename);
@@ -469,23 +514,23 @@ public class NoteEditFragment extends Fragment {
 		}
 	}
 	
-	public void onBackPressed() {
+	public void onBackPressed(String filename) {
 		// Pop back stack if no changes were made since last save
 		if(contentsOnLoad.equals(noteContents.getText().toString())) {
-			finish();
+			finish(filename);
 		} else {
-			// Pop back stack if EditText is empty
+			// Finish if EditText is empty
 			if(noteContents.getText().toString().isEmpty())
-				finish();
+				finish(filename);
 			else {
 				SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
 				if(pref.getBoolean("show_dialogs", true)) {
 					// Show back button dialog
-					listener.showBackButtonDialog();
+					listener.showBackButtonDialog(filename);
 				} else {
 					try {
 						saveNote();
-						finish();
+						finish(filename);
 					} catch (IOException e) {
 						// Show error message as toast if file fails to save
 						showToast(R.string.failed_to_save);
@@ -545,16 +590,43 @@ public class NoteEditFragment extends Fragment {
 		}
 	}
 	
-	private void finish() {
+	private void finish(String filename) {
 		if(listener.isShareIntent())
 			getActivity().finish();
-		else {
+		else if(filename == null) {
 		// Add NoteListFragment
 		getFragmentManager()
 			.beginTransaction()
 				.replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment")
 			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
 			.commit();
+		} else {
+			Bundle bundle = new Bundle();
+			bundle.putString("filename", filename);
+
+			Fragment fragment = new NoteViewFragment();
+			fragment.setArguments(bundle);
+
+			// Add NoteViewFragment
+			getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit();
 		}
+	}
+	
+	public void switchNotes(String filename) {
+		// Hide soft keyboard
+		EditText editText = (EditText) getActivity().findViewById(R.id.editText1);
+		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+		
+		// Act as if the back button was pressed
+		onBackPressed(filename);
+	}
+	
+	public String getFilename() {
+		return filename;
 	}
 }

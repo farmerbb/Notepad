@@ -112,24 +112,37 @@ public class NoteListFragment extends Fragment {
             editor.putInt("first-run", 1);
             editor.apply();
         } else {
+            // The following code is only present to support existing users of Notepad on Google Play
+            // and can be removed if using this source code for a different app
+
             // Convert old preferences to new ones
-            // (this code is only present to support existing users of Notepad on Google Play
-            //  and can be removed if using this source code for a different app)
-
             SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            SharedPreferences.Editor editorMain = prefMain.edit();
-
             if(prefMain.getInt("sort-by", -1) == 0) {
+                SharedPreferences.Editor editor = pref.edit();
+                SharedPreferences.Editor editorMain = prefMain.edit();
+
                 editor.putString("sort_by", "date");
                 editorMain.putInt("sort-by", -1);
+
+                editor.apply();
+                editorMain.apply();
             } else if(prefMain.getInt("sort-by", -1) == 1) {
+                SharedPreferences.Editor editor = pref.edit();
+                SharedPreferences.Editor editorMain = prefMain.edit();
+
                 editor.putString("sort_by", "name");
                 editorMain.putInt("sort-by", -1);
+
+                editor.apply();
+                editorMain.apply();
             }
 
-            editor.apply();
-            editorMain.apply();
+            // Rename any saved drafts from 1.3.x
+            File oldDraft = new File(getActivity().getFilesDir() + "/draft");
+            File newDraft = new File(getActivity().getFilesDir() + "/" + String.valueOf(System.currentTimeMillis()));
+
+            if(oldDraft.exists())
+                oldDraft.renameTo(newDraft);
         }
     }
 
@@ -226,7 +239,7 @@ public class NoteListFragment extends Fragment {
     private void deleteNote(Object[] filesToDelete) {
         // Build the pathname to delete each file, them perform delete operation
         for(Object file : filesToDelete) {
-            File fileToDelete = new File(getActivity().getFilesDir().getAbsolutePath() + "/" + file);
+            File fileToDelete = new File(getActivity().getFilesDir() + "/" + file);
             fileToDelete.delete();
         }
 
@@ -263,7 +276,7 @@ public class NoteListFragment extends Fragment {
 
     private void listNotes() {
         // Bugfix for Galaxy S5
-        File rList = new File(getActivity().getFilesDir().getAbsolutePath() + "/rList");
+        File rList = new File(getActivity().getFilesDir() + "/rList");
         if(rList.exists())
             rList.delete();
 

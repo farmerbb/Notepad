@@ -357,7 +357,7 @@ public class NoteEditFragment extends Fragment {
 	
 	private void deleteNote(String filename) {		
 		// Build the pathname to delete file, then perform delete operation
-		File fileToDelete = new File(getActivity().getFilesDir().getAbsolutePath() + "/" + filename);
+		File fileToDelete = new File(getActivity().getFilesDir() + "/" + filename);
 		fileToDelete.delete();
 	}
 

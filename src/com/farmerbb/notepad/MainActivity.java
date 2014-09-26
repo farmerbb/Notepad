@@ -15,9 +15,17 @@
 
 package com.farmerbb.notepad;
 
-import android.app.*;
-import android.os.*;
-import android.view.*;
+import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.widget.Toast;
+
+import java.io.File;
+import java.util.Arrays;
 
 public class MainActivity extends Activity implements 
 BackButtonDialogFragment.Listener, 
@@ -183,4 +191,43 @@ NoteViewFragment.Listener {
 	public boolean isShareIntent() {
 		return false;
 	}
+
+    @Override
+    public String getCabString() {
+        return getResources().getString(R.string.cab_note_selected);
+    }
+
+    @Override
+    public void deleteNote(Object[] filesToDelete) {
+        // Build the pathname to delete each file, them perform delete operation
+        for(Object file : filesToDelete) {
+            File fileToDelete = new File(getFilesDir() + "/" + file);
+            fileToDelete.delete();
+        }
+
+        String[] filesToDelete2 = new String[filesToDelete.length];
+        Arrays.asList(filesToDelete).toArray(filesToDelete2);
+
+        // Send broadcasts to update UI
+        Intent deleteIntent = new Intent();
+        deleteIntent.setAction("com.farmerbb.notepad.DELETE_NOTES");
+        deleteIntent.putExtra("files", filesToDelete2);
+        sendBroadcast(deleteIntent);
+
+        Intent listIntent = new Intent();
+        listIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+        sendBroadcast(listIntent);
+
+        // Show toast notification
+        if(filesToDelete.length == 1)
+            showToast(R.string.note_deleted);
+        else
+            showToast(R.string.notes_deleted);
+    }
+
+    // Method used to generate toast notifications
+    private void showToast(int message) {
+        Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(message), Toast.LENGTH_SHORT);
+        toast.show();
+    }
 }

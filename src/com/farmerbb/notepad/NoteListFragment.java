@@ -68,6 +68,8 @@ public class NoteListFragment extends Fragment {
  * implement this interface in order to receive event call backs. */
     public interface Listener {
         public void viewNote(String filename);
+        public String getCabString();
+        public void deleteNote(Object[] filesToDelete);
     }
 
     // Use this instance of the interface to deliver action events
@@ -236,34 +238,6 @@ public class NoteListFragment extends Fragment {
 		}
 	}
 
-    private void deleteNote(Object[] filesToDelete) {
-        // Build the pathname to delete each file, them perform delete operation
-        for(Object file : filesToDelete) {
-            File fileToDelete = new File(getActivity().getFilesDir() + "/" + file);
-            fileToDelete.delete();
-        }
-
-        if(getId() == R.id.noteList) {
-            String[] filesToDelete2 = new String[filesToDelete.length];
-            Arrays.asList(filesToDelete).toArray(filesToDelete2);
-
-            // Send broadcast to NoteViewFragment and NoteEditFragment
-            Intent deleteIntent = new Intent();
-            deleteIntent.setAction("com.farmerbb.notepad.DELETE_NOTES");
-            deleteIntent.putExtra("files", filesToDelete2);
-            getActivity().sendBroadcast(deleteIntent);
-        }
-
-        // Show toast notification
-        if(filesToDelete.length == 1)
-            showToast(R.string.note_deleted);
-        else
-            showToast(R.string.notes_deleted);
-
-        // Refresh notes list to reflect deletions
-        listNotes();
-    }
-
     // Returns list of filenames in /data/data/com.farmerbb.notepad/files/
     private static String[] getListOfNotes(File file) {
         return file.list();
@@ -372,8 +346,7 @@ public class NoteListFragment extends Fragment {
                 switch (item.getItemId()) {
                     case R.id.action_delete:
                         mode.finish(); // Action picked, so close the CAB
-                        if(isAdded())
-                            deleteNote(cab.toArray());
+                        listener.deleteNote(cab.toArray());
                         return true;
                     default:
                         return false;
@@ -407,14 +380,12 @@ public class NoteListFragment extends Fragment {
                 }
 
                 // Update the title in CAB
-                if(isAdded()) {
-                    if(cab.size() == 0)
-                        mode.setTitle("");
-                    else if(cab.size() == 1)
-                        mode.setTitle("1 " + getResources().getString(R.string.cab_note_selected));
-                    else
-                        mode.setTitle(cab.size() + " " + getResources().getString(R.string.cab_notes_selected));
-                }
+                if(cab.size() == 0)
+                    mode.setTitle("");
+                else if(cab.size() == 1)
+                    mode.setTitle("1 " + listener.getCabString());
+                else
+                    mode.setTitle(cab.size() + " " + listener.getCabString());
             }
 
             @Override

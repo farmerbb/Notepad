@@ -168,9 +168,7 @@ public class NoteEditFragment extends Fragment {
             noteContents = (EditText) getActivity().findViewById(R.id.editText1);
             contents = noteContents.getText().toString();
 
-            if(contents.equals(""))
-                finish(null);
-            else {
+            if(!contents.equals("")) {
                 SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
                 // Save filename to draft-name preference

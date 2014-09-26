@@ -155,8 +155,12 @@ String external;
 	
 	@Override
 	public void showBackButtonDialog(String filename) {
-		DialogFragment backFragment = new BackButtonDialogFragment();
-		backFragment.show(getFragmentManager(), "back");
+        Bundle bundle = new Bundle();
+        bundle.putString("filename", filename);
+
+        DialogFragment backFragment = new BackButtonDialogFragment();
+        backFragment.setArguments(bundle);
+        backFragment.show(getFragmentManager(), "back");
 	}
 
 	@Override

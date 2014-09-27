@@ -193,8 +193,11 @@ NoteViewFragment.Listener {
 	}
 
     @Override
-    public String getCabString() {
-        return getResources().getString(R.string.cab_note_selected);
+    public String getCabString(int size) {
+        if(size == 1)
+            return getResources().getString(R.string.cab_note_selected);
+        else
+            return getResources().getString(R.string.cab_notes_selected);
     }
 
     @Override

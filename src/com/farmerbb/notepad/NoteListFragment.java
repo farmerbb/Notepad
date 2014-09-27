@@ -68,7 +68,7 @@ public class NoteListFragment extends Fragment {
  * implement this interface in order to receive event call backs. */
     public interface Listener {
         public void viewNote(String filename);
-        public String getCabString();
+        public String getCabString(int size);
         public void deleteNote(Object[] filesToDelete);
     }
 
@@ -382,10 +382,8 @@ public class NoteListFragment extends Fragment {
                 // Update the title in CAB
                 if(cab.size() == 0)
                     mode.setTitle("");
-                else if(cab.size() == 1)
-                    mode.setTitle("1 " + listener.getCabString());
                 else
-                    mode.setTitle(cab.size() + " " + listener.getCabString());
+                    mode.setTitle(cab.size() + " " + listener.getCabString(cab.size()));
             }
 
             @Override

@@ -20,44 +20,44 @@
 
     <string name="action_cancel">Anuluj</string>
     <string name="action_close">Zamknij</string>
-    <string name="action_delete">Usu\u00f1</string>
-    <string name="action_discard">Odrzu\u00e6</string>
+    <string name="action_delete">Usuń</string>
+    <string name="action_discard">Odrzuć</string>
     <string name="action_edit">Edytuj</string>
     <string name="action_new">Nowa notatka</string>
     <string name="action_save">Zapisz</string>
     <string name="action_settings">Ustawienia</string>
-    <string name="action_share">Udost\u00eapnij</string>
-    <string name="action_sort_by">Sortuj notatki wed\u00b3ug</string>
+    <string name="action_share">Udostępnij</string>
+    <string name="action_sort_by">Sortuj notatki według</string>
     <string name="app_name">Notatnik</string>
     <string name="cab_note_selected">notatka zaznaczona</string>
     <string name="cab_notes_selected">notatki zaznaczone</string>
     <string name="changes_discarded">Zmiany odrzucone</string>
-    <string name="dialog_about_message">Notatnik: prosta aplikacja do sporz\u00b9dzania notatek\n\n&#169; 2014 Braden Farmer\n\nIkona aplikacji autorstwa <a href="http://deleket.deviantart.com">deleket</a> jest na licencji <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">CC BY-NC-ND 3.0</a></string>
+    <string name="dialog_about_message">Notatnik: prosta aplikacja do sporządzania notatek\n\n&#169; 2014 Braden Farmer\n\nIkona aplikacji autorstwa <a href="http://deleket.deviantart.com">deleket</a> jest na licencji <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">CC BY-NC-ND 3.0</a></string>
     <string name="dialog_about_title">O Notatniku</string>
-    <string name="dialog_are_you_sure">Czy jeste\u0153 pewien?</string>
-    <string name="dialog_delete_button_title">Usu\u00f1 notatk\u00ea</string>
+    <string name="dialog_are_you_sure">Czy jesteś pewien?</string>
+    <string name="dialog_delete_button_title">Usuń notatkę</string>
     <string name="dialog_save_button_title">Zapisz zmiany</string>
-    <string name="dialog_save_changes">Czy chcesz zapisa\u00e6 zmiany?</string>
-    <string name="draft_restored">Wersja robocza przywr\u00f3cona</string>
+    <string name="dialog_save_changes">Czy chcesz zapisać zmiany?</string>
+    <string name="draft_restored">Wersja robocza przywrócona</string>
     <string name="draft_saved">Wersja robocza zapisana</string>
-	<string name="edit_note">Edytuj notatk\u00ea</string>
-    <string name="edit_text">Napisz by wprowadzi\u00e6 tekst</string>
-    <string name="empty_note">Wprowad\u0178 jaki\u0153 tekst!</string>
-    <string name="error_loading_list">B\u00b3\u00b9d podczas wczytywania listy notatek!</string>
-    <string name="error_loading_note">B\u00b3\u00b9d podczas wczytywania notatki!</string>
-    <string name="failed_to_save">B\u00b3\u00b9d: Nie uda\u00b3o si\u00ea zapisa\u00e6 notatki!</string>
-    <string name="first_run">Witamy w Notatniku!\n\nAby stworzy\u00e6 notatk\u00ea, dotknij przycisku Nowa Notatka (znak plus) na g\u00f3rze.</string>
-    <string name="first_view">Aby zmieni\u00e6 zapisan\u00b9 notatk\u00ea, dotknij ekranu albo przycisku Edytuj na g\u00f3rze.</string>
+	<string name="edit_note">Edytuj notatkę</string>
+    <string name="edit_text">Napisz by wprowadzić tekst</string>
+    <string name="empty_note">Wprowadź jakiś tekst!</string>
+    <string name="error_loading_list">Błąd podczas wczytywania listy notatek!</string>
+    <string name="error_loading_note">Błąd podczas wczytywania notatki!</string>
+    <string name="failed_to_save">Błąd: Nie udało się zapisać notatki!</string>
+    <string name="first_run">Witamy w Notatniku!\n\nAby stworzyć notatkę, dotknij przycisku Nowa Notatka (znak plus) na górze.</string>
+    <string name="first_view">Aby zmienić zapisaną notatkę, dotknij ekranu albo przycisku Edytuj na górze.</string>
     <string name="no_notes_found">Nie znaleziono notatek</string>
-    <string name="note_deleted">Notatka usun\u00eata</string>
+    <string name="note_deleted">Notatka usunęta</string>
     <string name="note_saved">Notatka zapisana</string>
-    <string name="notes_deleted">Notatki usuni\u00eate</string>
+    <string name="notes_deleted">Notatki usunięte</string>
     <string name="pref_title_show_dialogs">Pytaj przed zapisaniem</string>
-    <string name="send_to">Udost\u00eapnij za pomoc\u00b9&#8230;</string>
-    <string name="view_note">Podgl\u00b9d notatki</string>
+    <string name="send_to">Udostępnij za pomocą&#8230;</string>
+    <string name="view_note">Podgląd notatki</string>
 
     <string-array name="sort_by_list">
-        <item>Daty (najnowsze na pocz\u00b9tku)</item>
+        <item>Daty (najnowsze na początku)</item>
         <item>Nazwy (Od A do Z)</item>
     </string-array>
     <string-array name="sort_by_list_values">

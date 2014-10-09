@@ -291,7 +291,7 @@ public class NoteEditFragment extends Fragment {
                                 .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
                                 .commit();
 					} else {
-						SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+						SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
 						if(pref.getBoolean("show_dialogs", true)) {
 							// Show save button dialog
 							listener.showSaveButtonDialog();
@@ -438,7 +438,7 @@ public class NoteEditFragment extends Fragment {
 
 	// Method used to generate toast notifications
     private void showToast(int message) {
-        Toast toast = Toast.makeText(getActivity().getApplicationContext(), getResources().getString(message), Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getActivity(), getResources().getString(message), Toast.LENGTH_SHORT);
         toast.show();
     }
 
@@ -521,7 +521,7 @@ public class NoteEditFragment extends Fragment {
 			if(noteContents.getText().toString().isEmpty())
 				finish(filename);
 			else {
-				SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+				SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
 				if(pref.getBoolean("show_dialogs", true)) {
 					// Show back button dialog
 					listener.showBackButtonDialog(filename);

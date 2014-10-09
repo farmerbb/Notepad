@@ -235,7 +235,7 @@ public class NoteViewFragment extends Fragment {
 
 	private void deleteNote(String filename) {		
 		// Build the pathname to delete file, then perform delete operation
-		File fileToDelete = new File(getActivity().getFilesDir().getAbsolutePath() + "/" + filename);
+		File fileToDelete = new File(getActivity().getFilesDir() + "/" + filename);
 		fileToDelete.delete();
 	}
 
@@ -269,7 +269,7 @@ public class NoteViewFragment extends Fragment {
 	}
 
     private void showToast(int message) {
-        Toast toast = Toast.makeText(getActivity().getApplicationContext(), getResources().getString(message), Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getActivity(), getResources().getString(message), Toast.LENGTH_SHORT);
         toast.show();
     }
 

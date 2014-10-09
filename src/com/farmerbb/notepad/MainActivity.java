@@ -19,7 +19,9 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.Toast;
@@ -39,6 +41,51 @@ NoteViewFragment.Listener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+        // Show dialog if this is the user's first time running Notepad
+        SharedPreferences prefMain = getPreferences(Context.MODE_PRIVATE);
+        if(prefMain.getInt("first-run", 0) == 0) {
+            // Show welcome dialog
+            DialogFragment firstRun = new FirstRunDialogFragment();
+            firstRun.show(getFragmentManager(), "firstrunfragment");
+
+            // Set some initial preferences
+            SharedPreferences.Editor editor = prefMain.edit();
+            editor.putInt("first-run", 1);
+            editor.apply();
+        } else {
+            // The following code is only present to support existing users of Notepad on Google Play
+            // and can be removed if using this source code for a different app
+
+            // Convert old preferences to new ones
+            SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+            if(prefMain.getInt("sort-by", -1) == 0) {
+                SharedPreferences.Editor editor = pref.edit();
+                SharedPreferences.Editor editorMain = prefMain.edit();
+
+                editor.putString("sort_by", "date");
+                editorMain.putInt("sort-by", -1);
+
+                editor.apply();
+                editorMain.apply();
+            } else if(prefMain.getInt("sort-by", -1) == 1) {
+                SharedPreferences.Editor editor = pref.edit();
+                SharedPreferences.Editor editorMain = prefMain.edit();
+
+                editor.putString("sort_by", "name");
+                editorMain.putInt("sort-by", -1);
+
+                editor.apply();
+                editorMain.apply();
+            }
+
+            // Rename any saved drafts from 1.3.x
+            File oldDraft = new File(getFilesDir() + "/draft");
+            File newDraft = new File(getFilesDir() + "/" + String.valueOf(System.currentTimeMillis()));
+
+            if(oldDraft.exists())
+                oldDraft.renameTo(newDraft);
+        }
 
         // Begin a new FragmentTransaction
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -230,7 +277,7 @@ NoteViewFragment.Listener {
 
     // Method used to generate toast notifications
     private void showToast(int message) {
-        Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(message), Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, getResources().getString(message), Toast.LENGTH_SHORT);
         toast.show();
     }
 }

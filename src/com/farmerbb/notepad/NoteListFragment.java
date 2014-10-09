@@ -16,7 +16,6 @@
 package com.farmerbb.notepad;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
@@ -101,51 +100,6 @@ public class NoteListFragment extends Fragment {
         // Set values
         setRetainInstance(true);
 		setHasOptionsMenu(true);
-
-        // Show a toast message if this is the user's first time running Notepad
-        SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
-        if(prefMain.getInt("first-run", 0) == 0) {
-            // Show welcome dialog
-            DialogFragment firstRun = new FirstRunDialogFragment();
-            firstRun.show(getFragmentManager(), "firstrunfragment");
-
-            // Set first-run preference to 1; we don't need to show the dialog anymore
-            SharedPreferences.Editor editor = prefMain.edit();
-            editor.putInt("first-run", 1);
-            editor.apply();
-        } else {
-            // The following code is only present to support existing users of Notepad on Google Play
-            // and can be removed if using this source code for a different app
-
-            // Convert old preferences to new ones
-            SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
-            if(prefMain.getInt("sort-by", -1) == 0) {
-                SharedPreferences.Editor editor = pref.edit();
-                SharedPreferences.Editor editorMain = prefMain.edit();
-
-                editor.putString("sort_by", "date");
-                editorMain.putInt("sort-by", -1);
-
-                editor.apply();
-                editorMain.apply();
-            } else if(prefMain.getInt("sort-by", -1) == 1) {
-                SharedPreferences.Editor editor = pref.edit();
-                SharedPreferences.Editor editorMain = prefMain.edit();
-
-                editor.putString("sort_by", "name");
-                editorMain.putInt("sort-by", -1);
-
-                editor.apply();
-                editorMain.apply();
-            }
-
-            // Rename any saved drafts from 1.3.x
-            File oldDraft = new File(getActivity().getFilesDir() + "/draft");
-            File newDraft = new File(getActivity().getFilesDir() + "/" + String.valueOf(System.currentTimeMillis()));
-
-            if(oldDraft.exists())
-                oldDraft.renameTo(newDraft);
-        }
     }
 
     @Override
@@ -162,7 +116,7 @@ public class NoteListFragment extends Fragment {
         }
 
         // Read preferences
-        SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getApplicationContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
         SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
         sortBy = pref.getString("sort_by", "date");
 
@@ -249,18 +203,30 @@ public class NoteListFragment extends Fragment {
     }
 
     private void listNotes() {
-        // Bugfix for Galaxy S5
-        File rList = new File(getActivity().getFilesDir() + "/rList");
-        if(rList.exists())
-            rList.delete();
+        // Get number of files
+        int numOfFiles = getNumOfFiles(getActivity().getFilesDir());
+
+        // Get array of file names
+        String[] listOfFiles = getListOfNotes(getActivity().getFilesDir());
+
+        // Newer Samsung devices (Galaxy S5, Galaxy Note 4) like to save junk files inside the app's internal storage.
+        // Delete them so that they don't cause problems with lists
+        for(int i = 0; i < numOfFiles; i++) {
+            File file = new File(getActivity().getFilesDir() + "/" + listOfFiles[i]);
+
+            if(listOfFiles[i].contains("rList"))
+                file.delete();
+
+            listOfFiles[i] = "";
+        }
 
         // Declare ListView
         final ListView listView = (ListView) getActivity().findViewById(R.id.listView1);
 
-        // Get number of notes saved
-        int numOfFiles = getNumOfFiles(getActivity().getFilesDir());
+        // Refresh number of files
+        numOfFiles = getNumOfFiles(getActivity().getFilesDir());
 
-        // Get array of file names and create additional arrays
+        // Create arrays of note lists
         String[] listOfNotesByDate = getListOfNotes(getActivity().getFilesDir());
         String[] listOfNotesByName = new String[numOfFiles];
 
@@ -421,7 +387,7 @@ public class NoteListFragment extends Fragment {
 
     // Method used to generate toast notifications
     private void showToast(int message) {
-        Toast toast = Toast.makeText(getActivity().getApplicationContext(), getResources().getString(message), Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getActivity(), getResources().getString(message), Toast.LENGTH_SHORT);
         toast.show();
     }
 	

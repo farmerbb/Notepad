@@ -16,17 +16,12 @@
 package com.farmerbb.notepad;
 
 import android.app.DialogFragment;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.preference.RingtonePreference;
-import android.text.TextUtils;
 
 public class SettingsActivity extends PreferenceActivity implements OnPreferenceClickListener {
 
@@ -58,7 +53,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		public boolean onPreferenceChange(Preference preference, Object value) {
 			String stringValue = value.toString();
 
-			if (preference instanceof ListPreference) {
+			if(preference instanceof ListPreference) {
 				// For list preferences, look up the correct display value in
 				// the preference's 'entries' list.
 				ListPreference listPreference = (ListPreference) preference;
@@ -68,25 +63,6 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 				preference
 				.setSummary(index >= 0 ? listPreference.getEntries()[index]
 						: null);
-
-			} else if (preference instanceof RingtonePreference) {
-				// For ringtone preferences, look up the correct display value
-				// using RingtoneManager.
-				if (!TextUtils.isEmpty(stringValue)) {
-					Ringtone ringtone = RingtoneManager.getRingtone(
-							preference.getContext(), Uri.parse(stringValue));
-
-					if (ringtone == null) {
-						// Clear the summary if there was a lookup error.
-						preference.setSummary(null);
-					} else {
-						// Set the summary to reflect the new ringtone display
-						// name.
-						String name = ringtone
-								.getTitle(preference.getContext());
-						preference.setSummary(name);
-					}
-				}
 
 			} else {
 				// For all other preferences, set the summary to the value's

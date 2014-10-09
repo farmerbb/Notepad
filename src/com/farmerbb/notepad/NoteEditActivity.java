@@ -76,13 +76,11 @@ String external;
 						output.close();
 
 						// Show toast notification and finish
-						Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.note_saved), Toast.LENGTH_SHORT);
-						toast.show();
+						showToast(R.string.note_saved);
                         finish();
                     } catch (IOException e) {
                         // Show error message as toast if file fails to save
-						Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.failed_to_save), Toast.LENGTH_SHORT);
-						toast.show();
+						showToast(R.string.failed_to_save);
 						finish();
                     }
 				}
@@ -174,4 +172,10 @@ String external;
 		DialogFragment saveFragment = new SaveButtonDialogFragment();
 		saveFragment.show(getFragmentManager(), "save");
 	}
+
+    // Method used to generate toast notifications
+    private void showToast(int message) {
+        Toast toast = Toast.makeText(this, getResources().getString(message), Toast.LENGTH_SHORT);
+        toast.show();
+    }
 }

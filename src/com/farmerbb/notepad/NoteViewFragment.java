@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -106,14 +107,18 @@ public class NoteViewFragment extends Fragment {
         setRetainInstance(true);
 		setHasOptionsMenu(true);
 
-		// Set up content view
-		noteContents = (TextView) getActivity().findViewById(R.id.textView);
+        // Change window title
+        getActivity().setTitle(getResources().getString(R.string.view_note));
 
 		// Show the Up button in the action bar.
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		// Change window title
-        getActivity().setTitle(getResources().getString(R.string.view_note));
+
+        // If on Lollipop or above, hide the app icon in the action bar
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            getActivity().getActionBar().setDisplayShowHomeEnabled(false);
+
+        // Set up content view
+        noteContents = (TextView) getActivity().findViewById(R.id.textView);
 		
 		// Get filename of saved note
 		filename = getArguments().getString("filename");

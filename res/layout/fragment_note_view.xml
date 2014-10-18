@@ -18,7 +18,7 @@
     android:id="@+id/layoutNoteView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099CC"
+    android:background="@color/primary"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical" >
@@ -28,7 +28,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFFFFF"
+        android:background="@color/window_background"
         android:fillViewport="true"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
@@ -40,13 +40,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="all"
-            android:background="#FFFFFF"
+            android:background="@color/window_background"
             android:clickable="true"
             android:linksClickable="true"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text=""
-            android:textColor="#000000"
+            android:text="@null"
+            android:textColor="@color/text_color_primary"
             android:textSize="18sp" />
     </ScrollView>
 

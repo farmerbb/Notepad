@@ -22,9 +22,15 @@
 
 <resources>
 
-    <style name="Theme.Holoyolo.2" parent="Theme.Holoyolo">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+    <style name="Theme.Materiyolo" parent="@android:style/Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:colorAccent">@color/primary_dark</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:textColorPrimary">@color/text_color_primary</item>
+        <item name="android:navigationBarColor">@color/text_color_primary</item>
+        <item name="android:actionModeBackground">@color/primary</item>
     </style>
 
 </resources>

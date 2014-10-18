@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.ActionMode;
 import android.view.KeyEvent;
@@ -107,12 +108,16 @@ public class NoteListFragment extends Fragment {
         super.onResume();
 
         if(getId() == R.id.noteViewEdit) {
+            // Change window title
+            getActivity().setTitle(getResources().getString(R.string.app_name));
+
             // Don't show the Up button in the action bar, and disable the button
             getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
             getActivity().getActionBar().setHomeButtonEnabled(false);
 
-            // Change window title
-            getActivity().setTitle(getResources().getString(R.string.app_name));
+            // If on Lollipop or above, show the app icon in the action bar
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                getActivity().getActionBar().setDisplayShowHomeEnabled(true);
         }
 
         // Read preferences
@@ -263,12 +268,10 @@ public class NoteListFragment extends Fragment {
             // Copy filenames array with new sort order of titles and nullify date arrays
             for(int i = 0; i < numOfFiles; i++) {
                 for(int j = 0; j < numOfFiles; j++) {
-                    if(listOfTitlesByName[i].equals(listOfTitlesByDate[j])) {
-                        if(listOfNotesByName[i].equals("new")) {
-                            listOfNotesByName[i] = listOfNotesByDate[j];
-                            listOfNotesByDate[j] = "";
-                            listOfTitlesByDate[j] = "";
-                        }
+                    if(listOfTitlesByName[i].equals(listOfTitlesByDate[j]) && listOfNotesByName[i].equals("new")) {
+                        listOfNotesByName[i] = listOfNotesByDate[j];
+                        listOfNotesByDate[j] = "";
+                        listOfTitlesByDate[j] = "";
                     }
                 }
             }

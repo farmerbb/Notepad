@@ -18,7 +18,7 @@ limitations under the License.
     android:id="@+id/noteViewEdit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099CC"
+    android:background="@color/primary"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical" />

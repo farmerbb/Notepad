@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -119,6 +120,13 @@ public class NoteEditFragment extends Fragment {
         setRetainInstance(true);
 		setHasOptionsMenu(true);
 
+        // Show the Up button in the action bar.
+        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // If on Lollipop or above, hide the app icon in the action bar
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            getActivity().getActionBar().setDisplayShowHomeEnabled(false);
+
 		// Set up content view
 		noteContents = (EditText) getActivity().findViewById(R.id.editText1);
 
@@ -132,9 +140,6 @@ public class NoteEditFragment extends Fragment {
 		} catch (NullPointerException e) {
 			filename = "new";
 		}
-
-		// Show the Up button in the action bar.
-        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Load note from existing file
 		if(isSavedNote) {

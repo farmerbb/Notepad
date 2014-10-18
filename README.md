@@ -4,7 +4,7 @@ A simple, bare-bones, no-frills note taking app
 
 &bull; Quickly create and save plain-text notes
 
-&bull; Beautiful, easy-to-use UI - optimized for KitKat
+&bull; Beautiful, easy-to-use UI - optimized for KitKat and Lollipop
 
 &bull; Dual-pane view for tablets
 

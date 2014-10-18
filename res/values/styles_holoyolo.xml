@@ -20,6 +20,7 @@
 <resources>
 
     <style name="Theme.Holoyolo" parent="@android:style/Theme.DeviceDefault.Light.DarkActionBar">
+
         <item name="android:actionBarItemBackground">@drawable/selectable_background_holoyolo</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Holoyolo</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Holoyolo</item>
@@ -29,13 +30,13 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_holoyolo</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_holoyolo</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Holoyolo</item>
-        
+
                 <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Holoyolo.Widget</item>
 
     </style>
 
-    <style name="ActionBar.Solid.Holoyolo" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+    <style name="ActionBar.Solid.Holoyolo" parent="@android:style/Widget.DeviceDefault.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/ab_solid_holoyolo</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_holoyolo</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_holoyolo</item>
@@ -43,43 +44,43 @@
         <item name="android:titleTextStyle">@style/ActionBar.TitleTextStyle</item>
     </style>
 
-    <style name="ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+    <style name="ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Title">
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="ActionBar.Transparent.Holoyolo" parent="@android:style/Widget.Holo.ActionBar">
+    <style name="ActionBar.Transparent.Holoyolo" parent="@android:style/Widget.DeviceDefault.ActionBar">
         <item name="android:background">@drawable/ab_transparent_holoyolo</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Holoyolo</item>
     </style>
 
-    <style name="PopupMenu.Holoyolo" parent="@android:style/Widget.Holo.ListPopupWindow">
+    <style name="PopupMenu.Holoyolo" parent="@android:style/Widget.DeviceDefault.ListPopupWindow">
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_holoyolo</item>	
     </style>
 
-    <style name="DropDownListView.Holoyolo" parent="@android:style/Widget.Holo.ListView.DropDown">
+    <style name="DropDownListView.Holoyolo" parent="@android:style/Widget.DeviceDefault.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_holoyolo</item>
     </style>
 
-    <style name="ActionBarTabStyle.Holoyolo" parent="@android:style/Widget.Holo.ActionBar.TabView">
+    <style name="ActionBarTabStyle.Holoyolo" parent="@android:style/Widget.DeviceDefault.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_holoyolo</item>
     </style>
 
-    <style name="DropDownNav.Holoyolo" parent="@android:style/Widget.Holo.Spinner">
+    <style name="DropDownNav.Holoyolo" parent="@android:style/Widget.DeviceDefault.Spinner">
         <item name="android:background">@drawable/spinner_background_ab_holoyolo</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_holoyolo</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_holoyolo</item>
     </style>
     
-    <style name="ProgressBar.Holoyolo" parent="@android:style/Widget.Holo.ProgressBar.Horizontal">
+    <style name="ProgressBar.Holoyolo" parent="@android:style/Widget.DeviceDefault.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_holoyolo</item>
     </style>
     
-    <style name="ActionButton.CloseMode.Holoyolo" parent="@android:style/Widget.Holo.ActionButton.CloseMode">
+    <style name="ActionButton.CloseMode.Holoyolo" parent="@android:style/Widget.DeviceDefault.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_holoyolo</item>
     </style>
 
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Holoyolo.Widget" parent="@android:style/Theme.Holo">
+    <style name="Theme.Holoyolo.Widget" parent="@android:style/Theme.DeviceDefault">
         <item name="android:popupMenuStyle">@style/PopupMenu.Holoyolo</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Holoyolo</item>
     </style>

@@ -1,4 +1,9 @@
-<!-- Copyright 2014 Braden Farmer
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     File created by the Android Action Bar Style Generator
+
+     Copyright (C) 2011 The Android Open Source Project
+     Copyright (C) 2012 readyState Software Ltd
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -11,15 +16,12 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
+
+
 -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<resources>
 
-    <!-- Delete button -->
-    <item
-        android:id="@+id/action_delete"
-        android:icon="@drawable/ic_action_discard"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/action_delete"/>
+    <style name="Theme.Notepad" parent="Theme.Materiyolo" />
 
-</menu>
+</resources>

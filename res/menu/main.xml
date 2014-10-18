@@ -19,7 +19,7 @@
     <item
         android:id="@+id/action_new"
         android:icon="@drawable/ic_action_new"
-        android:showAsAction="always|withText"
+        android:showAsAction="ifRoom|withText"
         android:title="@string/action_new" />
        
     <!-- Settings button -->

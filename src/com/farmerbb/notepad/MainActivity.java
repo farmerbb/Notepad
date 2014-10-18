@@ -22,8 +22,10 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.File;
@@ -41,6 +43,14 @@ NoteViewFragment.Listener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+        // Remove margins from layout on Lollipop devices
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            LinearLayout layout = (LinearLayout) findViewById(R.id.noteViewEdit);
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout.getLayoutParams();
+            params.setMargins(0, 0, 0, 0);
+            layout.setLayoutParams(params);
+        }
 
         // Show dialog if this is the user's first time running Notepad
         SharedPreferences prefMain = getPreferences(Context.MODE_PRIVATE);

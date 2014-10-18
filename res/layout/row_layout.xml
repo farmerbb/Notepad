@@ -31,7 +31,7 @@
         android:paddingTop="10dp"
         android:text="@null"
         android:textColor="@color/text_color_primary"
-        android:textSize="18sp" 
+        android:textSize="18sp"
         android:background="@drawable/selectable_background_holoyolo" />
 
 </LinearLayout>

@@ -32,7 +32,7 @@
     <string name="cab_note_selected">note selected</string>
     <string name="cab_notes_selected">notes selected</string>
     <string name="changes_discarded">Changes discarded</string>
-    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2014 Braden Farmer\n\nApplication icon by <a href="http://deleket.deviantart.com">deleket</a> is licensed under <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">CC BY-NC-ND 3.0</a></string>
+	<string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2014 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/Notepad">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, except where noted below:\n\nThis app uses code derived from the <a href="https://github.com/afollestad/FloatingActionButton">FloatingActionButton</a> project, licensed under the MIT License.\n\nThis app uses graphical assets from the following sources:\n\n&#8226; <a href="http://deleket.deviantart.com">Notepad icon (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a> <a href="http://creativecommons.org/licenses/by/3.0/">(CC-BY-3.0)</a></string>
     <string name="dialog_about_title">About Notepad</string>
     <string name="dialog_are_you_sure">Are you sure?</string>
     <string name="dialog_delete_button_title">Delete note</string>
@@ -53,6 +53,7 @@
     <string name="note_saved">Note saved</string>
     <string name="notes_deleted">Notes deleted</string>
     <string name="pref_title_show_dialogs">Ask before saving</string>
+	<string name="select_note">Select a note</string>
     <string name="send_to">Share note using&#8230;</string>
     <string name="view_note">View Note</string>
 

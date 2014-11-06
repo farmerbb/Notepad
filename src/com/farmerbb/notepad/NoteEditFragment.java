@@ -66,12 +66,18 @@ public class NoteEditFragment extends Fragment {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
-                    // Add NoteListFragment
-                    getFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment")
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                            .commit();
+					// Add NoteListFragment or WelcomeFragment
+					Fragment fragment;
+					if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+						fragment = new NoteListFragment();
+					else
+						fragment = new WelcomeFragment();
+
+					getFragmentManager()
+						.beginTransaction()
+						.replace(R.id.noteViewEdit, fragment, "NoteListFragment")
+						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+						.commit();
                 }
             }
         }
@@ -122,10 +128,6 @@ public class NoteEditFragment extends Fragment {
 
         // Show the Up button in the action bar.
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // If on Lollipop or above, hide the app icon in the action bar
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            getActivity().getActionBar().setDisplayShowHomeEnabled(false);
 
 		// Set up content view
 		noteContents = (EditText) getActivity().findViewById(R.id.editText1);
@@ -362,6 +364,13 @@ public class NoteEditFragment extends Fragment {
 		// Build the pathname to delete file, then perform delete operation
 		File fileToDelete = new File(getActivity().getFilesDir() + "/" + filename);
 		fileToDelete.delete();
+		
+		if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")) {
+			// Send broadcast to NoteListFragment to refresh list of notes
+			Intent listNotesIntent = new Intent();
+			listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+			getActivity().sendBroadcast(listNotesIntent);
+		}
 	}
 
 	// Loads note from /data/data/com.farmerbb.notepad/files
@@ -597,12 +606,18 @@ public class NoteEditFragment extends Fragment {
 		if(listener.isShareIntent())
 			getActivity().finish();
 		else if(filename == null) {
-		// Add NoteListFragment
-		getFragmentManager()
-			.beginTransaction()
-				.replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment")
-			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-			.commit();
+			// Add NoteListFragment or WelcomeFragment
+			Fragment fragment;
+			if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+				fragment = new NoteListFragment();
+			else
+				fragment = new WelcomeFragment();
+
+			getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                .commit();
 		} else {
 			Bundle bundle = new Bundle();
 			bundle.putString("filename", filename);

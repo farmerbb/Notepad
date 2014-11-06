@@ -16,16 +16,16 @@ limitations under the License.
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layoutMain"
+	android:tag="main-layout-large"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="horizontal" >
-	
+
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/noteList"
-		android:tag="NoteListFragment"
 		android:layout_weight="1"
 		android:layout_width="0dp"
 		android:layout_height="match_parent"
@@ -42,5 +42,5 @@ limitations under the License.
         android:layout_marginLeft="2dp"
 		android:background="@color/window_background"
         android:orientation="horizontal" />
-	
+
 </LinearLayout>

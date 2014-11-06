@@ -40,6 +40,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.melnykov.fab.FloatingActionButton;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -106,40 +108,19 @@ public class NoteListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+		
+		if(getId() == R.id.noteViewEdit) {
+        	// Change window title
+        	getActivity().setTitle(getResources().getString(R.string.app_name));
 
-        if(getId() == R.id.noteViewEdit) {
-            // Change window title
-            getActivity().setTitle(getResources().getString(R.string.app_name));
-
-            // Don't show the Up button in the action bar, and disable the button
-            getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
-            getActivity().getActionBar().setHomeButtonEnabled(false);
-
-            // If on Lollipop or above, show the app icon in the action bar
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                getActivity().getActionBar().setDisplayShowHomeEnabled(true);
-        }
+        	// Don't show the Up button in the action bar, and disable the button
+        	getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+        	getActivity().getActionBar().setHomeButtonEnabled(false);
+		}
 
         // Read preferences
         SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
-        SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
         sortBy = pref.getString("sort_by", "date");
-
-        // Before we do anything else, check for a saved draft; if one exists, load it
-        if(getId() == R.id.noteViewEdit && prefMain.getLong("draft-name", 0) != 0) {
-            Bundle bundle = new Bundle();
-            bundle.putString("filename", "draft");
-
-            Fragment fragment = new NoteEditFragment();
-            fragment.setArguments(bundle);
-
-            // Add NoteEditFragment
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit();
-        } else
 		
         // Refresh list of notes onResume (instead of onCreate) to reflect additions/deletions and preference changes
         listNotes();
@@ -147,11 +128,42 @@ public class NoteListFragment extends Fragment {
 
     // Register and unregister ListNotesReceiver (for tablet layout)
     @Override
-    public void onStart() {
-        super.onStart();
+	public void onStart() {
+		super.onStart();
 
-		getActivity().registerReceiver(receiver, filter);
-    }
+        getActivity().registerReceiver(receiver, filter);
+
+        // Floating action button
+        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
+        floatingActionButton.hide(false);
+		
+		SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP 
+			&& getId() == R.id.noteViewEdit
+			&& prefMain.getLong("draft-name", 0) == 0) {
+            floatingActionButton.show();
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						hideFab();
+						
+						Bundle bundle = new Bundle();
+						bundle.putString("filename", "new");
+
+						Fragment fragment = new NoteEditFragment();
+						fragment.setArguments(bundle);
+
+						// Add NoteEditFragment
+						getFragmentManager()
+							.beginTransaction()
+							.replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+							.commit();
+					}
+				});
+        }
+	}
 
     @Override
     public void onStop() {
@@ -398,6 +410,9 @@ public class NoteListFragment extends Fragment {
 			switch(keyCode) {
 					// CTRL+N: New Note
 			    case KeyEvent.KEYCODE_N:
+					if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+						hideFab();
+					
                     Bundle bundle = new Bundle();
                     bundle.putString("filename", "new");
 
@@ -416,5 +431,10 @@ public class NoteListFragment extends Fragment {
 		
 	public void onBackPressed() {
 		getActivity().finish();
+	}
+	
+	public void hideFab() {
+		FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
+		floatingActionButton.hide();
 	}
 }

@@ -36,7 +36,7 @@ public class WearPluginReceiver extends BroadcastReceiver {
             output.close();
         } catch (IOException e) {}
 		
-		// Send broadcast to MainActivity to refresh list of notes
+		// Send broadcast to NoteListFragment to refresh list of notes
 		Intent listNotesIntent = new Intent();
 		listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
 		context.sendBroadcast(listNotesIntent);

@@ -56,13 +56,20 @@ public class NoteViewFragment extends Fragment {
             String[] filesToDelete = intent.getStringArrayExtra("files");
 
             for(Object file : filesToDelete) {
-                if(filename.equals(file))
-                    // Add NoteListFragment
-                    getFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment")
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                            .commit();
+                if(filename.equals(file)) {
+					// Add NoteListFragment or WelcomeFragment
+					Fragment fragment;
+					if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+						fragment = new NoteListFragment();
+					else
+						fragment = new WelcomeFragment();
+
+					getFragmentManager()
+						.beginTransaction()
+						.replace(R.id.noteViewEdit, fragment, "NoteListFragment")
+						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+						.commit();
+				}
             }
         }
     }
@@ -113,10 +120,6 @@ public class NoteViewFragment extends Fragment {
 		// Show the Up button in the action bar.
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // If on Lollipop or above, hide the app icon in the action bar
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            getActivity().getActionBar().setDisplayShowHomeEnabled(false);
-
         // Set up content view
         noteContents = (TextView) getActivity().findViewById(R.id.textView);
 		
@@ -129,10 +132,16 @@ public class NoteViewFragment extends Fragment {
 			} catch (IOException e) {
 				showToast(R.string.error_loading_note);
 
-				// Add NoteListFragment
+				// Add NoteListFragment or WelcomeFragment
+				Fragment fragment;
+				if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+					fragment = new NoteListFragment();
+				else
+					fragment = new WelcomeFragment();
+
 				getFragmentManager()
 					.beginTransaction()
-					.replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment")
+					.replace(R.id.noteViewEdit, fragment, "NoteListFragment")
 					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
 					.commit();
 			}
@@ -242,6 +251,13 @@ public class NoteViewFragment extends Fragment {
 		// Build the pathname to delete file, then perform delete operation
 		File fileToDelete = new File(getActivity().getFilesDir() + "/" + filename);
 		fileToDelete.delete();
+		
+		if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")) {
+			// Send broadcast to NoteListFragment to refresh list of notes
+			Intent listNotesIntent = new Intent();
+			listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+			getActivity().sendBroadcast(listNotesIntent);
+		}
 	}
 
 	// Loads note from /data/data/com.farmerbb.notepad/files
@@ -283,10 +299,16 @@ public class NoteViewFragment extends Fragment {
 		deleteNote(filename);
 		showToast(R.string.note_deleted);
 		
-		// Add NoteListFragment
+		// Add NoteListFragment or WelcomeFragment
+		Fragment fragment;
+		if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+			fragment = new NoteListFragment();
+		else
+			fragment = new WelcomeFragment();
+
 		getFragmentManager()
 			.beginTransaction()
-			.replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment")
+			.replace(R.id.noteViewEdit, fragment, "NoteListFragment")
 			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
 			.commit();
 	}
@@ -335,12 +357,18 @@ public class NoteViewFragment extends Fragment {
         }
 	
 		public void onBackPressed() {
-			// Add NoteListFragment
+			// Add NoteListFragment or WelcomeFragment
+			Fragment fragment;
+			if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+				fragment = new NoteListFragment();
+			else
+				fragment = new WelcomeFragment();
+
 			getFragmentManager()
-				.beginTransaction()
-				.replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment")
-				.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-				.commit();
+                .beginTransaction()
+                .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                .commit();
 		}
 		
 	public String getFilename() {

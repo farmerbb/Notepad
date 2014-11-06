@@ -96,21 +96,42 @@ NoteViewFragment.Listener {
             if(oldDraft.exists())
                 oldDraft.renameTo(newDraft);
         }
+		
+		// Begin a new FragmentTransaction
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-        // Begin a new FragmentTransaction
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		// This fragment shows NoteListFragment as a sidebar (only seen in tablet mode landscape)
+        if(!(getFragmentManager().findFragmentById(R.id.noteList) instanceof NoteListFragment))
+		    transaction.replace(R.id.noteList, new NoteListFragment(), "NoteListFragment");
 
-        // This fragment shows NoteListFragment as a sidebar (only seen in tablet mode landscape)
-        transaction.replace(R.id.noteList, new NoteListFragment(), "NoteListFragment");
+        // Check for a saved draft; if one exists, load it
+        if(prefMain.getLong("draft-name", 0) != 0) {
+            Bundle bundle = new Bundle();
+            bundle.putString("filename", "draft");
 
-        // This fragment shows NoteListFragment in the main screen area (only seen on phones and tablet mode portrait),
-        // but only if it doesn't already contain NoteViewFragment or NoteEditFragment
-        if(!((getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment)
-                || (getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment)))
-            transaction.replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment");
+            Fragment fragment = new NoteEditFragment();
+            fragment.setArguments(bundle);
 
-        // Commit fragment transaction
-        transaction.commit();
+            // Add NoteEditFragment
+            transaction.replace(R.id.noteViewEdit, fragment, "NoteEditFragment");
+        }
+
+		// This fragment shows NoteListFragment in the main screen area (only seen on phones and tablet mode portrait),
+		// but only if it doesn't already contain NoteViewFragment or NoteEditFragment.
+        // If NoteListFragment is already showing in the sidebar, use WelcomeFragment instead
+        else if(!((getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment)
+		   || (getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment))) {
+            if((getFragmentManager().findFragmentById(R.id.noteViewEdit) == null
+			   && findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
+			   || ((getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment)
+			   && findViewById(R.id.layoutMain).getTag().equals("main-layout-large")))
+					transaction.replace(R.id.noteViewEdit, new WelcomeFragment(), "NoteListFragment");
+            else if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+                transaction.replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment");
+        }
+
+		// Commit fragment transaction
+		transaction.commit();
 	}
 
 	// Keyboard shortcuts	
@@ -128,6 +149,9 @@ NoteViewFragment.Listener {
 				fragment.dispatchKeyShortcutEvent(event.getKeyCode());
 			} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
 				NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+				fragment.dispatchKeyShortcutEvent(event.getKeyCode());
+			} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
+				WelcomeFragment fragment = (WelcomeFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
 				fragment.dispatchKeyShortcutEvent(event.getKeyCode());
 			}
 
@@ -158,6 +182,9 @@ NoteViewFragment.Listener {
 		} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
 			NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
 			fragment.onBackPressed(null);
+		} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
+			WelcomeFragment fragment = (WelcomeFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
+			fragment.onBackPressed();
 		}
 	}
 
@@ -165,7 +192,16 @@ NoteViewFragment.Listener {
     // Method used by selecting a existing note from the ListView in NoteViewFragment
     // We need this method in MainActivity because sometimes getFragmentManager() is null
     public void viewNote(String filename) {
-		
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
+				NoteListFragment fragment = (NoteListFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
+				fragment.hideFab();
+			} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
+				WelcomeFragment fragment = (WelcomeFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
+				fragment.hideFab();
+			}
+		}
+			
 		String currentFilename;
 		
 		if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
@@ -178,23 +214,23 @@ NoteViewFragment.Listener {
 			currentFilename = " ";
 		
 		if(!currentFilename.equals(filename)) {
-		if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
-			NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-			fragment.switchNotes(filename);
-		} else {
-        Bundle bundle = new Bundle();
-        bundle.putString("filename", filename);
+		    if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+			    NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+			    fragment.switchNotes(filename);
+		    } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("filename", filename);
 
-        Fragment fragment = new NoteViewFragment();
-        fragment.setArguments(bundle);
+            Fragment fragment = new NoteViewFragment();
+            fragment.setArguments(bundle);
 
-        // Add NoteViewFragment
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .commit();
-    	}
+            // Add NoteViewFragment
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
+    	    }
 		}
 	}
 

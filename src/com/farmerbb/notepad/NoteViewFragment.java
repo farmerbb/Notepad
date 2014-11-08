@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -251,13 +250,6 @@ public class NoteViewFragment extends Fragment {
 		// Build the pathname to delete file, then perform delete operation
 		File fileToDelete = new File(getActivity().getFilesDir() + "/" + filename);
 		fileToDelete.delete();
-		
-		if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")) {
-			// Send broadcast to NoteListFragment to refresh list of notes
-			Intent listNotesIntent = new Intent();
-			listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
-			getActivity().sendBroadcast(listNotesIntent);
-		}
 	}
 
 	// Loads note from /data/data/com.farmerbb.notepad/files
@@ -298,6 +290,13 @@ public class NoteViewFragment extends Fragment {
 		// User touched the dialog's positive button
 		deleteNote(filename);
 		showToast(R.string.note_deleted);
+
+        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")) {
+            // Send broadcast to NoteListFragment to refresh list of notes
+            Intent listNotesIntent = new Intent();
+            listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+            getActivity().sendBroadcast(listNotesIntent);
+        }
 		
 		// Add NoteListFragment or WelcomeFragment
 		Fragment fragment;

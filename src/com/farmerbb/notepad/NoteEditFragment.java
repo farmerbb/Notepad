@@ -35,12 +35,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class NoteEditFragment extends Fragment {
 	
@@ -92,6 +89,7 @@ public class NoteEditFragment extends Fragment {
 		public void showDeleteDialog();
 		public void showSaveButtonDialog();
 		public boolean isShareIntent();
+		public String loadNote(String filename) throws IOException;
 	}
 
 	// Use this instance of the interface to deliver action events
@@ -145,12 +143,16 @@ public class NoteEditFragment extends Fragment {
 		// Load note from existing file
 		if(isSavedNote) {
 			try {
-				noteContents.setText(loadNote(filename));
-				noteContents.setSelection(length, length);
+				contentsOnLoad = listener.loadNote(filename);
 			} catch (IOException e) {
 				showToast(R.string.error_loading_note);
                 finish(null);
-			}		
+			}
+			
+			// Set TextView contents
+			length = contentsOnLoad.length();
+			noteContents.setText(contentsOnLoad);
+			noteContents.setSelection(length, length);
 		} else if(filename.equals("draft")) {
             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                 noteContents.setText(sharedPref.getString("draft-contents", null));
@@ -212,7 +214,7 @@ public class NoteEditFragment extends Fragment {
                 // Reload old file into memory, so that correct contentsOnLoad is set
                 if(isSavedNote) {
                     try {
-                        loadNote(filename);
+                        contentsOnLoad = listener.loadNote(filename);
                     } catch (IOException e) {
                         showToast(R.string.error_loading_note);
                         finish(null);
@@ -361,38 +363,8 @@ public class NoteEditFragment extends Fragment {
 	
 	private void deleteNote(String filename) {		
 		// Build the pathname to delete file, then perform delete operation
-		File fileToDelete = new File(getActivity().getFilesDir() + "/" + filename);
+		File fileToDelete = new File(getActivity().getFilesDir() + File.separator + filename);
 		fileToDelete.delete();
-	}
-
-	// Loads note from /data/data/com.farmerbb.notepad/files
-	private StringBuffer loadNote(String filename) throws IOException {
-
-		// Initialize StringBuffer which will contain note
-		StringBuffer note = new StringBuffer("");
-
-		// Open the file on disk
-		FileInputStream input = getActivity().openFileInput(filename);
-		InputStreamReader reader = new InputStreamReader(input);
-		BufferedReader buffer = new BufferedReader(reader);
-
-		// Load the file
-		String line = buffer.readLine();		
-		while (line != null ) {
-			note.append(line);
-			line = buffer.readLine();
-			if(line != null)
-				note.append("\n");
-		}
-
-		// Close file on disk
-		reader.close();
-
-		// Write contents to variable to compare when discarding changes
-		contentsOnLoad = note.toString();
-		length = contentsOnLoad.length();
-
-		return(note);		
 	}
 
 	// Saves notes to /data/data/com.farmerbb.notepad/files

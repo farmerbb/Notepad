@@ -23,6 +23,7 @@
     <string name="action_delete">Supprimer</string>
     <string name="action_discard">Annuler</string>
     <string name="action_edit">Éditer</string>
+	<string name="action_export">Export</string>
     <string name="action_new">Nouvelle Note</string>
     <string name="action_save">Enregistrer</string>
     <string name="action_settings">Paramètres</string>
@@ -43,17 +44,20 @@
     <string name="edit_note">Édition</string>
     <string name="edit_text">Saisissez votre texte</string>
     <string name="empty_note">S\'il vous plaît saisissez un texte\u00A0!</string>
+	<string name="error_exporting_notes">Error exporting notes!</string>
     <string name="error_loading_list">Erreur lors du chargement de la liste de notes\u00A0!</string>
     <string name="error_loading_note">Erreur lors du chargement de la note\u00A0!</string>
     <string name="failed_to_save">Erreur\u00A0: Impossible d\'enregistrer la note\u00A0!</string>
     <string name="first_run">Bienvenue dans Bloc-Notes\u00A0!\n\nPour créer une note, appuyez sur le bouton Ajouter\u00A0(+) en haut.</string>
     <string name="first_view">Pour modifier une note, appuyez sur l\'écran ou appuyez sur le bouton Éditer\u00A0(Crayon) en haut.</string>
+    <string name="loading_external_file">Loading external files is not supported</string>
     <string name="no_notes_found">Aucune note trouvée</string>
     <string name="note_deleted">Note supprimée</string>
+    <string name="note_exported_to">Note exported to</string>
     <string name="note_saved">Note enregistrée</string>
     <string name="notes_deleted">Notes supprimées</string>
+	<string name="notes_exported_to">Notes exported to</string>
     <string name="pref_title_show_dialogs">Confirmer avant d\'enregistrer</string>
-    <string name="select_note">Select a note</string>
 	<string name="send_to">Partager la note par&#8230;</string>
     <string name="view_note">Affichage</string>
 

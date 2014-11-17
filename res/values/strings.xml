@@ -23,6 +23,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_discard">Discard</string>
     <string name="action_edit">Edit</string>
+	<string name="action_export">Export</string>
     <string name="action_new">New Note</string>
     <string name="action_save">Save</string>
     <string name="action_settings">Settings</string>
@@ -43,17 +44,20 @@
 	<string name="edit_note">Edit Note</string>
     <string name="edit_text">Type to add text</string>
     <string name="empty_note">Please enter some text!</string>
+	<string name="error_exporting_notes">Error exporting notes!</string>
     <string name="error_loading_list">Error loading list of notes!</string>
     <string name="error_loading_note">Error loading note!</string>
     <string name="failed_to_save">Error: Failed to save note!</string>
-    <string name="first_run">Welcome to Notepad!\n\nTo create a note, click the New Note button (plus sign) at the top.</string>
+    <string name="first_run">Welcome to Notepad!\n\nTo create a note, click the New Note button (plus sign).</string>
     <string name="first_view">To edit a saved note, tap the screen or click the Edit button at the top.</string>
+    <string name="loading_external_file">Loading external files is not supported</string>
     <string name="no_notes_found">No notes found</string>
     <string name="note_deleted">Note deleted</string>
+    <string name="note_exported_to">Note exported to</string>
     <string name="note_saved">Note saved</string>
     <string name="notes_deleted">Notes deleted</string>
+	<string name="notes_exported_to">Notes exported to</string>
     <string name="pref_title_show_dialogs">Ask before saving</string>
-	<string name="select_note">Select a note</string>
     <string name="send_to">Share note using&#8230;</string>
     <string name="view_note">View Note</string>
 

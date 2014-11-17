@@ -58,7 +58,7 @@ public class WelcomeFragment extends Fragment {
         getActivity().getActionBar().setHomeButtonEnabled(false);
 
         // Floating action button
-        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
+        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
         floatingActionButton.hide(false);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -149,7 +149,7 @@ public class WelcomeFragment extends Fragment {
 	}
 	
 	public void hideFab() {
-		FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
+		FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
 		floatingActionButton.hide();
 	}
 }

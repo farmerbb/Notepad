@@ -61,7 +61,10 @@ String external;
 						.beginTransaction()
 						.add(R.id.noteViewEdit, fragment, "NoteEditFragment")
 						.commit();
-			}
+			} else {
+                showToast(R.string.loading_external_file);
+                finish();
+            }
 		}
 
 		// Intent sent through Google Now "note to self"
@@ -178,4 +181,9 @@ String external;
         Toast toast = Toast.makeText(this, getResources().getString(message), Toast.LENGTH_SHORT);
         toast.show();
     }
+	
+	@Override
+	public String loadNote(String filename) {
+		return null;
+	}
 }

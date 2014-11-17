@@ -23,6 +23,7 @@
     <string name="action_delete">Usuń</string>
     <string name="action_discard">Odrzuć</string>
     <string name="action_edit">Edytuj</string>
+	<string name="action_export">Export</string>
     <string name="action_new">Nowa notatka</string>
     <string name="action_save">Zapisz</string>
     <string name="action_settings">Ustawienia</string>
@@ -43,17 +44,20 @@
 	<string name="edit_note">Edytuj notatkę</string>
     <string name="edit_text">Napisz by wprowadzić tekst</string>
     <string name="empty_note">Wprowadź jakiś tekst!</string>
+	<string name="error_exporting_notes">Error exporting notes!</string>
     <string name="error_loading_list">Błąd podczas wczytywania listy notatek!</string>
     <string name="error_loading_note">Błąd podczas wczytywania notatki!</string>
     <string name="failed_to_save">Błąd: Nie udało się zapisać notatki!</string>
     <string name="first_run">Witamy w Notatniku!\n\nAby stworzyć notatkę, dotknij przycisku Nowa Notatka (znak plus) na górze.</string>
     <string name="first_view">Aby zmienić zapisaną notatkę, dotknij ekranu albo przycisku Edytuj na górze.</string>
+    <string name="loading_external_file">Loading external files is not supported</string>
     <string name="no_notes_found">Nie znaleziono notatek</string>
     <string name="note_deleted">Notatka usunęta</string>
+    <string name="note_exported_to">Note exported to</string>
     <string name="note_saved">Notatka zapisana</string>
     <string name="notes_deleted">Notatki usunięte</string>
+	<string name="notes_exported_to">Notes exported to</string>
     <string name="pref_title_show_dialogs">Pytaj przed zapisaniem</string>
-    <string name="select_note">Select a note</string>
 	<string name="send_to">Udostępnij za pomocą&#8230;</string>
     <string name="view_note">Podgląd notatki</string>
 

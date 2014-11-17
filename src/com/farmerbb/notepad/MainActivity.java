@@ -28,8 +28,16 @@ import android.view.KeyEvent;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class MainActivity extends Activity implements 
 BackButtonDialogFragment.Listener, 
@@ -90,8 +98,8 @@ NoteViewFragment.Listener {
             }
 
             // Rename any saved drafts from 1.3.x
-            File oldDraft = new File(getFilesDir() + "/draft");
-            File newDraft = new File(getFilesDir() + "/" + String.valueOf(System.currentTimeMillis()));
+            File oldDraft = new File(getFilesDir() + File.separator + "draft");
+            File newDraft = new File(getFilesDir() + File.separator + String.valueOf(System.currentTimeMillis()));
 
             if(oldDraft.exists())
                 oldDraft.renameTo(newDraft);
@@ -297,7 +305,7 @@ NoteViewFragment.Listener {
     public void deleteNote(Object[] filesToDelete) {
         // Build the pathname to delete each file, them perform delete operation
         for(Object file : filesToDelete) {
-            File fileToDelete = new File(getFilesDir() + "/" + file);
+            File fileToDelete = new File(getFilesDir() + File.separator + file);
             fileToDelete.delete();
         }
 
@@ -320,10 +328,101 @@ NoteViewFragment.Listener {
         else
             showToast(R.string.notes_deleted);
     }
+	
+	@Override
+    public void exportNote(Object[] filesToExport) {
+		try {
+        	for(Object file : filesToExport) {
+                // Load note title to use as filename, and pass it through Scanner to remove any separators
+                Scanner scanner = new Scanner(loadNoteTitle(file.toString()));
+                scanner.useDelimiter(File.separator);
+                String filename = scanner.next();
+
+                while(scanner.hasNext())
+                    filename = filename + scanner.next();
+
+                System.out.println(filename);
+
+            	File fileToExport = new File(getFilesDir() + File.separator + file);
+				File exportedFile = new File(getExternalFilesDir(null), filename + ".txt");
+				int suffix = 1;
+
+                // Handle cases where a note may have a duplicate title
+				while(exportedFile.exists()) {
+					suffix++;
+					exportedFile = new File(getExternalFilesDir(null), filename + " (" + Integer.toString(suffix) + ").txt");
+				} 
+				
+				InputStream is = new FileInputStream(fileToExport);
+				OutputStream os = new FileOutputStream(exportedFile);
+				byte[] data = new byte[is.available()];
+					
+				is.read(data);
+				os.write(data);
+				is.close();
+				os.close();
+			}
+
+            // Show toast notification
+            Toast toast;
+            if(filesToExport.length == 1)
+                toast = Toast.makeText(this, getResources().getString(R.string.note_exported_to) + " " + getExternalFilesDir(null).getAbsolutePath(), Toast.LENGTH_LONG);
+            else
+                toast = Toast.makeText(this, getResources().getString(R.string.notes_exported_to) + " " + getExternalFilesDir(null).getAbsolutePath(), Toast.LENGTH_LONG);
+
+			toast.show();
+		} catch (IOException e) {
+			showToast(R.string.error_exporting_notes);
+		}
+    }
 
     // Method used to generate toast notifications
     private void showToast(int message) {
         Toast toast = Toast.makeText(this, getResources().getString(message), Toast.LENGTH_SHORT);
         toast.show();
+    }
+	
+	// Loads note from /data/data/com.farmerbb.notepad/files
+	public String loadNote(String filename) throws IOException {
+
+		// Initialize StringBuffer which will contain note
+		StringBuffer note = new StringBuffer("");
+
+		// Open the file on disk
+		FileInputStream input = openFileInput(filename);
+		InputStreamReader reader = new InputStreamReader(input);
+		BufferedReader buffer = new BufferedReader(reader);
+
+		// Load the file
+		String line = buffer.readLine();		
+		while (line != null ) {
+			note.append(line);
+			line = buffer.readLine();
+			if(line != null)
+				note.append("\n");
+		}
+
+		// Close file on disk
+		reader.close();
+
+		return(note.toString());		
+	}
+	
+	// Loads first line of a note for display in the ListView
+	@Override
+    public String loadNoteTitle(String filename) throws IOException {
+
+        // Open the file on disk
+        FileInputStream input = openFileInput(filename);
+        InputStreamReader reader = new InputStreamReader(input);
+        BufferedReader buffer = new BufferedReader(reader);
+
+        // Load the file
+        String line = buffer.readLine();
+
+        // Close file on disk
+        reader.close();
+
+        return(line);
     }
 }

@@ -35,11 +35,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class NoteViewFragment extends Fragment {
 	
@@ -80,6 +77,7 @@ public class NoteViewFragment extends Fragment {
 	 * implement this interface in order to receive event call backs. */
 	public interface Listener {
 		public void showDeleteDialog();
+		public String loadNote(String filename) throws IOException;
 	}
 
 	// Use this instance of the interface to deliver action events
@@ -126,25 +124,28 @@ public class NoteViewFragment extends Fragment {
 		filename = getArguments().getString("filename");
 
 		// Load note contents
-			try {
-				noteContents.setText(loadNote(filename));
-			} catch (IOException e) {
-				showToast(R.string.error_loading_note);
+		try {
+			contentsOnLoad = listener.loadNote(filename);
+		} catch (IOException e) {
+			showToast(R.string.error_loading_note);
 
-				// Add NoteListFragment or WelcomeFragment
-				Fragment fragment;
-				if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
-					fragment = new NoteListFragment();
-				else
-					fragment = new WelcomeFragment();
+			// Add NoteListFragment or WelcomeFragment
+			Fragment fragment;
+			if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+				fragment = new NoteListFragment();
+			else
+				fragment = new WelcomeFragment();
 
-				getFragmentManager()
-					.beginTransaction()
-					.replace(R.id.noteViewEdit, fragment, "NoteListFragment")
-					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-					.commit();
-			}
-
+			getFragmentManager()
+				.beginTransaction()
+				.replace(R.id.noteViewEdit, fragment, "NoteListFragment")
+				.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+				.commit();
+		}
+		
+		// Set TextView contents
+		noteContents.setText(contentsOnLoad);
+			
 		// Show a toast message if this is the user's first time viewing a note
 		SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 		firstLoad = sharedPref.getInt("first-load", 0);
@@ -248,37 +249,8 @@ public class NoteViewFragment extends Fragment {
 
 	private void deleteNote(String filename) {		
 		// Build the pathname to delete file, then perform delete operation
-		File fileToDelete = new File(getActivity().getFilesDir() + "/" + filename);
+		File fileToDelete = new File(getActivity().getFilesDir() + File.separator + filename);
 		fileToDelete.delete();
-	}
-
-	// Loads note from /data/data/com.farmerbb.notepad/files
-	private StringBuffer loadNote(String filename) throws IOException {
-
-		// Initialize StringBuffer which will contain note
-		StringBuffer note = new StringBuffer("");
-
-		// Open the file on disk
-		FileInputStream input = getActivity().openFileInput(filename);
-		InputStreamReader reader = new InputStreamReader(input);
-		BufferedReader buffer = new BufferedReader(reader);
-
-		// Load the file
-		String line = buffer.readLine();		
-		while (line != null ) {
-			note.append(line);
-			line = buffer.readLine();
-			if(line != null)
-				note.append("\n");
-		}
-
-		// Close file on disk
-		reader.close();
-
-		// Write contents to variable to compare when discarding changes
-		contentsOnLoad = note.toString();
-
-		return(note);		
 	}
 
     private void showToast(int message) {

@@ -42,11 +42,8 @@ import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -71,7 +68,9 @@ public class NoteListFragment extends Fragment {
     public interface Listener {
         public void viewNote(String filename);
         public String getCabString(int size);
-        public void deleteNote(Object[] filesToDelete);
+        public void exportNote(Object[] filesToExport);
+		public void deleteNote(Object[] filesToDelete);
+		public String loadNoteTitle(String filename) throws IOException;
     }
 
     // Use this instance of the interface to deliver action events
@@ -229,7 +228,7 @@ public class NoteListFragment extends Fragment {
         // Newer Samsung devices (Galaxy S5, Galaxy Note 4) like to save junk files inside the app's internal storage.
         // Delete them so that they don't cause problems with lists
         for(int i = 0; i < numOfFiles; i++) {
-            File file = new File(getActivity().getFilesDir() + "/" + listOfFiles[i]);
+            File file = new File(getActivity().getFilesDir() + File.separator + listOfFiles[i]);
 
             if(listOfFiles[i].contains("rList"))
                 file.delete();
@@ -259,7 +258,7 @@ public class NoteListFragment extends Fragment {
         // Get array of first lines of each note
         for(int i = 0; i < numOfFiles; i++) {
             try {
-                listOfTitlesByDate[i] = loadNoteTitle(listOfNotesByDate[i]);
+                listOfTitlesByDate[i] = listener.loadNoteTitle(listOfNotesByDate[i]);
             } catch (IOException e) {
                 showToast(R.string.error_loading_list);
             }
@@ -325,6 +324,10 @@ public class NoteListFragment extends Fragment {
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 // Respond to clicks on the actions in the CAB
                 switch (item.getItemId()) {
+					case R.id.action_export:
+                        mode.finish(); // Action picked, so close the CAB
+                        listener.exportNote(cab.toArray());
+                        return true;
                     case R.id.action_delete:
                         mode.finish(); // Action picked, so close the CAB
                         listener.deleteNote(cab.toArray());
@@ -336,6 +339,11 @@ public class NoteListFragment extends Fragment {
 
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                        && (getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment
+                        || getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment))
+					hideFab();
+				
                 // Inflate the menu for the CAB
                 MenuInflater inflater = mode.getMenuInflater();
                 inflater.inflate(R.menu.context_menu, menu);
@@ -343,7 +351,14 @@ public class NoteListFragment extends Fragment {
             }
 
             @Override
-            public void onDestroyActionMode(ActionMode mode) {}
+            public void onDestroyActionMode(ActionMode mode) {
+				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                        && (getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment
+                        || getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment)) {
+					FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
+					floatingActionButton.show();
+				}
+			}
 
             @Override
             public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
@@ -381,23 +396,6 @@ public class NoteListFragment extends Fragment {
             TextView empty = (TextView) getActivity().findViewById(R.id.empty);
             listView.setEmptyView(empty);
         }
-    }
-
-    // Loads first line of a note for display in the ListView
-    private String loadNoteTitle(String filename) throws IOException {
-
-        // Open the file on disk
-        FileInputStream input = getActivity().openFileInput(filename);
-        InputStreamReader reader = new InputStreamReader(input);
-        BufferedReader buffer = new BufferedReader(reader);
-
-        // Load the file
-        String line = buffer.readLine();
-
-        // Close file on disk
-        reader.close();
-
-        return(line);
     }
 
     // Method used to generate toast notifications

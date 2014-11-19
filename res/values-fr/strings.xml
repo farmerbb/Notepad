@@ -65,9 +65,5 @@
         <item>Date (la plus récente en premier)</item>
         <item>Nom (de A à Z)</item>
     </string-array>
-    <string-array name="sort_by_list_values">
-        <item>date</item>
-        <item>nom</item>
-    </string-array>
 
 </resources>

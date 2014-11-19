@@ -341,8 +341,6 @@ NoteViewFragment.Listener {
                 while(scanner.hasNext())
                     filename = filename + scanner.next();
 
-                System.out.println(filename);
-
             	File fileToExport = new File(getFilesDir() + File.separator + file);
 				File exportedFile = new File(getExternalFilesDir(null), filename + ".txt");
 				int suffix = 1;

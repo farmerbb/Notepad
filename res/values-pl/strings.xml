@@ -65,9 +65,5 @@
         <item>Daty (najnowsze na początku)</item>
         <item>Nazwy (Od A do Z)</item>
     </string-array>
-    <string-array name="sort_by_list_values">
-        <item>data</item>
-        <item>nazwa</item>
-    </string-array>
 
 </resources>

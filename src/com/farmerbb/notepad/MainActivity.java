@@ -33,11 +33,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Arrays;
-import java.util.Scanner;
 
 public class MainActivity extends Activity implements 
 BackButtonDialogFragment.Listener, 
@@ -333,15 +331,23 @@ NoteViewFragment.Listener {
     public void exportNote(Object[] filesToExport) {
 		try {
         	for(Object file : filesToExport) {
-                // Load note title to use as filename, and pass it through Scanner to remove any separators
-                Scanner scanner = new Scanner(loadNoteTitle(file.toString()));
-                scanner.useDelimiter(File.separator);
-                String filename = scanner.next();
+                // Load note title to use as filename, and remove any invalid characters
+                final String[] characters = new String[]{"<", ">", ":", "\"", "/", "\\\\", "\\|", "\\?", "\\*"};
+                String filename = loadNoteTitle(file.toString());
 
-                while(scanner.hasNext())
-                    filename = filename + scanner.next();
+                if(filename.isEmpty())
+                    filename = " ";
 
-            	File fileToExport = new File(getFilesDir() + File.separator + file);
+                for(String character : characters) {
+                    filename = filename.replaceAll(character, "");
+                }
+
+                // To ensure that the generated filename fits within file size limitations,
+                // truncate the filename to ~245 characters.
+                if(filename.length() > 245)
+                    filename = filename.substring(0, 245);
+
+                // Generate exported filename
 				File exportedFile = new File(getExternalFilesDir(null), filename + ".txt");
 				int suffix = 1;
 
@@ -349,15 +355,16 @@ NoteViewFragment.Listener {
 				while(exportedFile.exists()) {
 					suffix++;
 					exportedFile = new File(getExternalFilesDir(null), filename + " (" + Integer.toString(suffix) + ").txt");
-				} 
-				
-				InputStream is = new FileInputStream(fileToExport);
+				}
+
+                // Load note contents and convert line separators to Windows format
+                String note = loadNote(file.toString());
+                note = note.replaceAll("\r\n", "\n");
+                note = note.replaceAll("\n", "\r\n");
+
+                // Write file to external storage
 				OutputStream os = new FileOutputStream(exportedFile);
-				byte[] data = new byte[is.available()];
-					
-				is.read(data);
-				os.write(data);
-				is.close();
+				os.write(note.getBytes());
 				os.close();
 			}
 

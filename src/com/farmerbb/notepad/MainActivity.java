@@ -187,13 +187,7 @@ NoteViewFragment.Listener {
     // We need this method in MainActivity because sometimes getFragmentManager() is null
     public void viewNote(String filename) {
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
-				NoteListFragment fragment = (NoteListFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
-				fragment.hideFab();
-			} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
-				WelcomeFragment fragment = (WelcomeFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
-				fragment.hideFab();
-			}
+            hideFab();
 		}
 			
 		String currentFilename;
@@ -404,7 +398,6 @@ NoteViewFragment.Listener {
 	// Loads first line of a note for display in the ListView
 	@Override
     public String loadNoteTitle(String filename) throws IOException {
-
         // Open the file on disk
         FileInputStream input = openFileInput(filename);
         InputStreamReader reader = new InputStreamReader(input);
@@ -417,5 +410,27 @@ NoteViewFragment.Listener {
         reader.close();
 
         return(line);
+    }
+
+    @Override
+    public void showFab() {
+        if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
+            NoteListFragment fragment = (NoteListFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
+            fragment.showFab();
+        } else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
+            WelcomeFragment fragment = (WelcomeFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
+            fragment.showFab();
+        }
+    }
+
+    @Override
+    public void hideFab() {
+        if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
+            NoteListFragment fragment = (NoteListFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
+            fragment.hideFab();
+        } else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
+            WelcomeFragment fragment = (WelcomeFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
+            fragment.hideFab();
+        }
     }
 }

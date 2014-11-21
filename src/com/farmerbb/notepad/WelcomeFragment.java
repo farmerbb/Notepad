@@ -169,8 +169,13 @@ public class WelcomeFragment extends Fragment {
 		getActivity().finish();
 	}
 	
-	public void hideFab() {
+	public void showFab() {
 		FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
-		floatingActionButton.hide();
+		floatingActionButton.show();
 	}
+
+    public void hideFab() {
+        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
+        floatingActionButton.hide();
+    }
 }

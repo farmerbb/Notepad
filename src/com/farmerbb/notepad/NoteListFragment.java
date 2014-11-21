@@ -71,6 +71,8 @@ public class NoteListFragment extends Fragment {
         public void exportNote(Object[] filesToExport);
 		public void deleteNote(Object[] filesToDelete);
 		public String loadNoteTitle(String filename) throws IOException;
+        public void showFab();
+        public void hideFab();
     }
 
     // Use this instance of the interface to deliver action events
@@ -356,10 +358,8 @@ public class NoteListFragment extends Fragment {
 
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                        && (getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment
-                        || getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment))
-					hideFab();
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+					listener.hideFab();
 				
                 // Inflate the menu for the CAB
                 MenuInflater inflater = mode.getMenuInflater();
@@ -369,12 +369,8 @@ public class NoteListFragment extends Fragment {
 
             @Override
             public void onDestroyActionMode(ActionMode mode) {
-				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
-                        && (getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment
-                        || getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment)) {
-					FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
-					floatingActionButton.show();
-				}
+				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    listener.showFab();
 			}
 
             @Override
@@ -421,33 +417,40 @@ public class NoteListFragment extends Fragment {
         toast.show();
     }
 	
-        public void dispatchKeyShortcutEvent(int keyCode) {
-			switch(keyCode) {
-					// CTRL+N: New Note
-			    case KeyEvent.KEYCODE_N:
-					if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-						hideFab();
-					
+    public void dispatchKeyShortcutEvent(int keyCode) {
+        if(getId() == R.id.noteViewEdit) {
+            switch(keyCode) {
+                // CTRL+N: New Note
+                case KeyEvent.KEYCODE_N:
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                        hideFab();
+
                     Bundle bundle = new Bundle();
                     bundle.putString("filename", "new");
 
                     Fragment fragment = new NoteEditFragment();
                     fragment.setArguments(bundle);
-					
-					// Add NoteEditFragment
-					getFragmentManager()
-						.beginTransaction()
-						.replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-						.commit();
-				    break;
-			}
+
+                    // Add NoteEditFragment
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit();
+                    break;
+            }
         }
+    }
 		
 	public void onBackPressed() {
 		getActivity().finish();
 	}
-	
+
+    public void showFab() {
+        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
+        floatingActionButton.show();
+    }
+
 	public void hideFab() {
 		FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
 		floatingActionButton.hide();

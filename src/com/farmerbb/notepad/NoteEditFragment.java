@@ -131,7 +131,7 @@ public class NoteEditFragment extends Fragment {
 
 		// Get filename
 		try {
-			if(getArguments().getString("filename") != "new") {
+			if(!getArguments().getString("filename").equals("new")) {
 			    filename = getArguments().getString("filename");
 			    if(!filename.equals("draft"))
 				    isSavedNote = true;
@@ -160,9 +160,8 @@ public class NoteEditFragment extends Fragment {
         }
 
         // Show soft keyboard
-		EditText editText = (EditText) getActivity().findViewById(R.id.editText1);
 		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+		imm.showSoftInput(noteContents, InputMethodManager.SHOW_IMPLICIT);
 									
 	}
 

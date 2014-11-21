@@ -15,20 +15,22 @@
 
 package com.farmerbb.notepad;
 
-import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.app.*;
-import com.melnykov.fab.*;
-import android.view.*;
+
+import com.melnykov.fab.FloatingActionButton;
 
 public class WelcomeFragment extends Fragment {
 
@@ -50,38 +52,57 @@ public class WelcomeFragment extends Fragment {
 	public void onStart() {
 		super.onStart();
 
-        // Change window title
-        getActivity().setTitle(getResources().getString(R.string.app_name));
+        // Read preferences
+        SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-        // Don't show the Up button in the action bar, and disable the button
-        getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
-        getActivity().getActionBar().setHomeButtonEnabled(false);
+        // Before we do anything else, check for a saved draft; if one exists, load it
+        if(prefMain.getLong("draft-name", 0) != 0) {
+            Bundle bundle = new Bundle();
+            bundle.putString("filename", "draft");
 
-        // Floating action button
-        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
-        floatingActionButton.hide(false);
+            Fragment fragment = new NoteEditFragment();
+            fragment.setArguments(bundle);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            floatingActionButton.show();
-            floatingActionButton.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						hideFab();
-						
-						Bundle bundle = new Bundle();
-						bundle.putString("filename", "new");
+            // Add NoteEditFragment
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
+        } else {
+            // Change window title
+            getActivity().setTitle(getResources().getString(R.string.app_name));
 
-						Fragment fragment = new NoteEditFragment();
-						fragment.setArguments(bundle);
+            // Don't show the Up button in the action bar, and disable the button
+            getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+            getActivity().getActionBar().setHomeButtonEnabled(false);
 
-						// Add NoteEditFragment
-						getFragmentManager()
-							.beginTransaction()
-							.replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
-					}
-				});
+            // Floating action button
+            FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
+            floatingActionButton.hide(false);
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                floatingActionButton.show();
+                floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        hideFab();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("filename", "new");
+
+                        Fragment fragment = new NoteEditFragment();
+                        fragment.setArguments(bundle);
+
+                        // Add NoteEditFragment
+                        getFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
+                    }
+                });
+            }
         }
 	}
 
@@ -149,7 +170,7 @@ public class WelcomeFragment extends Fragment {
 	}
 	
 	public void hideFab() {
-		FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
+		FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
 		floatingActionButton.hide();
 	}
 }

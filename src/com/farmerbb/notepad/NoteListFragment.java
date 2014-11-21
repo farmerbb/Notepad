@@ -107,22 +107,39 @@ public class NoteListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-		
-		if(getId() == R.id.noteViewEdit) {
-        	// Change window title
-        	getActivity().setTitle(getResources().getString(R.string.app_name));
 
-        	// Don't show the Up button in the action bar, and disable the button
-        	getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
-        	getActivity().getActionBar().setHomeButtonEnabled(false);
-		}
+        // Before we do anything else, check for a saved draft; if one exists, load it
+        SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
+        if(getId() == R.id.noteViewEdit && prefMain.getLong("draft-name", 0) != 0) {
+            Bundle bundle = new Bundle();
+            bundle.putString("filename", "draft");
 
-        // Read preferences
-        SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
-        sortBy = pref.getString("sort_by", "date");
-		
-        // Refresh list of notes onResume (instead of onCreate) to reflect additions/deletions and preference changes
-        listNotes();
+            Fragment fragment = new NoteEditFragment();
+            fragment.setArguments(bundle);
+
+            // Add NoteEditFragment
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
+        } else {
+            if(getId() == R.id.noteViewEdit) {
+                // Change window title
+                getActivity().setTitle(getResources().getString(R.string.app_name));
+
+                // Don't show the Up button in the action bar, and disable the button
+                getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+                getActivity().getActionBar().setHomeButtonEnabled(false);
+            }
+
+            // Read preferences
+            SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+            sortBy = pref.getString("sort_by", "date");
+
+            // Refresh list of notes onResume (instead of onCreate) to reflect additions/deletions and preference changes
+            listNotes();
+        }
     }
 
     // Register and unregister ListNotesReceiver (for tablet layout)
@@ -143,24 +160,24 @@ public class NoteListFragment extends Fragment {
 			&& prefMain.getLong("draft-name", 0) == 0) {
             floatingActionButton.show();
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						hideFab();
+			    @Override
+				public void onClick(View v) {
+					hideFab();
 						
-						Bundle bundle = new Bundle();
-						bundle.putString("filename", "new");
+					Bundle bundle = new Bundle();
+					bundle.putString("filename", "new");
 
-						Fragment fragment = new NoteEditFragment();
-						fragment.setArguments(bundle);
+					Fragment fragment = new NoteEditFragment();
+					fragment.setArguments(bundle);
 
-						// Add NoteEditFragment
-						getFragmentManager()
-							.beginTransaction()
-							.replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-							.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-							.commit();
-					}
-				});
+					// Add NoteEditFragment
+					getFragmentManager()
+						.beginTransaction()
+						.replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+						.commit();
+				}
+			});
         }
 	}
 

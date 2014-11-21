@@ -110,22 +110,10 @@ NoteViewFragment.Listener {
         if(!(getFragmentManager().findFragmentById(R.id.noteList) instanceof NoteListFragment))
 		    transaction.replace(R.id.noteList, new NoteListFragment(), "NoteListFragment");
 
-        // Check for a saved draft; if one exists, load it
-        if(prefMain.getLong("draft-name", 0) != 0) {
-            Bundle bundle = new Bundle();
-            bundle.putString("filename", "draft");
-
-            Fragment fragment = new NoteEditFragment();
-            fragment.setArguments(bundle);
-
-            // Add NoteEditFragment
-            transaction.replace(R.id.noteViewEdit, fragment, "NoteEditFragment");
-        }
-
 		// This fragment shows NoteListFragment in the main screen area (only seen on phones and tablet mode portrait),
 		// but only if it doesn't already contain NoteViewFragment or NoteEditFragment.
         // If NoteListFragment is already showing in the sidebar, use WelcomeFragment instead
-        else if(!((getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment)
+        if(!((getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment)
 		   || (getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment))) {
             if((getFragmentManager().findFragmentById(R.id.noteViewEdit) == null
 			   && findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))

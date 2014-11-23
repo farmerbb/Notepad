@@ -22,6 +22,8 @@ A simple, bare-bones, no-frills note taking app
 
 &bull; Android Wear support (with additional plugin)
 
+&bull; Import and export notes to external storage (Android 4.4+)
+
 &bull; Zero permissions and absolutely zero ads
 
 &bull; Open-source

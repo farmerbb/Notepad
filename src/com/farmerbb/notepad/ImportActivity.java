@@ -70,13 +70,15 @@ public class ImportActivity extends Activity implements CompoundButton.OnChecked
                             }
 
                             InputStream is = new FileInputStream(fileToImport);
-                            OutputStream os = new FileOutputStream(importedFile);
                             byte[] data = new byte[is.available()];
 
-                            is.read(data);
-                            os.write(data);
-                            is.close();
-                            os.close();
+                            if(data.length > 0) {
+                                OutputStream os = new FileOutputStream(importedFile);
+                                is.read(data);
+                                os.write(data);
+                                is.close();
+                                os.close();
+                            }
                         }
 
                         // Send broadcast to NoteListFragment to refresh list of notes

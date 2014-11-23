@@ -324,7 +324,7 @@ NoteViewFragment.Listener {
                     filename = filename.replaceAll(character, "");
                 }
 
-                // To ensure that the generated filename fits within file size limitations,
+                // To ensure that the generated filename fits within filesystem limitations,
                 // truncate the filename to ~245 characters.
                 if(filename.length() > 245)
                     filename = filename.substring(0, 245);

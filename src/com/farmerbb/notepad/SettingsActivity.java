@@ -17,7 +17,6 @@ package com.farmerbb.notepad;
 
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -44,10 +43,6 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		// to reflect the new value, per the Android Design guidelines.
 
 		bindPreferenceSummaryToValue(findPreference("sort_by"));
-		
-		// Disable unsupported preferences
-		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
-			getPreferenceScreen().findPreference("import").setEnabled(false);
 	}
 	
 	/**

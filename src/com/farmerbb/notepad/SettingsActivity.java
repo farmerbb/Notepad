@@ -16,6 +16,8 @@
 package com.farmerbb.notepad;
 
 import android.app.DialogFragment;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -34,6 +36,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		addPreferencesFromResource(R.xml.settings_preferences);
 
 		// Set OnClickListeners for certain preferences
+		findPreference("import").setOnPreferenceClickListener(this);
 		findPreference("about").setOnPreferenceClickListener(this);
 
 		// Bind the summaries of EditText/List/Dialog/Ringtone preferences to
@@ -41,7 +44,10 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		// to reflect the new value, per the Android Design guidelines.
 
 		bindPreferenceSummaryToValue(findPreference("sort_by"));
-
+		
+		// Disable unsupported preferences
+		if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT)
+			getPreferenceScreen().findPreference("import").setEnabled(false);
 	}
 	
 	/**
@@ -99,7 +105,10 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 
 	@Override
 	public boolean onPreferenceClick(Preference p) {
-		if(p.getKey().equals("about")) {
+		if(p.getKey().equals("import")) {
+            Intent intent = new Intent(this, ImportActivity.class);
+            startActivity(intent);
+		} else if(p.getKey().equals("about")) {
 			DialogFragment aboutFragment = new AboutDialogFragment();
 			aboutFragment.show(getFragmentManager(), "about");
 		}

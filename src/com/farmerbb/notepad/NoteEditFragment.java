@@ -155,8 +155,10 @@ public class NoteEditFragment extends Fragment {
 			noteContents.setSelection(length, length);
 		} else if(filename.equals("draft")) {
             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                noteContents.setText(sharedPref.getString("draft-contents", null));
-                noteContents.setSelection(length, length);
+            String draftContents = sharedPref.getString("draft-contents", null);
+            length = draftContents.length();
+            noteContents.setText(draftContents);
+            noteContents.setSelection(length, length);
         }
 
         // Show soft keyboard

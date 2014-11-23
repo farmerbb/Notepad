@@ -25,6 +25,7 @@
     <string name="action_edit">Edytuj</string>
 	<string name="action_export">Zapisz do pliku</string>
     <string name="action_new">Nowa notatka</string>
+	<string name="action_import">Import</string>
     <string name="action_save">Zapisz</string>
     <string name="action_settings">Ustawienia</string>
     <string name="action_share">Udostępnij</string>
@@ -45,11 +46,14 @@
     <string name="edit_text">Napisz by wprowadzić tekst</string>
     <string name="empty_note">Wprowadź jakiś tekst!</string>
 	<string name="error_exporting_notes">Błąd podczas zapisywania notatek do plików!</string>
+    <string name="error_importing_notes">Error importing notes!</string>
     <string name="error_loading_list">Błąd podczas wczytywania listy notatek!</string>
     <string name="error_loading_note">Błąd podczas wczytywania notatki!</string>
     <string name="failed_to_save">Błąd: Nie udało się zapisać notatki!</string>
     <string name="first_run">Witamy w Notatniku!\n\nAby stworzyć notatkę, dotknij przycisku Nowa Notatka (znak plus) na górze.</string>
     <string name="first_view">Aby zmienić zapisaną notatkę, dotknij ekranu albo przycisku Edytuj na górze.</string>
+    <string name="import_notes">Import notes</string>
+    <string name="import_notes_instructions">Place text files to import at:\n</string>
     <string name="loading_external_file">Wczytywanie zewnętrznych plików nie jest obsługiwane</string>
     <string name="no_notes_found">Nie znaleziono notatek</string>
     <string name="note_deleted">Notatka usunęta</string>
@@ -57,6 +61,7 @@
     <string name="note_saved">Notatka zapisana</string>
     <string name="notes_deleted">Notatki usunięte</string>
 	<string name="notes_exported_to">Notatki zapisane w</string>
+    <string name="notes_imported_successfully">Notes imported successfully</string>
     <string name="pref_title_show_dialogs">Pytaj przed zapisaniem</string>
 	<string name="send_to">Udostępnij za pomocą&#8230;</string>
     <string name="view_note">Podgląd notatki</string>

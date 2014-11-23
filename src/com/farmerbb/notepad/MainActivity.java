@@ -353,9 +353,9 @@ NoteViewFragment.Listener {
             // Show toast notification
             Toast toast;
             if(filesToExport.length == 1)
-                toast = Toast.makeText(this, getResources().getString(R.string.note_exported_to) + " " + getExternalFilesDir(null).getAbsolutePath(), Toast.LENGTH_LONG);
+                toast = Toast.makeText(this, getResources().getString(R.string.note_exported_to) + " " + getExternalFilesDir(null), Toast.LENGTH_LONG);
             else
-                toast = Toast.makeText(this, getResources().getString(R.string.notes_exported_to) + " " + getExternalFilesDir(null).getAbsolutePath(), Toast.LENGTH_LONG);
+                toast = Toast.makeText(this, getResources().getString(R.string.notes_exported_to) + " " + getExternalFilesDir(null), Toast.LENGTH_LONG);
 
 			toast.show();
 		} catch (IOException e) {

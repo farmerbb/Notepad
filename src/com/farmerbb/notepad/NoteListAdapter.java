@@ -15,14 +15,14 @@
 
 package com.farmerbb.notepad;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class NoteListAdapter extends ArrayAdapter<String> {
     public NoteListAdapter(Context context, ArrayList<String> notes) {
@@ -32,13 +32,16 @@ public class NoteListAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
        // Get the data item for this position
-       String note = getItem(position);    
+       String note = getItem(position);
+
        // Check if an existing view is being reused, otherwise inflate the view
-       if (convertView == null) {
+       if(convertView == null) {
           convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_layout, null);
        }
+
        // Lookup view for data population
        TextView noteTitle = (TextView) convertView.findViewById(R.id.noteTitle);
+
        // Populate the data into the template view using the data object
        noteTitle.setText(note);
 

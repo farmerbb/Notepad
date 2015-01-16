@@ -57,8 +57,8 @@ limitations under the License.
             android:background="@android:color/transparent"
             android:text="@string/action_close"
             android:gravity="center"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
             android:textSize="14sp"
             android:id="@+id/button" />
 

@@ -30,8 +30,6 @@
         android:layout_height="wrap_content"
         android:background="@color/window_background"
         android:fillViewport="true"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
         android:scrollbars="vertical" >
 
         <!-- View containing note contents -->
@@ -43,8 +41,10 @@
             android:background="@color/window_background"
             android:clickable="true"
             android:linksClickable="true"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:text="@null"
             android:textColor="@color/text_color_primary"
             android:textSize="18sp" />

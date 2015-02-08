@@ -42,6 +42,7 @@
     <string name="dialog_save_changes">Czy chcesz zapisać zmiany?</string>
     <string name="draft_restored">Wersja robocza przywrócona</string>
     <string name="draft_saved">Wersja robocza zapisana</string>
+	<string name="double_tap">Tip: double tap text to switch to Edit mode</string>
 	<string name="edit_note">Edytuj notatkę</string>
     <string name="edit_text">Napisz by wprowadzić tekst</string>
     <string name="empty_note">Wprowadź jakiś tekst!</string>

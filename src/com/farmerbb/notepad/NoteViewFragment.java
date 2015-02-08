@@ -44,6 +44,7 @@ public class NoteViewFragment extends Fragment {
 	String filename = "";
 	String contentsOnLoad = "";
 	int firstLoad;
+	long lastTapTime = 0;
 
     // Receiver used to close fragment when a note is deleted
     public class DeleteNotesReceiver extends BroadcastReceiver {
@@ -164,16 +165,34 @@ public class NoteViewFragment extends Fragment {
 		noteContents.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                bundle.putString("filename", filename);
+				SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+				long tapTime = System.currentTimeMillis();
+				boolean showMessage = true;
+				
+				if(tapTime - lastTapTime < 500) {
+					if(sharedPref.getBoolean("show_double_tap_message", true)) {
+						SharedPreferences.Editor editor = sharedPref.edit();
+						editor.putBoolean("show_double_tap_message", false);
+						editor.apply();
+					}
+					
+					Bundle bundle = new Bundle();
+					bundle.putString("filename", filename);
 
-                Fragment fragment = new NoteEditFragment();
-                fragment.setArguments(bundle);
+					Fragment fragment = new NoteEditFragment();
+					fragment.setArguments(bundle);
 
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-                        .commit();
+					getFragmentManager()
+						.beginTransaction()
+						.replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+						.commit();
+				} else {
+					lastTapTime = tapTime;
+					if(sharedPref.getBoolean("show_double_tap_message", true) && showMessage) {
+						showToastLong(R.string.double_tap);
+						showMessage = false;
+					}
+				}
 			}
 		});
 	}
@@ -255,6 +274,11 @@ public class NoteViewFragment extends Fragment {
 
     private void showToast(int message) {
         Toast toast = Toast.makeText(getActivity(), getResources().getString(message), Toast.LENGTH_SHORT);
+        toast.show();
+    }
+	
+	private void showToastLong(int message) {
+        Toast toast = Toast.makeText(getActivity(), getResources().getString(message), Toast.LENGTH_LONG);
         toast.show();
     }
 

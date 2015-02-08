@@ -23,23 +23,33 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical" >
 
-    <!-- View containing note contents -->
-    <EditText
-        android:id="@+id/editText1"
+	<!-- Enables scrolling in long notes -->
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/window_background"
-        android:ems="10"
-        android:hint="@string/edit_text"
-        android:inputType="textMultiLine|textCapSentences"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:textColor="@color/text_color_primary" >
+        android:fillViewport="true"
+        android:scrollbars="vertical" >
+		
+    	<!-- View containing note contents -->
+    	<EditText
+        	android:id="@+id/editText1"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:background="@color/window_background"
+        	android:ems="10"
+        	android:hint="@string/edit_text"
+        	android:inputType="textMultiLine|textCapSentences"
+        	android:paddingTop="10dp"
+        	android:paddingBottom="10dp"
+        	android:paddingLeft="16dp"
+        	android:paddingRight="16dp"
+        	android:textColor="@color/text_color_primary" >
 
-        <requestFocus />
-    </EditText>
+        	<requestFocus />
+    	</EditText>
+	</ScrollView>
 
     <!-- View created purely to show additional whitespace in the layout -->
     <TextView

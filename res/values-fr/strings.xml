@@ -42,6 +42,7 @@
     <string name="dialog_save_changes">Voulez-vous enregistrer vos modifications\u00A0?</string>
     <string name="draft_restored">Brouillon restauré</string>
     <string name="draft_saved">Brouillon enregistré</string>
+	<string name="double_tap">Tip: double tap text to switch to Edit mode</string>
     <string name="edit_note">Édition</string>
     <string name="edit_text">Saisissez votre texte</string>
     <string name="empty_note">S\'il vous plaît saisissez un texte\u00A0!</string>

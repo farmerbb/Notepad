@@ -39,57 +39,58 @@ String external;
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_edit);
-		
-		// Handle intents
-		Intent intent = getIntent();
-		String action = intent.getAction();
-		String type = intent.getType();
 
-		// Intent sent through an external application
-		if(Intent.ACTION_SEND.equals(action) && type != null) {
-			if("text/plain".equals(type)) {
-				external = intent.getStringExtra(Intent.EXTRA_TEXT);
+        if(!(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment)) {
+            // Handle intents
+            Intent intent = getIntent();
+            String action = intent.getAction();
+            String type = intent.getType();
 
-                Bundle bundle = new Bundle();
-                bundle.putString("filename", "new");
+            // Intent sent through an external application
+            if(Intent.ACTION_SEND.equals(action) && type != null) {
+                if("text/plain".equals(type)) {
+                    external = intent.getStringExtra(Intent.EXTRA_TEXT);
 
-                Fragment fragment = new NoteEditFragment();
-                fragment.setArguments(bundle);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("filename", "new");
 
-					// Add NoteEditFragment
-					getFragmentManager()
-						.beginTransaction()
-						.add(R.id.noteViewEdit, fragment, "NoteEditFragment")
-						.commit();
-			} else {
-                showToast(R.string.loading_external_file);
-                finish();
-            }
-		}
+                    Fragment fragment = new NoteEditFragment();
+                    fragment.setArguments(bundle);
 
-		// Intent sent through Google Now "note to self"
-		else if("com.google.android.gm.action.AUTO_SEND".equals(action) && type != null) {
-			if("text/plain".equals(type)) {
-				external = intent.getStringExtra(Intent.EXTRA_TEXT);
-				if(external != null) {
-                    try {
-						// Write note to disk
-						FileOutputStream output = openFileOutput(String.valueOf(System.currentTimeMillis()), Context.MODE_PRIVATE);
-						output.write(external.getBytes());
-						output.close();
+                    // Add NoteEditFragment
+                    getFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                            .commit();
+                } else {
+                    showToast(R.string.loading_external_file);
+                    finish();
+                }
 
-						// Show toast notification and finish
-						showToast(R.string.note_saved);
-                        finish();
-                    } catch (IOException e) {
-                        // Show error message as toast if file fails to save
-						showToast(R.string.failed_to_save);
-						finish();
+            // Intent sent through Google Now "note to self"
+            } else if("com.google.android.gm.action.AUTO_SEND".equals(action) && type != null) {
+                if("text/plain".equals(type)) {
+                    external = intent.getStringExtra(Intent.EXTRA_TEXT);
+                    if(external != null) {
+                        try {
+                            // Write note to disk
+                            FileOutputStream output = openFileOutput(String.valueOf(System.currentTimeMillis()), Context.MODE_PRIVATE);
+                            output.write(external.getBytes());
+                            output.close();
+
+                            // Show toast notification and finish
+                            showToast(R.string.note_saved);
+                            finish();
+                        } catch (IOException e) {
+                            // Show error message as toast if file fails to save
+                            showToast(R.string.failed_to_save);
+                            finish();
+                        }
                     }
-				}
-			}
-		} else
-		finish();
+                }
+            } else
+                finish();
+        }
     }
 	
 	@Override

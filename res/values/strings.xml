@@ -52,7 +52,7 @@
     <string name="error_loading_note">Error loading note!</string>
     <string name="failed_to_save">Error: Failed to save note!</string>
     <string name="first_run">Welcome to Notepad!\n\nTo create a note, click the New Note button (plus sign).</string>
-    <string name="first_view">To edit a saved note, tap the screen or click the Edit button at the top.</string>
+    <string name="first_view">To edit a saved note, double-tap the text or click the Edit button (pencil).</string>
     <string name="import_notes">Import notes</string>
     <string name="import_notes_instructions">Place text files to import at:\n</string>
 	<string name="loading_external_file">Loading external files is not supported</string>

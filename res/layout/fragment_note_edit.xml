@@ -17,7 +17,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutNoteEdit"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/primary"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
@@ -25,7 +25,7 @@
 
 	<!-- Enables scrolling in long notes -->
     <ScrollView
-        android:id="@+id/scrollView"
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/window_background"
@@ -49,14 +49,7 @@
 
         	<requestFocus />
     	</EditText>
-	</ScrollView>
 
-    <!-- View created purely to show additional whitespace in the layout -->
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/window_background"
-        android:text="@null" />
+	</ScrollView>
 
 </LinearLayout>

@@ -42,7 +42,7 @@
     <string name="dialog_save_changes">Do you want to save your changes?</string>
     <string name="draft_restored">Draft restored</string>
     <string name="draft_saved">Draft saved</string>
-	<string name="double_tap">Tip: double tap text to switch to Edit mode</string>
+	<string name="double_tap">Tip: double-tap text to switch to Edit mode</string>
 	<string name="edit_note">Edit Note</string>
     <string name="edit_text">Type to add text</string>
     <string name="empty_note">Please enter some text!</string>

@@ -31,7 +31,7 @@
         android:key="show_dialogs"
         android:title="@string/pref_title_show_dialogs" />
 
-	<Preference
+    <Preference
         android:key="import"
         android:title="@string/import_notes" >
     </Preference>

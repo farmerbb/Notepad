@@ -26,88 +26,88 @@ import android.preference.PreferenceManager;
 
 public class SettingsActivity extends PreferenceActivity implements OnPreferenceClickListener {
 
-	@SuppressWarnings("deprecation")
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
+    @SuppressWarnings("deprecation")
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-		// Add preferences
-		addPreferencesFromResource(R.xml.settings_preferences);
+        // Add preferences
+        addPreferencesFromResource(R.xml.settings_preferences);
 
-		// Set OnClickListeners for certain preferences
-		findPreference("import").setOnPreferenceClickListener(this);
-		findPreference("about").setOnPreferenceClickListener(this);
+        // Set OnClickListeners for certain preferences
+        findPreference("import").setOnPreferenceClickListener(this);
+        findPreference("about").setOnPreferenceClickListener(this);
 
-		// Bind the summaries of EditText/List/Dialog/Ringtone preferences to
-		// their values. When their values change, their summaries are updated
-		// to reflect the new value, per the Android Design guidelines.
+        // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
+        // their values. When their values change, their summaries are updated
+        // to reflect the new value, per the Android Design guidelines.
 
-		bindPreferenceSummaryToValue(findPreference("sort_by"));
-	}
-	
-	/**
-	 * A preference value change listener that updates the preference's summary
-	 * to reflect its new value.
-	 */
-	private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
-		@Override
-		public boolean onPreferenceChange(Preference preference, Object value) {
-			String stringValue = value.toString();
+        bindPreferenceSummaryToValue(findPreference("sort_by"));
+    }
 
-			if(preference instanceof ListPreference) {
-				// For list preferences, look up the correct display value in
-				// the preference's 'entries' list.
-				ListPreference listPreference = (ListPreference) preference;
-				int index = listPreference.findIndexOfValue(stringValue);
+    /**
+     * A preference value change listener that updates the preference's summary
+     * to reflect its new value.
+     */
+    private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
+        @Override
+        public boolean onPreferenceChange(Preference preference, Object value) {
+            String stringValue = value.toString();
 
-				// Set the summary to reflect the new value.
-				preference
-				.setSummary(index >= 0 ? listPreference.getEntries()[index]
-						: null);
+            if(preference instanceof ListPreference) {
+                // For list preferences, look up the correct display value in
+                // the preference's 'entries' list.
+                ListPreference listPreference = (ListPreference) preference;
+                int index = listPreference.findIndexOfValue(stringValue);
 
-			} else {
-				// For all other preferences, set the summary to the value's
-				// simple string representation.
-				preference.setSummary(stringValue);
-			}
+                // Set the summary to reflect the new value.
+                preference
+                .setSummary(index >= 0 ? listPreference.getEntries()[index]
+                        : null);
 
-			return true;
-		}
-	};
+            } else {
+                // For all other preferences, set the summary to the value's
+                // simple string representation.
+                preference.setSummary(stringValue);
+            }
 
-	/**
-	 * Binds a preference's summary to its value. More specifically, when the
-	 * preference's value is changed, its summary (line of text below the
-	 * preference title) is updated to reflect the value. The summary is also
-	 * immediately updated upon calling this method. The exact display format is
-	 * dependent on the type of preference.
-	 * 
-	 * @see #sBindPreferenceSummaryToValueListener
-	 */
-	private static void bindPreferenceSummaryToValue(Preference preference) {
-		// Set the listener to watch for value changes.
-		preference
-		.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
+            return true;
+        }
+    };
 
-		// Trigger the listener immediately with the preference's
-		// current value.
-		sBindPreferenceSummaryToValueListener.onPreferenceChange(
-				preference,
-				PreferenceManager.getDefaultSharedPreferences(
-						preference.getContext()).getString(preference.getKey(),
-								""));
-	}
+    /**
+     * Binds a preference's summary to its value. More specifically, when the
+     * preference's value is changed, its summary (line of text below the
+     * preference title) is updated to reflect the value. The summary is also
+     * immediately updated upon calling this method. The exact display format is
+     * dependent on the type of preference.
+     *
+     * @see #sBindPreferenceSummaryToValueListener
+     */
+    private static void bindPreferenceSummaryToValue(Preference preference) {
+        // Set the listener to watch for value changes.
+        preference
+        .setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
-	@Override
-	public boolean onPreferenceClick(Preference p) {
-		if(p.getKey().equals("import")) {
+        // Trigger the listener immediately with the preference's
+        // current value.
+        sBindPreferenceSummaryToValueListener.onPreferenceChange(
+                preference,
+                PreferenceManager.getDefaultSharedPreferences(
+                        preference.getContext()).getString(preference.getKey(),
+                                ""));
+    }
+
+    @Override
+    public boolean onPreferenceClick(Preference p) {
+        if(p.getKey().equals("import")) {
             Intent intent = new Intent(this, ImportActivity.class);
             startActivity(intent);
-		} else if(p.getKey().equals("about")) {
-			DialogFragment aboutFragment = new AboutDialogFragment();
-			aboutFragment.show(getFragmentManager(), "about");
-		}
+        } else if(p.getKey().equals("about")) {
+            DialogFragment aboutFragment = new AboutDialogFragment();
+            aboutFragment.show(getFragmentManager(), "about");
+        }
 
-		return true;
-	}
+        return true;
+    }
 }

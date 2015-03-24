@@ -69,8 +69,8 @@ public class NoteListFragment extends Fragment {
         public void viewNote(String filename);
         public String getCabString(int size);
         public void exportNote(Object[] filesToExport);
-		public void deleteNote(Object[] filesToDelete);
-		public String loadNoteTitle(String filename) throws IOException;
+        public void deleteNote(Object[] filesToDelete);
+        public String loadNoteTitle(String filename) throws IOException;
         public void showFab();
         public void hideFab();
     }
@@ -95,15 +95,15 @@ public class NoteListFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_note_list, container, false);
-	}
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         // Set values
         setRetainInstance(true);
-		setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -146,42 +146,42 @@ public class NoteListFragment extends Fragment {
 
     // Register and unregister ListNotesReceiver (for tablet layout)
     @Override
-	public void onStart() {
-		super.onStart();
+    public void onStart() {
+        super.onStart();
 
         getActivity().registerReceiver(receiver, filter);
 
         // Floating action button
         FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
         floatingActionButton.hide(false);
-		
-		SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
+
+        SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP 
-			&& getId() == R.id.noteViewEdit
-			&& prefMain.getLong("draft-name", 0) == 0) {
+            && getId() == R.id.noteViewEdit
+            && prefMain.getLong("draft-name", 0) == 0) {
             floatingActionButton.show();
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
-			    @Override
-				public void onClick(View v) {
-					hideFab();
-						
-					Bundle bundle = new Bundle();
-					bundle.putString("filename", "new");
+                @Override
+                public void onClick(View v) {
+                    hideFab();
 
-					Fragment fragment = new NoteEditFragment();
-					fragment.setArguments(bundle);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("filename", "new");
 
-					// Add NoteEditFragment
-					getFragmentManager()
-						.beginTransaction()
-						.replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-						.commit();
-				}
-			});
+                    Fragment fragment = new NoteEditFragment();
+                    fragment.setArguments(bundle);
+
+                    // Add NoteEditFragment
+                    getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
+                }
+            });
         }
-	}
+    }
 
     @Override
     public void onStop() {
@@ -189,43 +189,43 @@ public class NoteListFragment extends Fragment {
 
         getActivity().unregisterReceiver(receiver);
     }
-	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		if(getId() == R.id.noteViewEdit)
-			inflater.inflate(R.menu.main, menu);
-	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
-		switch (item.getItemId()) {
-		// New button
-		case R.id.action_new:
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        if(getId() == R.id.noteViewEdit)
+            inflater.inflate(R.menu.main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+        // New button
+        case R.id.action_new:
             Bundle bundle = new Bundle();
             bundle.putString("filename", "new");
 
             Fragment fragment = new NoteEditFragment();
             fragment.setArguments(bundle);
 
-				// Add NoteEditFragment
-				getFragmentManager()
-					.beginTransaction()
-					.replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-					.commit();
-			
-			return true;
+                // Add NoteEditFragment
+                getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
 
-			// Settings button
-		case R.id.action_settings:
-			Intent intentSettings = new Intent (getActivity(), SettingsActivity.class);
-			startActivity(intentSettings);
-			return true;            
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
+            return true;
+
+            // Settings button
+        case R.id.action_settings:
+            Intent intentSettings = new Intent (getActivity(), SettingsActivity.class);
+            startActivity(intentSettings);
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
 
     // Returns list of filenames in /data/data/com.farmerbb.notepad/files/
     private static String[] getListOfNotes(File file) {
@@ -343,7 +343,7 @@ public class NoteListFragment extends Fragment {
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 // Respond to clicks on the actions in the CAB
                 switch (item.getItemId()) {
-					case R.id.action_export:
+                    case R.id.action_export:
                         mode.finish(); // Action picked, so close the CAB
                         listener.exportNote(cab.toArray());
                         return true;
@@ -359,8 +359,8 @@ public class NoteListFragment extends Fragment {
             @Override
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-					listener.hideFab();
-				
+                    listener.hideFab();
+
                 // Inflate the menu for the CAB
                 MenuInflater inflater = mode.getMenuInflater();
                 inflater.inflate(R.menu.context_menu, menu);
@@ -369,9 +369,9 @@ public class NoteListFragment extends Fragment {
 
             @Override
             public void onDestroyActionMode(ActionMode mode) {
-				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                     listener.showFab();
-			}
+            }
 
             @Override
             public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
@@ -416,7 +416,7 @@ public class NoteListFragment extends Fragment {
         Toast toast = Toast.makeText(getActivity(), getResources().getString(message), Toast.LENGTH_SHORT);
         toast.show();
     }
-	
+
     public void dispatchKeyShortcutEvent(int keyCode) {
         if(getId() == R.id.noteViewEdit) {
             switch(keyCode) {
@@ -441,18 +441,18 @@ public class NoteListFragment extends Fragment {
             }
         }
     }
-		
-	public void onBackPressed() {
-		getActivity().finish();
-	}
+
+    public void onBackPressed() {
+        getActivity().finish();
+    }
 
     public void showFab() {
         FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
         floatingActionButton.show();
     }
 
-	public void hideFab() {
-		FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
-		floatingActionButton.hide();
-	}
+    public void hideFab() {
+        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
+        floatingActionButton.hide();
+    }
 }

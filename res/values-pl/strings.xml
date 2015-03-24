@@ -23,9 +23,9 @@
     <string name="action_delete">Usuń</string>
     <string name="action_discard">Odrzuć</string>
     <string name="action_edit">Edytuj</string>
-	<string name="action_export">Zapisz do pliku</string>
+    <string name="action_export">Zapisz do pliku</string>
     <string name="action_new">Nowa notatka</string>
-	<string name="action_import">Import</string>
+    <string name="action_import">Import</string>
     <string name="action_save">Zapisz</string>
     <string name="action_settings">Ustawienia</string>
     <string name="action_share">Udostępnij</string>
@@ -35,18 +35,18 @@
     <string name="cab_notes_selected">notatki zaznaczone</string>
     <string name="changes_discarded">Zmiany odrzucone</string>
     <string name="dialog_about_message">Notatnik: prosta aplikacja do sporządzania notatek\n\n&#169; 2015 Braden Farmer\n\n<a href="http://github.com/farmerbb/Notepad">Kod źródłowy</a> tej aplikacji jest na licencji <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, z wyjątkiem wymienionych poniżej:\n\nTa aplikacja używa kodu pochodzącego z projektu <a href="https://github.com/makovkastar/FloatingActionButton">FloatingActionButton</a>, który jest objęty licencją MIT.\n\nTa aplikacja używa elementów graficznych pochodzących z następujących źródeł:\n\n&#8226; <a href="http://deleket.deviantart.com">Ikona notatnika (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a> <a href="http://creativecommons.org/licenses/by/3.0/">(CC-BY-3.0)</a></string>
-	<string name="dialog_about_title">O Notatniku</string>
+    <string name="dialog_about_title">O Notatniku</string>
     <string name="dialog_are_you_sure">Czy jesteś pewien?</string>
     <string name="dialog_delete_button_title">Usuń notatkę</string>
     <string name="dialog_save_button_title">Zapisz zmiany</string>
     <string name="dialog_save_changes">Czy chcesz zapisać zmiany?</string>
     <string name="draft_restored">Wersja robocza przywrócona</string>
     <string name="draft_saved">Wersja robocza zapisana</string>
-	<string name="double_tap">Tip: double-tap text to switch to Edit mode</string>
-	<string name="edit_note">Edytuj notatkę</string>
+    <string name="double_tap">Tip: double-tap text to switch to Edit mode</string>
+    <string name="edit_note">Edytuj notatkę</string>
     <string name="edit_text">Napisz by wprowadzić tekst</string>
     <string name="empty_note">Wprowadź jakiś tekst!</string>
-	<string name="error_exporting_notes">Błąd podczas zapisywania notatek do plików!</string>
+    <string name="error_exporting_notes">Błąd podczas zapisywania notatek do plików!</string>
     <string name="error_importing_notes">Error importing notes!</string>
     <string name="error_loading_list">Błąd podczas wczytywania listy notatek!</string>
     <string name="error_loading_note">Błąd podczas wczytywania notatki!</string>
@@ -61,10 +61,10 @@
     <string name="note_exported_to">Notatka zapisana w</string>
     <string name="note_saved">Notatka zapisana</string>
     <string name="notes_deleted">Notatki usunięte</string>
-	<string name="notes_exported_to">Notatki zapisane w</string>
+    <string name="notes_exported_to">Notatki zapisane w</string>
     <string name="notes_imported_successfully">Notes imported successfully</string>
     <string name="pref_title_show_dialogs">Pytaj przed zapisaniem</string>
-	<string name="send_to">Udostępnij za pomocą&#8230;</string>
+    <string name="send_to">Udostępnij za pomocą&#8230;</string>
     <string name="view_note">Podgląd notatki</string>
 
     <string-array name="sort_by_list">

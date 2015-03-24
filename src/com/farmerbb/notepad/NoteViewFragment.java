@@ -41,11 +41,11 @@ import java.io.File;
 import java.io.IOException;
 
 public class NoteViewFragment extends Fragment {
-	
-	private TextView noteContents;
-	String filename = "";
-	String contentsOnLoad = "";
-	int firstLoad;
+
+    private TextView noteContents;
+    String filename = "";
+    String contentsOnLoad = "";
+    int firstLoad;
     boolean showMessage = true;
 
     // Receiver used to close fragment when a note is deleted
@@ -56,58 +56,58 @@ public class NoteViewFragment extends Fragment {
 
             for(Object file : filesToDelete) {
                 if(filename.equals(file)) {
-					// Add NoteListFragment or WelcomeFragment
-					Fragment fragment;
-					if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
-						fragment = new NoteListFragment();
-					else
-						fragment = new WelcomeFragment();
+                    // Add NoteListFragment or WelcomeFragment
+                    Fragment fragment;
+                    if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+                        fragment = new NoteListFragment();
+                    else
+                        fragment = new WelcomeFragment();
 
-					getFragmentManager()
-						.beginTransaction()
-						.replace(R.id.noteViewEdit, fragment, "NoteListFragment")
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-						.commit();
-				}
+                    getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                        .commit();
+                }
             }
         }
     }
 
     IntentFilter filter = new IntentFilter("com.farmerbb.notepad.DELETE_NOTES");
     DeleteNotesReceiver receiver = new DeleteNotesReceiver();
-	
-	/* The activity that creates an instance of this fragment must
-	 * implement this interface in order to receive event call backs. */
-	public interface Listener {
-		public void showDeleteDialog();
-		public String loadNote(String filename) throws IOException;
-	}
 
-	// Use this instance of the interface to deliver action events
-	Listener listener;
+    /* The activity that creates an instance of this fragment must
+     * implement this interface in order to receive event call backs. */
+    public interface Listener {
+        public void showDeleteDialog();
+        public String loadNote(String filename) throws IOException;
+    }
 
-	// Override the Fragment.onAttach() method to instantiate the Listener
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		// Verify that the host activity implements the callback interface
-		try {
-			// Instantiate the Listener so we can send events to the host
-			listener = (Listener) activity;
-		} catch (ClassCastException e) {
-			// The activity doesn't implement the interface, throw exception
-			throw new ClassCastException(activity.toString()
-										 + " must implement Listener");
-		}
-	}	
+    // Use this instance of the interface to deliver action events
+    Listener listener;
 
-	@Override
+    // Override the Fragment.onAttach() method to instantiate the Listener
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // Verify that the host activity implements the callback interface
+        try {
+            // Instantiate the Listener so we can send events to the host
+            listener = (Listener) activity;
+        } catch (ClassCastException e) {
+            // The activity doesn't implement the interface, throw exception
+            throw new ClassCastException(activity.toString()
+                                         + " must implement Listener");
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_note_view, container, false);
-	}
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         // Set values
@@ -255,22 +255,22 @@ public class NoteViewFragment extends Fragment {
 
         getActivity().unregisterReceiver(receiver);
     }
-	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.note_view, menu);
-	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home:
-				// Override default Android "up" behavior to instead mimic the back button
-				getActivity().onBackPressed();
-				return true;
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.note_view, menu);
+    }
 
-				// Edit button
-			case R.id.action_edit:
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Override default Android "up" behavior to instead mimic the back button
+                getActivity().onBackPressed();
+                return true;
+
+                // Edit button
+            case R.id.action_edit:
                 Bundle bundle = new Bundle();
                 bundle.putString("filename", filename);
 
@@ -282,54 +282,54 @@ public class NoteViewFragment extends Fragment {
                         .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
                         .commit();
 
-				return true;
+                return true;
 
-				// Delete button
-			case R.id.action_delete:
-				listener.showDeleteDialog();
-				return true;
+                // Delete button
+            case R.id.action_delete:
+                listener.showDeleteDialog();
+                return true;
 
-				// Share menu item
-			case R.id.action_share:
-				// Set current note contents to a String
-				String contents = noteContents.getText().toString();
+                // Share menu item
+            case R.id.action_share:
+                // Set current note contents to a String
+                String contents = noteContents.getText().toString();
 
-				// Send a share intent
-				Intent intent = new Intent();
-				intent.setAction(Intent.ACTION_SEND);
-				intent.putExtra(Intent.EXTRA_TEXT, contents);
-				intent.setType("text/plain");
+                // Send a share intent
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_TEXT, contents);
+                intent.setType("text/plain");
 
-				// Verify that the intent will resolve to an activity, and send
-				if(intent.resolveActivity(getActivity().getPackageManager()) != null)
-					startActivity(Intent.createChooser(intent, getResources().getText(R.string.send_to)));
+                // Verify that the intent will resolve to an activity, and send
+                if(intent.resolveActivity(getActivity().getPackageManager()) != null)
+                    startActivity(Intent.createChooser(intent, getResources().getText(R.string.send_to)));
 
-				return true;             
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-	}
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-	private void deleteNote(String filename) {		
-		// Build the pathname to delete file, then perform delete operation
-		File fileToDelete = new File(getActivity().getFilesDir() + File.separator + filename);
-		fileToDelete.delete();
-	}
+    private void deleteNote(String filename) {
+        // Build the pathname to delete file, then perform delete operation
+        File fileToDelete = new File(getActivity().getFilesDir() + File.separator + filename);
+        fileToDelete.delete();
+    }
 
     private void showToast(int message) {
         Toast toast = Toast.makeText(getActivity(), getResources().getString(message), Toast.LENGTH_SHORT);
         toast.show();
     }
-	
-	private void showToastLong(int message) {
+
+    private void showToastLong(int message) {
         Toast toast = Toast.makeText(getActivity(), getResources().getString(message), Toast.LENGTH_LONG);
         toast.show();
     }
 
-	public void onDeleteDialogPositiveClick() {
-		// User touched the dialog's positive button
-		deleteNote(filename);
-		showToast(R.string.note_deleted);
+    public void onDeleteDialogPositiveClick() {
+        // User touched the dialog's positive button
+        deleteNote(filename);
+        showToast(R.string.note_deleted);
 
         if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")) {
             // Send broadcast to NoteListFragment to refresh list of notes
@@ -337,80 +337,80 @@ public class NoteViewFragment extends Fragment {
             listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
             getActivity().sendBroadcast(listNotesIntent);
         }
-		
-		// Add NoteListFragment or WelcomeFragment
-		Fragment fragment;
-		if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
-			fragment = new NoteListFragment();
-		else
-			fragment = new WelcomeFragment();
 
-		getFragmentManager()
-			.beginTransaction()
-			.replace(R.id.noteViewEdit, fragment, "NoteListFragment")
-			.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-			.commit();
-	}
-	
-	// Nested class used to listen for keyboard shortcuts
+        // Add NoteListFragment or WelcomeFragment
+        Fragment fragment;
+        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+            fragment = new NoteListFragment();
+        else
+            fragment = new WelcomeFragment();
+
+        getFragmentManager()
+            .beginTransaction()
+            .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+            .commit();
+    }
+
+    // Nested class used to listen for keyboard shortcuts
         public void dispatchKeyShortcutEvent(int keyCode) {
-			switch(keyCode){
+            switch(keyCode){
 
-					// CTRL+E: Edit
-				case KeyEvent.KEYCODE_E:
+                    // CTRL+E: Edit
+                case KeyEvent.KEYCODE_E:
                     Bundle bundle = new Bundle();
                     bundle.putString("filename", filename);
 
                     Fragment fragment = new NoteEditFragment();
                     fragment.setArguments(bundle);
 
-					getFragmentManager()
-						.beginTransaction()
-						.replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-						.commit();
-					break;
+                    getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                        .commit();
+                    break;
 
-					// CTRL+D: Delete
-				case KeyEvent.KEYCODE_D:
-					// Show delete dialog
-					listener.showDeleteDialog();
-					break;
+                    // CTRL+D: Delete
+                case KeyEvent.KEYCODE_D:
+                    // Show delete dialog
+                    listener.showDeleteDialog();
+                    break;
 
-					// CTRL+H: Share
-				case KeyEvent.KEYCODE_H:
-					// Set current note contents to a String
-					String contents = noteContents.getText().toString();
+                    // CTRL+H: Share
+                case KeyEvent.KEYCODE_H:
+                    // Set current note contents to a String
+                    String contents = noteContents.getText().toString();
 
-					// Send a share intent
-					Intent shareIntent = new Intent();
-					shareIntent.setAction(Intent.ACTION_SEND);
-					shareIntent.putExtra(Intent.EXTRA_TEXT, contents);
-					shareIntent.setType("text/plain");
+                    // Send a share intent
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, contents);
+                    shareIntent.setType("text/plain");
 
-					// Verify that the intent will resolve to an activity, and send
-					if(shareIntent.resolveActivity(getActivity().getPackageManager()) != null)
-						startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
+                    // Verify that the intent will resolve to an activity, and send
+                    if(shareIntent.resolveActivity(getActivity().getPackageManager()) != null)
+                        startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
 
-					break;
-			}
+                    break;
+            }
         }
-	
-		public void onBackPressed() {
-			// Add NoteListFragment or WelcomeFragment
-			Fragment fragment;
-			if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
-				fragment = new NoteListFragment();
-			else
-				fragment = new WelcomeFragment();
 
-			getFragmentManager()
+        public void onBackPressed() {
+            // Add NoteListFragment or WelcomeFragment
+            Fragment fragment;
+            if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+                fragment = new NoteListFragment();
+            else
+                fragment = new WelcomeFragment();
+
+            getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 .commit();
-		}
-		
-	public String getFilename() {
-		return getArguments().getString("filename");
-	}
+        }
+
+    public String getFilename() {
+        return getArguments().getString("filename");
+    }
 }

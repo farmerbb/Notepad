@@ -23,9 +23,9 @@
     <string name="action_delete">Delete</string>
     <string name="action_discard">Discard</string>
     <string name="action_edit">Edit</string>
-	<string name="action_export">Export</string>
+    <string name="action_export">Export</string>
     <string name="action_new">New Note</string>
-	<string name="action_import">Import</string>
+    <string name="action_import">Import</string>
     <string name="action_save">Save</string>
     <string name="action_settings">Settings</string>
     <string name="action_share">Share</string>
@@ -34,7 +34,7 @@
     <string name="cab_note_selected">note selected</string>
     <string name="cab_notes_selected">notes selected</string>
     <string name="changes_discarded">Changes discarded</string>
-	<string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2015 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/Notepad">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, except where noted below:\n\nThis app uses code derived from the <a href="https://github.com/makovkastar/FloatingActionButton">FloatingActionButton</a> project, licensed under the MIT License.\n\nThis app uses graphical assets from the following sources:\n\n&#8226; <a href="http://deleket.deviantart.com">Notepad icon (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a> <a href="http://creativecommons.org/licenses/by/3.0/">(CC-BY-3.0)</a></string>
+    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2015 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/Notepad">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, except where noted below:\n\nThis app uses code derived from the <a href="https://github.com/makovkastar/FloatingActionButton">FloatingActionButton</a> project, licensed under the MIT License.\n\nThis app uses graphical assets from the following sources:\n\n&#8226; <a href="http://deleket.deviantart.com">Notepad icon (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a> <a href="http://creativecommons.org/licenses/by/3.0/">(CC-BY-3.0)</a></string>
     <string name="dialog_about_title">About Notepad</string>
     <string name="dialog_are_you_sure">Are you sure?</string>
     <string name="dialog_delete_button_title">Delete note</string>
@@ -42,12 +42,12 @@
     <string name="dialog_save_changes">Do you want to save your changes?</string>
     <string name="draft_restored">Draft restored</string>
     <string name="draft_saved">Draft saved</string>
-	<string name="double_tap">Tip: double-tap text to switch to Edit mode</string>
-	<string name="edit_note">Edit Note</string>
+    <string name="double_tap">Tip: double-tap text to switch to Edit mode</string>
+    <string name="edit_note">Edit Note</string>
     <string name="edit_text">Type to add text</string>
     <string name="empty_note">Please enter some text!</string>
     <string name="error_exporting_notes">Error exporting notes!</string>
-	<string name="error_importing_notes">Error importing notes!</string>
+    <string name="error_importing_notes">Error importing notes!</string>
     <string name="error_loading_list">Error loading list of notes!</string>
     <string name="error_loading_note">Error loading note!</string>
     <string name="failed_to_save">Error: Failed to save note!</string>
@@ -55,13 +55,13 @@
     <string name="first_view">To edit a saved note, double-tap the text or click the Edit button (pencil).</string>
     <string name="import_notes">Import notes</string>
     <string name="import_notes_instructions">Place text files to import at:\n</string>
-	<string name="loading_external_file">Loading external files is not supported</string>
+    <string name="loading_external_file">Loading external files is not supported</string>
     <string name="no_notes_found">No notes found</string>
     <string name="note_deleted">Note deleted</string>
     <string name="note_exported_to">Note exported to</string>
     <string name="note_saved">Note saved</string>
     <string name="notes_deleted">Notes deleted</string>
-	<string name="notes_exported_to">Notes exported to</string>
+    <string name="notes_exported_to">Notes exported to</string>
     <string name="notes_imported_successfully">Notes imported successfully</string>
     <string name="pref_title_show_dialogs">Ask before saving</string>
     <string name="send_to">Share note using&#8230;</string>

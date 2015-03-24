@@ -34,23 +34,23 @@ import com.melnykov.fab.FloatingActionButton;
 
 public class WelcomeFragment extends Fragment {
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             return inflater.inflate(R.layout.fragment_welcome_alt, container, false);
-	}
+    }
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
-		// Set values
-		setRetainInstance(true);
-		setHasOptionsMenu(true);
-	}
+        // Set values
+        setRetainInstance(true);
+        setHasOptionsMenu(true);
+    }
 
-	@Override
-	public void onStart() {
-		super.onStart();
+    @Override
+    public void onStart() {
+        super.onStart();
 
         // Read preferences
         SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
@@ -104,75 +104,75 @@ public class WelcomeFragment extends Fragment {
                 });
             }
         }
-	}
+    }
 
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
-	}
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
-		switch (item.getItemId()) {
-				// New button
-			case R.id.action_new:
-				Bundle bundle = new Bundle();
-				bundle.putString("filename", "new");
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+                // New button
+            case R.id.action_new:
+                Bundle bundle = new Bundle();
+                bundle.putString("filename", "new");
 
-				Fragment fragment = new NoteEditFragment();
-				fragment.setArguments(bundle);
+                Fragment fragment = new NoteEditFragment();
+                fragment.setArguments(bundle);
 
-				// Add NoteEditFragment
-				getFragmentManager()
-					.beginTransaction()
-					.replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-					.commit();
+                // Add NoteEditFragment
+                getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
 
-				return true;
+                return true;
 
-				// Settings button
-			case R.id.action_settings:
-				Intent intentSettings = new Intent (getActivity(), SettingsActivity.class);
-				startActivity(intentSettings);
-				return true;            
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-	}
-	
-	public void dispatchKeyShortcutEvent(int keyCode) {
-		switch(keyCode) {
-				// CTRL+N: New Note
-			case KeyEvent.KEYCODE_N:
-				if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-					hideFab();
-				
-				Bundle bundle = new Bundle();
-				bundle.putString("filename", "new");
+                // Settings button
+            case R.id.action_settings:
+                Intent intentSettings = new Intent (getActivity(), SettingsActivity.class);
+                startActivity(intentSettings);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-				Fragment fragment = new NoteEditFragment();
-				fragment.setArguments(bundle);
+    public void dispatchKeyShortcutEvent(int keyCode) {
+        switch(keyCode) {
+                // CTRL+N: New Note
+            case KeyEvent.KEYCODE_N:
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+                    hideFab();
 
-				// Add NoteEditFragment
-				getFragmentManager()
-					.beginTransaction()
-					.replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-					.commit();
-				break;
-		}
-	}
-	
-	public void onBackPressed() {
-		getActivity().finish();
-	}
-	
-	public void showFab() {
-		FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
-		floatingActionButton.show();
-	}
+                Bundle bundle = new Bundle();
+                bundle.putString("filename", "new");
+
+                Fragment fragment = new NoteEditFragment();
+                fragment.setArguments(bundle);
+
+                // Add NoteEditFragment
+                getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit();
+                break;
+        }
+    }
+
+    public void onBackPressed() {
+        getActivity().finish();
+    }
+
+    public void showFab() {
+        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
+        floatingActionButton.show();
+    }
 
     public void hideFab() {
         FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);

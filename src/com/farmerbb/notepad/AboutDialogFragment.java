@@ -33,7 +33,7 @@ public class AboutDialogFragment extends DialogFragment {
     TextView textView;
 
     @Override
-	public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -46,8 +46,8 @@ public class AboutDialogFragment extends DialogFragment {
         final View view = inflater.inflate(R.layout.fragment_dialogs, null);
 
         builder.setView(view)
-		.setTitle(R.string.dialog_about_title)
-		.setPositiveButton(R.string.action_close, new DialogInterface.OnClickListener() {
+        .setTitle(R.string.dialog_about_title)
+        .setPositiveButton(R.string.action_close, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {}
         });
 
@@ -59,7 +59,7 @@ public class AboutDialogFragment extends DialogFragment {
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             view.setPadding(0, 0, 0, 0);
 
-		// Create the AlertDialog object and return it
-		return builder.create();
-	}
+        // Create the AlertDialog object and return it
+        return builder.create();
+    }
 }

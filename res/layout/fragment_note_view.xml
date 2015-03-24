@@ -48,7 +48,7 @@
             android:text="@null"
             android:textColor="@color/text_color_primary"
             android:textSize="18sp" 
-			android:textIsSelectable="true" />
+            android:textIsSelectable="true" />
 
     </ScrollView>
 

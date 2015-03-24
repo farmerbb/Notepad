@@ -15,13 +15,13 @@ limitations under the License.
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-	<!-- Export button -->
+    <!-- Export button -->
     <item
         android:id="@+id/action_export"
         android:icon="@drawable/ic_action_sd_storage"
         android:showAsAction="ifRoom|withText"
         android:title="@string/action_export"/>
-	
+
     <!-- Delete button -->
     <item
         android:id="@+id/action_delete"

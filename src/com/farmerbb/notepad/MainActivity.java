@@ -44,11 +44,11 @@ SaveButtonDialogFragment.Listener,
 NoteListFragment.Listener,
 NoteEditFragment.Listener, 
 NoteViewFragment.Listener {
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         // Remove margins from layout on Lollipop devices
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -102,110 +102,110 @@ NoteViewFragment.Listener {
             if(oldDraft.exists())
                 oldDraft.renameTo(newDraft);
         }
-		
-		// Begin a new FragmentTransaction
-		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-		// This fragment shows NoteListFragment as a sidebar (only seen in tablet mode landscape)
+        // Begin a new FragmentTransaction
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        // This fragment shows NoteListFragment as a sidebar (only seen in tablet mode landscape)
         if(!(getFragmentManager().findFragmentById(R.id.noteList) instanceof NoteListFragment))
-		    transaction.replace(R.id.noteList, new NoteListFragment(), "NoteListFragment");
+            transaction.replace(R.id.noteList, new NoteListFragment(), "NoteListFragment");
 
-		// This fragment shows NoteListFragment in the main screen area (only seen on phones and tablet mode portrait),
-		// but only if it doesn't already contain NoteViewFragment or NoteEditFragment.
+        // This fragment shows NoteListFragment in the main screen area (only seen on phones and tablet mode portrait),
+        // but only if it doesn't already contain NoteViewFragment or NoteEditFragment.
         // If NoteListFragment is already showing in the sidebar, use WelcomeFragment instead
         if(!((getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment)
-		   || (getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment))) {
+           || (getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment))) {
             if((getFragmentManager().findFragmentById(R.id.noteViewEdit) == null
-			   && findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
-			   || ((getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment)
-			   && findViewById(R.id.layoutMain).getTag().equals("main-layout-large")))
-					transaction.replace(R.id.noteViewEdit, new WelcomeFragment(), "NoteListFragment");
+               && findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
+               || ((getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment)
+               && findViewById(R.id.layoutMain).getTag().equals("main-layout-large")))
+                    transaction.replace(R.id.noteViewEdit, new WelcomeFragment(), "NoteListFragment");
             else if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
                 transaction.replace(R.id.noteViewEdit, new NoteListFragment(), "NoteListFragment");
         }
 
-		// Commit fragment transaction
-		transaction.commit();
-	}
+        // Commit fragment transaction
+        transaction.commit();
+    }
 
-	// Keyboard shortcuts	
-	@Override
-	public boolean dispatchKeyShortcutEvent(KeyEvent event) {
-		super.dispatchKeyShortcutEvent(event);
-		if(event.getAction() == KeyEvent.ACTION_DOWN &&
-		   event.isCtrlPressed()) {		
-		   
-			if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
-				NoteListFragment fragment = (NoteListFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
-				fragment.dispatchKeyShortcutEvent(event.getKeyCode());
-			} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
-				NoteViewFragment fragment = (NoteViewFragment) getFragmentManager().findFragmentByTag("NoteViewFragment");
-				fragment.dispatchKeyShortcutEvent(event.getKeyCode());
-			} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
-				NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-				fragment.dispatchKeyShortcutEvent(event.getKeyCode());
-			} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
-				WelcomeFragment fragment = (WelcomeFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
-				fragment.dispatchKeyShortcutEvent(event.getKeyCode());
-			}
+    // Keyboard shortcuts
+    @Override
+    public boolean dispatchKeyShortcutEvent(KeyEvent event) {
+        super.dispatchKeyShortcutEvent(event);
+        if(event.getAction() == KeyEvent.ACTION_DOWN &&
+           event.isCtrlPressed()) {
 
-			return true;
-		}
-		return super.dispatchKeyShortcutEvent(event);
-	}
+            if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
+                NoteListFragment fragment = (NoteListFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
+                fragment.dispatchKeyShortcutEvent(event.getKeyCode());
+            } else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
+                NoteViewFragment fragment = (NoteViewFragment) getFragmentManager().findFragmentByTag("NoteViewFragment");
+                fragment.dispatchKeyShortcutEvent(event.getKeyCode());
+            } else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+                NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+                fragment.dispatchKeyShortcutEvent(event.getKeyCode());
+            } else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
+                WelcomeFragment fragment = (WelcomeFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
+                fragment.dispatchKeyShortcutEvent(event.getKeyCode());
+            }
 
-	@Override
-	public void onDeleteDialogPositiveClick() {
-		if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
-			NoteViewFragment fragment = (NoteViewFragment) getFragmentManager().findFragmentByTag("NoteViewFragment");
-			fragment.onDeleteDialogPositiveClick();
-		} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
-			NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-			fragment.onDeleteDialogPositiveClick();
-		}
-	}
+            return true;
+        }
+        return super.dispatchKeyShortcutEvent(event);
+    }
 
-	@Override
-	public void onBackPressed() {
-		if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
-			NoteListFragment fragment = (NoteListFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
-			fragment.onBackPressed();
-		} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
-			NoteViewFragment fragment = (NoteViewFragment) getFragmentManager().findFragmentByTag("NoteViewFragment");
-			fragment.onBackPressed();
-		} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
-			NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-			fragment.onBackPressed(null);
-		} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
-			WelcomeFragment fragment = (WelcomeFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
-			fragment.onBackPressed();
-		}
-	}
+    @Override
+    public void onDeleteDialogPositiveClick() {
+        if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
+            NoteViewFragment fragment = (NoteViewFragment) getFragmentManager().findFragmentByTag("NoteViewFragment");
+            fragment.onDeleteDialogPositiveClick();
+        } else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+            NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+            fragment.onDeleteDialogPositiveClick();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
+            NoteListFragment fragment = (NoteListFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
+            fragment.onBackPressed();
+        } else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
+            NoteViewFragment fragment = (NoteViewFragment) getFragmentManager().findFragmentByTag("NoteViewFragment");
+            fragment.onBackPressed();
+        } else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+            NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+            fragment.onBackPressed(null);
+        } else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof WelcomeFragment) {
+            WelcomeFragment fragment = (WelcomeFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
+            fragment.onBackPressed();
+        }
+    }
 
     @Override
     // Method used by selecting a existing note from the ListView in NoteViewFragment
     // We need this method in MainActivity because sometimes getFragmentManager() is null
     public void viewNote(String filename) {
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             hideFab();
-		}
-			
-		String currentFilename;
-		
-		if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
-			NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-			currentFilename = fragment.getFilename();
-		} else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
-			NoteViewFragment fragment = (NoteViewFragment) getFragmentManager().findFragmentByTag("NoteViewFragment");
-			currentFilename = fragment.getFilename();
-		} else
-			currentFilename = " ";
-		
-		if(!currentFilename.equals(filename)) {
-		    if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
-			    NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-			    fragment.switchNotes(filename);
-		    } else {
+        }
+
+        String currentFilename;
+
+        if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+            NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+            currentFilename = fragment.getFilename();
+        } else if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
+            NoteViewFragment fragment = (NoteViewFragment) getFragmentManager().findFragmentByTag("NoteViewFragment");
+            currentFilename = fragment.getFilename();
+        } else
+            currentFilename = " ";
+
+        if(!currentFilename.equals(filename)) {
+            if(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
+                NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+                fragment.switchNotes(filename);
+            } else {
             Bundle bundle = new Bundle();
             bundle.putString("filename", filename);
 
@@ -218,60 +218,60 @@ NoteViewFragment.Listener {
                     .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
-    	    }
-		}
-	}
+            }
+        }
+    }
 
-	@Override
-	public void onBackDialogNegativeClick(String filename) {
-		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onBackDialogNegativeClick(filename);
-	}
+    @Override
+    public void onBackDialogNegativeClick(String filename) {
+        NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+        fragment.onBackDialogNegativeClick(filename);
+    }
 
-	@Override
-	public void onBackDialogPositiveClick(String filename) {
-		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onBackDialogPositiveClick(filename);
-	}
+    @Override
+    public void onBackDialogPositiveClick(String filename) {
+        NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+        fragment.onBackDialogPositiveClick(filename);
+    }
 
-	@Override
-	public void onSaveDialogNegativeClick() {
-		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onSaveDialogNegativeClick();
-	}
+    @Override
+    public void onSaveDialogNegativeClick() {
+        NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+        fragment.onSaveDialogNegativeClick();
+    }
 
-	@Override
-	public void onSaveDialogPositiveClick() {
-		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onSaveDialogPositiveClick();
-	}
+    @Override
+    public void onSaveDialogPositiveClick() {
+        NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+        fragment.onSaveDialogPositiveClick();
+    }
 
-	@Override
-	public void showBackButtonDialog(String filename) {
-		Bundle bundle = new Bundle();
-		bundle.putString("filename", filename);
+    @Override
+    public void showBackButtonDialog(String filename) {
+        Bundle bundle = new Bundle();
+        bundle.putString("filename", filename);
 
-		DialogFragment backFragment = new BackButtonDialogFragment();
-		backFragment.setArguments(bundle);
-		backFragment.show(getFragmentManager(), "back");
-	}
+        DialogFragment backFragment = new BackButtonDialogFragment();
+        backFragment.setArguments(bundle);
+        backFragment.show(getFragmentManager(), "back");
+    }
 
-	@Override
-	public void showDeleteDialog() {
-		DialogFragment deleteFragment = new DeleteDialogFragment();
-		deleteFragment.show(getFragmentManager(), "delete");
-	}
+    @Override
+    public void showDeleteDialog() {
+        DialogFragment deleteFragment = new DeleteDialogFragment();
+        deleteFragment.show(getFragmentManager(), "delete");
+    }
 
-	@Override
-	public void showSaveButtonDialog() {
-		DialogFragment saveFragment = new SaveButtonDialogFragment();
-		saveFragment.show(getFragmentManager(), "save");
-	}
-	
-	@Override
-	public boolean isShareIntent() {
-		return false;
-	}
+    @Override
+    public void showSaveButtonDialog() {
+        DialogFragment saveFragment = new SaveButtonDialogFragment();
+        saveFragment.show(getFragmentManager(), "save");
+    }
+
+    @Override
+    public boolean isShareIntent() {
+        return false;
+    }
 
     @Override
     public String getCabString(int size) {
@@ -308,11 +308,11 @@ NoteViewFragment.Listener {
         else
             showToast(R.string.notes_deleted);
     }
-	
-	@Override
+
+    @Override
     public void exportNote(Object[] filesToExport) {
-		try {
-        	for(Object file : filesToExport) {
+        try {
+            for(Object file : filesToExport) {
                 // Load note title to use as filename, and remove any invalid characters
                 final String[] characters = new String[]{"<", ">", ":", "\"", "/", "\\\\", "\\|", "\\?", "\\*"};
                 String filename = loadNoteTitle(file.toString());
@@ -330,14 +330,14 @@ NoteViewFragment.Listener {
                     filename = filename.substring(0, 245);
 
                 // Generate exported filename
-				File exportedFile = new File(getExternalFilesDir(null), filename + ".txt");
-				int suffix = 1;
+                File exportedFile = new File(getExternalFilesDir(null), filename + ".txt");
+                int suffix = 1;
 
                 // Handle cases where a note may have a duplicate title
-				while(exportedFile.exists()) {
-					suffix++;
-					exportedFile = new File(getExternalFilesDir(null), filename + " (" + Integer.toString(suffix) + ").txt");
-				}
+                while(exportedFile.exists()) {
+                    suffix++;
+                    exportedFile = new File(getExternalFilesDir(null), filename + " (" + Integer.toString(suffix) + ").txt");
+                }
 
                 // Load note contents and convert line separators to Windows format
                 String note = loadNote(file.toString());
@@ -345,10 +345,10 @@ NoteViewFragment.Listener {
                 note = note.replaceAll("\n", "\r\n");
 
                 // Write file to external storage
-				OutputStream os = new FileOutputStream(exportedFile);
-				os.write(note.getBytes());
-				os.close();
-			}
+                OutputStream os = new FileOutputStream(exportedFile);
+                os.write(note.getBytes());
+                os.close();
+            }
 
             // Show toast notification
             Toast toast;
@@ -357,10 +357,10 @@ NoteViewFragment.Listener {
             else
                 toast = Toast.makeText(this, getResources().getString(R.string.notes_exported_to) + " " + getExternalFilesDir(null), Toast.LENGTH_LONG);
 
-			toast.show();
-		} catch (IOException e) {
-			showToast(R.string.error_exporting_notes);
-		}
+            toast.show();
+        } catch (IOException e) {
+            showToast(R.string.error_exporting_notes);
+        }
     }
 
     // Method used to generate toast notifications
@@ -368,35 +368,35 @@ NoteViewFragment.Listener {
         Toast toast = Toast.makeText(this, getResources().getString(message), Toast.LENGTH_SHORT);
         toast.show();
     }
-	
-	// Loads note from /data/data/com.farmerbb.notepad/files
-	public String loadNote(String filename) throws IOException {
 
-		// Initialize StringBuffer which will contain note
-		StringBuffer note = new StringBuffer("");
+    // Loads note from /data/data/com.farmerbb.notepad/files
+    public String loadNote(String filename) throws IOException {
 
-		// Open the file on disk
-		FileInputStream input = openFileInput(filename);
-		InputStreamReader reader = new InputStreamReader(input);
-		BufferedReader buffer = new BufferedReader(reader);
+        // Initialize StringBuffer which will contain note
+        StringBuffer note = new StringBuffer("");
 
-		// Load the file
-		String line = buffer.readLine();		
-		while (line != null ) {
-			note.append(line);
-			line = buffer.readLine();
-			if(line != null)
-				note.append("\n");
-		}
+        // Open the file on disk
+        FileInputStream input = openFileInput(filename);
+        InputStreamReader reader = new InputStreamReader(input);
+        BufferedReader buffer = new BufferedReader(reader);
 
-		// Close file on disk
-		reader.close();
+        // Load the file
+        String line = buffer.readLine();
+        while (line != null ) {
+            note.append(line);
+            line = buffer.readLine();
+            if(line != null)
+                note.append("\n");
+        }
 
-		return(note.toString());		
-	}
-	
-	// Loads first line of a note for display in the ListView
-	@Override
+        // Close file on disk
+        reader.close();
+
+        return(note.toString());
+    }
+
+    // Loads first line of a note for display in the ListView
+    @Override
     public String loadNoteTitle(String filename) throws IOException {
         // Open the file on disk
         FileInputStream input = openFileInput(filename);

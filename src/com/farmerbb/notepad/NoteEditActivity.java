@@ -26,17 +26,17 @@ public class NoteEditActivity extends Activity implements
 BackButtonDialogFragment.Listener, 
 DeleteDialogFragment.Listener, 
 SaveButtonDialogFragment.Listener, 
-NoteEditFragment.Listener {	
+NoteEditFragment.Listener {
 
 String external;
-	
-	@Override
-	public boolean isShareIntent() {
-		return true;
-	}
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    public boolean isShareIntent() {
+        return true;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_edit);
 
@@ -92,99 +92,99 @@ String external;
                 finish();
         }
     }
-	
-	@Override
-	protected void onStart() {
-		super.onStart();
-		
-		// Set text in EditView
-		if(external != null) {
-			EditText noteContents = (EditText) findViewById(R.id.editText1);
-			noteContents.setText(external);
-			noteContents.setSelection(external.length(), external.length());
-		}
-	}
-	
-	// Keyboard shortcuts	
-	@Override
-	public boolean dispatchKeyShortcutEvent(KeyEvent event) {
-		super.dispatchKeyShortcutEvent(event);
-		if(event.getAction() == KeyEvent.ACTION_DOWN &&
-		   event.isCtrlPressed()) {		
-			NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-			fragment.dispatchKeyShortcutEvent(event.getKeyCode());
 
-			return true;
-		}
-		return super.dispatchKeyShortcutEvent(event);
-	}
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-	@Override
-	public void onBackPressed() {
-		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onBackPressed(null);
-	}
+        // Set text in EditView
+        if(external != null) {
+            EditText noteContents = (EditText) findViewById(R.id.editText1);
+            noteContents.setText(external);
+            noteContents.setSelection(external.length(), external.length());
+        }
+    }
 
-	@Override
-	public void onBackDialogNegativeClick(String filename) {
-		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onBackDialogNegativeClick(null);
-	}
+    // Keyboard shortcuts
+    @Override
+    public boolean dispatchKeyShortcutEvent(KeyEvent event) {
+        super.dispatchKeyShortcutEvent(event);
+        if(event.getAction() == KeyEvent.ACTION_DOWN &&
+           event.isCtrlPressed()) {
+            NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+            fragment.dispatchKeyShortcutEvent(event.getKeyCode());
 
-	@Override
-	public void onBackDialogPositiveClick(String filename) {
-		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onBackDialogPositiveClick(null);
-	}
+            return true;
+        }
+        return super.dispatchKeyShortcutEvent(event);
+    }
 
-	@Override
-	public void onDeleteDialogPositiveClick() {
-		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onDeleteDialogPositiveClick();
-	}
-	
-	@Override
-	public void onSaveDialogNegativeClick() {
-		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onSaveDialogNegativeClick();
-	}
+    @Override
+    public void onBackPressed() {
+        NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+        fragment.onBackPressed(null);
+    }
 
-	@Override
-	public void onSaveDialogPositiveClick() {
-		NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
-		fragment.onSaveDialogPositiveClick();
-	}
-	
-	@Override
-	public void showBackButtonDialog(String filename) {
+    @Override
+    public void onBackDialogNegativeClick(String filename) {
+        NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+        fragment.onBackDialogNegativeClick(null);
+    }
+
+    @Override
+    public void onBackDialogPositiveClick(String filename) {
+        NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+        fragment.onBackDialogPositiveClick(null);
+    }
+
+    @Override
+    public void onDeleteDialogPositiveClick() {
+        NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+        fragment.onDeleteDialogPositiveClick();
+    }
+
+    @Override
+    public void onSaveDialogNegativeClick() {
+        NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+        fragment.onSaveDialogNegativeClick();
+    }
+
+    @Override
+    public void onSaveDialogPositiveClick() {
+        NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
+        fragment.onSaveDialogPositiveClick();
+    }
+
+    @Override
+    public void showBackButtonDialog(String filename) {
         Bundle bundle = new Bundle();
         bundle.putString("filename", filename);
 
         DialogFragment backFragment = new BackButtonDialogFragment();
         backFragment.setArguments(bundle);
         backFragment.show(getFragmentManager(), "back");
-	}
+    }
 
-	@Override
-	public void showDeleteDialog() {
-		DialogFragment deleteFragment = new DeleteDialogFragment();
-		deleteFragment.show(getFragmentManager(), "delete");
-	}
-	
-	@Override
-	public void showSaveButtonDialog() {
-		DialogFragment saveFragment = new SaveButtonDialogFragment();
-		saveFragment.show(getFragmentManager(), "save");
-	}
+    @Override
+    public void showDeleteDialog() {
+        DialogFragment deleteFragment = new DeleteDialogFragment();
+        deleteFragment.show(getFragmentManager(), "delete");
+    }
+
+    @Override
+    public void showSaveButtonDialog() {
+        DialogFragment saveFragment = new SaveButtonDialogFragment();
+        saveFragment.show(getFragmentManager(), "save");
+    }
 
     // Method used to generate toast notifications
     private void showToast(int message) {
         Toast toast = Toast.makeText(this, getResources().getString(message), Toast.LENGTH_SHORT);
         toast.show();
     }
-	
-	@Override
-	public String loadNote(String filename) {
-		return null;
-	}
+
+    @Override
+    public String loadNote(String filename) {
+        return null;
+    }
 }

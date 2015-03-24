@@ -36,5 +36,5 @@ limitations under the License.
             android:textSize="15sp"
             android:textColor="@color/text_color_primary" />
     </ScrollView>
-	
+
 </LinearLayout>

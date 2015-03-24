@@ -40,14 +40,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class NoteEditFragment extends Fragment {
-	
-	private EditText noteContents;
-	String filename = String.valueOf(System.currentTimeMillis());
-	String contentsOnLoad = "";
-	int length = 0;
-	long draftName;
-	boolean isSavedNote = false;
-	String contents;
+
+    private EditText noteContents;
+    String filename = String.valueOf(System.currentTimeMillis());
+    String contentsOnLoad = "";
+    int length = 0;
+    long draftName;
+    boolean isSavedNote = false;
+    String contents;
 
     // Receiver used to close fragment when a note is deleted
     public class DeleteNotesReceiver extends BroadcastReceiver {
@@ -62,18 +62,18 @@ public class NoteEditFragment extends Fragment {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
-					// Add NoteListFragment or WelcomeFragment
-					Fragment fragment;
-					if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
-						fragment = new NoteListFragment();
-					else
-						fragment = new WelcomeFragment();
+                    // Add NoteListFragment or WelcomeFragment
+                    Fragment fragment;
+                    if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+                        fragment = new NoteListFragment();
+                    else
+                        fragment = new WelcomeFragment();
 
-					getFragmentManager()
-						.beginTransaction()
-						.replace(R.id.noteViewEdit, fragment, "NoteListFragment")
-						.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-						.commit();
+                    getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                        .commit();
                 }
             }
         }
@@ -82,78 +82,78 @@ public class NoteEditFragment extends Fragment {
     IntentFilter filter = new IntentFilter("com.farmerbb.notepad.DELETE_NOTES");
     DeleteNotesReceiver receiver = new DeleteNotesReceiver();
 
-	/* The activity that creates an instance of this fragment must
-	 * implement this interface in order to receive event call backs. */
-	public interface Listener {
-		public void showBackButtonDialog(String filename);
-		public void showDeleteDialog();
-		public void showSaveButtonDialog();
-		public boolean isShareIntent();
-		public String loadNote(String filename) throws IOException;
-	}
+    /* The activity that creates an instance of this fragment must
+     * implement this interface in order to receive event call backs. */
+    public interface Listener {
+        public void showBackButtonDialog(String filename);
+        public void showDeleteDialog();
+        public void showSaveButtonDialog();
+        public boolean isShareIntent();
+        public String loadNote(String filename) throws IOException;
+    }
 
-	// Use this instance of the interface to deliver action events
-	Listener listener;
+    // Use this instance of the interface to deliver action events
+    Listener listener;
 
-	// Override the Fragment.onAttach() method to instantiate the Listener
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		// Verify that the host activity implements the callback interface
-		try {
-			// Instantiate the Listener so we can send events to the host
-			listener = (Listener) activity;
-		} catch (ClassCastException e) {
-			// The activity doesn't implement the interface, throw exception
-			throw new ClassCastException(activity.toString()
-										 + " must implement Listener");
-		}
-	}	
-	
+    // Override the Fragment.onAttach() method to instantiate the Listener
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        // Verify that the host activity implements the callback interface
+        try {
+            // Instantiate the Listener so we can send events to the host
+            listener = (Listener) activity;
+        } catch (ClassCastException e) {
+            // The activity doesn't implement the interface, throw exception
+            throw new ClassCastException(activity.toString()
+                                         + " must implement Listener");
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_note_edit, container, false);
-	}
-	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         // Set values
         setRetainInstance(true);
-		setHasOptionsMenu(true);
+        setHasOptionsMenu(true);
 
         // Show the Up button in the action bar.
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 
-		// Set up content view
-		noteContents = (EditText) getActivity().findViewById(R.id.editText1);
+        // Set up content view
+        noteContents = (EditText) getActivity().findViewById(R.id.editText1);
 
-		// Get filename
-		try {
-			if(!getArguments().getString("filename").equals("new")) {
-			    filename = getArguments().getString("filename");
-			    if(!filename.equals("draft"))
-				    isSavedNote = true;
-		    }
-		} catch (NullPointerException e) {
-			filename = "new";
-		}
+        // Get filename
+        try {
+            if(!getArguments().getString("filename").equals("new")) {
+                filename = getArguments().getString("filename");
+                if(!filename.equals("draft"))
+                    isSavedNote = true;
+            }
+        } catch (NullPointerException e) {
+            filename = "new";
+        }
 
-		// Load note from existing file
-		if(isSavedNote) {
-			try {
-				contentsOnLoad = listener.loadNote(filename);
-			} catch (IOException e) {
-				showToast(R.string.error_loading_note);
+        // Load note from existing file
+        if(isSavedNote) {
+            try {
+                contentsOnLoad = listener.loadNote(filename);
+            } catch (IOException e) {
+                showToast(R.string.error_loading_note);
                 finish(null);
-			}
-			
-			// Set TextView contents
-			length = contentsOnLoad.length();
-			noteContents.setText(contentsOnLoad);
-			noteContents.setSelection(length, length);
-		} else if(filename.equals("draft")) {
+            }
+
+            // Set TextView contents
+            length = contentsOnLoad.length();
+            noteContents.setText(contentsOnLoad);
+            noteContents.setSelection(length, length);
+        } else if(filename.equals("draft")) {
             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
             String draftContents = sharedPref.getString("draft-contents", null);
             length = draftContents.length();
@@ -162,17 +162,17 @@ public class NoteEditFragment extends Fragment {
         }
 
         // Show soft keyboard
-		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.showSoftInput(noteContents, InputMethodManager.SHOW_IMPLICIT);
-									
-	}
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(noteContents, InputMethodManager.SHOW_IMPLICIT);
 
-	@Override
-	public void onPause() {
-		super.onPause();
+    }
 
-		// Disable saving drafts if user launched Notepad through a share intent
-		if(!listener.isShareIntent() && !isRemoving()) {
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        // Disable saving drafts if user launched Notepad through a share intent
+        if(!listener.isShareIntent() && !isRemoving()) {
             // Set current note contents to a String
             noteContents = (EditText) getActivity().findViewById(R.id.editText1);
             contents = noteContents.getText().toString();
@@ -192,17 +192,17 @@ public class NoteEditFragment extends Fragment {
                 // Show toast notification
                 showToast(R.string.draft_saved);
             }
-		}
-	}
+        }
+    }
 
-	@Override
-	public void onResume() {
-		super.onResume();
+    @Override
+    public void onResume() {
+        super.onResume();
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-		// Disable restoring drafts if user launched Notepad through a share intent
-		if(!listener.isShareIntent()) {
+        // Disable restoring drafts if user launched Notepad through a share intent
+        if(!listener.isShareIntent()) {
             if(filename.equals("draft")) {
 
                 // Restore draft preferences
@@ -235,12 +235,12 @@ public class NoteEditFragment extends Fragment {
             editor.apply();
         }
 
-		// Change window title
-		if(isSavedNote)
+        // Change window title
+        if(isSavedNote)
             getActivity().setTitle(getResources().getString(R.string.edit_note));
-		else
-			getActivity().setTitle(getResources().getString(R.string.action_new));
-	}
+        else
+            getActivity().setTitle(getResources().getString(R.string.action_new));
+    }
 
     // Register and unregister DeleteNotesReceiver
     @Override
@@ -258,37 +258,37 @@ public class NoteEditFragment extends Fragment {
         if(!listener.isShareIntent())
             getActivity().unregisterReceiver(receiver);
     }
-	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.note_edit, menu);
-	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.note_edit, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Hide soft keyboard
-		EditText editText = (EditText) getActivity().findViewById(R.id.editText1);
-		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-		
-		switch (item.getItemId()) {
-			case android.R.id.home:
-				// Override default Android "up" behavior to instead mimic the back button
-				getActivity().onBackPressed();
-				return true;
+        EditText editText = (EditText) getActivity().findViewById(R.id.editText1);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
-				// Save button
-			case R.id.action_save:
-				// Get current note contents from EditText
-				noteContents = (EditText) getActivity().findViewById(R.id.editText1);
-				contents = noteContents.getText().toString();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Override default Android "up" behavior to instead mimic the back button
+                getActivity().onBackPressed();
+                return true;
 
-				// If EditText is empty, show toast informing user to enter some text
-				if(contents.equals(""))
-					showToast(R.string.empty_note);
-				else {
-					// If no changes were made since last save, switch back to NoteViewFragment
-					if(contentsOnLoad.equals(noteContents.getText().toString())) {
+                // Save button
+            case R.id.action_save:
+                // Get current note contents from EditText
+                noteContents = (EditText) getActivity().findViewById(R.id.editText1);
+                contents = noteContents.getText().toString();
+
+                // If EditText is empty, show toast informing user to enter some text
+                if(contents.equals(""))
+                    showToast(R.string.empty_note);
+                else {
+                    // If no changes were made since last save, switch back to NoteViewFragment
+                    if(contentsOnLoad.equals(noteContents.getText().toString())) {
                         Bundle bundle = new Bundle();
                         bundle.putString("filename", filename);
 
@@ -299,18 +299,18 @@ public class NoteEditFragment extends Fragment {
                                 .beginTransaction()
                                 .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
                                 .commit();
-					} else {
-						SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
-						if(pref.getBoolean("show_dialogs", true)) {
-							// Show save button dialog
-							listener.showSaveButtonDialog();
-						} else {
-							try {
-								saveNote();
+                    } else {
+                        SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+                        if(pref.getBoolean("show_dialogs", true)) {
+                            // Show save button dialog
+                            listener.showSaveButtonDialog();
+                        } else {
+                            try {
+                                saveNote();
 
-								if(listener.isShareIntent())
-									getActivity().finish();
-								else {
+                                if(listener.isShareIntent())
+                                    getActivity().finish();
+                                else {
                                     Bundle bundle = new Bundle();
                                     bundle.putString("filename", filename);
 
@@ -321,127 +321,127 @@ public class NoteEditFragment extends Fragment {
                                             .beginTransaction()
                                             .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
                                             .commit();
-								}
-							} catch (IOException e) {
-								// Show error message as toast if file fails to save
-								showToast(R.string.failed_to_save);
-							}
-						}
-					}
-				}
-				return true;
+                                }
+                            } catch (IOException e) {
+                                // Show error message as toast if file fails to save
+                                showToast(R.string.failed_to_save);
+                            }
+                        }
+                    }
+                }
+                return true;
 
-				// Delete button
-			case R.id.action_delete:
-				listener.showDeleteDialog();
-				return true;
+                // Delete button
+            case R.id.action_delete:
+                listener.showDeleteDialog();
+                return true;
 
-				// Share menu item
-			case R.id.action_share:
-				// Set current note contents to a String
-				contents = noteContents.getText().toString();
+                // Share menu item
+            case R.id.action_share:
+                // Set current note contents to a String
+                contents = noteContents.getText().toString();
 
-				// If EditText is empty, show toast informing user to enter some text
-				if(contents.equals(""))
-					showToast(R.string.empty_note);
-				else {
-					// Send a share intent
-					Intent intent = new Intent();
-					intent.setAction(Intent.ACTION_SEND);
-					intent.putExtra(Intent.EXTRA_TEXT, contents);
-					intent.setType("text/plain");
+                // If EditText is empty, show toast informing user to enter some text
+                if(contents.equals(""))
+                    showToast(R.string.empty_note);
+                else {
+                    // Send a share intent
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_SEND);
+                    intent.putExtra(Intent.EXTRA_TEXT, contents);
+                    intent.setType("text/plain");
 
-					// Verify that the intent will resolve to an activity, and send
-					if(intent.resolveActivity(getActivity().getPackageManager()) != null)
-						startActivity(Intent.createChooser(intent, getResources().getText(R.string.send_to)));
-				}
+                    // Verify that the intent will resolve to an activity, and send
+                    if(intent.resolveActivity(getActivity().getPackageManager()) != null)
+                        startActivity(Intent.createChooser(intent, getResources().getText(R.string.send_to)));
+                }
 
-				return true;             
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-	}
-	
-	private void deleteNote(String filename) {		
-		// Build the pathname to delete file, then perform delete operation
-		File fileToDelete = new File(getActivity().getFilesDir() + File.separator + filename);
-		fileToDelete.delete();
-	}
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
-	// Saves notes to /data/data/com.farmerbb.notepad/files
-	private void saveNote() throws IOException {
-		// Set current note contents to a String
-		noteContents = (EditText) getActivity().findViewById(R.id.editText1);
-		contents = noteContents.getText().toString(); 
+    private void deleteNote(String filename) {
+        // Build the pathname to delete file, then perform delete operation
+        File fileToDelete = new File(getActivity().getFilesDir() + File.separator + filename);
+        fileToDelete.delete();
+    }
 
-		// Write the String to a new file with filename of current milliseconds of Unix time
-		if(contents.equals("") && filename.equals("draft"))
-			finish(null);
-		else {
+    // Saves notes to /data/data/com.farmerbb.notepad/files
+    private void saveNote() throws IOException {
+        // Set current note contents to a String
+        noteContents = (EditText) getActivity().findViewById(R.id.editText1);
+        contents = noteContents.getText().toString();
 
-			// Set a new filename if this is not a draft
-			String newFilename;
-			if(filename.equals("draft"))
-				newFilename = filename;
-			else 
-				newFilename = String.valueOf(System.currentTimeMillis());
+        // Write the String to a new file with filename of current milliseconds of Unix time
+        if(contents.equals("") && filename.equals("draft"))
+            finish(null);
+        else {
 
-			// Write note to disk
-			FileOutputStream output = getActivity().openFileOutput(newFilename, Context.MODE_PRIVATE);
-			output.write(contents.getBytes());
-			output.close();
+            // Set a new filename if this is not a draft
+            String newFilename;
+            if(filename.equals("draft"))
+                newFilename = filename;
+            else
+                newFilename = String.valueOf(System.currentTimeMillis());
 
-			// Delete old file
-			if(!filename.equals("draft"))
-				deleteNote(filename);
+            // Write note to disk
+            FileOutputStream output = getActivity().openFileOutput(newFilename, Context.MODE_PRIVATE);
+            output.write(contents.getBytes());
+            output.close();
 
-			// Show toast notification
-			if(filename.equals("draft"))
-				showToast(R.string.draft_saved);
-			else
-				showToast(R.string.note_saved);
+            // Delete old file
+            if(!filename.equals("draft"))
+                deleteNote(filename);
 
-			// Old file is no more
-			if(!filename.equals("draft")) {
-				filename = newFilename;
-				contentsOnLoad = contents;
-				length = contentsOnLoad.length();
-			}
-			
-			// Send broadcast to MainActivity to refresh list of notes
-			Intent listNotesIntent = new Intent();
-			listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
-			getActivity().sendBroadcast(listNotesIntent);
-		}
-	}
+            // Show toast notification
+            if(filename.equals("draft"))
+                showToast(R.string.draft_saved);
+            else
+                showToast(R.string.note_saved);
 
-	// Method used to generate toast notifications
+            // Old file is no more
+            if(!filename.equals("draft")) {
+                filename = newFilename;
+                contentsOnLoad = contents;
+                length = contentsOnLoad.length();
+            }
+
+            // Send broadcast to MainActivity to refresh list of notes
+            Intent listNotesIntent = new Intent();
+            listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+            getActivity().sendBroadcast(listNotesIntent);
+        }
+    }
+
+    // Method used to generate toast notifications
     private void showToast(int message) {
         Toast toast = Toast.makeText(getActivity(), getResources().getString(message), Toast.LENGTH_SHORT);
         toast.show();
     }
 
-	public void onBackDialogNegativeClick(String filename) {
-		// User touched the dialog's negative button
-		showToast(R.string.changes_discarded);
-		finish(filename);
-	}
+    public void onBackDialogNegativeClick(String filename) {
+        // User touched the dialog's negative button
+        showToast(R.string.changes_discarded);
+        finish(filename);
+    }
 
-	public void onBackDialogPositiveClick(String filename) {
-		// User touched the dialog's positive button
-		try {
-			saveNote();
-			finish(filename);
-		} catch (IOException e) {
-			// Show error message as toast if file fails to save
-			showToast(R.string.failed_to_save);
-		}
-	}
+    public void onBackDialogPositiveClick(String filename) {
+        // User touched the dialog's positive button
+        try {
+            saveNote();
+            finish(filename);
+        } catch (IOException e) {
+            // Show error message as toast if file fails to save
+            showToast(R.string.failed_to_save);
+        }
+    }
 
-	public void onDeleteDialogPositiveClick() {
-		// User touched the dialog's positive button
-		deleteNote(filename);
-		showToast(R.string.note_deleted);
+    public void onDeleteDialogPositiveClick() {
+        // User touched the dialog's positive button
+        deleteNote(filename);
+        showToast(R.string.note_deleted);
 
         if(getActivity().getComponentName().getClassName().equals("com.farmerbb.notepad.MainActivity")
                 && getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")) {
@@ -451,13 +451,13 @@ public class NoteEditFragment extends Fragment {
             getActivity().sendBroadcast(listNotesIntent);
         }
 
-		finish(null);
-	}
+        finish(null);
+    }
 
-	public void onSaveDialogNegativeClick() {
-		// User touched the dialog's negative button
-		if(isSavedNote) {
-			showToast(R.string.changes_discarded);
+    public void onSaveDialogNegativeClick() {
+        // User touched the dialog's negative button
+        if(isSavedNote) {
+            showToast(R.string.changes_discarded);
 
             Bundle bundle = new Bundle();
             bundle.putString("filename", filename);
@@ -469,19 +469,19 @@ public class NoteEditFragment extends Fragment {
                     .beginTransaction()
                     .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
                     .commit();
-		} else {
-			showToast(R.string.changes_discarded);
-			finish(null);
-		}
-	}
+        } else {
+            showToast(R.string.changes_discarded);
+            finish(null);
+        }
+    }
 
-	public void onSaveDialogPositiveClick() {
-		// User touched the dialog's positive button
-		try {
-			saveNote();
+    public void onSaveDialogPositiveClick() {
+        // User touched the dialog's positive button
+        try {
+            saveNote();
 
             if(listener.isShareIntent())
-				finish(null);
+                finish(null);
             else {
                 Bundle bundle = new Bundle();
                 bundle.putString("filename", filename);
@@ -494,131 +494,131 @@ public class NoteEditFragment extends Fragment {
                         .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
                         .commit();
             }
-		} catch (IOException e) {
-			// Show error message as toast if file fails to save
-			showToast(R.string.failed_to_save);
-		}
-	}
-	
-	public void onBackPressed(String filename) {
-		// Pop back stack if no changes were made since last save
-		if(contentsOnLoad.equals(noteContents.getText().toString())) {
-			finish(filename);
-		} else {
-			// Finish if EditText is empty
-			if(noteContents.getText().toString().isEmpty())
-				finish(filename);
-			else {
-				SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
-				if(pref.getBoolean("show_dialogs", true)) {
-					// Show back button dialog
-					listener.showBackButtonDialog(filename);
-				} else {
-					try {
-						saveNote();
-						finish(filename);
-					} catch (IOException e) {
-						// Show error message as toast if file fails to save
-						showToast(R.string.failed_to_save);
-					}
-				}
-			}
-		}
-	}
-	
-	public void dispatchKeyShortcutEvent(int keyCode) {		
-		switch(keyCode) {
+        } catch (IOException e) {
+            // Show error message as toast if file fails to save
+            showToast(R.string.failed_to_save);
+        }
+    }
 
-				// CTRL+S: Save
-			case KeyEvent.KEYCODE_S:
-				// Set current note contents to a String
-				contents = noteContents.getText().toString();
+    public void onBackPressed(String filename) {
+        // Pop back stack if no changes were made since last save
+        if(contentsOnLoad.equals(noteContents.getText().toString())) {
+            finish(filename);
+        } else {
+            // Finish if EditText is empty
+            if(noteContents.getText().toString().isEmpty())
+                finish(filename);
+            else {
+                SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+                if(pref.getBoolean("show_dialogs", true)) {
+                    // Show back button dialog
+                    listener.showBackButtonDialog(filename);
+                } else {
+                    try {
+                        saveNote();
+                        finish(filename);
+                    } catch (IOException e) {
+                        // Show error message as toast if file fails to save
+                        showToast(R.string.failed_to_save);
+                    }
+                }
+            }
+        }
+    }
 
-				// If EditText is empty, show toast informing user to enter some text
-				if(contents.equals(""))
-					showToast(R.string.empty_note);
-				else {
-					try {
-						// Keyboard shortcut just saves the note; no dialog shown
-						saveNote();
-					} catch (IOException e) {
-						// Show error message as toast if file fails to save
-						showToast(R.string.failed_to_save);
-					}
-				}
-				break;
+    public void dispatchKeyShortcutEvent(int keyCode) {
+        switch(keyCode) {
 
-				// CTRL+D: Delete
-			case KeyEvent.KEYCODE_D:
-				listener.showDeleteDialog();
-				break;
+                // CTRL+S: Save
+            case KeyEvent.KEYCODE_S:
+                // Set current note contents to a String
+                contents = noteContents.getText().toString();
 
-				// CTRL+H: Share
-			case KeyEvent.KEYCODE_H:
-				// Set current note contents to a String
-				contents = noteContents.getText().toString();
+                // If EditText is empty, show toast informing user to enter some text
+                if(contents.equals(""))
+                    showToast(R.string.empty_note);
+                else {
+                    try {
+                        // Keyboard shortcut just saves the note; no dialog shown
+                        saveNote();
+                    } catch (IOException e) {
+                        // Show error message as toast if file fails to save
+                        showToast(R.string.failed_to_save);
+                    }
+                }
+                break;
 
-				// If EditText is empty, show toast informing user to enter some text
-				if(contents.equals(""))
-					showToast(R.string.empty_note);
-				else {
-					// Send a share intent
-					Intent shareIntent = new Intent();
-					shareIntent.setAction(Intent.ACTION_SEND);
-					shareIntent.putExtra(Intent.EXTRA_TEXT, contents);
-					shareIntent.setType("text/plain");
+                // CTRL+D: Delete
+            case KeyEvent.KEYCODE_D:
+                listener.showDeleteDialog();
+                break;
 
-					// Verify that the intent will resolve to an activity, and send
-					if(shareIntent.resolveActivity(getActivity().getPackageManager()) != null)
-						startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
-				}
-				break;
-		}
-	}
-	
-	private void finish(String filename) {
-		if(listener.isShareIntent())
-			getActivity().finish();
-		else if(filename == null) {
-			// Add NoteListFragment or WelcomeFragment
-			Fragment fragment;
-			if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
-				fragment = new NoteListFragment();
-			else
-				fragment = new WelcomeFragment();
+                // CTRL+H: Share
+            case KeyEvent.KEYCODE_H:
+                // Set current note contents to a String
+                contents = noteContents.getText().toString();
 
-			getFragmentManager()
+                // If EditText is empty, show toast informing user to enter some text
+                if(contents.equals(""))
+                    showToast(R.string.empty_note);
+                else {
+                    // Send a share intent
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, contents);
+                    shareIntent.setType("text/plain");
+
+                    // Verify that the intent will resolve to an activity, and send
+                    if(shareIntent.resolveActivity(getActivity().getPackageManager()) != null)
+                        startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
+                }
+                break;
+        }
+    }
+
+    private void finish(String filename) {
+        if(listener.isShareIntent())
+            getActivity().finish();
+        else if(filename == null) {
+            // Add NoteListFragment or WelcomeFragment
+            Fragment fragment;
+            if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+                fragment = new NoteListFragment();
+            else
+                fragment = new WelcomeFragment();
+
+            getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 .commit();
-		} else {
-			Bundle bundle = new Bundle();
-			bundle.putString("filename", filename);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("filename", filename);
 
-			Fragment fragment = new NoteViewFragment();
-			fragment.setArguments(bundle);
+            Fragment fragment = new NoteViewFragment();
+            fragment.setArguments(bundle);
 
-			// Add NoteViewFragment
-			getFragmentManager()
+            // Add NoteViewFragment
+            getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
-		}
-	}
-	
-	public void switchNotes(String filename) {
-		// Hide soft keyboard
-		EditText editText = (EditText) getActivity().findViewById(R.id.editText1);
-		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-		
-		// Act as if the back button was pressed
-		onBackPressed(filename);
-	}
-	
-	public String getFilename() {
-		return filename;
-	}
+        }
+    }
+
+    public void switchNotes(String filename) {
+        // Hide soft keyboard
+        EditText editText = (EditText) getActivity().findViewById(R.id.editText1);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+
+        // Act as if the back button was pressed
+        onBackPressed(filename);
+    }
+
+    public String getFilename() {
+        return filename;
+    }
 }

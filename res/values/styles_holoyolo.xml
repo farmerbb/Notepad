@@ -54,7 +54,7 @@
     </style>
 
     <style name="PopupMenu.Holoyolo" parent="@android:style/Widget.Holo.ListPopupWindow">
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_holoyolo</item>	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_holoyolo</item>
     </style>
 
     <style name="DropDownListView.Holoyolo" parent="@android:style/Widget.Holo.ListView.DropDown">

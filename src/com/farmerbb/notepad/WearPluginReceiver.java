@@ -35,10 +35,10 @@ public class WearPluginReceiver extends BroadcastReceiver {
             output.write(intent.getByteArrayExtra("note"));
             output.close();
         } catch (IOException e) {}
-		
-		// Send broadcast to NoteListFragment to refresh list of notes
-		Intent listNotesIntent = new Intent();
-		listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
-		context.sendBroadcast(listNotesIntent);
+
+        // Send broadcast to NoteListFragment to refresh list of notes
+        Intent listNotesIntent = new Intent();
+        listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+        context.sendBroadcast(listNotesIntent);
     }
 }

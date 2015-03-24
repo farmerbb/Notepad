@@ -23,6 +23,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.widget.Toast;
 
 public class SettingsActivity extends PreferenceActivity implements OnPreferenceClickListener {
 
@@ -101,13 +102,24 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     @Override
     public boolean onPreferenceClick(Preference p) {
         if(p.getKey().equals("import")) {
-            Intent intent = new Intent(this, ImportActivity.class);
-            startActivity(intent);
+            try{
+                getExternalFilesDir(null);
+                Intent intent = new Intent(this, ImportActivity.class);
+                startActivity(intent);
+            } catch (NullPointerException e) {
+                // Throws a NullPointerException if no external storage is present
+                showToastLong(R.string.no_external_storage);
+            }
         } else if(p.getKey().equals("about")) {
             DialogFragment aboutFragment = new AboutDialogFragment();
             aboutFragment.show(getFragmentManager(), "about");
         }
 
         return true;
+    }
+
+    private void showToastLong(int message) {
+        Toast toast = Toast.makeText(this, getResources().getString(message), Toast.LENGTH_LONG);
+        toast.show();
     }
 }

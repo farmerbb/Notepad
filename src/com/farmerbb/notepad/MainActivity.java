@@ -50,12 +50,15 @@ NoteViewFragment.Listener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Remove margins from layout on Lollipop devices
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Remove margins from layout on Lollipop devices
             LinearLayout layout = (LinearLayout) findViewById(R.id.noteViewEdit);
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout.getLayoutParams();
             params.setMargins(0, 0, 0, 0);
             layout.setLayoutParams(params);
+
+            // Set action bar elevation
+            getActionBar().setElevation(15f);
         }
 
         // Show dialog if this is the user's first time running Notepad

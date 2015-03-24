@@ -56,6 +56,7 @@
     <string name="import_notes">Importeer notities</string>
     <string name="import_notes_instructions">Locatie van text bestanden om te importeren:\n</string>
     <string name="loading_external_file">Laden van externe bestanden niet toegestaan</string>
+    <string name="no_external_storage">Can\'t access external storage. Try restarting your device.</string>
     <string name="no_notes_found">Geen notitie gevonden</string>
     <string name="note_deleted">Notitie verwijderd</string>
     <string name="note_exported_to">Notitie geexporteert naar</string>

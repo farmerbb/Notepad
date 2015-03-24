@@ -364,6 +364,10 @@ public class NoteListFragment extends Fragment {
                 // Inflate the menu for the CAB
                 MenuInflater inflater = mode.getMenuInflater();
                 inflater.inflate(R.menu.context_menu, menu);
+
+                // Clear any old values from cab array
+                cab.clear();
+
                 return true;
             }
 
@@ -397,9 +401,6 @@ public class NoteListFragment extends Fragment {
 
             @Override
             public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                // Clear any old values from cab array
-                cab.clear();
-
                 return false;
             }
         });

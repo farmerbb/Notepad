@@ -56,6 +56,7 @@
     <string name="import_notes">Import notes</string>
     <string name="import_notes_instructions">Place text files to import at:\n</string>
     <string name="loading_external_file">Loading external files is not supported</string>
+    <string name="no_external_storage">Can\'t access external storage. Try restarting your device.</string>
     <string name="no_notes_found">No notes found</string>
     <string name="note_deleted">Note deleted</string>
     <string name="note_exported_to">Note exported to</string>

@@ -40,6 +40,10 @@ String external;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_edit);
 
+        // Set action bar elevation
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            getActionBar().setElevation(15f);
+
         if(!(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment)) {
             // Handle intents
             Intent intent = getIntent();

@@ -131,7 +131,8 @@ public class NoteEditFragment extends Fragment {
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Animate elevation change
-        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
+        if(getActivity() instanceof MainActivity
+                && getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
             LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);

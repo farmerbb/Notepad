@@ -102,7 +102,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
     @Override
     public boolean onPreferenceClick(Preference p) {
         if(p.getKey().equals("import")) {
-            try{
+            try {
                 getExternalFilesDir(null);
                 Intent intent = new Intent(this, ImportActivity.class);
                 startActivity(intent);

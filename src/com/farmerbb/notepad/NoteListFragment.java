@@ -268,7 +268,7 @@ public class NoteListFragment extends Fragment {
         String[] listOfTitlesByDate = new String[numOfFiles];
         String[] listOfTitlesByName = new String[numOfFiles];
 
-        ArrayList<String> list = new ArrayList<String>(numOfFiles);
+        ArrayList<String> list = new ArrayList<>(numOfFiles);
 
         // If sort-by is "by date", sort in reverse order
         if(sortBy.equals("date"))
@@ -334,7 +334,7 @@ public class NoteListFragment extends Fragment {
         });
 
         // Make ListView handle contextual action bar
-        final ArrayList<String> cab = new ArrayList<String>(numOfFiles);
+        final ArrayList<String> cab = new ArrayList<>(numOfFiles);
 
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {

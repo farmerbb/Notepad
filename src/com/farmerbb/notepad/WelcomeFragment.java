@@ -15,6 +15,7 @@
 
 package com.farmerbb.notepad;
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -29,6 +30,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -39,6 +41,7 @@ public class WelcomeFragment extends Fragment {
             return inflater.inflate(R.layout.fragment_welcome_alt, container, false);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -46,6 +49,15 @@ public class WelcomeFragment extends Fragment {
         // Set values
         setRetainInstance(true);
         setHasOptionsMenu(true);
+
+        // Animate elevation change
+        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
+            LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);
+            noteViewEdit.animate().z(0f);
+            noteList.animate().z(45f);
+        }
     }
 
     @Override

@@ -105,7 +105,7 @@ public class ImportActivity extends Activity implements CompoundButton.OnChecked
             // Sort array
             Arrays.sort(allFiles);
 
-            listOfFiles = new ArrayList<String>(allFiles.length);
+            listOfFiles = new ArrayList<>(allFiles.length);
 
             for(String note : allFiles) {
                 if(note.endsWith(".txt")) {
@@ -116,7 +116,7 @@ public class ImportActivity extends Activity implements CompoundButton.OnChecked
 
             // Declare ListView and ArrayList
             listView = (ListView) findViewById(R.id.listView2);
-            notesToImport = new ArrayList<String>(numOfFiles);
+            notesToImport = new ArrayList<>(numOfFiles);
 
             // Create the custom adapter to bind the array to the ListView
             final ImportListAdapter adapter = new ImportListAdapter(this, listOfFiles);

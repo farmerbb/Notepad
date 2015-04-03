@@ -15,6 +15,7 @@
 
 package com.farmerbb.notepad;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
@@ -24,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
@@ -34,6 +36,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -106,6 +109,7 @@ public class NoteViewFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_note_view, container, false);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -119,6 +123,15 @@ public class NoteViewFragment extends Fragment {
 
         // Show the Up button in the action bar.
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Animate elevation change
+        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
+            LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);
+            noteList.animate().z(0f);
+            noteViewEdit.animate().z(35f);
+        }
 
         // Set up content view
         noteContents = (TextView) getActivity().findViewById(R.id.textView);

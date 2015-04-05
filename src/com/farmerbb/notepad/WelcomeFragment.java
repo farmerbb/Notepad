@@ -56,7 +56,7 @@ public class WelcomeFragment extends Fragment {
             LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
             LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);
             noteViewEdit.animate().z(0f);
-            noteList.animate().z(45f);
+            noteList.animate().z(getResources().getDimensionPixelSize(R.dimen.note_list_elevation));
         }
     }
 

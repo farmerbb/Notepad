@@ -42,7 +42,7 @@ String external;
 
         // Set action bar elevation
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            getActionBar().setElevation(15f);
+            getActionBar().setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
 
         if(!(getFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment)) {
             // Handle intents

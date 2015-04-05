@@ -58,7 +58,7 @@ NoteViewFragment.Listener {
             layout.setLayoutParams(params);
 
             // Set action bar elevation
-            getActionBar().setElevation(15f);
+            getActionBar().setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
         }
 
         // Show dialog if this is the user's first time running Notepad

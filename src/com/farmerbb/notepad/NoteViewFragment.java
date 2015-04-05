@@ -130,7 +130,7 @@ public class NoteViewFragment extends Fragment {
             LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
             LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);
             noteList.animate().z(0f);
-            noteViewEdit.animate().z(35f);
+            noteViewEdit.animate().z(getResources().getDimensionPixelSize(R.dimen.note_view_edit_elevation));
         }
 
         // Set up content view

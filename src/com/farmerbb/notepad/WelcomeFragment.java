@@ -21,6 +21,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -55,8 +56,12 @@ public class WelcomeFragment extends Fragment {
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
             LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);
+
             noteViewEdit.animate().z(0f);
-            noteList.animate().z(getResources().getDimensionPixelSize(R.dimen.note_list_elevation));
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+                noteList.animate().z(getResources().getDimensionPixelSize(R.dimen.note_list_elevation_land));
+            else
+                noteList.animate().z(getResources().getDimensionPixelSize(R.dimen.note_list_elevation));
         }
     }
 

@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -129,8 +130,12 @@ public class NoteViewFragment extends Fragment {
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
             LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);
+
             noteList.animate().z(0f);
-            noteViewEdit.animate().z(getResources().getDimensionPixelSize(R.dimen.note_view_edit_elevation));
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+                noteViewEdit.animate().z(getResources().getDimensionPixelSize(R.dimen.note_view_edit_elevation_land));
+            else
+                noteViewEdit.animate().z(getResources().getDimensionPixelSize(R.dimen.note_view_edit_elevation));
         }
 
         // Set up content view

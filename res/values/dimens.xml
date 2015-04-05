@@ -13,7 +13,10 @@
     <dimen name="fab_elevation_lollipop">5dp</dimen>
 
     <dimen name="action_bar_elevation">7.5dp</dimen>
-    <dimen name="note_list_elevation">22.5dp</dimen>
-    <dimen name="note_view_edit_elevation">17.5dp</dimen>
+    <dimen name="note_list_elevation">55dp</dimen>
+    <dimen name="note_view_edit_elevation">45dp</dimen>
+
+    <dimen name="note_list_elevation_land">65dp</dimen>
+    <dimen name="note_view_edit_elevation_land">40dp</dimen>
 
 </resources>

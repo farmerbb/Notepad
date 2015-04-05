@@ -20,7 +20,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.farmerbb.notepad"
     android:installLocation="auto"
-    android:versionCode="59"
+    android:versionCode="60"
     android:versionName="2.1.6" >
 
     <uses-sdk

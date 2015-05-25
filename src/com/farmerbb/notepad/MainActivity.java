@@ -178,7 +178,7 @@ NoteViewFragment.Listener {
             } catch (PackageManager.NameNotFoundException e) {
                 SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
                 if(pref.getBoolean("show_wear_dialog", true)
-                        && getFragmentManager().findFragmentByTag("new-device-fragment") == null) {
+                        && getFragmentManager().findFragmentByTag("WearPluginDialogFragment") == null) {
                     DialogFragment wearDialog = new WearPluginDialogFragment();
                     wearDialog.show(getFragmentManager(), "WearPluginDialogFragment");
                 }

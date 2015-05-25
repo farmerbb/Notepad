@@ -16,6 +16,7 @@
 package com.farmerbb.notepad;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
@@ -66,13 +67,13 @@ public class NoteListFragment extends Fragment {
     /* The activity that creates an instance of this fragment must
  * implement this interface in order to receive event call backs. */
     public interface Listener {
-        public void viewNote(String filename);
-        public String getCabString(int size);
-        public void exportNote(Object[] filesToExport);
-        public void deleteNote(Object[] filesToDelete);
-        public String loadNoteTitle(String filename) throws IOException;
-        public void showFab();
-        public void hideFab();
+        void viewNote(String filename);
+        String getCabString(int size);
+        void exportNote(Object[] filesToExport);
+        void deleteNote(Object[] filesToDelete);
+        String loadNoteTitle(String filename) throws IOException;
+        void showFab();
+        void hideFab();
     }
 
     // Use this instance of the interface to deliver action events
@@ -128,7 +129,14 @@ public class NoteListFragment extends Fragment {
         } else {
             if(getId() == R.id.noteViewEdit) {
                 // Change window title
-                getActivity().setTitle(getResources().getString(R.string.app_name));
+                String title = getResources().getString(R.string.app_name);
+
+                getActivity().setTitle(title);
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, getResources().getColor(R.color.primary));
+                    getActivity().setTaskDescription(taskDescription);
+                }
 
                 // Don't show the Up button in the action bar, and disable the button
                 getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);

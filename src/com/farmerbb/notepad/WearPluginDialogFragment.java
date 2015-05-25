@@ -1,4 +1,4 @@
-/* Copyright 2014 Braden Farmer
+/* Copyright 2015 Braden Farmer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,13 +22,13 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-public class SaveButtonDialogFragment extends DialogFragment {
+public class WearPluginDialogFragment extends DialogFragment {
 
     /* The activity that creates an instance of this fragment must
      * implement this interface in order to receive event call backs. */
     public interface Listener {
-        void onSaveDialogPositiveClick();
-        void onSaveDialogNegativeClick();
+        void onWearDialogPositiveClick();
+        void onWearDialogNegativeClick();
     }
 
     // Use this instance of the interface to deliver action events
@@ -51,20 +51,21 @@ public class SaveButtonDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.dialog_save_changes)
-        .setTitle(R.string.dialog_save_button_title)
-        .setPositiveButton(R.string.action_save, new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.install_wear_plugin_message)
+        .setTitle(R.string.install_wear_plugin_title)
+        .setPositiveButton(R.string.action_install, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                listener.onSaveDialogPositiveClick();
+                listener.onWearDialogPositiveClick();
             }
         })
-        .setNegativeButton(R.string.action_discard, new DialogInterface.OnClickListener() {
+        .setNegativeButton(R.string.action_no_thanks, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                listener.onSaveDialogNegativeClick();
+                listener.onWearDialogNegativeClick();
             }
-        });
+         });
 
         // Create the AlertDialog object and return it
         return builder.create();

@@ -67,6 +67,11 @@
     <string name="pref_title_show_dialogs">Confirmer avant d\'enregistrer</string>
     <string name="send_to">Partager la note par&#8230;</string>
     <string name="view_note">Affichage</string>
+    <string name="action_install">Install</string>
+    <string name="action_no_thanks">No Thanks</string>
+    <string name="install_wear_plugin_title">Android Wear Plugin</string>
+    <string name="install_wear_plugin_message">Notepad can save notes from your Android Wear device using the \"Ok Google, take a note\" command. This requires a separate plugin to be installed.\n\nInstall Notepad Plugin for Android Wear?</string>
+    <string name="congratulations">Congratulations! Notepad Plugin for Android Wear setup is now complete.\n\nTo take a note to save in Notepad, say \"Ok Google, take a note\". Your note will automatically be saved in the Notepad app on your device.</string>
 
     <string-array name="sort_by_list">
         <item>Date (la plus récente en premier)</item>

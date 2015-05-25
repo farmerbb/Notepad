@@ -113,8 +113,7 @@ String external;
     @Override
     public boolean dispatchKeyShortcutEvent(KeyEvent event) {
         super.dispatchKeyShortcutEvent(event);
-        if(event.getAction() == KeyEvent.ACTION_DOWN &&
-           event.isCtrlPressed()) {
+        if(event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
             NoteEditFragment fragment = (NoteEditFragment) getFragmentManager().findFragmentByTag("NoteEditFragment");
             fragment.dispatchKeyShortcutEvent(event.getKeyCode());
 
@@ -189,6 +188,11 @@ String external;
 
     @Override
     public String loadNote(String filename) {
+        return null;
+    }
+
+    @Override
+    public String loadNoteTitle(String filename) {
         return null;
     }
 }

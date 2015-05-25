@@ -17,6 +17,7 @@ package com.farmerbb.notepad;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
@@ -89,11 +90,12 @@ public class NoteEditFragment extends Fragment {
     /* The activity that creates an instance of this fragment must
      * implement this interface in order to receive event call backs. */
     public interface Listener {
-        public void showBackButtonDialog(String filename);
-        public void showDeleteDialog();
-        public void showSaveButtonDialog();
-        public boolean isShareIntent();
-        public String loadNote(String filename) throws IOException;
+        void showBackButtonDialog(String filename);
+        void showDeleteDialog();
+        void showSaveButtonDialog();
+        boolean isShareIntent();
+        String loadNote(String filename) throws IOException;
+        String loadNoteTitle(String filename) throws IOException;
     }
 
     // Use this instance of the interface to deliver action events
@@ -255,10 +257,23 @@ public class NoteEditFragment extends Fragment {
         }
 
         // Change window title
+        String title;
+
         if(isSavedNote)
-            getActivity().setTitle(getResources().getString(R.string.edit_note));
+            try {
+                title = listener.loadNoteTitle(filename);
+            } catch (IOException e) {
+                title = getResources().getString(R.string.edit_note);
+            }
         else
-            getActivity().setTitle(getResources().getString(R.string.action_new));
+            title = getResources().getString(R.string.action_new);
+
+        getActivity().setTitle(title);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, getResources().getColor(R.color.primary));
+            getActivity().setTaskDescription(taskDescription);
+        }
     }
 
     // Register and unregister DeleteNotesReceiver
@@ -560,6 +575,22 @@ public class NoteEditFragment extends Fragment {
                     try {
                         // Keyboard shortcut just saves the note; no dialog shown
                         saveNote();
+                        isSavedNote = true;
+
+                        // Change window title
+                        String title;
+                        try {
+                            title = listener.loadNoteTitle(filename);
+                        } catch (IOException e) {
+                            title = getResources().getString(R.string.edit_note);
+                        }
+
+                        getActivity().setTitle(title);
+
+                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, getResources().getColor(R.color.primary));
+                            getActivity().setTaskDescription(taskDescription);
+                        }
                     } catch (IOException e) {
                         // Show error message as toast if file fails to save
                         showToast(R.string.failed_to_save);

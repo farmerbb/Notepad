@@ -17,6 +17,7 @@ package com.farmerbb.notepad;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -83,8 +84,9 @@ public class NoteViewFragment extends Fragment {
     /* The activity that creates an instance of this fragment must
      * implement this interface in order to receive event call backs. */
     public interface Listener {
-        public void showDeleteDialog();
-        public String loadNote(String filename) throws IOException;
+        void showDeleteDialog();
+        String loadNote(String filename) throws IOException;
+        String loadNoteTitle(String filename) throws IOException;
     }
 
     // Use this instance of the interface to deliver action events
@@ -119,8 +121,24 @@ public class NoteViewFragment extends Fragment {
         setRetainInstance(true);
         setHasOptionsMenu(true);
 
+        // Get filename of saved note
+        filename = getArguments().getString("filename");
+
         // Change window title
-        getActivity().setTitle(getResources().getString(R.string.view_note));
+        String title;
+
+        try {
+            title = listener.loadNoteTitle(filename);
+        } catch (IOException e) {
+            title = getResources().getString(R.string.view_note);
+        }
+
+        getActivity().setTitle(title);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, getResources().getColor(R.color.primary));
+            getActivity().setTaskDescription(taskDescription);
+        }
 
         // Show the Up button in the action bar.
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -140,9 +158,6 @@ public class NoteViewFragment extends Fragment {
 
         // Set up content view
         noteContents = (TextView) getActivity().findViewById(R.id.textView);
-
-        // Get filename of saved note
-        filename = getArguments().getString("filename");
 
         // Load note contents
         try {

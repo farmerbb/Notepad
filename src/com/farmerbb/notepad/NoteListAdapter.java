@@ -35,9 +35,8 @@ public class NoteListAdapter extends ArrayAdapter<String> {
        String note = getItem(position);
 
        // Check if an existing view is being reused, otherwise inflate the view
-       if(convertView == null) {
-          convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_layout, null);
-       }
+       if(convertView == null)
+          convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_layout, parent, false);
 
        // Lookup view for data population
        TextView noteTitle = (TextView) convertView.findViewById(R.id.noteTitle);

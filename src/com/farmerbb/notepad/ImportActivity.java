@@ -20,7 +20,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,11 +33,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ImportActivity extends Activity implements CompoundButton.OnCheckedChangeListener {
+public class ImportActivity extends Activity {
 
     ListView listView;
     Button button;
-    ArrayList<String> listOfFiles;
+    ArrayList<ImportableNote> listOfFiles;
     ArrayList<String> notesToImport;
 
     @SuppressWarnings("deprecation")
@@ -109,7 +108,7 @@ public class ImportActivity extends Activity implements CompoundButton.OnChecked
 
             for(String note : allFiles) {
                 if(note.endsWith(".txt")) {
-                    listOfFiles.add(note);
+                    listOfFiles.add(new ImportableNote(note));
                     numOfFiles++;
                 }
             }
@@ -129,12 +128,12 @@ public class ImportActivity extends Activity implements CompoundButton.OnChecked
         }
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if(isChecked)
-            notesToImport.add(listOfFiles.get(listView.getPositionForView(buttonView)));
-        else
-            notesToImport.remove(listOfFiles.get(listView.getPositionForView(buttonView)));
+    public void onCheckedChanged(String note, boolean isChecked) {
+        if(isChecked) {
+            if(!notesToImport.contains(note))
+                notesToImport.add(note);
+        } else
+            notesToImport.remove(note);
 
         if(notesToImport != null && notesToImport.size() > 0) {
             if(button.getText().equals(getResources().getString(R.string.action_close)))

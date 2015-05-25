@@ -16,6 +16,7 @@
 package com.farmerbb.notepad;
 
 import android.annotation.TargetApi;
+import android.app.ActivityManager;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -88,7 +89,14 @@ public class WelcomeFragment extends Fragment {
                     .commit();
         } else {
             // Change window title
-            getActivity().setTitle(getResources().getString(R.string.app_name));
+            String title = getResources().getString(R.string.app_name);
+
+            getActivity().setTitle(title);
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, getResources().getColor(R.color.primary));
+                getActivity().setTaskDescription(taskDescription);
+            }
 
             // Don't show the Up button in the action bar, and disable the button
             getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);

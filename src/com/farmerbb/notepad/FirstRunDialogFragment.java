@@ -27,7 +27,7 @@ public class FirstRunDialogFragment extends DialogFragment {
     /* The activity that creates an instance of this fragment must
      * implement this interface in order to receive event call backs. */
     public interface Listener {
-        void checkForAndroidWear();
+        void onFirstRunDialogPositiveClick();
     }
 
     // Use this instance of the interface to deliver action events
@@ -57,9 +57,12 @@ public class FirstRunDialogFragment extends DialogFragment {
         .setTitle(R.string.app_name)
         .setPositiveButton(R.string.action_close, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                listener.checkForAndroidWear();
+                listener.onFirstRunDialogPositiveClick();
             }
         });
+
+        // Prevent the user from cancelling this particular dialog
+        setCancelable(false);
 
         // Create the AlertDialog object and return it
         return builder.create();

@@ -72,13 +72,10 @@ NoteViewFragment.Listener {
         SharedPreferences prefMain = getPreferences(Context.MODE_PRIVATE);
         if(prefMain.getInt("first-run", 0) == 0) {
             // Show welcome dialog
-            DialogFragment firstRun = new FirstRunDialogFragment();
-            firstRun.show(getFragmentManager(), "firstrunfragment");
-
-            // Set some initial preferences
-            SharedPreferences.Editor editor = prefMain.edit();
-            editor.putInt("first-run", 1);
-            editor.apply();
+            if(getFragmentManager().findFragmentByTag("firstrunfragment") == null) {
+                DialogFragment firstRun = new FirstRunDialogFragment();
+                firstRun.show(getFragmentManager(), "firstrunfragment");
+            }
         } else {
             // Check to see if Android Wear app is installed, and offer to install the Notepad Plugin
             checkForAndroidWear();
@@ -142,42 +139,50 @@ NoteViewFragment.Listener {
     }
 
     @Override
-    public void checkForAndroidWear() {
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
         // Notepad Plugin for Android Wear sends intent with "plugin_install_complete" extra,
         // in order to verify that the main Notepad app is installed correctly
-        if(getIntent().hasExtra("plugin_install_complete")) {
-            DialogFragment wearDialog = new WearPluginDialogFragmentAlt();
-            wearDialog.show(getFragmentManager(), "WearPluginDialogFragmentAlt");
+        if(intent.hasExtra("plugin_install_complete")) {
+            if(getFragmentManager().findFragmentByTag("WearPluginDialogFragmentAlt") == null) {
+                DialogFragment wearDialog = new WearPluginDialogFragmentAlt();
+                wearDialog.show(getFragmentManager(), "WearPluginDialogFragmentAlt");
+            }
 
             SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = pref.edit();
             editor.putBoolean("show_wear_dialog", false);
             editor.apply();
-        } else {
-            boolean hasAndroidWear = false;
+        }
+    }
 
-            @SuppressWarnings("unused")
-            PackageInfo pInfo;
+    private void checkForAndroidWear() {
+        boolean hasAndroidWear = false;
+
+        @SuppressWarnings("unused")
+        PackageInfo pInfo;
+        try {
+            pInfo = getPackageManager().getPackageInfo("com.google.android.wearable.app", 0);
+            hasAndroidWear = true;
+        } catch (PackageManager.NameNotFoundException e) {}
+
+        if(hasAndroidWear) {
             try {
-                pInfo = getPackageManager().getPackageInfo("com.google.android.wearable.app", 0);
-                hasAndroidWear = true;
-            } catch (PackageManager.NameNotFoundException e) {}
-
-            if(hasAndroidWear) {
-                try {
-                    pInfo = getPackageManager().getPackageInfo("com.farmerbb.notepad.wear", 0);
-                    Intent intent = new Intent("android.intent.action.MAIN");
-                    intent.setComponent(ComponentName.unflattenFromString("com.farmerbb.notepad.wear/com.farmerbb.notepad.wear.MobileMainActivity"));
-                    intent.addCategory("android.intent.category.LAUNCHER");
-                    startActivity(intent);
-                } catch (PackageManager.NameNotFoundException e) {
-                    SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
-                    if(pref.getBoolean("show_wear_dialog", true)) {
-                        DialogFragment wearDialog = new WearPluginDialogFragment();
-                        wearDialog.show(getFragmentManager(), "WearPluginDialogFragment");
-                    }
-                } catch (ActivityNotFoundException e) {}
-            }
+                pInfo = getPackageManager().getPackageInfo("com.farmerbb.notepad.wear", 0);
+                Intent intent = new Intent("android.intent.action.MAIN");
+                intent.setComponent(ComponentName.unflattenFromString("com.farmerbb.notepad.wear/com.farmerbb.notepad.wear.MobileMainActivity"));
+                intent.addCategory("android.intent.category.LAUNCHER");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            } catch (PackageManager.NameNotFoundException e) {
+                SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+                if(pref.getBoolean("show_wear_dialog", true)
+                        && getFragmentManager().findFragmentByTag("new-device-fragment") == null) {
+                    DialogFragment wearDialog = new WearPluginDialogFragment();
+                    wearDialog.show(getFragmentManager(), "WearPluginDialogFragment");
+                }
+            } catch (ActivityNotFoundException e) {}
         }
     }
 
@@ -482,6 +487,17 @@ NoteViewFragment.Listener {
             WelcomeFragment fragment = (WelcomeFragment) getFragmentManager().findFragmentByTag("NoteListFragment");
             fragment.hideFab();
         }
+    }
+
+    @Override
+    public void onFirstRunDialogPositiveClick() {
+        // Set some initial preferences
+        SharedPreferences prefMain = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefMain.edit();
+        editor.putInt("first-run", 1);
+        editor.apply();
+
+        checkForAndroidWear();
     }
 
     @Override

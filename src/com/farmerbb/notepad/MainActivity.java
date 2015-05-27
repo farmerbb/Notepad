@@ -141,10 +141,14 @@ NoteViewFragment.Listener {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
+        checkForAndroidWear();
+    }
 
+    private void checkForAndroidWear() {
         // Notepad Plugin for Android Wear sends intent with "plugin_install_complete" extra,
         // in order to verify that the main Notepad app is installed correctly
-        if(intent.hasExtra("plugin_install_complete")) {
+        if(getIntent().hasExtra("plugin_install_complete")) {
             if(getFragmentManager().findFragmentByTag("WearPluginDialogFragmentAlt") == null) {
                 DialogFragment wearDialog = new WearPluginDialogFragmentAlt();
                 wearDialog.show(getFragmentManager(), "WearPluginDialogFragmentAlt");
@@ -154,35 +158,33 @@ NoteViewFragment.Listener {
             SharedPreferences.Editor editor = pref.edit();
             editor.putBoolean("show_wear_dialog", false);
             editor.apply();
-        }
-    }
+        } else {
+            boolean hasAndroidWear = false;
 
-    private void checkForAndroidWear() {
-        boolean hasAndroidWear = false;
-
-        @SuppressWarnings("unused")
-        PackageInfo pInfo;
-        try {
-            pInfo = getPackageManager().getPackageInfo("com.google.android.wearable.app", 0);
-            hasAndroidWear = true;
-        } catch (PackageManager.NameNotFoundException e) {}
-
-        if(hasAndroidWear) {
+            @SuppressWarnings("unused")
+            PackageInfo pInfo;
             try {
-                pInfo = getPackageManager().getPackageInfo("com.farmerbb.notepad.wear", 0);
-                Intent intent = new Intent("android.intent.action.MAIN");
-                intent.setComponent(ComponentName.unflattenFromString("com.farmerbb.notepad.wear/com.farmerbb.notepad.wear.MobileMainActivity"));
-                intent.addCategory("android.intent.category.LAUNCHER");
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            } catch (PackageManager.NameNotFoundException e) {
-                SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
-                if(pref.getBoolean("show_wear_dialog", true)
-                        && getFragmentManager().findFragmentByTag("WearPluginDialogFragment") == null) {
-                    DialogFragment wearDialog = new WearPluginDialogFragment();
-                    wearDialog.show(getFragmentManager(), "WearPluginDialogFragment");
-                }
-            } catch (ActivityNotFoundException e) {}
+                pInfo = getPackageManager().getPackageInfo("com.google.android.wearable.app", 0);
+                hasAndroidWear = true;
+            } catch (PackageManager.NameNotFoundException e) {}
+
+            if(hasAndroidWear) {
+                try {
+                    pInfo = getPackageManager().getPackageInfo("com.farmerbb.notepad.wear", 0);
+                    Intent intent = new Intent("android.intent.action.MAIN");
+                    intent.setComponent(ComponentName.unflattenFromString("com.farmerbb.notepad.wear/com.farmerbb.notepad.wear.MobileMainActivity"));
+                    intent.addCategory("android.intent.category.LAUNCHER");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } catch (PackageManager.NameNotFoundException e) {
+                    SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+                    if(pref.getBoolean("show_wear_dialog", true)
+                            && getFragmentManager().findFragmentByTag("WearPluginDialogFragment") == null) {
+                        DialogFragment wearDialog = new WearPluginDialogFragment();
+                        wearDialog.show(getFragmentManager(), "WearPluginDialogFragment");
+                    }
+                } catch (ActivityNotFoundException e) {}
+            }
         }
     }
 

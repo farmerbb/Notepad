@@ -171,9 +171,9 @@ NoteViewFragment.Listener {
             if(hasAndroidWear) {
                 try {
                     pInfo = getPackageManager().getPackageInfo("com.farmerbb.notepad.wear", 0);
-                    Intent intent = new Intent("android.intent.action.MAIN");
+                    Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.setComponent(ComponentName.unflattenFromString("com.farmerbb.notepad.wear/com.farmerbb.notepad.wear.MobileMainActivity"));
-                    intent.addCategory("android.intent.category.LAUNCHER");
+                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 } catch (PackageManager.NameNotFoundException e) {

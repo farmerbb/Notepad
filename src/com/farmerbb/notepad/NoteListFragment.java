@@ -314,9 +314,10 @@ public class NoteListFragment extends Fragment {
             for(int i = 0; i < numOfFiles; i++) {
                 for(int j = 0; j < numOfFiles; j++) {
                     if(listOfTitlesByName[i].getNote().equals(listOfTitlesByDate[j].getNote())
-                       && listOfNotesByName[i].equals("new")) {
+                            && listOfNotesByName[i].equals("new")) {
                         listOfNotesByName[i] = listOfNotesByDate[j];
                         listOfNotesByDate[j] = "";
+                        listOfTitlesByDate[j] = new NoteListItem("", "");
                     }
                 }
             }

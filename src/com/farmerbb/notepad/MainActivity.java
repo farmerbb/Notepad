@@ -41,7 +41,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -472,16 +472,13 @@ NoteViewFragment.Listener {
         return(line);
     }
 
-    // Loads date of a note for display in the ListView
+    // Calculates last modified date/time of a note for display in the ListView
     @Override
     public String loadNoteDate(String filename) throws IOException {
-        File file = new File(getFilesDir() + File.separator + filename);
-        Date lastModified = new Date(file.lastModified());
-        String strFormat = getResources().getString(R.string.note_date_format);
-        SimpleDateFormat formatter = new SimpleDateFormat(strFormat);
-        String datetime = formatter.format(lastModified);
-
-        return(datetime);
+        Date lastModified = new Date(Long.parseLong(filename));
+        return(DateFormat
+                .getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+                .format(lastModified));
     }
 
     @Override

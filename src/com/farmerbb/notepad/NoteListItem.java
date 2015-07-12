@@ -15,29 +15,29 @@
 
 package com.farmerbb.notepad;
 
-
 import java.util.Comparator;
 
 public class NoteListItem {
-  private String note;
-  private String date;
+    private String note;
+    private String date;
 
-  public NoteListItem(String note, String date) {
-    this.note = note;
-    this.date = date;
-  }
-
-  public String getNote() {
-    return note;
-  }
-  public String getDate() {
-    return date;
-  }
-
-  public static Comparator<NoteListItem> NoteComparatorTitle = new Comparator<NoteListItem>() {
-    @Override
-    public int compare(NoteListItem arg1, NoteListItem arg2) {
-      return arg1.getNote().compareToIgnoreCase(arg2.getNote());
+    public NoteListItem(String note, String date) {
+        this.note = note;
+        this.date = date;
     }
-  };
+
+    public String getNote() {
+      return note;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public static Comparator<NoteListItem> NoteComparatorTitle = new Comparator<NoteListItem>() {
+        @Override
+        public int compare(NoteListItem arg1, NoteListItem arg2) {
+            return arg1.getNote().compareToIgnoreCase(arg2.getNote());
+        }
+    };
 }

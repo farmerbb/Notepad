@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2014 Braden Farmer
+     Copyright 2015 Sean93Park
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,20 +15,20 @@
      limitations under the License.
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="wrap_content" >
 
     <TextView
         android:id="@+id/noteTitle"
-        android:layout_width="0dip"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="1"
-        android:paddingTop="@dimen/padding_top_bottom"
-        android:paddingBottom="@dimen/padding_top_bottom"
+        android:paddingTop="2dp"
+        android:paddingBottom="0dp"
         android:paddingLeft="@dimen/padding_left_right"
         android:paddingRight="@dimen/padding_left_right"
         android:text="@null"
@@ -35,4 +36,20 @@
         android:textSize="18sp"
         android:background="@drawable/selectable_background_holoyolo" />
 
-</LinearLayout>
+  <TextView
+      android:id="@+id/noteDate"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="2"
+      android:layout_below="@id/noteTitle"
+      android:gravity="right"
+      android:maxLines="1"
+      android:paddingTop="0dp"
+      android:paddingBottom="2dp"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      android:text="@null"
+      android:textColor="@color/text_color_secondary"
+      android:textSize="14sp"
+      android:background="@drawable/selectable_background_holoyolo" />
+</RelativeLayout>

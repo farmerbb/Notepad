@@ -1,4 +1,5 @@
 /* Copyright 2014 Braden Farmer
+ * Copyright 2015 Sean93Park
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,27 +25,28 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class NoteListAdapter extends ArrayAdapter<String> {
-    public NoteListAdapter(Context context, ArrayList<String> notes) {
-       super(context, R.layout.row_layout, notes);
+public class NoteListAdapter extends ArrayAdapter<NoteListItem> {
+    public NoteListAdapter(Context context, ArrayList<NoteListItem> notes) {
+        super(context, R.layout.row_layout, notes);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-       // Get the data item for this position
-       String note = getItem(position);
+        // Get the data item for this position
+        NoteListItem item = getItem(position);
+        String note = item.getNote();
 
-       // Check if an existing view is being reused, otherwise inflate the view
-       if(convertView == null)
-          convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_layout, parent, false);
+        // Check if an existing view is being reused, otherwise inflate the view
+        if(convertView == null)
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_layout, parent, false);
 
-       // Lookup view for data population
-       TextView noteTitle = (TextView) convertView.findViewById(R.id.noteTitle);
+        // Lookup view for data population
+        TextView noteTitle = (TextView) convertView.findViewById(R.id.noteTitle);
 
-       // Populate the data into the template view using the data object
-       noteTitle.setText(note);
+        // Populate the data into the template view using the data object
+        noteTitle.setText(note);
 
-       // Return the completed view to render on screen
-       return convertView;
-   }
+        // Return the completed view to render on screen
+        return convertView;
+    }
 }

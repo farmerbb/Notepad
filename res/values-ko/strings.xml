@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2014 Braden Farmer
+     Copyright 2015 Sean Park
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+
+<resources>
+
+    <string name="action_cancel">취소</string>
+    <string name="action_close">닫기</string>
+    <string name="action_delete">삭제</string>
+    <string name="action_discard">버리기</string>
+    <string name="action_edit">편집</string>
+    <string name="action_export">보내기</string>
+    <string name="action_new">새 메모</string>
+    <string name="action_import">불어오기</string>
+    <string name="action_save">저장</string>
+    <string name="action_settings">설정</string>
+    <string name="action_share">공유</string>
+    <string name="action_sort_by">정렬 순서</string>
+    <string name="app_name">노트패드</string>
+    <string name="cab_note_selected">선택됨</string>
+    <string name="cab_notes_selected">선택됨</string>
+    <string name="changes_discarded">변경 취소됨</string>
+    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2015 Braden Farmer\n&#169; 2015 Sean93Park\n\nThis app\'s <a href="http://github.com/farmerbb/Notepad">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, except where noted below:\n\nThis app uses code derived from the <a href="https://github.com/makovkastar/FloatingActionButton">FloatingActionButton</a> project, licensed under the MIT License.\n\nThis app uses graphical assets from the following sources:\n\n&#8226; <a href="http://deleket.deviantart.com">Notepad icon (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a> <a href="http://creativecommons.org/licenses/by/3.0/">(CC-BY-3.0)</a></string>
+    <string name="dialog_about_title">노트패드 정보</string>
+    <string name="dialog_are_you_sure">노트를 삭제하시겠어요?</string>
+    <string name="dialog_delete_button_title">노트 삭제</string>
+    <string name="dialog_save_button_title">변경 저장</string>
+    <string name="dialog_save_changes">변경 내용을 저장하시겠어요?</string>
+    <string name="draft_restored">임시 복구됨</string>
+    <string name="draft_saved">임시 저장됨</string>
+    <string name="double_tap">팁: 문장 더블-탭으로 편집하기</string>
+    <string name="edit_note">노트 편집</string>
+    <string name="edit_text">여기에 메모 내용을 입력하세요</string>
+    <string name="empty_note">메모 내용이 없습니다</string>
+    <string name="error_exporting_notes">노트 내보니기 실패</string>
+    <string name="error_importing_notes">노트 불러오기 실패</string>
+    <string name="error_loading_list">노트 목록 읽기 실패</string>
+    <string name="error_loading_note">노트 읽기 실패</string>
+    <string name="failed_to_save">오류: 노트 저장 실패</string>
+    <string name="first_run">노트패드입니다!\n\n새 노트를 생성하려면 + 기호를 탭 하세요</string>
+    <string name="first_view">메모를 수정하려면 본문을 더블-탭 하거나 연필을 탭 하세요</string>
+    <string name="import_notes">노트 가져오기</string>
+    <string name="loading_external_file">외부 파일을 읽기는 지원하지 않음</string>
+    <string name="import_notes_instructions">불어오기를 하려면 다음에 텍스트 파일을 두세요:\n</string>
+    <string name="no_external_storage">외부 저장 장치 읽기 실패. 기기를 재시작해 보세요</string>
+    <string name="no_notes_found">새 노트를 만드세요</string>
+    <string name="note_deleted">노트 삭제됨</string>
+    <string name="note_exported_to">노트 보내기</string>
+    <string name="note_saved">노트 저장됨</string>
+    <string name="notes_deleted">노트 삭제</string>
+    <string name="notes_exported_to">노트 보내기</string>
+    <string name="notes_imported_successfully">노트 불러오기 성공</string>
+    <string name="pref_title_show_dialogs">저장전에 물어보기</string>
+    <string name="send_to">노트 공유하기...</string>
+    <string name="view_note">노트 보기</string>
+    <string name="action_install">Install</string>
+    <string name="action_no_thanks">No Thanks</string>
+    <string name="install_wear_plugin_title">Android Wear Plugin</string>
+    <string name="install_wear_plugin_message">Notepad can save notes from your Android Wear device using the \"Ok Google, take a note\" command. This requires a separate plugin to be installed.\n\nInstall Notepad Plugin for Android Wear?</string>
+    <string name="congratulations">Congratulations! Notepad Plugin for Android Wear setup is now complete.\n\nTo take a note to save in Notepad, say \"Ok Google, take a note\". Your note will automatically be saved in the Notepad app on your device.</string>
+    <string name="pref_title_show_date">Show date/time</string>
+
+    <string-array name="sort_by_list">
+        <item>날짜 (내림차순)</item>
+        <item>내용 (가나다순)</item>
+    </string-array>
+
+</resources>

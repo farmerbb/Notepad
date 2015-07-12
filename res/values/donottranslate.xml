@@ -18,6 +18,8 @@
 
 <resources>
 
+    <string name="note_date_format">yyyy-MM-dd kk:mm</string>
+
     <string-array name="sort_by_list_values">
         <item>date</item>
         <item>name</item>

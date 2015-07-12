@@ -21,5 +21,6 @@
     <color name="primary_dark">#0082AD</color>
     <color name="window_background">#FFFFFF</color>
     <color name="text_color_primary">#000000</color>
+    <color name="text_color_secondary">#606060</color>
     <color name="close_button">#009688</color>
 </resources>

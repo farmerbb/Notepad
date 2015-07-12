@@ -41,10 +41,10 @@
             android:ems="10"
             android:hint="@string/edit_text"
             android:inputType="textMultiLine|textCapSentences"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:paddingTop="@dimen/padding_top_bottom"
+            android:paddingBottom="@dimen/padding_top_bottom"
+            android:paddingLeft="@dimen/padding_left_right"
+            android:paddingRight="@dimen/padding_left_right"
             android:textColor="@color/text_color_primary" >
 
             <requestFocus />

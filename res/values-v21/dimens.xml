@@ -1,0 +1,6 @@
+<resources>
+
+    <dimen name="padding_top_bottom">12dp</dimen>
+    <dimen name="padding_left_right">16dp</dimen>
+
+</resources>

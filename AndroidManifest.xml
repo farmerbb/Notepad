@@ -20,12 +20,23 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.farmerbb.notepad"
     android:installLocation="auto"
-    android:versionCode="63"
-    android:versionName="2.1.7" >
+    android:versionCode="64"
+    android:versionName="2.1.8" >
 
     <uses-sdk
         android:minSdkVersion="15"
         android:targetSdkVersion="22" />
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
 
     <application
         android:allowBackup="true"

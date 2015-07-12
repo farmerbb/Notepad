@@ -1,4 +1,5 @@
 /* Copyright 2014 Braden Farmer
+ * Copyright 2015 Sean93Park
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +41,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class MainActivity extends Activity implements 
 BackButtonDialogFragment.Listener, 
@@ -467,6 +470,18 @@ NoteViewFragment.Listener {
         reader.close();
 
         return(line);
+    }
+
+    // Loads date of a note for display in the ListView
+    @Override
+    public String loadNoteDate(String filename) throws IOException {
+        File file = new File(getFilesDir() + File.separator + filename);
+        Date lastModified = new Date(file.lastModified());
+        String strFormat = getResources().getString(R.string.note_date_format);
+        SimpleDateFormat formatter = new SimpleDateFormat(strFormat);
+        String datetime = formatter.format(lastModified);
+
+        return(datetime);
     }
 
     @Override

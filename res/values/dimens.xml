@@ -19,8 +19,8 @@
     <dimen name="note_list_elevation_land">65dp</dimen>
     <dimen name="note_view_edit_elevation_land">40dp</dimen>
 
-    <dimen name="padding_top_bottom">10dp</dimen>
-    <dimen name="padding_top_bottom_date">5dp</dimen>
-    <dimen name="padding_left_right">15dp</dimen>
+    <dimen name="padding_top_bottom">12dp</dimen>
+    <dimen name="padding_top_bottom_date">8dp</dimen>
+    <dimen name="padding_left_right">16dp</dimen>
 
 </resources>

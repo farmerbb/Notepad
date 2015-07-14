@@ -1,0 +1,5 @@
+<resources>
+
+    <dimen name="padding_left_right">24dp</dimen>
+
+</resources>

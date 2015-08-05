@@ -40,6 +40,18 @@ String external;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_edit);
 
+        // Apply theme
+        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        String theme = pref.getString("theme", "light-sans");
+
+        LinearLayout noteViewEdit = (LinearLayout) findViewById(R.id.noteViewEdit);
+
+        if(theme.contains("light"))
+            noteViewEdit.setBackgroundColor(getResources().getColor(R.color.window_background));
+
+        if(theme.contains("dark"))
+            noteViewEdit.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+
         // Set action bar elevation
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             getActionBar().setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));

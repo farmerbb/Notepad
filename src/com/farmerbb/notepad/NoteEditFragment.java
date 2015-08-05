@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -38,6 +39,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -149,6 +151,32 @@ public class NoteEditFragment extends Fragment {
 
         // Set up content view
         noteContents = (EditText) getActivity().findViewById(R.id.editText1);
+
+        // Apply theme
+        SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        ScrollView scrollView = (ScrollView) getActivity().findViewById(R.id.scrollView1);
+        String theme = pref.getString("theme", "light-sans");
+
+        if(theme.contains("light")) {
+            noteContents.setTextColor(getResources().getColor(R.color.text_color_primary));
+            noteContents.setBackgroundColor(getResources().getColor(R.color.window_background));
+            scrollView.setBackgroundColor(getResources().getColor(R.color.window_background));
+        }
+
+        if(theme.contains("dark")) {
+            noteContents.setTextColor(getResources().getColor(R.color.text_color_primary_dark));
+            noteContents.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+            scrollView.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+        }
+
+        if(theme.contains("sans"))
+            noteContents.setTypeface(Typeface.SANS_SERIF);
+
+        if(theme.contains("serif"))
+            noteContents.setTypeface(Typeface.SERIF);
+
+        if(theme.contains("monospace"))
+            noteContents.setTypeface(Typeface.MONOSPACE);
 
         // Get filename
         try {

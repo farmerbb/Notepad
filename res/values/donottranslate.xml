@@ -22,5 +22,13 @@
         <item>date</item>
         <item>name</item>
     </string-array>
+    <string-array name="theme_list_values">
+        <item>light-sans</item>
+        <item>light-serif</item>
+        <item>light-monospace</item>
+        <item>dark-sans</item>
+        <item>dark-serif</item>
+        <item>dark-monospace</item>
+    </string-array>
 
 </resources>

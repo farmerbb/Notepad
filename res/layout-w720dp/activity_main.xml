@@ -29,8 +29,7 @@ limitations under the License.
         android:layout_weight="2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:background="@color/window_background" />
+        android:orientation="horizontal" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/noteViewEdit"
@@ -39,7 +38,6 @@ limitations under the License.
         android:layout_height="match_parent"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
-        android:background="@color/window_background"
         android:orientation="horizontal" />
 
 </LinearLayout>

@@ -42,7 +42,7 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
         // Bind the summaries of EditText/List/Dialog/Ringtone preferences to
         // their values. When their values change, their summaries are updated
         // to reflect the new value, per the Android Design guidelines.
-
+        bindPreferenceSummaryToValue(findPreference("theme"));
         bindPreferenceSummaryToValue(findPreference("sort_by"));
     }
 

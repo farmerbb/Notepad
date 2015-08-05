@@ -28,14 +28,12 @@
         android:id="@+id/noteViewEdit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/window_background" />
+        android:orientation="vertical" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/noteList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/window_background" />
+        android:orientation="vertical" />
 
     </LinearLayout>

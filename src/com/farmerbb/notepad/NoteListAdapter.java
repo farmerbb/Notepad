@@ -17,6 +17,8 @@
 package com.farmerbb.notepad;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +47,25 @@ public class NoteListAdapter extends ArrayAdapter<NoteListItem> {
 
         // Populate the data into the template view using the data object
         noteTitle.setText(note);
+
+        // Apply theme
+        SharedPreferences pref = getContext().getSharedPreferences(getContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        String theme = pref.getString("theme", "light-sans");
+
+        if(theme.contains("light"))
+            noteTitle.setTextColor(getContext().getResources().getColor(R.color.text_color_primary));
+
+        if(theme.contains("dark"))
+            noteTitle.setTextColor(getContext().getResources().getColor(R.color.text_color_primary_dark));
+
+        if(theme.contains("sans"))
+            noteTitle.setTypeface(Typeface.SANS_SERIF);
+
+        if(theme.contains("serif"))
+            noteTitle.setTypeface(Typeface.SERIF);
+
+        if(theme.contains("monospace"))
+            noteTitle.setTypeface(Typeface.MONOSPACE);
 
         // Return the completed view to render on screen
         return convertView;

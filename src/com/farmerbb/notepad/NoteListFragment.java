@@ -38,6 +38,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +54,7 @@ import java.util.Comparator;
 
 public class NoteListFragment extends Fragment {
 
+    String theme;
     String sortBy;
     boolean showDate = false;
 
@@ -149,8 +151,23 @@ public class NoteListFragment extends Fragment {
 
             // Read preferences
             SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+            theme = pref.getString("theme", "light-sans");
             sortBy = pref.getString("sort_by", "date");
             showDate = pref.getBoolean("show_date", false);
+
+            // Apply theme
+            LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
+            LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);
+
+            if(theme.contains("light")) {
+                noteViewEdit.setBackgroundColor(getResources().getColor(R.color.window_background));
+                noteList.setBackgroundColor(getResources().getColor(R.color.window_background));
+            }
+
+            if(theme.contains("dark")) {
+                noteViewEdit.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+                noteList.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+            }
 
             // Refresh list of notes onResume (instead of onCreate) to reflect additions/deletions and preference changes
             listNotes();

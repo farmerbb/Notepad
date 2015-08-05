@@ -18,6 +18,14 @@
     android:title="@string/action_settings" >
 
     <ListPreference
+        android:defaultValue="light-sans"
+        android:entries="@array/theme_list"
+        android:entryValues="@array/theme_list_values"
+        android:key="theme"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/action_theme" />
+    <ListPreference
         android:defaultValue="date"
         android:entries="@array/sort_by_list"
         android:entryValues="@array/sort_by_list_values"

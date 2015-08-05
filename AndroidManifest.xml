@@ -20,8 +20,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.farmerbb.notepad"
     android:installLocation="auto"
-    android:versionCode="67"
-    android:versionName="2.1.8" >
+    android:versionCode="68"
+    android:versionName="2.1.9" >
 
     <uses-sdk
         android:minSdkVersion="15"

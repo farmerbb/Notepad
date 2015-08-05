@@ -17,39 +17,71 @@
 package com.farmerbb.notepad;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class NoteListDateAdapter extends ArrayAdapter<NoteListItem> {
     public NoteListDateAdapter(Context context, ArrayList<NoteListItem> notes) {
-       super(context, R.layout.row_layout_date, notes);
+        super(context, R.layout.row_layout_date, notes);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-       // Get the data item for this position
-       NoteListItem item = getItem(position);
-       String note = item.getNote();
-       String date = item.getDate();
+        // Get the data item for this position
+        NoteListItem item = getItem(position);
+        String note = item.getNote();
+        String date = item.getDate();
 
-       // Check if an existing view is being reused, otherwise inflate the view
-       if(convertView == null)
-          convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_layout_date, parent, false);
+        // Check if an existing view is being reused, otherwise inflate the view
+        if(convertView == null)
+           convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_layout_date, parent, false);
 
-       // Lookup view for data population
-       TextView noteTitle = (TextView) convertView.findViewById(R.id.noteTitle);
-       TextView noteDate = (TextView) convertView.findViewById(R.id.noteDate);
+        // Lookup view for data population
+        TextView noteTitle = (TextView) convertView.findViewById(R.id.noteTitle);
+        TextView noteDate = (TextView) convertView.findViewById(R.id.noteDate);
 
-       // Populate the data into the template view using the data object
-       noteTitle.setText(note);
-       noteDate.setText(date);
+        // Populate the data into the template view using the data object
+        noteTitle.setText(note);
+        noteDate.setText(date);
 
-       // Return the completed view to render on screen
-       return convertView;
-   }
+        // Apply theme
+        SharedPreferences pref = getContext().getSharedPreferences(getContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        String theme = pref.getString("theme", "light-sans");
+
+        if(theme.contains("light")) {
+            noteTitle.setTextColor(getContext().getResources().getColor(R.color.text_color_primary));
+            noteDate.setTextColor(getContext().getResources().getColor(R.color.text_color_secondary));
+        }
+
+        if(theme.contains("dark")) {
+            noteTitle.setTextColor(getContext().getResources().getColor(R.color.text_color_primary_dark));
+            noteDate.setTextColor(getContext().getResources().getColor(R.color.text_color_secondary_dark));
+        }
+
+        if(theme.contains("sans")) {
+            noteTitle.setTypeface(Typeface.SANS_SERIF);
+            noteDate.setTypeface(Typeface.SANS_SERIF);
+        }
+
+        if(theme.contains("serif")) {
+            noteTitle.setTypeface(Typeface.SERIF);
+            noteDate.setTypeface(Typeface.SERIF);
+        }
+
+        if(theme.contains("monospace")) {
+            noteTitle.setTypeface(Typeface.MONOSPACE);
+            noteDate.setTypeface(Typeface.MONOSPACE);
+        }
+
+        // Return the completed view to render on screen
+        return convertView;
+    }
 }

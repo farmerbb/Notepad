@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -39,6 +40,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -158,6 +160,32 @@ public class NoteViewFragment extends Fragment {
 
         // Set up content view
         noteContents = (TextView) getActivity().findViewById(R.id.textView);
+
+        // Apply theme
+        SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        ScrollView scrollView = (ScrollView) getActivity().findViewById(R.id.scrollView);
+        String theme = pref.getString("theme", "light-sans");
+
+        if(theme.contains("light")) {
+            noteContents.setTextColor(getResources().getColor(R.color.text_color_primary));
+            noteContents.setBackgroundColor(getResources().getColor(R.color.window_background));
+            scrollView.setBackgroundColor(getResources().getColor(R.color.window_background));
+        }
+
+        if(theme.contains("dark")) {
+            noteContents.setTextColor(getResources().getColor(R.color.text_color_primary_dark));
+            noteContents.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+            scrollView.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+        }
+
+        if(theme.contains("sans"))
+            noteContents.setTypeface(Typeface.SANS_SERIF);
+
+        if(theme.contains("serif"))
+            noteContents.setTypeface(Typeface.SERIF);
+
+        if(theme.contains("monospace"))
+            noteContents.setTypeface(Typeface.MONOSPACE);
 
         // Load note contents
         try {

@@ -1,0 +1,119 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:20:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:20:11
+	package
+		ADDED from AndroidManifest.xml:21:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionName
+		ADDED from AndroidManifest.xml:24:5
+	android:versionCode
+		ADDED from AndroidManifest.xml:23:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:installLocation
+		ADDED from AndroidManifest.xml:22:5
+uses-sdk
+ADDED from AndroidManifest.xml:26:5
+	android:targetSdkVersion
+		ADDED from AndroidManifest.xml:28:9
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		ADDED from AndroidManifest.xml:27:9
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+application
+ADDED from AndroidManifest.xml:30:5
+	android:label
+		ADDED from AndroidManifest.xml:33:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:31:9
+	android:icon
+		ADDED from AndroidManifest.xml:32:9
+	android:theme
+		ADDED from AndroidManifest.xml:34:9
+activity#com.farmerbb.notepad.ImportActivity
+ADDED from AndroidManifest.xml:35:9
+	android:label
+		ADDED from AndroidManifest.xml:37:13
+	android:theme
+		ADDED from AndroidManifest.xml:38:13
+	android:name
+		ADDED from AndroidManifest.xml:36:13
+activity#com.farmerbb.notepad.MainActivity
+ADDED from AndroidManifest.xml:40:9
+	android:label
+		ADDED from AndroidManifest.xml:42:13
+	android:name
+		ADDED from AndroidManifest.xml:41:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:43:13
+intent-filter#android.intent.action.MAIN+android.intent.category.APP_MAPS+android.intent.category.DEFAULT+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:44:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:45:17
+	android:name
+		ADDED from AndroidManifest.xml:45:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:47:17
+	android:name
+		ADDED from AndroidManifest.xml:47:27
+category#android.intent.category.DEFAULT
+ADDED from AndroidManifest.xml:48:17
+	android:name
+		ADDED from AndroidManifest.xml:48:27
+category#android.intent.category.APP_MAPS
+ADDED from AndroidManifest.xml:49:17
+	android:name
+		ADDED from AndroidManifest.xml:49:27
+activity#com.farmerbb.notepad.NoteEditActivity
+ADDED from AndroidManifest.xml:52:9
+	android:label
+		ADDED from AndroidManifest.xml:54:13
+	android:name
+		ADDED from AndroidManifest.xml:53:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:55:13
+intent-filter#android.intent.action.SEND+android.intent.category.DEFAULT+com.google.android.gm.action.AUTO_SEND+com.google.android.voicesearch.SELF_NOTE
+ADDED from AndroidManifest.xml:56:13
+action#android.intent.action.SEND
+ADDED from AndroidManifest.xml:57:17
+	android:name
+		ADDED from AndroidManifest.xml:57:25
+action#com.google.android.gm.action.AUTO_SEND
+ADDED from AndroidManifest.xml:58:17
+	android:name
+		ADDED from AndroidManifest.xml:58:25
+category#com.google.android.voicesearch.SELF_NOTE
+ADDED from AndroidManifest.xml:61:17
+	android:name
+		ADDED from AndroidManifest.xml:61:27
+data
+ADDED from AndroidManifest.xml:63:17
+	android:mimeType
+		ADDED from AndroidManifest.xml:63:23
+activity#com.farmerbb.notepad.SettingsActivity
+ADDED from AndroidManifest.xml:66:9
+	android:label
+		ADDED from AndroidManifest.xml:68:13
+	android:theme
+		ADDED from AndroidManifest.xml:69:13
+	android:name
+		ADDED from AndroidManifest.xml:67:13
+receiver#com.farmerbb.notepad.WearPluginReceiver
+ADDED from AndroidManifest.xml:72:9
+	android:exported
+		ADDED from AndroidManifest.xml:75:13
+	android:enabled
+		ADDED from AndroidManifest.xml:74:13
+	android:name
+		ADDED from AndroidManifest.xml:73:13
+intent-filter#com.farmerbb.notepad.RECEIVE_NOTE
+ADDED from AndroidManifest.xml:76:13
+action#com.farmerbb.notepad.RECEIVE_NOTE
+ADDED from AndroidManifest.xml:77:17
+	android:name
+		ADDED from AndroidManifest.xml:77:25

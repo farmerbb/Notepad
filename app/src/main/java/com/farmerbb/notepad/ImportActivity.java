@@ -53,17 +53,16 @@ public class ImportActivity extends Activity {
         TextView textView = (TextView) findViewById(R.id.importTextView);
         textView.setText(getResources().getString(R.string.import_notes_instructions) + getExternalFilesDir(null));
 
+        button = (Button) findViewById(R.id.button);
+        button.setText(getResources().getString(R.string.action_close).toUpperCase());
+
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             TextView header = (TextView) findViewById(R.id.import_header);
             header.setTypeface(Typeface.DEFAULT);
-
-            Button button = (Button) findViewById(R.id.button);
-            button.setText(button.getText().toString().toUpperCase());
             button.setTextSize(14);
         }
 
         // Set OnClickListener for the button
-        button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -148,10 +147,10 @@ public class ImportActivity extends Activity {
             notesToImport.remove(note);
 
         if(notesToImport != null && notesToImport.size() > 0) {
-            if(button.getText().equals(getResources().getString(R.string.action_close)))
-                button.setText(getResources().getString(R.string.action_import));
+            if(button.getText().toString().equalsIgnoreCase(getResources().getString(R.string.action_close)))
+                button.setText(getResources().getString(R.string.action_import).toUpperCase());
         } else
-            button.setText(getResources().getString(R.string.action_close));
+            button.setText(getResources().getString(R.string.action_close).toUpperCase());
     }
 
     // Method used to generate toast notifications

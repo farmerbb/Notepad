@@ -18,7 +18,21 @@ limitations under the License.
     android:id="@+id/layoutImport"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="8dp" >
+
+    <TextView
+        android:id="@+id/import_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textSize="20sp"
+        android:text="@string/import_notes"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/text_color_primary" />
 
     <TextView
         android:id="@+id/importTextView"
@@ -34,32 +48,25 @@ limitations under the License.
         android:id="@+id/listView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/buttonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="8dp"
+        android:gravity="bottom|end"
+        android:padding="16dp"
         android:orientation="vertical" >
 
-        <View
-            android:layout_height="1dp"
-            android:background="?android:attr/dividerVertical"
-            android:layout_width="match_parent" />
-
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:text="@string/action_close"
-            android:gravity="center"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:textSize="14sp"
+            android:gravity="bottom|end"
+            android:textColor="@color/close_button"
             android:id="@+id/button" />
 
     </LinearLayout>

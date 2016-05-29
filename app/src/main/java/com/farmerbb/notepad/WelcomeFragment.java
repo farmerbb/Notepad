@@ -17,6 +17,7 @@ package com.farmerbb.notepad;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -36,8 +37,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.melnykov.fab.FloatingActionButton;
 
 public class WelcomeFragment extends Fragment {
 
@@ -107,14 +106,10 @@ public class WelcomeFragment extends Fragment {
 
             // Floating action button
             FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
-            floatingActionButton.hide(false);
-
-            floatingActionButton.show();
+            floatingActionButton.setImageResource(R.drawable.ic_action_new);
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    hideFab();
-
                     Bundle bundle = new Bundle();
                     bundle.putString("filename", "new");
 
@@ -169,8 +164,6 @@ public class WelcomeFragment extends Fragment {
         switch(keyCode) {
                 // CTRL+N: New Note
             case KeyEvent.KEYCODE_N:
-                hideFab();
-
                 Bundle bundle = new Bundle();
                 bundle.putString("filename", "new");
 

@@ -17,6 +17,8 @@ package com.farmerbb.notepad;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
@@ -50,6 +52,11 @@ public class ImportActivity extends Activity {
         // Set TextView contents
         TextView textView = (TextView) findViewById(R.id.importTextView);
         textView.setText(getResources().getString(R.string.import_notes_instructions) + getExternalFilesDir(null));
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            TextView header = (TextView) findViewById(R.id.import_header);
+            header.setTypeface(Typeface.DEFAULT);
+        }
 
         // Set OnClickListener for the button
         button = (Button) findViewById(R.id.button);

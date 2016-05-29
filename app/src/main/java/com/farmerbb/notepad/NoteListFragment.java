@@ -18,6 +18,7 @@ package com.farmerbb.notepad;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -45,8 +46,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.melnykov.fab.FloatingActionButton;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -187,19 +186,16 @@ public class NoteListFragment extends Fragment {
 
         // Floating action button
         FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
-        floatingActionButton.hide(false);
+        floatingActionButton.setImageResource(R.drawable.ic_action_new);
+        floatingActionButton.hide();
 
         SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP 
-            && getId() == R.id.noteViewEdit
-            && prefMain.getLong("draft-name", 0) == 0) {
+        if(getId() == R.id.noteViewEdit && prefMain.getLong("draft-name", 0) == 0) {
             floatingActionButton.show();
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    hideFab();
-
                     Bundle bundle = new Bundle();
                     bundle.putString("filename", "new");
 
@@ -263,13 +259,13 @@ public class NoteListFragment extends Fragment {
     }
 
     // Returns an integer with number of files in /data/data/com.farmerbb.notepad/files/
-    private static int getnumOfNotes(File file){
+    private static int getNumOfNotes(File file){
         return new File(file.getPath()).list().length;
     }
 
     private void listNotes() {
         // Get number of files
-        int numOfFiles = getnumOfNotes(getActivity().getFilesDir());
+        int numOfFiles = getNumOfNotes(getActivity().getFilesDir());
         int numOfNotes = numOfFiles;
 
         // Get array of file names

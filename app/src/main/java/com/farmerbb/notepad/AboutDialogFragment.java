@@ -15,10 +15,9 @@
 
 package com.farmerbb.notepad;
 
-import android.app.AlertDialog;
+import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.method.LinkMovementMethod;
@@ -52,10 +51,6 @@ public class AboutDialogFragment extends DialogFragment {
         textView = (TextView) view.findViewById(R.id.dialogMessage);
         textView.setText(R.string.dialog_about_message);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
-
-        // Remove padding from layout on pre-Lollipop devices
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-            view.setPadding(0, 0, 0, 0);
 
         // Create the AlertDialog object and return it
         return builder.create();

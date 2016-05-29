@@ -19,6 +19,10 @@
 
 <resources>
 
-    <style name="Theme.Notepad.Dialog" parent="@android:style/Theme.Holo.Light.Dialog" />
+    <style name="Theme.Notepad.Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/primary_dark</item>
+    </style>
 
 </resources>

@@ -187,7 +187,8 @@ public class NoteListFragment extends Fragment {
         // Floating action button
         FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
         floatingActionButton.setImageResource(R.drawable.ic_action_new);
-        floatingActionButton.hide();
+        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
+            floatingActionButton.hide();
 
         SharedPreferences prefMain = getActivity().getPreferences(Context.MODE_PRIVATE);
 

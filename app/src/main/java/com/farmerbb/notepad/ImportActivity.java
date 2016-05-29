@@ -56,6 +56,10 @@ public class ImportActivity extends Activity {
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             TextView header = (TextView) findViewById(R.id.import_header);
             header.setTypeface(Typeface.DEFAULT);
+
+            Button button = (Button) findViewById(R.id.button);
+            button.setText(button.getText().toString().toUpperCase());
+            button.setTextSize(14);
         }
 
         // Set OnClickListener for the button

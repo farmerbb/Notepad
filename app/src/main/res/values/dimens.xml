@@ -23,4 +23,6 @@
     <dimen name="padding_top_bottom_date">8dp</dimen>
     <dimen name="padding_left_right">16dp</dimen>
 
+    <dimen name="fab_padding">16dp</dimen>
+
 </resources>

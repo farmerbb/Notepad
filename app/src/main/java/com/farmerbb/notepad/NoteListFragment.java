@@ -455,8 +455,6 @@ public class NoteListFragment extends Fragment {
             switch(keyCode) {
                 // CTRL+N: New Note
                 case KeyEvent.KEYCODE_N:
-                    hideFab();
-
                     Bundle bundle = new Bundle();
                     bundle.putString("filename", "new");
 

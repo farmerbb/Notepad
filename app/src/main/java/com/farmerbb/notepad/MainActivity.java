@@ -255,8 +255,6 @@ NoteViewFragment.Listener {
     // Method used by selecting a existing note from the ListView in NoteViewFragment
     // We need this method in MainActivity because sometimes getSupportFragmentManager() is null
     public void viewNote(String filename) {
-        hideFab();
-
         String currentFilename;
 
         if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {

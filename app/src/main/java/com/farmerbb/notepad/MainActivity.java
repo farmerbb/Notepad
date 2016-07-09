@@ -252,9 +252,18 @@ NoteViewFragment.Listener {
     }
 
     @Override
-    // Method used by selecting a existing note from the ListView in NoteViewFragment
-    // We need this method in MainActivity because sometimes getSupportFragmentManager() is null
     public void viewNote(String filename) {
+        viewEditNote(filename, false);
+    }
+
+    @Override
+    public void editNote(String filename) {
+        viewEditNote(filename, true);
+    }
+
+    // Method used by selecting a existing note from the ListView in NoteViewFragment or NoteEditFragment
+    // We need this method in MainActivity because sometimes getSupportFragmentManager() is null
+    public void viewEditNote(String filename, boolean isEdit) {
         String currentFilename;
 
         if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
@@ -271,18 +280,28 @@ NoteViewFragment.Listener {
                 NoteEditFragment fragment = (NoteEditFragment) getSupportFragmentManager().findFragmentByTag("NoteEditFragment");
                 fragment.switchNotes(filename);
             } else {
-            Bundle bundle = new Bundle();
-            bundle.putString("filename", filename);
+                Bundle bundle = new Bundle();
+                bundle.putString("filename", filename);
 
-            Fragment fragment = new NoteViewFragment();
-            fragment.setArguments(bundle);
+                Fragment fragment;
+                String tag;
 
-            // Add NoteViewFragment
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                    .commit();
+                if(isEdit) {
+                    fragment = new NoteEditFragment();
+                    tag = "NoteEditFragment";
+                } else {
+                    fragment = new NoteViewFragment();
+                    tag = "NoteViewFragment";
+                }
+
+                fragment.setArguments(bundle);
+
+                // Add NoteViewFragment or NoteEditFragment
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.noteViewEdit, fragment, tag)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                        .commit();
             }
         }
     }

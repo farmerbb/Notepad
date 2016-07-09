@@ -57,6 +57,7 @@ public class NoteEditFragment extends Fragment {
     long draftName;
     boolean isSavedNote = false;
     String contents;
+    boolean directEdit = false;
 
     // Receiver used to close fragment when a note is deleted
     public class DeleteNotesReceiver extends BroadcastReceiver {
@@ -269,7 +270,6 @@ public class NoteEditFragment extends Fragment {
         super.onResume();
 
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-
         // Disable restoring drafts if user launched Notepad through a share intent
         if(!listener.isShareIntent()) {
             if(filename.equals("draft")) {
@@ -322,6 +322,9 @@ public class NoteEditFragment extends Fragment {
             ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, getResources().getColor(R.color.primary));
             getActivity().setTaskDescription(taskDescription);
         }
+
+        SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        directEdit = pref.getBoolean("direct_edit", false);
     }
 
     // Register and unregister DeleteNotesReceiver
@@ -368,6 +371,8 @@ public class NoteEditFragment extends Fragment {
                 // If EditText is empty, show toast informing user to enter some text
                 if(contents.equals(""))
                     showToast(R.string.empty_note);
+                else if(directEdit)
+                    getActivity().onBackPressed();
                 else {
                     // If no changes were made since last save, switch back to NoteViewFragment
                     if(contentsOnLoad.equals(noteContents.getText().toString())) {
@@ -694,15 +699,25 @@ public class NoteEditFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString("filename", filename);
 
-            Fragment fragment = new NoteViewFragment();
+            Fragment fragment;
+            String tag;
+
+            if(directEdit) {
+                fragment = new NoteEditFragment();
+                tag = "NoteEditFragment";
+            } else {
+                fragment = new NoteViewFragment();
+                tag = "NoteViewFragment";
+            }
+
             fragment.setArguments(bundle);
 
-            // Add NoteViewFragment
+            // Add NoteViewFragment or NoteEditFragment
             getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.noteViewEdit, fragment, "NoteViewFragment")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                .commit();
+                    .beginTransaction()
+                    .replace(R.id.noteViewEdit, fragment, tag)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    .commit();
         }
     }
 

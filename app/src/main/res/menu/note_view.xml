@@ -20,20 +20,20 @@
     <item
         android:id="@+id/action_edit"
         android:icon="@drawable/ic_action_edit"
-        app:showAsAction="ifRoom|withText"
+        app:showAsAction="ifRoom"
         android:title="@string/action_edit"/>
     <!-- Delete button -->
     <item
         android:id="@+id/action_delete"
         android:icon="@drawable/ic_action_discard"
-        app:showAsAction="ifRoom|withText"
+        app:showAsAction="ifRoom"
         android:title="@string/action_delete"/>
     <!-- Share button -->
     <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_action_share"
         android:orderInCategory="100"
-        app:showAsAction="ifRoom|withText"
+        app:showAsAction="ifRoom"
         android:title="@string/action_share"/>
 
 </menu>

@@ -76,6 +76,7 @@
     <string name="congratulations">축하합니다! 안드로이드 웨어를 위한 노트패드 플러그인이 설치되었습니다.\n\n노트패드에 저장할 노트를 생성하려면 \"Ok Google, take a note\"를 말하세요. 노트는 자동으로 노트패드에 저장 됩니다.</string>
     <string name="pref_title_show_date">날짜/시간 보이기</string>
     <string name="action_theme">Theme</string>
+    <string name="pref_title_direct_edit">Edit notes directly</string>
 
     <string-array name="sort_by_list">
         <item>날짜 (내림차순)</item>

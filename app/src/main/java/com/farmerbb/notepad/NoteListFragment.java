@@ -60,6 +60,7 @@ public class NoteListFragment extends Fragment {
     String theme;
     String sortBy;
     boolean showDate = false;
+    boolean directEdit = false;
 
     // Receiver used to refresh list of notes (in tablet layout)
     public class ListNotesReceiver extends BroadcastReceiver {
@@ -76,6 +77,7 @@ public class NoteListFragment extends Fragment {
  * implement this interface in order to receive event call backs. */
     public interface Listener {
         void viewNote(String filename);
+        void editNote(String filename);
         String getCabString(int size);
         void exportNote(Object[] filesToExport);
         void deleteNote(Object[] filesToDelete);
@@ -157,6 +159,7 @@ public class NoteListFragment extends Fragment {
             theme = pref.getString("theme", "light-sans");
             sortBy = pref.getString("sort_by", "date");
             showDate = pref.getBoolean("show_date", false);
+            directEdit = pref.getBoolean("direct_edit", false);
 
             // Apply theme
             LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
@@ -360,10 +363,17 @@ public class NoteListFragment extends Fragment {
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                if(sortBy.equals("date"))
-                    listener.viewNote(finalListByDate[position]);
-                if(sortBy.equals("name"))
-                    listener.viewNote(finalListByName[position]);
+                if(sortBy.equals("date")) {
+                    if(directEdit)
+                        listener.editNote(finalListByDate[position]);
+                    else
+                        listener.viewNote(finalListByDate[position]);
+                } else if(sortBy.equals("name")) {
+                    if(directEdit)
+                        listener.editNote(finalListByName[position]);
+                    else
+                        listener.viewNote(finalListByName[position]);
+                }
             }
         });
 

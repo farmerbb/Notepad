@@ -222,13 +222,17 @@ public class NoteEditFragment extends Fragment {
             // Set TextView contents
             length = contentsOnLoad.length();
             noteContents.setText(contentsOnLoad);
-            noteContents.setSelection(length, length);
+
+            if(!pref.getBoolean("direct_edit", false))
+                noteContents.setSelection(length, length);
         } else if(filename.equals("draft")) {
             SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
             String draftContents = sharedPref.getString("draft-contents", null);
             length = draftContents.length();
             noteContents.setText(draftContents);
-            noteContents.setSelection(length, length);
+
+            if(!pref.getBoolean("direct_edit", false))
+                noteContents.setSelection(length, length);
         }
 
         // Show soft keyboard

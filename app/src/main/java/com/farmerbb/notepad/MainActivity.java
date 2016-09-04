@@ -414,13 +414,17 @@ NoteViewFragment.Listener {
                     filename = filename.substring(0, 245);
 
                 // Generate exported filename
-                File exportedFile = new File(getExternalFilesDir(null), filename + ".txt");
+
+                SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+                String ext = pref.getBoolean("markdown", false) ? ".md" : ".txt";
+
+                File exportedFile = new File(getExternalFilesDir(null), filename + ext);
                 int suffix = 1;
 
                 // Handle cases where a note may have a duplicate title
                 while(exportedFile.exists()) {
                     suffix++;
-                    exportedFile = new File(getExternalFilesDir(null), filename + " (" + Integer.toString(suffix) + ").txt");
+                    exportedFile = new File(getExternalFilesDir(null), filename + " (" + Integer.toString(suffix) + ")" + ext);
                 }
 
                 // Load note contents and convert line separators to Windows format

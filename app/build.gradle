@@ -2,20 +2,20 @@ apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "24.0.0"
+    SUPPORT_LIBRARY_VERSION = "24.2.0"
 }
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         applicationId "com.farmerbb.notepad"
         minSdkVersion 15
         targetSdkVersion 24
 
-        versionCode 77
-        versionName "2.2.1"
+        versionCode 78
+        versionName "2.2.2"
 
         resConfigs "en", "fr", "ko", "nl", "pl"
         vectorDrawables.useSupportLibrary = true
@@ -36,4 +36,5 @@ dependencies {
     compile "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
     compile "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
     compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'us.feras.mdv:markdownview:1.1.0'
 }

@@ -15,14 +15,15 @@
 
 package com.farmerbb.notepad;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.widget.Toast;
 
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener{
 
     @SuppressWarnings("deprecation")
     @Override
@@ -38,6 +39,14 @@ public class SettingsActivity extends PreferenceActivity {
         bindPreferenceSummaryToValue(findPreference("theme"));
         bindPreferenceSummaryToValue(findPreference("font_size"));
         bindPreferenceSummaryToValue(findPreference("sort_by"));
+
+        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+
+        findPreference("direct_edit").setOnPreferenceChangeListener(this);
+        findPreference("direct_edit").setEnabled(!pref.getBoolean("markdown", false));
+
+        findPreference("markdown").setOnPreferenceChangeListener(this);
+        findPreference("markdown").setEnabled(!pref.getBoolean("direct_edit", false));
     }
 
     /**
@@ -59,7 +68,6 @@ public class SettingsActivity extends PreferenceActivity {
                 preference
                 .setSummary(index >= 0 ? listPreference.getEntries()[index]
                         : null);
-
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
@@ -93,8 +101,17 @@ public class SettingsActivity extends PreferenceActivity {
                                 ""));
     }
 
-    private void showToastLong(int message) {
-        Toast toast = Toast.makeText(this, getResources().getString(message), Toast.LENGTH_LONG);
-        toast.show();
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object value) {
+        switch(preference.getKey()) {
+            case "direct_edit":
+                findPreference("markdown").setEnabled(!(Boolean) value);
+                break;
+            case "markdown":
+                findPreference("direct_edit").setEnabled(!(Boolean) value);
+                break;
+        }
+
+        return true;
     }
 }

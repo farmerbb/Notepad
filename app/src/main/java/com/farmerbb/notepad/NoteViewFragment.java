@@ -15,9 +15,11 @@
 
 package com.farmerbb.notepad;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.net.Uri;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -41,17 +43,25 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.File;
 import java.io.IOException;
+
+import us.feras.mdv.MarkdownView;
 
 public class NoteViewFragment extends Fragment {
 
     private TextView noteContents;
+    private MarkdownView markdownView;
+
     String filename = "";
     String contentsOnLoad = "";
     int firstLoad;
@@ -113,9 +123,11 @@ public class NoteViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_note_view, container, false);
+        SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        return inflater.inflate(pref.getBoolean("markdown", false) ? R.layout.fragment_note_view_md : R.layout.fragment_note_view, container, false);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -162,49 +174,121 @@ public class NoteViewFragment extends Fragment {
 
         // Set up content view
         noteContents = (TextView) getActivity().findViewById(R.id.textView);
+        markdownView = (MarkdownView) getActivity().findViewById(R.id.markdownView);
 
         // Apply theme
         SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
         ScrollView scrollView = (ScrollView) getActivity().findViewById(R.id.scrollView);
         String theme = pref.getString("theme", "light-sans");
+        int textSize = -1;
+        int textColor = -1;
+
+        String fontFamily = null;
 
         if(theme.contains("light")) {
-            noteContents.setTextColor(getResources().getColor(R.color.text_color_primary));
-            noteContents.setBackgroundColor(getResources().getColor(R.color.window_background));
+            if(noteContents != null) {
+                noteContents.setTextColor(getResources().getColor(R.color.text_color_primary));
+                noteContents.setBackgroundColor(getResources().getColor(R.color.window_background));
+            }
+
+            if(markdownView != null) {
+                markdownView.setBackgroundColor(getResources().getColor(R.color.window_background));
+                textColor = getResources().getColor(R.color.text_color_primary);
+            }
+
             scrollView.setBackgroundColor(getResources().getColor(R.color.window_background));
         }
 
         if(theme.contains("dark")) {
-            noteContents.setTextColor(getResources().getColor(R.color.text_color_primary_dark));
-            noteContents.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+            if(noteContents != null) {
+                noteContents.setTextColor(getResources().getColor(R.color.text_color_primary_dark));
+                noteContents.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+            }
+
+            if(markdownView != null) {
+                markdownView.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+                textColor = getResources().getColor(R.color.text_color_primary_dark);
+            }
+
             scrollView.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
         }
 
-        if(theme.contains("sans"))
-            noteContents.setTypeface(Typeface.SANS_SERIF);
+        if(theme.contains("sans")) {
+            if(noteContents != null)
+                noteContents.setTypeface(Typeface.SANS_SERIF);
 
-        if(theme.contains("serif"))
-            noteContents.setTypeface(Typeface.SERIF);
+            if(markdownView != null)
+                fontFamily = "sans-serif";
+        }
 
-        if(theme.contains("monospace"))
-            noteContents.setTypeface(Typeface.MONOSPACE);
+        if(theme.contains("serif")) {
+            if(noteContents != null)
+                noteContents.setTypeface(Typeface.SERIF);
+
+            if(markdownView != null)
+                fontFamily = "serif";
+        }
+
+        if(theme.contains("monospace")) {
+            if(noteContents != null)
+                noteContents.setTypeface(Typeface.MONOSPACE);
+
+            if(markdownView != null)
+                fontFamily = "monospace";
+        }
 
         switch(pref.getString("font_size", "normal")) {
             case "smallest":
-                noteContents.setTextSize(12);
+                textSize = 12;
                 break;
             case "small":
-                noteContents.setTextSize(14);
+                textSize = 14;
                 break;
             case "normal":
-                noteContents.setTextSize(16);
+                textSize = 16;
                 break;
             case "large":
-                noteContents.setTextSize(18);
+                textSize = 18;
                 break;
             case "largest":
-                noteContents.setTextSize(20);
+                textSize = 20;
                 break;
+        }
+
+        if(noteContents != null)
+            noteContents.setTextSize(textSize);
+
+        if(markdownView != null) {
+            String topBottom = " " + Float.toString(getResources().getDimension(R.dimen.padding_top_bottom) / getResources().getDisplayMetrics().density) + "px";
+            String leftRight = " " + Float.toString(getResources().getDimension(R.dimen.padding_left_right) / getResources().getDisplayMetrics().density) + "px";
+            String fontSize = " " + Integer.toString(textSize) + "px";
+            String fontColor = " #" + StringUtils.remove(Integer.toHexString(textColor), "ff");
+
+            final String css = "body {margin:" + topBottom + topBottom + leftRight + leftRight + "; font-family: " + fontFamily + "; font-size:" + fontSize + "; color:" + fontColor + "; }";
+            final String js = "var styleNode = document.createElement('style');\n" +
+                    "styleNode.type = \"text/css\";\n" +
+                    "var styleText = document.createTextNode('" + css + "');\n" +
+                    "styleNode.appendChild(styleText);\n" +
+                    "document.getElementsByTagName('head')[0].appendChild(styleNode);\n";
+
+            markdownView.getSettings().setJavaScriptEnabled(true);
+            markdownView.getSettings().setLoadsImagesAutomatically(false);
+            markdownView.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onLoadResource(WebView view, String url) {
+                    view.stopLoading();
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                        view.evaluateJavascript(js, null);
+                    else
+                        view.loadUrl("javascript:" + js);
+                }
+            });
         }
 
         // Load note contents
@@ -228,7 +312,11 @@ public class NoteViewFragment extends Fragment {
         }
 
         // Set TextView contents
-        noteContents.setText(contentsOnLoad);
+        if(noteContents != null)
+            noteContents.setText(contentsOnLoad);
+
+        if(markdownView != null)
+            markdownView.loadMarkdown(contentsOnLoad);
 
         // Show a toast message if this is the user's first time viewing a note
         final SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
@@ -313,13 +401,23 @@ public class NoteViewFragment extends Fragment {
 
         });
 
-        noteContents.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                detector.onTouchEvent(event);
-                return false;
-            }
-        });
+        if(noteContents != null)
+            noteContents.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    detector.onTouchEvent(event);
+                    return false;
+                }
+            });
+
+        if(markdownView != null)
+            markdownView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    detector.onTouchEvent(event);
+                    return false;
+                }
+            });
     }
 
     // Register and unregister DeleteNotesReceiver
@@ -335,6 +433,14 @@ public class NoteViewFragment extends Fragment {
         super.onStop();
 
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(markdownView != null && markdownView.canGoBack())
+            markdownView.goBack();
     }
 
     @Override

@@ -77,6 +77,7 @@
     <string name="pref_title_show_date">날짜/시간 보이기</string>
     <string name="action_theme">Theme</string>
     <string name="pref_title_direct_edit">Edit notes directly</string>
+    <string name="pref_title_markdown">Markdown support</string>
 
     <string-array name="sort_by_list">
         <item>날짜 (내림차순)</item>

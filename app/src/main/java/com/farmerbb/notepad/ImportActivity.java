@@ -114,7 +114,10 @@ public class ImportActivity extends AppCompatActivity {
             listOfFiles = new ArrayList<>(allFiles.length);
 
             for(String note : allFiles) {
-                if(note.toLowerCase().endsWith(".txt") || note.toLowerCase().endsWith(".md")) {
+                if(note.toLowerCase().endsWith(".txt")
+                        || note.toLowerCase().endsWith(".md")
+                        || note.toLowerCase().endsWith(".htm")
+                        || note.toLowerCase().endsWith(".html")) {
                     listOfFiles.add(new ImportableNote(note));
                     numOfFiles++;
                 }

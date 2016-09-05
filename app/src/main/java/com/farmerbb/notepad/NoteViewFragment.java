@@ -264,8 +264,16 @@ public class NoteViewFragment extends Fragment {
             String fontSize = " " + Integer.toString(textSize) + "px";
             String fontColor = " #" + StringUtils.remove(Integer.toHexString(textColor), "ff");
 
-            final String css = "body {margin:" + topBottom + topBottom + leftRight + leftRight + "; font-family: " + fontFamily + "; font-size:" + fontSize + "; color:" + fontColor + "; }";
-            final String js = "var styleNode = document.createElement('style');\n" +
+            final String css =
+                    "body { " +
+                    "margin:" + topBottom + topBottom + leftRight + leftRight + "; " +
+                    "font-family:" + fontFamily + "; " +
+                    "font-size:" + fontSize + "; " +
+                    "color:" + fontColor + "; " +
+                    "}";
+
+            final String js =
+                    "var styleNode = document.createElement('style');\n" +
                     "styleNode.type = \"text/css\";\n" +
                     "var styleText = document.createTextNode('" + css + "');\n" +
                     "styleNode.appendChild(styleText);\n" +

@@ -36,8 +36,8 @@ limitations under the License.
         android:layout_weight="2"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
+        android:layout_marginStart="@dimen/main_activity_margins"
+        android:layout_marginLeft="@dimen/main_activity_margins"
         android:orientation="horizontal" />
 
 </LinearLayout>

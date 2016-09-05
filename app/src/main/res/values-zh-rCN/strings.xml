@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2014 Braden Farmer
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+
+<resources>
+
+    <string name="action_cancel">取消</string>
+    <string name="action_close">关闭</string>
+    <string name="action_delete">删除</string>
+    <string name="action_discard">舍弃</string>
+    <string name="action_edit">编辑</string>
+    <string name="action_export">导出</string>
+    <string name="action_font_size">字体大小</string>
+    <string name="action_new">新建笔记</string>
+    <string name="action_import">导入</string>
+    <string name="action_save">保存</string>
+    <string name="action_settings">设置</string>
+    <string name="action_share">分享</string>
+    <string name="action_sort_by">排序方式</string>
+    <string name="app_name">Notepad</string>
+    <string name="cab_note_selected">项目已选</string>
+    <string name="cab_notes_selected">项目已选</string>
+    <string name="changes_discarded">已舍弃更改</string>
+    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2016 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/Notepad">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, except where noted below:\n\nThis app uses code derived from the <a href="https://github.com/makovkastar/FloatingActionButton">FloatingActionButton</a> project, licensed under the MIT License.\n\nThis app uses graphical assets from the following sources:\n\n&#8226; <a href="http://deleket.deviantart.com">Notepad icon (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a> <a href="http://creativecommons.org/licenses/by/3.0/">(CC-BY-3.0)</a></string>
+    <string name="dialog_about_title">关于Notepad</string>
+    <string name="dialog_are_you_sure">确认？</string>
+    <string name="dialog_delete_button_title">删除笔记</string>
+    <string name="dialog_save_button_title">保存更改</string>
+    <string name="dialog_save_changes">是否保存更改？</string>
+    <string name="draft_restored">已恢复草稿</string>
+    <string name="draft_saved">已保存草稿</string>
+    <string name="double_tap">提示：双击文本以进入编辑模式</string>
+    <string name="edit_note">编辑笔记</string>
+    <string name="edit_text">请键入文字</string>
+    <string name="empty_note">文本为空！</string>
+    <string name="error_exporting_notes">导出笔记出错！</string>
+    <string name="error_importing_notes">导入笔记出错！</string>
+    <string name="error_loading_list">加载笔记列表出错！</string>
+    <string name="error_loading_note">加载笔记出错！</string>
+    <string name="failed_to_save">保存笔记失败！</string>
+    <string name="first_run">欢迎使用 Notepad!\n\n点击加号以创建新笔记。</string>
+    <string name="first_view">要开始编辑，双击文本或点击小铅笔。</string>
+    <string name="import_notes">导入笔记</string>
+    <string name="import_notes_instructions">请将要导入的文件放入该文件夹：\n</string>
+    <string name="loading_external_file">不支持导入外部文件</string>
+    <string name="no_external_storage">无法访问外部存储。可尝试重启设备。</string>
+    <string name="no_notes_found">无笔记</string>
+    <string name="note_deleted">已删除笔记</string>
+    <string name="note_exported_to">已导出笔记至</string>
+    <string name="note_saved">已保存笔记</string>
+    <string name="notes_deleted">已删除笔记</string>
+    <string name="notes_exported_to">已导出笔记至</string>
+    <string name="notes_imported_successfully">导入笔记成功</string>
+    <string name="pref_title_show_dialogs">保存笔记前请求确认</string>
+    <string name="send_to">笔记分享方式</string>
+    <string name="view_note">查看笔记</string>
+    <string name="action_install">安装</string>
+    <string name="action_no_thanks">不，谢了</string>
+    <string name="install_wear_plugin_title">Android Wear Plugin</string>
+    <string name="install_wear_plugin_message">Notepad can save notes from your Android Wear device using the \"Ok Google, take a note\" command. This requires a separate plugin to be installed.\n\nInstall Notepad Plugin for Android Wear?</string>
+    <string name="congratulations">Congratulations! Notepad Plugin for Android Wear setup is now complete.\n\nTo take a note to save in Notepad, say \"Ok Google, take a note\". Your note will automatically be saved in the Notepad app on your device.</string>
+    <string name="pref_title_show_date">列表中显示修改时间</string>
+    <string name="action_theme">主题</string>
+    <string name="pref_title_direct_edit">打开笔记即开始编辑</string>
+    <string name="pref_title_markdown">Markdown/HTML 支持</string>
+
+    <string-array name="sort_by_list">
+        <item>修改时间</item>
+        <item>标题</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>亮色 sans-serif</item>
+        <item>亮色 serif</item>
+        <item>亮色 monospace</item>
+        <item>暗色 sans-serif</item>
+        <item>暗色 serif</item>
+        <item>暗色 monospace</item>
+    </string-array>
+    <string-array name="font_size_list">
+        <item>极小</item>
+        <item>小</item>
+        <item>正常</item>
+        <item>大</item>
+        <item>极大</item>
+    </string-array>
+
+</resources>

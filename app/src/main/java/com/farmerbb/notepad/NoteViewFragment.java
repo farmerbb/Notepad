@@ -478,13 +478,10 @@ public class NoteViewFragment extends Fragment {
 
                 // Share menu item
             case R.id.action_share:
-                // Set current note contents to a String
-                String contents = noteContents.getText().toString();
-
                 // Send a share intent
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_TEXT, contents);
+                intent.putExtra(Intent.EXTRA_TEXT, contentsOnLoad);
                 intent.setType("text/plain");
 
                 // Verify that the intent will resolve to an activity, and send
@@ -565,13 +562,10 @@ public class NoteViewFragment extends Fragment {
 
                     // CTRL+H: Share
                 case KeyEvent.KEYCODE_H:
-                    // Set current note contents to a String
-                    String contents = noteContents.getText().toString();
-
                     // Send a share intent
                     Intent shareIntent = new Intent();
                     shareIntent.setAction(Intent.ACTION_SEND);
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, contents);
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, contentsOnLoad);
                     shareIntent.setType("text/plain");
 
                     // Verify that the intent will resolve to an activity, and send

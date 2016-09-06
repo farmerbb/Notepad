@@ -19,7 +19,9 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.ActivityNotFoundException;
 import android.net.Uri;
+import android.os.FileUriExposedException;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -282,11 +284,20 @@ public class NoteViewFragment extends Fragment {
             markdownView.getSettings().setJavaScriptEnabled(true);
             markdownView.getSettings().setLoadsImagesAutomatically(false);
             markdownView.setWebViewClient(new WebViewClient() {
+                @TargetApi(Build.VERSION_CODES.N)
                 @Override
                 public void onLoadResource(WebView view, String url) {
                     view.stopLoading();
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                    startActivity(intent);
+
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                        try {
+                            startActivity(intent);
+                        } catch (ActivityNotFoundException | FileUriExposedException e) {}
+                    else
+                        try {
+                            startActivity(intent);
+                        } catch (ActivityNotFoundException e) {}
                 }
 
                 @Override

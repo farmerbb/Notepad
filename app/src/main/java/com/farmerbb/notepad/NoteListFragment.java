@@ -249,7 +249,7 @@ public class NoteListFragment extends Fragment {
                 intent.setType("*/*");
 
                 try {
-                    getActivity().startActivityForResult(intent, 42);
+                    getActivity().startActivityForResult(intent, MainActivity.IMPORT);
                 } catch (ActivityNotFoundException e) {
                     showToast(R.string.error_importing_notes);
                 }

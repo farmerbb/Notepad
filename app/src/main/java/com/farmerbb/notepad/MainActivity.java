@@ -62,6 +62,11 @@ NoteViewFragment.Listener {
     Object[] filesToExport;
     Object[] filesToDelete;
     int fileBeingExported;
+    boolean successful = true;
+
+    static final int IMPORT = 42;
+    static final int EXPORT = 43;
+    static final int EXPORT_TREE = 44;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -421,7 +426,7 @@ NoteViewFragment.Listener {
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
 
             try {
-                startActivityForResult(intent, 44);
+                startActivityForResult(intent, EXPORT_TREE);
             } catch (ActivityNotFoundException e) {
                 showToast(R.string.error_exporting_notes);
             }
@@ -443,7 +448,7 @@ NoteViewFragment.Listener {
         intent.putExtra(Intent.EXTRA_TITLE, generateFilename(filename));
 
         try {
-            startActivityForResult(intent, 43);
+            startActivityForResult(intent, EXPORT);
         } catch (ActivityNotFoundException e) {
             showToast(R.string.error_exporting_notes);
         }
@@ -587,41 +592,42 @@ NoteViewFragment.Listener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         if(resultCode == RESULT_OK && resultData != null) {
-            if(requestCode == 42) {
-                try {
-                    Uri uri = resultData.getData();
-                    ClipData clipData = resultData.getClipData();
+            successful = true;
 
-                    if(uri != null)
-                        importNote(uri);
-                    else if(clipData != null)
-                        for(int i = 0; i < clipData.getItemCount(); i++) {
-                            importNote(clipData.getItemAt(i).getUri());
-                        }
+            if(requestCode == IMPORT) {
+                Uri uri = resultData.getData();
+                ClipData clipData = resultData.getClipData();
 
-                    // Send broadcast to NoteListFragment to refresh list of notes
-                    Intent listNotesIntent = new Intent();
-                    listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
-                    LocalBroadcastManager.getInstance(this).sendBroadcast(listNotesIntent);
+                if(uri != null)
+                    successful = importNote(uri);
+                else if(clipData != null)
+                    for(int i = 0; i < clipData.getItemCount(); i++) {
+                        successful = importNote(clipData.getItemAt(i).getUri());
+                    }
 
-                    // Show toast notification
-                    showToast(R.string.notes_imported_successfully);
-                } catch (IOException e) {
-                    showToast(R.string.error_importing_notes);
-                }
-            } else if(requestCode == 43) {
+                // Show toast notification
+                showToast(successful ? R.string.notes_imported_successfully : R.string.error_importing_notes);
+
+                // Send broadcast to NoteListFragment to refresh list of notes
+                Intent listNotesIntent = new Intent();
+                listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+                LocalBroadcastManager.getInstance(this).sendBroadcast(listNotesIntent);
+            } else if(requestCode == EXPORT) {
                 try {
                     saveExportedNote(loadNote(filesToExport[fileBeingExported].toString()), resultData.getData());
-
-                    fileBeingExported++;
-                    if(fileBeingExported < filesToExport.length)
-                        reallyExportNote();
-                    else
-                        showToast(fileBeingExported == 1 ? R.string.note_exported_to : R.string.notes_exported_to);
                 } catch (IOException e) {
-                    showToast(R.string.error_exporting_notes);
+                    successful = false;
                 }
-            } else if(requestCode == 44) {
+
+                fileBeingExported++;
+                if(fileBeingExported < filesToExport.length)
+                    reallyExportNote();
+                else
+                    showToast(successful
+                            ? (fileBeingExported == 1 ? R.string.note_exported_to : R.string.notes_exported_to)
+                            : R.string.error_exporting_notes);
+
+            } else if(requestCode == EXPORT_TREE) {
                 DocumentFile tree = DocumentFile.fromTreeUri(this, resultData.getData());
 
                 for(Object exportFilename : filesToExport) {
@@ -631,12 +637,12 @@ NoteViewFragment.Listener {
                                 pref.getBoolean("markdown", false) ? "text/x-markdown" : "text/plain",
                                 generateFilename(loadNoteTitle(exportFilename.toString())));
                         saveExportedNote(loadNote(exportFilename.toString()), file.getUri());
-
-                        showToast(R.string.notes_exported_to);
                     } catch (IOException e) {
-                        showToast(R.string.error_exporting_notes);
+                        successful = false;
                     }
                 }
+
+                showToast(successful ? R.string.notes_exported_to : R.string.error_exporting_notes);
             }
         }
     }
@@ -652,25 +658,31 @@ NoteViewFragment.Listener {
         os.close();
     }
 
-    private void importNote(Uri uri) throws IOException {
-        File importedFile = new File(getFilesDir(), Long.toString(System.currentTimeMillis()));
-        long suffix = 0;
+    private boolean importNote(Uri uri) {
+        try {
+            File importedFile = new File(getFilesDir(), Long.toString(System.currentTimeMillis()));
+            long suffix = 0;
 
-        // Handle cases where a note may have a duplicate title
-        while(importedFile.exists()) {
-            suffix++;
-            importedFile = new File(getFilesDir(), Long.toString(System.currentTimeMillis() + suffix));
-        }
+            // Handle cases where a note may have a duplicate title
+            while(importedFile.exists()) {
+                suffix++;
+                importedFile = new File(getFilesDir(), Long.toString(System.currentTimeMillis() + suffix));
+            }
 
-        InputStream is = getContentResolver().openInputStream(uri);
-        byte[] data = new byte[is.available()];
+            InputStream is = getContentResolver().openInputStream(uri);
+            byte[] data = new byte[is.available()];
 
-        if(data.length > 0) {
-            OutputStream os = new FileOutputStream(importedFile);
-            is.read(data);
-            os.write(data);
-            is.close();
-            os.close();
+            if(data.length > 0) {
+                OutputStream os = new FileOutputStream(importedFile);
+                is.read(data);
+                os.write(data);
+                is.close();
+                os.close();
+            }
+
+            return true;
+        } catch (IOException e) {
+            return false;
         }
     }
 }

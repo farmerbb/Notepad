@@ -60,10 +60,10 @@
     <string name="no_external_storage">Can\'t access external storage. Try restarting your device.</string>
     <string name="no_notes_found">Aucune note trouvée</string>
     <string name="note_deleted">Note supprimée</string>
-    <string name="note_exported_to">Note exported to</string>
+    <string name="note_exported_to">Note exported successfully</string>
     <string name="note_saved">Note enregistrée</string>
     <string name="notes_deleted">Notes supprimées</string>
-    <string name="notes_exported_to">Notes exported to</string>
+    <string name="notes_exported_to">Notes exported successfully</string>
     <string name="notes_imported_successfully">Notes imported successfully</string>
     <string name="pref_title_show_dialogs">Confirmer avant d\'enregistrer</string>
     <string name="send_to">Partager la note par&#8230;</string>

@@ -16,8 +16,10 @@
 
 package com.farmerbb.notepad;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.ActivityNotFoundException;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -230,6 +232,7 @@ public class NoteListFragment extends Fragment {
             inflater.inflate(R.menu.main, menu);
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
@@ -239,13 +242,16 @@ public class NoteListFragment extends Fragment {
                 startActivity(intentSettings);
                 return true;
             case R.id.action_import:
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[] {"text/plain", "text/html", "text/x-markdown"});
+                intent.setType("*/*");
+
                 try {
-                    getActivity().getExternalFilesDir(null);
-                    Intent intent = new Intent(getActivity(), ImportActivity.class);
-                    startActivity(intent);
-                } catch (NullPointerException e) {
-                    // Throws a NullPointerException if no external storage is present
-                    showToastLong(R.string.no_external_storage);
+                    getActivity().startActivityForResult(intent, 42);
+                } catch (ActivityNotFoundException e) {
+                    showToast(R.string.error_importing_notes);
                 }
                 return true;
             case R.id.action_about:
@@ -494,10 +500,5 @@ public class NoteListFragment extends Fragment {
     public void hideFab() {
         FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
         floatingActionButton.hide();
-    }
-
-    private void showToastLong(int message) {
-        Toast toast = Toast.makeText(getActivity(), getResources().getString(message), Toast.LENGTH_LONG);
-        toast.show();
     }
 }

@@ -16,6 +16,8 @@
 
 package com.farmerbb.notepad;
 
+import android.annotation.TargetApi;
+import android.content.ClipData;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -30,9 +32,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -40,6 +42,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.DateFormat;
@@ -55,6 +58,10 @@ WearPluginDialogFragment.Listener,
 NoteListFragment.Listener,
 NoteEditFragment.Listener, 
 NoteViewFragment.Listener {
+
+    Object[] filesToExport;
+    Object[] filesToDelete;
+    int fileBeingExported;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,7 +226,9 @@ NoteViewFragment.Listener {
 
     @Override
     public void onDeleteDialogPositiveClick() {
-        if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
+        if(filesToDelete != null) {
+            reallyDeleteNote();
+        } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
             NoteViewFragment fragment = (NoteViewFragment) getSupportFragmentManager().findFragmentByTag("NoteViewFragment");
             fragment.onDeleteDialogPositiveClick();
         } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteEditFragment) {
@@ -336,6 +345,12 @@ NoteViewFragment.Listener {
 
     @Override
     public void showDeleteDialog() {
+        showDeleteDialog(true);
+    }
+
+    private void showDeleteDialog(boolean clearFilesToDelete) {
+        if(clearFilesToDelete) filesToDelete = null;
+
         DialogFragment deleteFragment = new DeleteDialogFragment();
         deleteFragment.show(getSupportFragmentManager(), "delete");
     }
@@ -361,6 +376,11 @@ NoteViewFragment.Listener {
 
     @Override
     public void deleteNote(Object[] filesToDelete) {
+        this.filesToDelete = filesToDelete;
+        showDeleteDialog(false);
+    }
+
+    private void reallyDeleteNote() {
         // Build the pathname to delete each file, them perform delete operation
         for(Object file : filesToDelete) {
             File fileToDelete = new File(getFilesDir() + File.separator + file);
@@ -385,64 +405,69 @@ NoteViewFragment.Listener {
             showToast(R.string.note_deleted);
         else
             showToast(R.string.notes_deleted);
+
+        filesToDelete = null;
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void exportNote(Object[] filesToExport) {
-        try {
-            for(Object file : filesToExport) {
-                // Load note title to use as filename, and remove any invalid characters
-                final String[] characters = new String[]{"<", ">", ":", "\"", "/", "\\\\", "\\|", "\\?", "\\*"};
-                String filename = loadNoteTitle(file.toString());
+        this.filesToExport = filesToExport;
 
-                if(filename.isEmpty())
-                    filename = " ";
+        if(filesToExport.length == 1 || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            fileBeingExported = 0;
+            reallyExportNote();
+        } else {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
 
-                for(String character : characters) {
-                    filename = filename.replaceAll(character, "");
-                }
-
-                // To ensure that the generated filename fits within filesystem limitations,
-                // truncate the filename to ~245 characters.
-                if(filename.length() > 245)
-                    filename = filename.substring(0, 245);
-
-                // Generate exported filename
-
-                SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
-                String ext = pref.getBoolean("markdown", false) ? ".md" : ".txt";
-
-                File exportedFile = new File(getExternalFilesDir(null), filename + ext);
-                int suffix = 1;
-
-                // Handle cases where a note may have a duplicate title
-                while(exportedFile.exists()) {
-                    suffix++;
-                    exportedFile = new File(getExternalFilesDir(null), filename + " (" + Integer.toString(suffix) + ")" + ext);
-                }
-
-                // Load note contents and convert line separators to Windows format
-                String note = loadNote(file.toString());
-                note = note.replaceAll("\r\n", "\n");
-                note = note.replaceAll("\n", "\r\n");
-
-                // Write file to external storage
-                OutputStream os = new FileOutputStream(exportedFile);
-                os.write(note.getBytes());
-                os.close();
+            try {
+                startActivityForResult(intent, 44);
+            } catch (ActivityNotFoundException e) {
+                showToast(R.string.error_exporting_notes);
             }
+        }
+    }
 
-            // Show toast notification
-            Toast toast;
-            if(filesToExport.length == 1)
-                toast = Toast.makeText(this, getResources().getString(R.string.note_exported_to) + " " + getExternalFilesDir(null), Toast.LENGTH_LONG);
-            else
-                toast = Toast.makeText(this, getResources().getString(R.string.notes_exported_to) + " " + getExternalFilesDir(null), Toast.LENGTH_LONG);
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void reallyExportNote() {
+        String filename = "";
 
-            toast.show();
-        } catch (IOException e) {
+        try {
+            filename = loadNoteTitle(filesToExport[fileBeingExported].toString());
+        } catch (IOException e) {}
+
+        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType(pref.getBoolean("markdown", false) ? "text/x-markdown" : "text/plain");
+        intent.putExtra(Intent.EXTRA_TITLE, generateFilename(filename));
+
+        try {
+            startActivityForResult(intent, 43);
+        } catch (ActivityNotFoundException e) {
             showToast(R.string.error_exporting_notes);
         }
+    }
+
+    private String generateFilename(String filename) {
+        // Remove any invalid characters
+        final String[] characters = new String[]{"<", ">", ":", "\"", "/", "\\\\", "\\|", "\\?", "\\*"};
+
+
+        for(String character : characters) {
+            filename = filename.replaceAll(character, "");
+        }
+
+        // To ensure that the generated filename fits within filesystem limitations,
+        // truncate the filename to ~245 characters.
+        if(filename.length() > 245)
+            filename = filename.substring(0, 245);
+
+        // Generate exported filename
+        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        String ext = pref.getBoolean("markdown", false) ? ".md" : ".txt";
+
+        return filename + ext;
     }
 
     // Method used to generate toast notifications
@@ -533,6 +558,11 @@ NoteViewFragment.Listener {
         editor.putInt("first-run", 1);
         editor.apply();
 
+        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor2 = pref.edit();
+        editor2.putBoolean("show_dialogs", false);
+        editor2.apply();
+
         checkForAndroidWear();
     }
 
@@ -551,5 +581,96 @@ NoteViewFragment.Listener {
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean("show_wear_dialog", false);
         editor.apply();
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        if(resultCode == RESULT_OK && resultData != null) {
+            if(requestCode == 42) {
+                try {
+                    Uri uri = resultData.getData();
+                    ClipData clipData = resultData.getClipData();
+
+                    if(uri != null)
+                        importNote(uri);
+                    else if(clipData != null)
+                        for(int i = 0; i < clipData.getItemCount(); i++) {
+                            importNote(clipData.getItemAt(i).getUri());
+                        }
+
+                    // Send broadcast to NoteListFragment to refresh list of notes
+                    Intent listNotesIntent = new Intent();
+                    listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+                    LocalBroadcastManager.getInstance(this).sendBroadcast(listNotesIntent);
+
+                    // Show toast notification
+                    showToast(R.string.notes_imported_successfully);
+                } catch (IOException e) {
+                    showToast(R.string.error_importing_notes);
+                }
+            } else if(requestCode == 43) {
+                try {
+                    saveExportedNote(loadNote(filesToExport[fileBeingExported].toString()), resultData.getData());
+
+                    fileBeingExported++;
+                    if(fileBeingExported < filesToExport.length)
+                        reallyExportNote();
+                    else
+                        showToast(fileBeingExported == 1 ? R.string.note_exported_to : R.string.notes_exported_to);
+                } catch (IOException e) {
+                    showToast(R.string.error_exporting_notes);
+                }
+            } else if(requestCode == 44) {
+                DocumentFile tree = DocumentFile.fromTreeUri(this, resultData.getData());
+
+                for(Object exportFilename : filesToExport) {
+                    try {
+                        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+                        DocumentFile file = tree.createFile(
+                                pref.getBoolean("markdown", false) ? "text/x-markdown" : "text/plain",
+                                generateFilename(loadNoteTitle(exportFilename.toString())));
+                        saveExportedNote(loadNote(exportFilename.toString()), file.getUri());
+
+                        showToast(R.string.notes_exported_to);
+                    } catch (IOException e) {
+                        showToast(R.string.error_exporting_notes);
+                    }
+                }
+            }
+        }
+    }
+
+    private void saveExportedNote(String note, Uri uri) throws IOException {
+        // Convert line separators to Windows format
+        note = note.replaceAll("\r\n", "\n");
+        note = note.replaceAll("\n", "\r\n");
+
+        // Write file to external storage
+        OutputStream os = getContentResolver().openOutputStream(uri);
+        os.write(note.getBytes());
+        os.close();
+    }
+
+    private void importNote(Uri uri) throws IOException {
+        File importedFile = new File(getFilesDir(), Long.toString(System.currentTimeMillis()));
+        long suffix = 0;
+
+        // Handle cases where a note may have a duplicate title
+        while(importedFile.exists()) {
+            suffix++;
+            importedFile = new File(getFilesDir(), Long.toString(System.currentTimeMillis() + suffix));
+        }
+
+        InputStream is = getContentResolver().openInputStream(uri);
+        byte[] data = new byte[is.available()];
+
+        if(data.length > 0) {
+            OutputStream os = new FileOutputStream(importedFile);
+            is.read(data);
+            os.write(data);
+            is.close();
+            os.close();
+        }
     }
 }

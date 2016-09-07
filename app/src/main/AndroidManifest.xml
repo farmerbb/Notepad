@@ -38,11 +38,6 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Notepad" >
         <activity
-            android:name="com.farmerbb.notepad.ImportActivity"
-            android:label="@string/import_notes"
-            android:theme="@style/Theme.Notepad.Dialog" >
-        </activity>
-        <activity
             android:name="com.farmerbb.notepad.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop" >

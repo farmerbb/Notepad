@@ -54,9 +54,5 @@
         android:defaultValue="false"
         android:key="direct_edit"
         android:title="@string/pref_title_direct_edit" />
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="markdown"
-        android:title="@string/pref_title_markdown" />
 
 </PreferenceScreen>

@@ -126,7 +126,10 @@ public class NoteViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
-        return inflater.inflate(pref.getBoolean("markdown", false) ? R.layout.fragment_note_view_md : R.layout.fragment_note_view, container, false);
+        return inflater.inflate(
+                pref.getBoolean("markdown", false) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+                        ? R.layout.fragment_note_view_md
+                        : R.layout.fragment_note_view, container, false);
     }
 
     @SuppressLint("SetJavaScriptEnabled")

@@ -17,6 +17,7 @@ package com.farmerbb.notepad;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -40,13 +41,15 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         bindPreferenceSummaryToValue(findPreference("font_size"));
         bindPreferenceSummaryToValue(findPreference("sort_by"));
 
-        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            addPreferencesFromResource(R.xml.settings_preferences_md);
+            SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
+            findPreference("direct_edit").setOnPreferenceChangeListener(this);
+            findPreference("direct_edit").setEnabled(!pref.getBoolean("markdown", false));
 
-        findPreference("direct_edit").setOnPreferenceChangeListener(this);
-        findPreference("direct_edit").setEnabled(!pref.getBoolean("markdown", false));
-
-        findPreference("markdown").setOnPreferenceChangeListener(this);
-        findPreference("markdown").setEnabled(!pref.getBoolean("direct_edit", false));
+            findPreference("markdown").setOnPreferenceChangeListener(this);
+            findPreference("markdown").setEnabled(!pref.getBoolean("direct_edit", false));
+        }
     }
 
     /**

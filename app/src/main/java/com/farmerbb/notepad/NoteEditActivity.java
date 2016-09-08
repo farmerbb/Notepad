@@ -75,18 +75,22 @@ String external;
             if(Intent.ACTION_SEND.equals(action) && type != null) {
                 if("text/plain".equals(type)) {
                     external = intent.getStringExtra(Intent.EXTRA_TEXT);
+                    if(external != null) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("filename", "new");
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("filename", "new");
+                        Fragment fragment = new NoteEditFragment();
+                        fragment.setArguments(bundle);
 
-                    Fragment fragment = new NoteEditFragment();
-                    fragment.setArguments(bundle);
-
-                    // Add NoteEditFragment
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .add(R.id.noteViewEdit, fragment, "NoteEditFragment")
-                            .commit();
+                        // Add NoteEditFragment
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .add(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                                .commit();
+                    } else {
+                        showToast(R.string.loading_external_file);
+                        finish();
+                    }
                 } else {
                     showToast(R.string.loading_external_file);
                     finish();
@@ -191,7 +195,11 @@ String external;
 
     @Override
     public void showDeleteDialog() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("dialog_title", R.string.dialog_delete_button_title);
+
         DialogFragment deleteFragment = new DeleteDialogFragment();
+        deleteFragment.setArguments(bundle);
         deleteFragment.show(getSupportFragmentManager(), "delete");
     }
 

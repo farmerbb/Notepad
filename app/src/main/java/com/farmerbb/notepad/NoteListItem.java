@@ -15,6 +15,7 @@
 
 package com.farmerbb.notepad;
 
+import java.text.Collator;
 import java.util.Comparator;
 
 public class NoteListItem {
@@ -37,7 +38,7 @@ public class NoteListItem {
     public static Comparator<NoteListItem> NoteComparatorTitle = new Comparator<NoteListItem>() {
         @Override
         public int compare(NoteListItem arg1, NoteListItem arg2) {
-            return arg1.getNote().compareToIgnoreCase(arg2.getNote());
+            return Collator.getInstance().compare(arg1.getNote(), arg2.getNote());
         }
     };
 }

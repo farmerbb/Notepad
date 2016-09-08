@@ -26,7 +26,6 @@
     <string name="action_export">导出</string>
     <string name="action_font_size">字体大小</string>
     <string name="action_new">新建笔记</string>
-    <string name="action_import">导入</string>
     <string name="action_save">保存</string>
     <string name="action_settings">设置</string>
     <string name="action_share">分享</string>
@@ -39,6 +38,7 @@
     <string name="dialog_about_title">关于Notepad</string>
     <string name="dialog_are_you_sure">确认？</string>
     <string name="dialog_delete_button_title">删除笔记</string>
+    <string name="dialog_delete_button_title_plural">删除笔记</string>
     <string name="dialog_save_button_title">保存更改</string>
     <string name="dialog_save_changes">是否保存更改？</string>
     <string name="draft_restored">已恢复草稿</string>
@@ -55,15 +55,14 @@
     <string name="first_run">欢迎使用 Notepad!\n\n点击加号以创建新笔记。</string>
     <string name="first_view">要开始编辑，双击文本或点击小铅笔。</string>
     <string name="import_notes">导入笔记</string>
-    <string name="import_notes_instructions">请将要导入的文件放入该文件夹：\n</string>
     <string name="loading_external_file">不支持导入外部文件</string>
-    <string name="no_external_storage">无法访问外部存储。可尝试重启设备。</string>
     <string name="no_notes_found">无笔记</string>
     <string name="note_deleted">已删除笔记</string>
     <string name="note_exported_to">已导出笔记至</string>
     <string name="note_saved">已保存笔记</string>
     <string name="notes_deleted">已删除笔记</string>
     <string name="notes_exported_to">已导出笔记至</string>
+    <string name="note_imported_successfully">导入笔记成功</string>
     <string name="notes_imported_successfully">导入笔记成功</string>
     <string name="pref_title_show_dialogs">保存笔记前请求确认</string>
     <string name="send_to">笔记分享方式</string>

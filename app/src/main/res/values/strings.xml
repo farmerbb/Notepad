@@ -26,7 +26,6 @@
     <string name="action_export">Export</string>
     <string name="action_font_size">Font size</string>
     <string name="action_new">New Note</string>
-    <string name="action_import">Import</string>
     <string name="action_save">Save</string>
     <string name="action_settings">Settings</string>
     <string name="action_share">Share</string>
@@ -39,6 +38,7 @@
     <string name="dialog_about_title">About Notepad</string>
     <string name="dialog_are_you_sure">Are you sure?</string>
     <string name="dialog_delete_button_title">Delete note</string>
+    <string name="dialog_delete_button_title_plural">Delete notes</string>
     <string name="dialog_save_button_title">Save changes</string>
     <string name="dialog_save_changes">Do you want to save your changes?</string>
     <string name="draft_restored">Draft restored</string>
@@ -55,15 +55,14 @@
     <string name="first_run">Welcome to Notepad!\n\nTo create a note, click the New Note button (plus sign).</string>
     <string name="first_view">To edit a saved note, double-tap the text or click the Edit button (pencil).</string>
     <string name="import_notes">Import notes</string>
-    <string name="import_notes_instructions">Place text files to import at:\n</string>
     <string name="loading_external_file">Loading external files is not supported</string>
-    <string name="no_external_storage">Can\'t access external storage. Try restarting your device.</string>
     <string name="no_notes_found">No notes found</string>
     <string name="note_deleted">Note deleted</string>
     <string name="note_exported_to">Note exported successfully</string>
     <string name="note_saved">Note saved</string>
     <string name="notes_deleted">Notes deleted</string>
     <string name="notes_exported_to">Notes exported successfully</string>
+    <string name="note_imported_successfully">Note imported successfully</string>
     <string name="notes_imported_successfully">Notes imported successfully</string>
     <string name="pref_title_show_dialogs">Ask before saving</string>
     <string name="send_to">Share note using&#8230;</string>

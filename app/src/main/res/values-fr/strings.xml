@@ -26,7 +26,6 @@
     <string name="action_export">Export</string>
     <string name="action_font_size">Font size</string>
     <string name="action_new">Nouvelle Note</string>
-    <string name="action_import">Import</string>
     <string name="action_save">Enregistrer</string>
     <string name="action_settings">Paramètres</string>
     <string name="action_share">Partager</string>
@@ -39,6 +38,7 @@
     <string name="dialog_about_title">À Propos de Bloc-Notes</string>
     <string name="dialog_are_you_sure">Êtes-vous sûr\u00A0?</string>
     <string name="dialog_delete_button_title">Supprimer la note</string>
+    <string name="dialog_delete_button_title_plural">Supprimer la note</string>
     <string name="dialog_save_button_title">Enregistrer les modifications</string>
     <string name="dialog_save_changes">Voulez-vous enregistrer vos modifications\u00A0?</string>
     <string name="draft_restored">Brouillon restauré</string>
@@ -55,15 +55,14 @@
     <string name="first_run">Bienvenue dans Bloc-Notes\u00A0!\n\nPour créer une note, appuyez sur le bouton Ajouter\u00A0(+) en haut.</string>
     <string name="first_view">Pour modifier une note, appuyez sur l\'écran ou appuyez sur le bouton Éditer\u00A0(Crayon) en haut.</string>
     <string name="import_notes">Import notes</string>
-    <string name="import_notes_instructions">Place text files to import at:\n</string>
     <string name="loading_external_file">Loading external files is not supported</string>
-    <string name="no_external_storage">Can\'t access external storage. Try restarting your device.</string>
     <string name="no_notes_found">Aucune note trouvée</string>
     <string name="note_deleted">Note supprimée</string>
     <string name="note_exported_to">Note exported successfully</string>
     <string name="note_saved">Note enregistrée</string>
     <string name="notes_deleted">Notes supprimées</string>
     <string name="notes_exported_to">Notes exported successfully</string>
+    <string name="note_imported_successfully">Note imported successfully</string>
     <string name="notes_imported_successfully">Notes imported successfully</string>
     <string name="pref_title_show_dialogs">Confirmer avant d\'enregistrer</string>
     <string name="send_to">Partager la note par&#8230;</string>

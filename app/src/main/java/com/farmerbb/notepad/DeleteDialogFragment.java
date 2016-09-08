@@ -53,7 +53,7 @@ public class DeleteDialogFragment extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.dialog_are_you_sure)
-        .setTitle(R.string.dialog_delete_button_title)
+        .setTitle(getArguments().getInt("dialog_title"))
         .setPositiveButton(R.string.action_delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 listener.onDeleteDialogPositiveClick();

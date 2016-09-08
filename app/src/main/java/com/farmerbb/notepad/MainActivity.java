@@ -356,7 +356,14 @@ NoteViewFragment.Listener {
     private void showDeleteDialog(boolean clearFilesToDelete) {
         if(clearFilesToDelete) filesToDelete = null;
 
+        Bundle bundle = new Bundle();
+        bundle.putInt("dialog_title",
+                filesToDelete == null || filesToDelete.length == 1
+                ? R.string.dialog_delete_button_title
+                : R.string.dialog_delete_button_title_plural);
+
         DialogFragment deleteFragment = new DeleteDialogFragment();
+        deleteFragment.setArguments(bundle);
         deleteFragment.show(getSupportFragmentManager(), "delete");
     }
 
@@ -600,7 +607,9 @@ NoteViewFragment.Listener {
                     }
 
                 // Show toast notification
-                showToast(successful ? R.string.notes_imported_successfully : R.string.error_importing_notes);
+                showToast(successful
+                        ? (uri == null ? R.string.notes_imported_successfully : R.string.note_imported_successfully)
+                        : R.string.error_importing_notes);
 
                 // Send broadcast to NoteListFragment to refresh list of notes
                 Intent listNotesIntent = new Intent();

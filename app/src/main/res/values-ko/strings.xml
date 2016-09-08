@@ -27,7 +27,6 @@
     <string name="action_export">보내기</string>
     <string name="action_font_size">Font size</string>
     <string name="action_new">새 메모</string>
-    <string name="action_import">불어오기</string>
     <string name="action_save">저장</string>
     <string name="action_settings">설정</string>
     <string name="action_share">공유</string>
@@ -40,6 +39,7 @@
     <string name="dialog_about_title">노트패드 정보</string>
     <string name="dialog_are_you_sure">노트를 삭제하시겠어요?</string>
     <string name="dialog_delete_button_title">노트 삭제</string>
+    <string name="dialog_delete_button_title_plural">노트 삭제</string>
     <string name="dialog_save_button_title">변경 저장</string>
     <string name="dialog_save_changes">변경 내용을 저장하시겠어요?</string>
     <string name="draft_restored">임시 복구됨</string>
@@ -57,14 +57,13 @@
     <string name="first_view">메모를 수정하려면 본문을 더블-탭 하거나 연필을 탭 하세요</string>
     <string name="import_notes">노트 가져오기</string>
     <string name="loading_external_file">외부 파일을 읽기는 지원하지 않음</string>
-    <string name="import_notes_instructions">불어오기를 하려면 다음에 텍스트 파일을 두세요:\n</string>
-    <string name="no_external_storage">외부 저장 장치 읽기 실패. 기기를 재시작해 보세요</string>
     <string name="no_notes_found">새 노트를 만드세요</string>
     <string name="note_deleted">노트 삭제됨</string>
     <string name="note_exported_to">노트 보내기</string>
     <string name="note_saved">노트 저장됨</string>
     <string name="notes_deleted">노트 삭제</string>
     <string name="notes_exported_to">노트 보내기</string>
+    <string name="note_imported_successfully">노트 불러오기 성공</string>
     <string name="notes_imported_successfully">노트 불러오기 성공</string>
     <string name="pref_title_show_dialogs">저장전에 물어보기</string>
     <string name="send_to">노트 공유하기...</string>

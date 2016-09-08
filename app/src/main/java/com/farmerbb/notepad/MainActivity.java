@@ -441,10 +441,9 @@ NoteViewFragment.Listener {
             filename = loadNoteTitle(filesToExport[fileBeingExported].toString());
         } catch (IOException e) {}
 
-        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType(pref.getBoolean("markdown", false) ? "text/x-markdown" : "text/plain");
+        intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TITLE, generateFilename(filename));
 
         try {
@@ -458,7 +457,6 @@ NoteViewFragment.Listener {
         // Remove any invalid characters
         final String[] characters = new String[]{"<", ">", ":", "\"", "/", "\\\\", "\\|", "\\?", "\\*"};
 
-
         for(String character : characters) {
             filename = filename.replaceAll(character, "");
         }
@@ -468,11 +466,7 @@ NoteViewFragment.Listener {
         if(filename.length() > 245)
             filename = filename.substring(0, 245);
 
-        // Generate exported filename
-        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
-        String ext = pref.getBoolean("markdown", false) ? ".md" : ".txt";
-
-        return filename + ext;
+        return filename + ".txt";
     }
 
     // Method used to generate toast notifications
@@ -632,9 +626,8 @@ NoteViewFragment.Listener {
 
                 for(Object exportFilename : filesToExport) {
                     try {
-                        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
                         DocumentFile file = tree.createFile(
-                                pref.getBoolean("markdown", false) ? "text/x-markdown" : "text/plain",
+                                "text/plain",
                                 generateFilename(loadNoteTitle(exportFilename.toString())));
                         saveExportedNote(loadNote(exportFilename.toString()), file.getUri());
                     } catch (IOException e) {

@@ -4,6 +4,8 @@ A simple, bare-bones, no-frills note taking app
 
 &bull; Quickly create and save plain-text notes
 
+&bull; Optionally create rich-text notes using Markdown or HTML (Android 5.0+)
+
 &bull; Beautiful, easy-to-use UI with Material Design elements
 
 &bull; Dual-pane view for tablets

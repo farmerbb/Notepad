@@ -58,10 +58,10 @@
     <string name="loading_external_file">不支持导入外部文件</string>
     <string name="no_notes_found">无笔记</string>
     <string name="note_deleted">已删除笔记</string>
-    <string name="note_exported_to">已导出笔记至</string>
+    <string name="note_exported_to">导出笔记成功</string>
     <string name="note_saved">已保存笔记</string>
     <string name="notes_deleted">已删除笔记</string>
-    <string name="notes_exported_to">已导出笔记至</string>
+    <string name="notes_exported_to">导出笔记成功</string>
     <string name="note_imported_successfully">导入笔记成功</string>
     <string name="notes_imported_successfully">导入笔记成功</string>
     <string name="pref_title_show_dialogs">保存笔记前请求确认</string>

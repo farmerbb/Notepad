@@ -19,14 +19,14 @@ limitations under the License.
     <item
         android:id="@+id/action_export"
         android:icon="@drawable/ic_action_sd_storage"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="ifRoom"
         android:title="@string/action_export"/>
 
     <!-- Delete button -->
     <item
         android:id="@+id/action_delete"
         android:icon="@drawable/ic_action_discard"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="ifRoom"
         android:title="@string/action_delete"/>
 
 </menu>

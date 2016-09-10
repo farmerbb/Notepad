@@ -20,7 +20,7 @@
     <item
         android:id="@+id/action_delete"
         android:icon="@drawable/ic_action_discard"
-        app:showAsAction="ifRoom|withText"
+        app:showAsAction="ifRoom"
         android:title="@string/action_delete"/>
 
 </menu>

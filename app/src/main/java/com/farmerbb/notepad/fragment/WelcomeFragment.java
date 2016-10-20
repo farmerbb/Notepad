@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad;
+package com.farmerbb.notepad.fragment;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
@@ -28,6 +28,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -38,6 +39,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.farmerbb.notepad.R;
+import com.farmerbb.notepad.activity.SettingsActivity;
+import com.farmerbb.notepad.fragment.dialog.AboutDialogFragment;
 
 public class WelcomeFragment extends Fragment {
 
@@ -97,7 +102,7 @@ public class WelcomeFragment extends Fragment {
             getActivity().setTitle(title);
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, getResources().getColor(R.color.primary));
+                ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, ContextCompat.getColor(getActivity(), R.color.primary));
                 getActivity().setTaskDescription(taskDescription);
             }
 

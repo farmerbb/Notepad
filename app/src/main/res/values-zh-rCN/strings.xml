@@ -76,6 +76,8 @@
     <string name="action_theme">主题</string>
     <string name="pref_title_direct_edit">打开笔记即开始编辑</string>
     <string name="pref_title_markdown">Markdown/HTML 支持</string>
+    <string name="new_note_long">Compose a new note using Notepad</string>
+    <string name="new_note_disabled">Shortcut is disabled</string>
 
     <string-array name="sort_by_list">
         <item>修改时间</item>

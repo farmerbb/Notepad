@@ -2,20 +2,20 @@ apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "24.2.0"
+    SUPPORT_LIBRARY_VERSION = "25.0.0"
 }
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         applicationId "com.farmerbb.notepad"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 25
 
-        versionCode 89
-        versionName "2.2.3"
+        versionCode 90
+        versionName "2.2.4"
 
         resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN"
         vectorDrawables.useSupportLibrary = true
@@ -25,7 +25,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            proguardFiles 'proguard-android.txt'
         }
     }
 }

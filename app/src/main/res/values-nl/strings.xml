@@ -76,6 +76,8 @@
     <string name="action_theme">Theme</string>
     <string name="pref_title_direct_edit">Edit notes directly</string>
     <string name="pref_title_markdown">Markdown/HTML support</string>
+    <string name="new_note_long">Compose a new note using Notepad</string>
+    <string name="new_note_disabled">Shortcut is disabled</string>
 
     <string-array name="sort_by_list">
         <item>Datum (meest recent eerst)</item>

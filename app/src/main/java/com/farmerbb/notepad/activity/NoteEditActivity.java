@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad;
+package com.farmerbb.notepad.activity;
 
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -22,11 +22,18 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.farmerbb.notepad.R;
+import com.farmerbb.notepad.fragment.NoteEditFragment;
+import com.farmerbb.notepad.fragment.dialog.BackButtonDialogFragment;
+import com.farmerbb.notepad.fragment.dialog.DeleteDialogFragment;
+import com.farmerbb.notepad.fragment.dialog.SaveButtonDialogFragment;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -56,10 +63,10 @@ String external;
         LinearLayout noteViewEdit = (LinearLayout) findViewById(R.id.noteViewEdit);
 
         if(theme.contains("light"))
-            noteViewEdit.setBackgroundColor(getResources().getColor(R.color.window_background));
+            noteViewEdit.setBackgroundColor(ContextCompat.getColor(this, R.color.window_background));
 
         if(theme.contains("dark"))
-            noteViewEdit.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+            noteViewEdit.setBackgroundColor(ContextCompat.getColor(this, R.color.window_background_dark));
 
         // Set action bar elevation
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
@@ -76,17 +83,7 @@ String external;
                 if("text/plain".equals(type)) {
                     external = intent.getStringExtra(Intent.EXTRA_TEXT);
                     if(external != null) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("filename", "new");
-
-                        Fragment fragment = new NoteEditFragment();
-                        fragment.setArguments(bundle);
-
-                        // Add NoteEditFragment
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .add(R.id.noteViewEdit, fragment, "NoteEditFragment")
-                                .commit();
+                        newNote();
                     } else {
                         showToast(R.string.loading_external_file);
                         finish();
@@ -118,8 +115,22 @@ String external;
                     }
                 }
             } else
-                finish();
+                newNote();
         }
+    }
+
+    private void newNote() {
+        Bundle bundle = new Bundle();
+        bundle.putString("filename", "new");
+
+        Fragment fragment = new NoteEditFragment();
+        fragment.setArguments(bundle);
+
+        // Add NoteEditFragment
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                .commit();
     }
 
     @Override

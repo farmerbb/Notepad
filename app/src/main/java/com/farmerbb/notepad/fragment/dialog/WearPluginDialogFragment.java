@@ -13,14 +13,17 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad;
+package com.farmerbb.notepad.fragment.dialog;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.support.v4.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import com.farmerbb.notepad.R;
 
 public class WearPluginDialogFragment extends DialogFragment {
 
@@ -35,6 +38,7 @@ public class WearPluginDialogFragment extends DialogFragment {
     Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -49,6 +53,7 @@ public class WearPluginDialogFragment extends DialogFragment {
         }
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 

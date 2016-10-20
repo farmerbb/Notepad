@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad;
+package com.farmerbb.notepad.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -29,6 +29,7 @@ import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -43,6 +44,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
+
+import com.farmerbb.notepad.MainActivity;
+import com.farmerbb.notepad.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -107,6 +111,7 @@ public class NoteEditFragment extends Fragment {
     Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -161,15 +166,15 @@ public class NoteEditFragment extends Fragment {
         String theme = pref.getString("theme", "light-sans");
 
         if(theme.contains("light")) {
-            noteContents.setTextColor(getResources().getColor(R.color.text_color_primary));
-            noteContents.setBackgroundColor(getResources().getColor(R.color.window_background));
-            scrollView.setBackgroundColor(getResources().getColor(R.color.window_background));
+            noteContents.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color_primary));
+            noteContents.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
+            scrollView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
         }
 
         if(theme.contains("dark")) {
-            noteContents.setTextColor(getResources().getColor(R.color.text_color_primary_dark));
-            noteContents.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
-            scrollView.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+            noteContents.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color_primary_dark));
+            noteContents.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
+            scrollView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
         }
 
         if(theme.contains("sans"))
@@ -323,7 +328,7 @@ public class NoteEditFragment extends Fragment {
         getActivity().setTitle(title);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, getResources().getColor(R.color.primary));
+            ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, ContextCompat.getColor(getActivity(), R.color.primary));
             getActivity().setTaskDescription(taskDescription);
         }
 
@@ -356,9 +361,8 @@ public class NoteEditFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Hide soft keyboard
-        EditText editText = (EditText) getActivity().findViewById(R.id.editText1);
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(getActivity().findViewById(R.id.editText1).getWindowToken(), 0);
 
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -645,7 +649,7 @@ public class NoteEditFragment extends Fragment {
                         getActivity().setTitle(title);
 
                         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, getResources().getColor(R.color.primary));
+                            ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, ContextCompat.getColor(getActivity(), R.color.primary));
                             getActivity().setTaskDescription(taskDescription);
                         }
                     } catch (IOException e) {

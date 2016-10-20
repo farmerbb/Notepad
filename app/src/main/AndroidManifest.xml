@@ -48,9 +48,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.APP_MAPS" />
             </intent-filter>
+            <meta-data android:name="android.app.shortcuts"
+                       android:resource="@xml/shortcuts" />
         </activity>
         <activity
-            android:name="com.farmerbb.notepad.NoteEditActivity"
+            android:name="com.farmerbb.notepad.activity.NoteEditActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -64,13 +66,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.farmerbb.notepad.SettingsActivity"
+            android:name="com.farmerbb.notepad.activity.SettingsActivity"
             android:label="@string/action_settings"
             android:theme="@style/Theme.Notepad.Dialog" >
         </activity>
 
         <receiver
-            android:name="com.farmerbb.notepad.WearPluginReceiver"
+            android:name="com.farmerbb.notepad.receiver.WearPluginReceiver"
             android:enabled="true"
             android:exported="true" >
             <intent-filter>

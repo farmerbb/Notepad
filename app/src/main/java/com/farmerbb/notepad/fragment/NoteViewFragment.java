@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad;
+package com.farmerbb.notepad.fragment;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -34,6 +34,7 @@ import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
@@ -52,6 +53,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.farmerbb.notepad.R;
+import com.farmerbb.notepad.fragment.dialog.FirstViewDialogFragment;
+
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -61,7 +65,6 @@ import us.feras.mdv.MarkdownView;
 
 public class NoteViewFragment extends Fragment {
 
-    private TextView noteContents;
     private MarkdownView markdownView;
 
     String filename = "";
@@ -109,6 +112,7 @@ public class NoteViewFragment extends Fragment {
     Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -157,7 +161,7 @@ public class NoteViewFragment extends Fragment {
         getActivity().setTitle(title);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, getResources().getColor(R.color.primary));
+            ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, ContextCompat.getColor(getActivity(), R.color.primary));
             getActivity().setTaskDescription(taskDescription);
         }
 
@@ -178,7 +182,7 @@ public class NoteViewFragment extends Fragment {
         }
 
         // Set up content view
-        noteContents = (TextView) getActivity().findViewById(R.id.textView);
+        TextView noteContents = (TextView) getActivity().findViewById(R.id.textView);
         markdownView = (MarkdownView) getActivity().findViewById(R.id.markdownView);
 
         // Apply theme
@@ -192,30 +196,30 @@ public class NoteViewFragment extends Fragment {
 
         if(theme.contains("light")) {
             if(noteContents != null) {
-                noteContents.setTextColor(getResources().getColor(R.color.text_color_primary));
-                noteContents.setBackgroundColor(getResources().getColor(R.color.window_background));
+                noteContents.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color_primary));
+                noteContents.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
             }
 
             if(markdownView != null) {
-                markdownView.setBackgroundColor(getResources().getColor(R.color.window_background));
-                textColor = getResources().getColor(R.color.text_color_primary);
+                markdownView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
+                textColor = ContextCompat.getColor(getActivity(), R.color.text_color_primary);
             }
 
-            scrollView.setBackgroundColor(getResources().getColor(R.color.window_background));
+            scrollView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
         }
 
         if(theme.contains("dark")) {
             if(noteContents != null) {
-                noteContents.setTextColor(getResources().getColor(R.color.text_color_primary_dark));
-                noteContents.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+                noteContents.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color_primary_dark));
+                noteContents.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
             }
 
             if(markdownView != null) {
-                markdownView.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
-                textColor = getResources().getColor(R.color.text_color_primary_dark);
+                markdownView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
+                textColor = ContextCompat.getColor(getActivity(), R.color.text_color_primary_dark);
             }
 
-            scrollView.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+            scrollView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
         }
 
         if(theme.contains("sans")) {
@@ -296,11 +300,11 @@ public class NoteViewFragment extends Fragment {
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                         try {
                             startActivity(intent);
-                        } catch (ActivityNotFoundException | FileUriExposedException e) {}
+                        } catch (ActivityNotFoundException | FileUriExposedException e) { /* Gracefully fail */ }
                     else
                         try {
                             startActivity(intent);
-                        } catch (ActivityNotFoundException e) {}
+                        } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
                 }
 
                 @Override

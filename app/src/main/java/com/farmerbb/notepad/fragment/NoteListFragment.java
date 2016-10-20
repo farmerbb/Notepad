@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad;
+package com.farmerbb.notepad.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -31,6 +31,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ActionMode;
@@ -48,6 +49,14 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.farmerbb.notepad.MainActivity;
+import com.farmerbb.notepad.R;
+import com.farmerbb.notepad.activity.SettingsActivity;
+import com.farmerbb.notepad.adapter.NoteListAdapter;
+import com.farmerbb.notepad.adapter.NoteListDateAdapter;
+import com.farmerbb.notepad.fragment.dialog.AboutDialogFragment;
+import com.farmerbb.notepad.util.NoteListItem;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -93,6 +102,7 @@ public class NoteListFragment extends Fragment {
     Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -147,7 +157,7 @@ public class NoteListFragment extends Fragment {
                 getActivity().setTitle(title);
 
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, getResources().getColor(R.color.primary));
+                    ActivityManager.TaskDescription taskDescription = new ActivityManager.TaskDescription(title, null, ContextCompat.getColor(getActivity(), R.color.primary));
                     getActivity().setTaskDescription(taskDescription);
                 }
 
@@ -168,13 +178,13 @@ public class NoteListFragment extends Fragment {
             LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);
 
             if(theme.contains("light")) {
-                noteViewEdit.setBackgroundColor(getResources().getColor(R.color.window_background));
-                noteList.setBackgroundColor(getResources().getColor(R.color.window_background));
+                noteViewEdit.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
+                noteList.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
             }
 
             if(theme.contains("dark")) {
-                noteViewEdit.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
-                noteList.setBackgroundColor(getResources().getColor(R.color.window_background_dark));
+                noteViewEdit.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
+                noteList.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
             }
 
             // Refresh list of notes onResume (instead of onCreate) to reflect additions/deletions and preference changes

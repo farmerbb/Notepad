@@ -1,4 +1,4 @@
-/* Copyright 2014 Braden Farmer
+/* Copyright 2015 Braden Farmer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,28 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad;
+package com.farmerbb.notepad.fragment.dialog;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.support.v4.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-public class FirstViewDialogFragment extends DialogFragment {
+import com.farmerbb.notepad.R;
 
+public class WearPluginDialogFragmentAlt extends DialogFragment {
+
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.first_view)
-        .setTitle(R.string.app_name)
-        .setPositiveButton(R.string.action_close, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {}
-        });
+        builder.setMessage(R.string.congratulations)
+        .setTitle(R.string.install_wear_plugin_title)
+        .setPositiveButton(R.string.action_close, null);
 
         // Create the AlertDialog object and return it
         return builder.create();

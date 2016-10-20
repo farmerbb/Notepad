@@ -37,6 +37,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.farmerbb.notepad.fragment.NoteEditFragment;
+import com.farmerbb.notepad.fragment.NoteListFragment;
+import com.farmerbb.notepad.fragment.NoteViewFragment;
+import com.farmerbb.notepad.fragment.WelcomeFragment;
+import com.farmerbb.notepad.fragment.dialog.BackButtonDialogFragment;
+import com.farmerbb.notepad.fragment.dialog.DeleteDialogFragment;
+import com.farmerbb.notepad.fragment.dialog.FirstRunDialogFragment;
+import com.farmerbb.notepad.fragment.dialog.SaveButtonDialogFragment;
+import com.farmerbb.notepad.fragment.dialog.WearPluginDialogFragment;
+import com.farmerbb.notepad.fragment.dialog.WearPluginDialogFragmentAlt;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -64,9 +75,9 @@ NoteViewFragment.Listener {
     int fileBeingExported;
     boolean successful = true;
 
-    static final int IMPORT = 42;
-    static final int EXPORT = 43;
-    static final int EXPORT_TREE = 44;
+    public static final int IMPORT = 42;
+    public static final int EXPORT = 43;
+    public static final int EXPORT_TREE = 44;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +194,7 @@ NoteViewFragment.Listener {
             try {
                 pInfo = getPackageManager().getPackageInfo("com.google.android.wearable.app", 0);
                 hasAndroidWear = true;
-            } catch (PackageManager.NameNotFoundException e) {}
+            } catch (PackageManager.NameNotFoundException e) { /* Gracefully fail */ }
 
             if(hasAndroidWear) {
                 try {
@@ -200,7 +211,7 @@ NoteViewFragment.Listener {
                         DialogFragment wearDialog = new WearPluginDialogFragment();
                         wearDialog.show(getSupportFragmentManager(), "WearPluginDialogFragment");
                     }
-                } catch (ActivityNotFoundException e) {}
+                } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
             }
         }
     }
@@ -446,7 +457,7 @@ NoteViewFragment.Listener {
 
         try {
             filename = loadNoteTitle(filesToExport[fileBeingExported].toString());
-        } catch (IOException e) {}
+        } catch (IOException e) { /* Gracefully fail */ }
 
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);

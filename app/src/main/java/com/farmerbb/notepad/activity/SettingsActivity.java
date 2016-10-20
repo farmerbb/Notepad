@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad;
+package com.farmerbb.notepad.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,6 +23,8 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+
+import com.farmerbb.notepad.R;
 
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener{
 
@@ -104,6 +106,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                                 ""));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean onPreferenceChange(Preference preference, Object value) {
         switch(preference.getKey()) {

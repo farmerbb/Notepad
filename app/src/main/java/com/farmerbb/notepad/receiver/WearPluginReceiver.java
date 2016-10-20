@@ -16,7 +16,7 @@
 // NOTE: This BroadcastReceiver is implemented specifically for the Notepad Plugin for Android Wear, which is not open-source.
 // To use, send a broadcast with action "com.farmerbb.notepad.RECEIVE_NOTE" and a byte-array extra "note".
  
-package com.farmerbb.notepad;
+package com.farmerbb.notepad.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -35,7 +35,7 @@ public class WearPluginReceiver extends BroadcastReceiver {
             FileOutputStream output = context.openFileOutput(String.valueOf(System.currentTimeMillis()), Context.MODE_PRIVATE);
             output.write(intent.getByteArrayExtra("note"));
             output.close();
-        } catch (IOException e) {}
+        } catch (IOException e) { /* Gracefully fail */ }
 
         // Send broadcast to NoteListFragment to refresh list of notes
         Intent listNotesIntent = new Intent();

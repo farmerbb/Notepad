@@ -13,8 +13,9 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad;
+package com.farmerbb.notepad.fragment.dialog;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -25,10 +26,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.farmerbb.notepad.R;
+
 public class AboutDialogFragment extends DialogFragment {
 
     TextView textView;
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -44,9 +48,7 @@ public class AboutDialogFragment extends DialogFragment {
 
         builder.setView(view)
         .setTitle(R.string.dialog_about_title)
-        .setPositiveButton(R.string.action_close, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {}
-        });
+        .setPositiveButton(R.string.action_close, null);
 
         textView = (TextView) view.findViewById(R.id.dialogMessage);
         textView.setText(R.string.dialog_about_message);

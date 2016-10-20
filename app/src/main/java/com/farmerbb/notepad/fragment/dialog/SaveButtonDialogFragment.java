@@ -13,27 +13,32 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad;
+package com.farmerbb.notepad.fragment.dialog;
 
 import android.app.Activity;
-import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 
-public class DeleteDialogFragment extends DialogFragment {
+import com.farmerbb.notepad.R;
+
+public class SaveButtonDialogFragment extends DialogFragment {
 
     /* The activity that creates an instance of this fragment must
      * implement this interface in order to receive event call backs. */
     public interface Listener {
-        public void onDeleteDialogPositiveClick();
+        void onSaveDialogPositiveClick();
+        void onSaveDialogNegativeClick();
     }
 
     // Use this instance of the interface to deliver action events
     Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -48,19 +53,22 @@ public class DeleteDialogFragment extends DialogFragment {
         }
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.dialog_are_you_sure)
-        .setTitle(getArguments().getInt("dialog_title"))
-        .setPositiveButton(R.string.action_delete, new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.dialog_save_changes)
+        .setTitle(R.string.dialog_save_button_title)
+        .setPositiveButton(R.string.action_save, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                listener.onDeleteDialogPositiveClick();
+                listener.onSaveDialogPositiveClick();
             }
         })
-        .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {}
+        .setNegativeButton(R.string.action_discard, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                listener.onSaveDialogNegativeClick();
+            }
         });
 
         // Create the AlertDialog object and return it

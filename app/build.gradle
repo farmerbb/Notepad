@@ -11,10 +11,10 @@ android {
 
     defaultConfig {
         applicationId "com.farmerbb.notepad"
-        minSdkVersion 15
+        minSdkVersion 9
         targetSdkVersion 25
 
-        versionCode 91
+        versionCode 92
         versionName "2.2.4"
 
         resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN"

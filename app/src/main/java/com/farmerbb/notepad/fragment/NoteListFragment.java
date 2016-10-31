@@ -283,6 +283,7 @@ public class NoteListFragment extends Fragment {
         return new File(file.getPath()).list().length;
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void listNotes() {
         // Get number of files
         int numOfFiles = getNumOfNotes(getActivity().getFilesDir());
@@ -394,74 +395,76 @@ public class NoteListFragment extends Fragment {
         });
 
         // Make ListView handle contextual action bar
-        final ArrayList<String> cab = new ArrayList<>(numOfNotes);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            final ArrayList<String> cab = new ArrayList<>(numOfNotes);
 
-        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+            listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+            listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
 
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                // Respond to clicks on the actions in the CAB
-                switch (item.getItemId()) {
-                    case R.id.action_export:
-                        mode.finish(); // Action picked, so close the CAB
-                        listener.exportNote(cab.toArray());
-                        return true;
-                    case R.id.action_delete:
-                        mode.finish(); // Action picked, so close the CAB
-                        listener.deleteNote(cab.toArray());
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                listener.hideFab();
-
-                // Inflate the menu for the CAB
-                MenuInflater inflater = mode.getMenuInflater();
-                inflater.inflate(R.menu.context_menu, menu);
-
-                // Clear any old values from cab array
-                cab.clear();
-
-                return true;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-                listener.showFab();
-            }
-
-            @Override
-            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-                // Add/remove filenames to cab array as they are checked/unchecked
-                if(checked) {
-                    if(sortBy.equals("date"))
-                        cab.add(finalListByDate[position]);
-                    if(sortBy.equals("name"))
-                        cab.add(finalListByName[position]);
-                } else {
-                    if(sortBy.equals("date"))
-                        cab.remove(finalListByDate[position]);
-                    if(sortBy.equals("name"))
-                        cab.remove(finalListByName[position]);
+                @Override
+                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                    // Respond to clicks on the actions in the CAB
+                    switch(item.getItemId()) {
+                        case R.id.action_export:
+                            mode.finish(); // Action picked, so close the CAB
+                            listener.exportNote(cab.toArray());
+                            return true;
+                        case R.id.action_delete:
+                            mode.finish(); // Action picked, so close the CAB
+                            listener.deleteNote(cab.toArray());
+                            return true;
+                        default:
+                            return false;
+                    }
                 }
 
-                // Update the title in CAB
-                if(cab.size() == 0)
-                    mode.setTitle("");
-                else
-                    mode.setTitle(cab.size() + " " + listener.getCabString(cab.size()));
-            }
+                @Override
+                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                    listener.hideFab();
 
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
-            }
-        });
+                    // Inflate the menu for the CAB
+                    MenuInflater inflater = mode.getMenuInflater();
+                    inflater.inflate(R.menu.context_menu, menu);
+
+                    // Clear any old values from cab array
+                    cab.clear();
+
+                    return true;
+                }
+
+                @Override
+                public void onDestroyActionMode(ActionMode mode) {
+                    listener.showFab();
+                }
+
+                @Override
+                public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+                    // Add/remove filenames to cab array as they are checked/unchecked
+                    if(checked) {
+                        if(sortBy.equals("date"))
+                            cab.add(finalListByDate[position]);
+                        if(sortBy.equals("name"))
+                            cab.add(finalListByName[position]);
+                    } else {
+                        if(sortBy.equals("date"))
+                            cab.remove(finalListByDate[position]);
+                        if(sortBy.equals("name"))
+                            cab.remove(finalListByName[position]);
+                    }
+
+                    // Update the title in CAB
+                    if(cab.size() == 0)
+                        mode.setTitle("");
+                    else
+                        mode.setTitle(cab.size() + " " + listener.getCabString(cab.size()));
+                }
+
+                @Override
+                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                    return false;
+                }
+            });
+        }
 
         // If there are no saved notes, then display the empty view
         if(numOfNotes == 0) {

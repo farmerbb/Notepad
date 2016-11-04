@@ -19,9 +19,7 @@
         android:shortcutId="new_note"
         android:enabled="true"
         android:icon="@drawable/shortcut_icon"
-        android:shortcutShortLabel="@string/action_new"
-        android:shortcutLongLabel="@string/new_note_long"
-        android:shortcutDisabledMessage="@string/new_note_disabled">
+        android:shortcutShortLabel="@string/action_new">
         <intent
             android:action="android.intent.action.MAIN"
             android:targetPackage="com.farmerbb.notepad"

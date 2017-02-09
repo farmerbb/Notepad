@@ -114,6 +114,13 @@ String external;
                         }
                     }
                 }
+            } else if(Intent.ACTION_EDIT.equals(action) && "text/plain".equals(type)) {
+                external = intent.getStringExtra(Intent.EXTRA_TEXT);
+                if(external != null) {
+                    newNote();
+                    return;
+                }
+                finish();
             } else
                 newNote();
         }

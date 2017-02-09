@@ -595,9 +595,8 @@ NoteViewFragment.Listener {
 
         try {
             startActivity(intent);
+            showToastLong(R.string.wear_two_point_oh);
         } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
-
-        showToastLong(R.string.wear_two_point_oh);
     }
 
     @Override

@@ -66,7 +66,7 @@
     <string name="note_imported_successfully">노트 불러오기 성공</string>
     <string name="notes_imported_successfully">노트 불러오기 성공</string>
     <string name="pref_title_show_dialogs">저장전에 물어보기</string>
-    <string name="send_to">노트 공유하기...</string>
+    <string name="send_to">노트 공유하기&#8230;</string>
     <string name="view_note">노트 보기</string>
     <string name="action_install">설치</string>
     <string name="action_no_thanks">아니오</string>

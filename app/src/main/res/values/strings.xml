@@ -65,7 +65,7 @@
     <string name="note_imported_successfully">Note imported successfully</string>
     <string name="notes_imported_successfully">Notes imported successfully</string>
     <string name="pref_title_show_dialogs">Ask before saving</string>
-    <string name="send_to">Share note using&#8230;</string>
+    <string name="send_to">Share note to&#8230;</string>
     <string name="view_note">View Note</string>
     <string name="action_install">Install</string>
     <string name="action_no_thanks">No Thanks</string>

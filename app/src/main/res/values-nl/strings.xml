@@ -34,7 +34,7 @@
     <string name="cab_note_selected">notitie geselecteerd</string>
     <string name="cab_notes_selected">notities geselecteedt</string>
     <string name="changes_discarded">Aanpassing verworpen</string>
-    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2016 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/Notepad">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, except where noted below:\n\nThis app uses graphical assets from the following sources:\n\n&#8226; <a href="http://deleket.deviantart.com">Notepad icon (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
+    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2017 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/Notepad">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, except where noted below:\n\nThis app uses graphical assets from the following sources:\n\n&#8226; <a href="http://deleket.deviantart.com">Notepad icon (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
     <string name="dialog_about_title">Over Notepad</string>
     <string name="dialog_are_you_sure">Zeker weten?</string>
     <string name="dialog_delete_button_title">Verwijder notitie</string>
@@ -76,6 +76,7 @@
     <string name="action_theme">Theme</string>
     <string name="pref_title_direct_edit">Edit notes directly</string>
     <string name="pref_title_markdown">Markdown/HTML support</string>
+    <string name="wear_two_point_oh">If you have a Wear 2.0 device, please install the app on both your phone and your watch</string>
 
     <string-array name="sort_by_list">
         <item>Datum (meest recent eerst)</item>

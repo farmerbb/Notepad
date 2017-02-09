@@ -105,6 +105,7 @@ public class NoteEditFragment extends Fragment {
         boolean isShareIntent();
         String loadNote(String filename) throws IOException;
         String loadNoteTitle(String filename) throws IOException;
+        void exportNote(Object[] filesToExport);
     }
 
     // Use this instance of the interface to deliver action events
@@ -356,6 +357,9 @@ public class NoteEditFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.note_edit, menu);
+
+        if(listener.isShareIntent() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+            menu.removeItem(R.id.action_export);
     }
 
     @Override
@@ -455,6 +459,30 @@ public class NoteEditFragment extends Fragment {
                 }
 
                 return true;
+
+            // Export menu item
+            case R.id.action_export:
+                // Set current note contents to a String
+                contents = noteContents.getText().toString();
+
+                // If EditText is empty, show toast informing user to enter some text
+                if(contents.equals(""))
+                    showToast(R.string.empty_note);
+                else {
+                    String currentFilename = filename;
+                    filename = "exported_note";
+
+                    try {
+                        saveNote();
+                    } catch (IOException e) { /* Gracefully fail */ }
+
+                    filename = currentFilename;
+
+                    listener.exportNote(new Object[] {"exported_note"});
+                }
+
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -479,7 +507,7 @@ public class NoteEditFragment extends Fragment {
 
             // Set a new filename if this is not a draft
             String newFilename;
-            if(filename.equals("draft"))
+            if(filename.equals("draft") || filename.equals("exported_note"))
                 newFilename = filename;
             else
                 newFilename = String.valueOf(System.currentTimeMillis());
@@ -490,17 +518,17 @@ public class NoteEditFragment extends Fragment {
             output.close();
 
             // Delete old file
-            if(!filename.equals("draft"))
+            if(!(filename.equals("draft") || filename.equals("exported_note")))
                 deleteNote(filename);
 
             // Show toast notification
             if(filename.equals("draft"))
                 showToast(R.string.draft_saved);
-            else
+            else if(!filename.equals("exported_note"))
                 showToast(R.string.note_saved);
 
             // Old file is no more
-            if(!filename.equals("draft")) {
+            if(!(filename.equals("draft") || filename.equals("exported_note"))) {
                 filename = newFilename;
                 contentsOnLoad = contents;
                 length = contentsOnLoad.length();

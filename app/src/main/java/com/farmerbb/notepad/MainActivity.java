@@ -26,7 +26,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -189,16 +188,14 @@ NoteViewFragment.Listener {
         } else {
             boolean hasAndroidWear = false;
 
-            @SuppressWarnings("unused")
-            PackageInfo pInfo;
             try {
-                pInfo = getPackageManager().getPackageInfo("com.google.android.wearable.app", 0);
+                getPackageManager().getPackageInfo("com.google.android.wearable.app", 0);
                 hasAndroidWear = true;
             } catch (PackageManager.NameNotFoundException e) { /* Gracefully fail */ }
 
             if(hasAndroidWear) {
                 try {
-                    pInfo = getPackageManager().getPackageInfo("com.farmerbb.notepad.wear", 0);
+                    getPackageManager().getPackageInfo("com.farmerbb.notepad.wear", 0);
                     Intent intent = new Intent(Intent.ACTION_MAIN);
                     intent.setComponent(ComponentName.unflattenFromString("com.farmerbb.notepad.wear/com.farmerbb.notepad.wear.MobileMainActivity"));
                     intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -220,7 +217,8 @@ NoteViewFragment.Listener {
     @Override
     public boolean dispatchKeyShortcutEvent(KeyEvent event) {
         super.dispatchKeyShortcutEvent(event);
-        if(event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
+                && event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
             if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
                 NoteListFragment fragment = (NoteListFragment) getSupportFragmentManager().findFragmentByTag("NoteListFragment");
                 fragment.dispatchKeyShortcutEvent(event.getKeyCode());
@@ -487,9 +485,14 @@ NoteViewFragment.Listener {
         return filename + ".txt";
     }
 
-    // Method used to generate toast notifications
+    // Methods used to generate toast notifications
     private void showToast(int message) {
         Toast toast = Toast.makeText(this, getResources().getString(message), Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
+    private void showToastLong(int message) {
+        Toast toast = Toast.makeText(this, getResources().getString(message), Toast.LENGTH_LONG);
         toast.show();
     }
 
@@ -589,7 +592,12 @@ NoteViewFragment.Listener {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.farmerbb.notepad.wear"));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
+
+        showToastLong(R.string.wear_two_point_oh);
     }
 
     @Override
@@ -641,6 +649,8 @@ NoteViewFragment.Listener {
                             ? (fileBeingExported == 1 ? R.string.note_exported_to : R.string.notes_exported_to)
                             : R.string.error_exporting_notes);
 
+                File fileToDelete = new File(getFilesDir() + File.separator + "exported_note");
+                fileToDelete.delete();
             } else if(requestCode == EXPORT_TREE) {
                 DocumentFile tree = DocumentFile.fromTreeUri(this, resultData.getData());
 

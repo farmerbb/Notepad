@@ -156,7 +156,8 @@ String external;
     @Override
     public boolean dispatchKeyShortcutEvent(KeyEvent event) {
         super.dispatchKeyShortcutEvent(event);
-        if(event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
+                && event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
             NoteEditFragment fragment = (NoteEditFragment) getSupportFragmentManager().findFragmentByTag("NoteEditFragment");
             fragment.dispatchKeyShortcutEvent(event.getKeyCode());
 
@@ -242,4 +243,7 @@ String external;
     public String loadNoteTitle(String filename) {
         return null;
     }
+
+    @Override
+    public void exportNote(Object[] filesToExport) {}
 }

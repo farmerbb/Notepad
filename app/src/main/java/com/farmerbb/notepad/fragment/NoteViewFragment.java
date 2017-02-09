@@ -106,6 +106,7 @@ public class NoteViewFragment extends Fragment {
         void showDeleteDialog();
         String loadNote(String filename) throws IOException;
         String loadNoteTitle(String filename) throws IOException;
+        void exportNote(Object[] filesToExport);
     }
 
     // Use this instance of the interface to deliver action events
@@ -515,6 +516,12 @@ public class NoteViewFragment extends Fragment {
                     startActivity(Intent.createChooser(intent, getResources().getText(R.string.send_to)));
 
                 return true;
+
+            // Export menu item
+            case R.id.action_export:
+                listener.exportNote(new Object[] {filename});
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

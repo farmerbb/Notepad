@@ -401,6 +401,9 @@ public class NoteEditFragment extends Fragment {
                             listener.showSaveButtonDialog();
                         } else {
                             try {
+                                Intent intent = new Intent();
+                                intent.putExtra(Intent.EXTRA_TEXT, noteContents.getText().toString());
+                                this.getActivity().setResult(Activity.RESULT_OK, intent);
                                 saveNote();
 
                                 if(listener.isShareIntent())

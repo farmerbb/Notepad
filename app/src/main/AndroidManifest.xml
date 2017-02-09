@@ -60,6 +60,7 @@
             android:label="@string/app_name"
             android:launchMode="singleTop" >
             <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="com.google.android.gm.action.AUTO_SEND" />
 

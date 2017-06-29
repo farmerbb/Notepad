@@ -107,6 +107,7 @@ public class NoteViewFragment extends Fragment {
         String loadNote(String filename) throws IOException;
         String loadNoteTitle(String filename) throws IOException;
         void exportNote(Object[] filesToExport);
+        void printNote(String contentToPrint);
     }
 
     // Use this instance of the interface to deliver action events
@@ -310,10 +311,7 @@ public class NoteViewFragment extends Fragment {
 
                 @Override
                 public void onPageFinished(WebView view, String url) {
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-                        view.evaluateJavascript(js, null);
-                    else
-                        view.loadUrl("javascript:" + js);
+                    view.evaluateJavascript(js, null);
                 }
             });
         }
@@ -520,6 +518,11 @@ public class NoteViewFragment extends Fragment {
             // Export menu item
             case R.id.action_export:
                 listener.exportNote(new Object[] {filename});
+                return true;
+
+            // Print menu item
+            case R.id.action_print:
+                listener.printNote(contentsOnLoad);
                 return true;
 
             default:

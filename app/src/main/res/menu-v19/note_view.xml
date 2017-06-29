@@ -42,5 +42,11 @@
         android:orderInCategory="100"
         app:showAsAction="never"
         android:title="@string/action_export"/>
+    <!-- Print button -->
+    <item
+        android:id="@+id/action_print"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/action_print"/>
 
 </menu>

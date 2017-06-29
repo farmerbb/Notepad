@@ -16,8 +16,13 @@
 
 package com.farmerbb.notepad;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ClipData;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintJob;
+import android.print.PrintManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -34,6 +39,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.webkit.ValueCallback;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.farmerbb.notepad.fragment.NoteEditFragment;
@@ -47,6 +55,8 @@ import com.farmerbb.notepad.fragment.dialog.SaveButtonDialogFragment;
 import com.farmerbb.notepad.fragment.dialog.WearPluginDialogFragment;
 import com.farmerbb.notepad.fragment.dialog.WearPluginDialogFragmentAlt;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -58,6 +68,8 @@ import java.io.OutputStream;
 import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Date;
+
+import us.feras.mdv.MarkdownView;
 
 public class MainActivity extends AppCompatActivity implements
 BackButtonDialogFragment.Listener, 
@@ -77,6 +89,8 @@ NoteViewFragment.Listener {
     public static final int IMPORT = 42;
     public static final int EXPORT = 43;
     public static final int EXPORT_TREE = 44;
+
+    private WebView printWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -706,5 +720,119 @@ NoteViewFragment.Listener {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public void printNote(String contentToPrint) {
+        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", MODE_PRIVATE);
+
+        // Create a WebView object specifically for printing
+        boolean generateHtml = !(pref.getBoolean("markdown", false)
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
+        WebView webView = generateHtml ? new WebView(this) : new MarkdownView(this);
+
+        // Apply theme
+        String theme = pref.getString("theme", "light-sans");
+        int textSize = -1;
+
+        String fontFamily = null;
+
+        if(theme.contains("sans")) {
+            fontFamily = "sans-serif";
+        }
+
+        if(theme.contains("serif")) {
+            fontFamily = "serif";
+        }
+
+        if(theme.contains("monospace")) {
+            fontFamily = "monospace";
+        }
+
+        switch(pref.getString("font_size", "normal")) {
+            case "smallest":
+                textSize = 12;
+                break;
+            case "small":
+                textSize = 14;
+                break;
+            case "normal":
+                textSize = 16;
+                break;
+            case "large":
+                textSize = 18;
+                break;
+            case "largest":
+                textSize = 20;
+                break;
+        }
+
+        String topBottom = " " + Float.toString(getResources().getDimension(R.dimen.padding_top_bottom) / getResources().getDisplayMetrics().density) + "px";
+        String leftRight = " " + Float.toString(getResources().getDimension(R.dimen.padding_left_right) / getResources().getDisplayMetrics().density) + "px";
+        String fontSize = " " + Integer.toString(textSize) + "px";
+
+        final String css =
+                "body { " +
+                        "margin:" + topBottom + topBottom + leftRight + leftRight + "; " +
+                        "font-family:" + fontFamily + "; " +
+                        "font-size:" + fontSize + "; " +
+                        "}";
+
+        final String js =
+                "var styleNode = document.createElement('style');\n" +
+                        "styleNode.type = \"text/css\";\n" +
+                        "var styleText = document.createTextNode('" + css + "');\n" +
+                        "styleNode.appendChild(styleText);\n" +
+                        "document.getElementsByTagName('head')[0].appendChild(styleNode);\n";
+
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setLoadsImagesAutomatically(false);
+        webView.setWebViewClient(new WebViewClient() {
+            @TargetApi(Build.VERSION_CODES.N)
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
+            }
+
+            @Override
+            public void onPageFinished(final WebView view, String url) {
+                view.evaluateJavascript(js, new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String s) {
+                        createWebPrintJob(view);
+                        printWebView = null;
+                    }
+                });
+            }
+        });
+
+        // Load content into WebView
+        if(generateHtml) {
+            webView.loadDataWithBaseURL(null,
+                    "<html><body><p>"
+                            + StringUtils.replace(contentToPrint, "\n", "<br>")
+                            + "</p></body></html>",
+                    "text/HTML", "UTF-8", null);
+        } else
+            ((MarkdownView) webView).loadMarkdown(contentToPrint);
+
+        // Keep a reference to WebView object until you pass the PrintDocumentAdapter
+        // to the PrintManager
+        printWebView = webView;
+    }
+
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void createWebPrintJob(WebView webView) {
+        // Get a PrintManager instance
+        PrintManager printManager = (PrintManager) getSystemService(PRINT_SERVICE);
+
+        // Get a print adapter instance
+        PrintDocumentAdapter printAdapter = webView.createPrintDocumentAdapter();
+
+        // Create a print job with name and adapter instance
+        String jobName = getString(R.string.app_name) + " Document";
+        PrintJob printJob = printManager.print(jobName, printAdapter,
+                new PrintAttributes.Builder().build());
     }
 }

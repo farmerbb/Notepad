@@ -106,6 +106,7 @@ public class NoteEditFragment extends Fragment {
         String loadNote(String filename) throws IOException;
         String loadNoteTitle(String filename) throws IOException;
         void exportNote(Object[] filesToExport);
+        void printNote(String contentToPrint);
     }
 
     // Use this instance of the interface to deliver action events
@@ -358,8 +359,10 @@ public class NoteEditFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.note_edit, menu);
 
-        if(listener.isShareIntent() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+        if(listener.isShareIntent() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             menu.removeItem(R.id.action_export);
+            menu.removeItem(R.id.action_print);
+        }
     }
 
     @Override
@@ -480,6 +483,19 @@ public class NoteEditFragment extends Fragment {
 
                     listener.exportNote(new Object[] {"exported_note"});
                 }
+
+                return true;
+
+            // Print menu item
+            case R.id.action_print:
+                // Set current note contents to a String
+                contents = noteContents.getText().toString();
+
+                // If EditText is empty, show toast informing user to enter some text
+                if(contents.equals(""))
+                    showToast(R.string.empty_note);
+                else
+                    listener.printNote(contents);
 
                 return true;
 

@@ -246,4 +246,7 @@ String external;
 
     @Override
     public void exportNote(Object[] filesToExport) {}
+
+    @Override
+    public void printNote(String contentToPrint) {}
 }

@@ -78,6 +78,7 @@
     <string name="pref_title_direct_edit">Edit notes directly</string>
     <string name="pref_title_markdown">Markdown/HTML support</string>
     <string name="wear_two_point_oh">If you have a Wear 2.0 device, please install the app on both your phone and your watch</string>
+    <string name="action_print">Print</string>
 
     <string-array name="sort_by_list">
         <item>Date (most recent first)</item>

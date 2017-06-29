@@ -31,6 +31,7 @@
     <string name="action_share">Share</string>
     <string name="action_sort_by">Sort notes by</string>
     <string name="app_name">Notepad</string>
+    <string name="app_name_debug">Notepad (Debug)</string>
     <string name="cab_note_selected">note selected</string>
     <string name="cab_notes_selected">notes selected</string>
     <string name="changes_discarded">Changes discarded</string>

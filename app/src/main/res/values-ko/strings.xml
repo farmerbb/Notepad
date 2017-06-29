@@ -32,6 +32,7 @@
     <string name="action_share">공유</string>
     <string name="action_sort_by">정렬 순서</string>
     <string name="app_name">노트패드</string>
+    <string name="app_name_debug">@string/app_name</string>
     <string name="cab_note_selected">선택됨</string>
     <string name="cab_notes_selected">선택됨</string>
     <string name="changes_discarded">변경 취소됨</string>

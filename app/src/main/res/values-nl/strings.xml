@@ -31,6 +31,7 @@
     <string name="action_share">Delen</string>
     <string name="action_sort_by">Order op</string>
     <string name="app_name">Notepad</string>
+    <string name="app_name_debug">@string/app_name</string>
     <string name="cab_note_selected">notitie geselecteerd</string>
     <string name="cab_notes_selected">notities geselecteedt</string>
     <string name="changes_discarded">Aanpassing verworpen</string>

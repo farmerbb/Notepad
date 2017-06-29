@@ -31,6 +31,7 @@
     <string name="action_share">Partager</string>
     <string name="action_sort_by">Trier les notes par</string>
     <string name="app_name">Bloc-Notes</string>
+    <string name="app_name_debug">@string/app_name</string>
     <string name="cab_note_selected">note sélectionnée</string>
     <string name="cab_notes_selected">notes sélectionnées</string>
     <string name="changes_discarded">Modifications abandonnées</string>

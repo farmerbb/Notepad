@@ -768,8 +768,8 @@ NoteViewFragment.Listener {
                 break;
         }
 
-        String topBottom = " " + Float.toString(getResources().getDimension(R.dimen.padding_top_bottom) / getResources().getDisplayMetrics().density) + "px";
-        String leftRight = " " + Float.toString(getResources().getDimension(R.dimen.padding_left_right) / getResources().getDisplayMetrics().density) + "px";
+        String topBottom = " " + Float.toString(getResources().getDimension(R.dimen.padding_top_bottom_print) / getResources().getDisplayMetrics().density) + "px";
+        String leftRight = " " + Float.toString(getResources().getDimension(R.dimen.padding_left_right_print) / getResources().getDisplayMetrics().density) + "px";
         String fontSize = " " + Integer.toString(textSize) + "px";
 
         final String css =

@@ -274,6 +274,7 @@ public class NoteViewFragment extends Fragment {
             String leftRight = " " + Float.toString(getResources().getDimension(R.dimen.padding_left_right) / getResources().getDisplayMetrics().density) + "px";
             String fontSize = " " + Integer.toString(textSize) + "px";
             String fontColor = " #" + StringUtils.remove(Integer.toHexString(textColor), "ff");
+            String linkColor = " #" + StringUtils.remove(Integer.toHexString(new TextView(getActivity()).getLinkTextColors().getDefaultColor()), "ff");
 
             final String css =
                     "body { " +
@@ -281,6 +282,9 @@ public class NoteViewFragment extends Fragment {
                     "font-family:" + fontFamily + "; " +
                     "font-size:" + fontSize + "; " +
                     "color:" + fontColor + "; " +
+                    "}" +
+                    "a { " +
+                    "color:" + linkColor + "; " +
                     "}";
 
             final String js =

@@ -21,7 +21,6 @@ import android.annotation.TargetApi;
 import android.content.ClipData;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
-import android.print.PrintJob;
 import android.print.PrintManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -89,8 +88,6 @@ NoteViewFragment.Listener {
     public static final int IMPORT = 42;
     public static final int EXPORT = 43;
     public static final int EXPORT_TREE = 44;
-
-    private WebView printWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -801,7 +798,6 @@ NoteViewFragment.Listener {
                     @Override
                     public void onReceiveValue(String s) {
                         createWebPrintJob(view);
-                        printWebView = null;
                     }
                 });
             }
@@ -816,10 +812,6 @@ NoteViewFragment.Listener {
                     "text/HTML", "UTF-8", null);
         } else
             ((MarkdownView) webView).loadMarkdown(contentToPrint);
-
-        // Keep a reference to WebView object until you pass the PrintDocumentAdapter
-        // to the PrintManager
-        printWebView = webView;
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -832,7 +824,7 @@ NoteViewFragment.Listener {
 
         // Create a print job with name and adapter instance
         String jobName = getString(R.string.app_name) + " Document";
-        PrintJob printJob = printManager.print(jobName, printAdapter,
+        printManager.print(jobName, printAdapter,
                 new PrintAttributes.Builder().build());
     }
 }

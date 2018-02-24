@@ -595,7 +595,11 @@ NoteViewFragment.Listener {
                         DocumentFile file = tree.createFile(
                                 "text/plain",
                                 generateFilename(loadNoteTitle(exportFilename.toString())));
-                        saveExportedNote(loadNote(exportFilename.toString()), file.getUri());
+
+                        if(file != null)
+                            saveExportedNote(loadNote(exportFilename.toString()), file.getUri());
+                        else
+                            successful = false;
                     } catch (IOException e) {
                         successful = false;
                     }

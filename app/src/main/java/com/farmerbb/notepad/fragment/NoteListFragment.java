@@ -477,6 +477,8 @@ public class NoteListFragment extends Fragment {
                         if(sortBy.equals("name"))
                             cab.remove(finalListByName[position]);
                     }
+
+                    listView.setItemChecked(-1, false);
                 }
 
                 // Update the title in CAB

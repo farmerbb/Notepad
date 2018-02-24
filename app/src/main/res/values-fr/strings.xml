@@ -78,7 +78,6 @@
     <string name="action_start_selection">Select notes</string>
     <string name="action_select_all">Select all</string>
     <string name="no_notes_to_select">No notes to select</string>
-    <string name="action_licenses">Licenses</string>
 
     <string-array name="sort_by_list">
         <item>Date (la plus récente en premier)</item>

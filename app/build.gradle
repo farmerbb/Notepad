@@ -3,7 +3,6 @@ ext {
 }
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.gms.oss.licenses.plugin'
 
 repositories {
     google()
@@ -18,7 +17,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 27
 
-        versionCode 96
+        versionCode 97
         versionName "2.2.7"
 
         resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN"
@@ -57,7 +56,6 @@ dependencies {
 
     implementation "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
     implementation "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
-    implementation 'com.google.android.gms:play-services-oss-licenses:11.8.0'
     implementation 'org.apache.commons:commons-lang3:3.7'
     implementation 'us.feras.mdv:markdownview:1.1.0'
 }

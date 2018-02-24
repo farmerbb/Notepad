@@ -1,26 +1,25 @@
-apply plugin: 'com.android.application'
-
 ext {
-    SUPPORT_LIBRARY_VERSION = "25.4.0"
+    SUPPORT_LIBRARY_VERSION = "27.0.2"
 }
 
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.oss.licenses.plugin'
+
 repositories {
-    maven {
-        url "https://maven.google.com"
-    }
+    google()
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.farmerbb.notepad"
-        minSdkVersion 9
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 27
 
-        versionCode 95
-        versionName "2.2.6"
+        versionCode 96
+        versionName "2.2.7"
 
         resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN"
         vectorDrawables.useSupportLibrary = true
@@ -54,10 +53,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
-    compile "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
-    compile 'org.apache.commons:commons-lang3:3.5'
-    compile 'us.feras.mdv:markdownview:1.1.0'
+    implementation "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
+    implementation "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
+    implementation 'com.google.android.gms:play-services-oss-licenses:11.8.0'
+    implementation 'org.apache.commons:commons-lang3:3.7'
+    implementation 'us.feras.mdv:markdownview:1.1.0'
 }

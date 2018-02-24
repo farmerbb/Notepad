@@ -22,8 +22,6 @@ A simple, bare-bones, no-frills note taking app
 
 &bull; Integration with Google Now "note to self"
 
-&bull; Android Wear support (with additional plugin)
-
 &bull; Import and export notes to external storage (Android 4.4+)
 
 &bull; Zero permissions and absolutely zero ads

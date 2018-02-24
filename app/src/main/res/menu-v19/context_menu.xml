@@ -13,20 +13,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_select_all"
+        android:icon="@drawable/ic_select_all_black_24dp"
+        app:showAsAction="ifRoom"
+        android:title="@string/action_select_all"/>
 
     <!-- Export button -->
     <item
         android:id="@+id/action_export"
         android:icon="@drawable/ic_action_sd_storage"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/action_export"/>
 
     <!-- Delete button -->
     <item
         android:id="@+id/action_delete"
         android:icon="@drawable/ic_action_discard"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/action_delete"/>
 
 </menu>

@@ -36,7 +36,7 @@
     <string name="cab_note_selected">선택됨</string>
     <string name="cab_notes_selected">선택됨</string>
     <string name="changes_discarded">변경 취소됨</string>
-    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2017 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/Notepad">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, except where noted below:\n\nThis app uses graphical assets from the following sources:\n\n&#8226; <a href="http://deleket.deviantart.com">Notepad icon (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
+    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2018 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/Notepad">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, except where noted below:\n\nThis app uses graphical assets from the following sources:\n\n&#8226; <a href="http://deleket.deviantart.com">Notepad icon (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
     <string name="dialog_about_title">노트패드 정보</string>
     <string name="dialog_are_you_sure">노트를 삭제하시겠어요?</string>
     <string name="dialog_delete_button_title">노트 삭제</string>
@@ -71,15 +71,15 @@
     <string name="view_note">노트 보기</string>
     <string name="action_install">설치</string>
     <string name="action_no_thanks">아니오</string>
-    <string name="install_wear_plugin_title">안드로이드 웨어 플러그인</string>
-    <string name="install_wear_plugin_message">노트패드는 안드로이드 웨어 장치를 이용하여 음성 명령 \"Ok Google, take a note\"으로 노트를 생성할 수 있습니다. 이를 위해 별도의 플러그인이 필요합니다.\n\n안드로이드 웨어를 위한 노트패트 플러그인을 설치하시겠습니까?</string>
-    <string name="congratulations">축하합니다! 안드로이드 웨어를 위한 노트패드 플러그인이 설치되었습니다.\n\n노트패드에 저장할 노트를 생성하려면 \"Ok Google, take a note\"를 말하세요. 노트는 자동으로 노트패드에 저장 됩니다.</string>
     <string name="pref_title_show_date">날짜/시간 보이기</string>
     <string name="action_theme">Theme</string>
     <string name="pref_title_direct_edit">Edit notes directly</string>
     <string name="pref_title_markdown">Markdown/HTML support</string>
-    <string name="wear_two_point_oh">If you have a Wear 2.0 device, please install the app on both your phone and your watch</string>
     <string name="action_print">Print</string>
+    <string name="action_start_selection">Select notes</string>
+    <string name="action_select_all">Select all</string>
+    <string name="no_notes_to_select">No notes to select</string>
+    <string name="action_licenses">Licenses</string>
 
     <string-array name="sort_by_list">
         <item>날짜 (내림차순)</item>

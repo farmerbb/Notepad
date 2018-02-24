@@ -57,6 +57,7 @@ import com.farmerbb.notepad.adapter.NoteListAdapter;
 import com.farmerbb.notepad.adapter.NoteListDateAdapter;
 import com.farmerbb.notepad.fragment.dialog.AboutDialogFragment;
 import com.farmerbb.notepad.util.NoteListItem;
+import com.farmerbb.notepad.util.ScrollPositions;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -72,6 +73,8 @@ public class NoteListFragment extends Fragment {
     String sortBy;
     boolean showDate = false;
     boolean directEdit = false;
+
+    private ListView listView;
 
     // Receiver used to refresh list of notes (in tablet layout)
     public class ListNotesReceiver extends BroadcastReceiver {
@@ -96,6 +99,7 @@ public class NoteListFragment extends Fragment {
         String loadNoteDate(String filename) throws IOException;
         void showFab();
         void hideFab();
+        void startMultiSelect();
     }
 
     // Use this instance of the interface to deliver action events
@@ -187,6 +191,9 @@ public class NoteListFragment extends Fragment {
                 noteList.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
             }
 
+            // Declare ListView
+            listView = (ListView) getActivity().findViewById(R.id.listView1);
+
             // Refresh list of notes onResume (instead of onCreate) to reflect additions/deletions and preference changes
             listNotes();
         }
@@ -212,6 +219,8 @@ public class NoteListFragment extends Fragment {
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ScrollPositions.getInstance().setPosition(listView.getFirstVisiblePosition());
+
                     Bundle bundle = new Bundle();
                     bundle.putString("filename", "new");
 
@@ -247,6 +256,9 @@ public class NoteListFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch(item.getItemId()) {
+            case R.id.action_start_selection:
+                listener.startMultiSelect();
+                return true;
             case R.id.action_settings:
                 Intent intentSettings = new Intent(getActivity(), SettingsActivity.class);
                 startActivity(intentSettings);
@@ -273,6 +285,13 @@ public class NoteListFragment extends Fragment {
         }
     }
 
+    public void startMultiSelect() {
+        if(listView.getAdapter().getCount() > 0)
+            listView.setItemChecked(-1, true);
+        else
+            showToast(R.string.no_notes_to_select);
+    }
+
     // Returns list of filenames in /data/data/com.farmerbb.notepad/files/
     private static String[] getListOfNotes(File file) {
         return file.list();
@@ -283,7 +302,6 @@ public class NoteListFragment extends Fragment {
         return new File(file.getPath()).list().length;
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void listNotes() {
         // Get number of files
         int numOfFiles = getNumOfNotes(getActivity().getFilesDir());
@@ -300,9 +318,6 @@ public class NoteListFragment extends Fragment {
             else
                 numOfNotes--;
         }
-
-        // Declare ListView
-        final ListView listView = (ListView) getActivity().findViewById(R.id.listView1);
 
         // Create arrays of note lists
         String[] listOfNotesByDate = new String[numOfNotes];
@@ -371,6 +386,8 @@ public class NoteListFragment extends Fragment {
         else
             listView.setAdapter(adapter);
 
+        listView.setSelection(ScrollPositions.getInstance().getPosition());
+
         // Finalize arrays to prepare for handling clicked items
         final String[] finalListByDate = listOfNotesByDate;
         final String[] finalListByName = listOfNotesByName;
@@ -380,6 +397,8 @@ public class NoteListFragment extends Fragment {
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                ScrollPositions.getInstance().setPosition(listView.getFirstVisiblePosition());
+
                 if(sortBy.equals("date")) {
                     if(directEdit)
                         listener.editNote(finalListByDate[position]);
@@ -395,50 +414,57 @@ public class NoteListFragment extends Fragment {
         });
 
         // Make ListView handle contextual action bar
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            final ArrayList<String> cab = new ArrayList<>(numOfNotes);
+        final ArrayList<String> cab = new ArrayList<>(numOfNotes);
 
-            listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-            listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
 
-                @Override
-                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                    // Respond to clicks on the actions in the CAB
-                    switch(item.getItemId()) {
-                        case R.id.action_export:
-                            mode.finish(); // Action picked, so close the CAB
-                            listener.exportNote(cab.toArray());
-                            return true;
-                        case R.id.action_delete:
-                            mode.finish(); // Action picked, so close the CAB
-                            listener.deleteNote(cab.toArray());
-                            return true;
-                        default:
-                            return false;
-                    }
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                // Respond to clicks on the actions in the CAB
+                switch(item.getItemId()) {
+                    case R.id.action_select_all:
+                        cab.clear();
+
+                        for(int i = 0; i < listView.getAdapter().getCount(); i++) {
+                            listView.setItemChecked(i, true);
+                        }
+                        return false;
+                    case R.id.action_export:
+                        mode.finish(); // Action picked, so close the CAB
+                        listener.exportNote(cab.toArray());
+                        return true;
+                    case R.id.action_delete:
+                        mode.finish(); // Action picked, so close the CAB
+                        listener.deleteNote(cab.toArray());
+                        return true;
+                    default:
+                        return false;
                 }
+            }
 
-                @Override
-                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                    listener.hideFab();
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                listener.hideFab();
 
-                    // Inflate the menu for the CAB
-                    MenuInflater inflater = mode.getMenuInflater();
-                    inflater.inflate(R.menu.context_menu, menu);
+                // Inflate the menu for the CAB
+                MenuInflater inflater = mode.getMenuInflater();
+                inflater.inflate(R.menu.context_menu, menu);
 
-                    // Clear any old values from cab array
-                    cab.clear();
+                // Clear any old values from cab array
+                cab.clear();
 
-                    return true;
-                }
+                return true;
+            }
 
-                @Override
-                public void onDestroyActionMode(ActionMode mode) {
-                    listener.showFab();
-                }
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                listener.showFab();
+            }
 
-                @Override
-                public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+            @Override
+            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+                if(position > -1) {
                     // Add/remove filenames to cab array as they are checked/unchecked
                     if(checked) {
                         if(sortBy.equals("date"))
@@ -451,20 +477,17 @@ public class NoteListFragment extends Fragment {
                         if(sortBy.equals("name"))
                             cab.remove(finalListByName[position]);
                     }
-
-                    // Update the title in CAB
-                    if(cab.size() == 0)
-                        mode.setTitle("");
-                    else
-                        mode.setTitle(cab.size() + " " + listener.getCabString(cab.size()));
                 }
 
-                @Override
-                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                    return false;
-                }
-            });
-        }
+                // Update the title in CAB
+                mode.setTitle(cab.size() + " " + listener.getCabString(cab.size()));
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+        });
 
         // If there are no saved notes, then display the empty view
         if(numOfNotes == 0) {
@@ -484,6 +507,8 @@ public class NoteListFragment extends Fragment {
             switch(keyCode) {
                 // CTRL+N: New Note
                 case KeyEvent.KEYCODE_N:
+                    ScrollPositions.getInstance().setPosition(listView.getFirstVisiblePosition());
+
                     Bundle bundle = new Bundle();
                     bundle.putString("filename", "new");
 

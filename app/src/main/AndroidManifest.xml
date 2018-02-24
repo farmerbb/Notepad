@@ -85,15 +85,6 @@
             android:label="@string/action_settings"
             android:theme="@style/Theme.Notepad.Dialog" >
         </activity>
-
-        <receiver
-            android:name="com.farmerbb.notepad.receiver.WearPluginReceiver"
-            android:enabled="true"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="com.farmerbb.notepad.RECEIVE_NOTE" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

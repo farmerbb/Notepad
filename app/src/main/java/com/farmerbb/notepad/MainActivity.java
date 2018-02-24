@@ -26,11 +26,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -51,8 +49,6 @@ import com.farmerbb.notepad.fragment.dialog.BackButtonDialogFragment;
 import com.farmerbb.notepad.fragment.dialog.DeleteDialogFragment;
 import com.farmerbb.notepad.fragment.dialog.FirstRunDialogFragment;
 import com.farmerbb.notepad.fragment.dialog.SaveButtonDialogFragment;
-import com.farmerbb.notepad.fragment.dialog.WearPluginDialogFragment;
-import com.farmerbb.notepad.fragment.dialog.WearPluginDialogFragmentAlt;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -75,7 +71,6 @@ BackButtonDialogFragment.Listener,
 DeleteDialogFragment.Listener, 
 SaveButtonDialogFragment.Listener,
 FirstRunDialogFragment.Listener,
-WearPluginDialogFragment.Listener,
 NoteListFragment.Listener,
 NoteEditFragment.Listener, 
 NoteViewFragment.Listener {
@@ -108,9 +103,6 @@ NoteViewFragment.Listener {
                 firstRun.show(getSupportFragmentManager(), "firstrunfragment");
             }
         } else {
-            // Check to see if Android Wear app is installed, and offer to install the Notepad Plugin
-            checkForAndroidWear();
-
             // The following code is only present to support existing users of Notepad on Google Play
             // and can be removed if using this source code for a different app
 
@@ -180,56 +172,13 @@ NoteViewFragment.Listener {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
-        checkForAndroidWear();
-    }
-
-    private void checkForAndroidWear() {
-        // Notepad Plugin for Android Wear sends intent with "plugin_install_complete" extra,
-        // in order to verify that the main Notepad app is installed correctly
-        if(getIntent().hasExtra("plugin_install_complete")) {
-            if(getSupportFragmentManager().findFragmentByTag("WearPluginDialogFragmentAlt") == null) {
-                DialogFragment wearDialog = new WearPluginDialogFragmentAlt();
-                wearDialog.show(getSupportFragmentManager(), "WearPluginDialogFragmentAlt");
-            }
-
-            SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putBoolean("show_wear_dialog", false);
-            editor.apply();
-        } else {
-            boolean hasAndroidWear = false;
-
-            try {
-                getPackageManager().getPackageInfo("com.google.android.wearable.app", 0);
-                hasAndroidWear = true;
-            } catch (PackageManager.NameNotFoundException e) { /* Gracefully fail */ }
-
-            if(hasAndroidWear) {
-                try {
-                    getPackageManager().getPackageInfo("com.farmerbb.notepad.wear", 0);
-                    Intent intent = new Intent(Intent.ACTION_MAIN);
-                    intent.setComponent(ComponentName.unflattenFromString("com.farmerbb.notepad.wear/com.farmerbb.notepad.wear.MobileMainActivity"));
-                    intent.addCategory(Intent.CATEGORY_LAUNCHER);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                } catch (PackageManager.NameNotFoundException e) {
-                    SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
-                    if(pref.getBoolean("show_wear_dialog", true)
-                            && getSupportFragmentManager().findFragmentByTag("WearPluginDialogFragment") == null) {
-                        DialogFragment wearDialog = new WearPluginDialogFragment();
-                        wearDialog.show(getSupportFragmentManager(), "WearPluginDialogFragment");
-                    }
-                } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
-            }
-        }
     }
 
     // Keyboard shortcuts
     @Override
     public boolean dispatchKeyShortcutEvent(KeyEvent event) {
         super.dispatchKeyShortcutEvent(event);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
-                && event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
+        if(event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
             if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
                 NoteListFragment fragment = (NoteListFragment) getSupportFragmentManager().findFragmentByTag("NoteListFragment");
                 fragment.dispatchKeyShortcutEvent(event.getKeyCode());
@@ -593,29 +542,6 @@ NoteViewFragment.Listener {
         SharedPreferences.Editor editor2 = pref.edit();
         editor2.putBoolean("show_dialogs", false);
         editor2.apply();
-
-        checkForAndroidWear();
-    }
-
-    @Override
-    public void onWearDialogPositiveClick() {
-        // Intent to Google Play
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.farmerbb.notepad.wear"));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        try {
-            startActivity(intent);
-            showToastLong(R.string.wear_two_point_oh);
-        } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
-    }
-
-    @Override
-    public void onWearDialogNegativeClick() {
-        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean("show_wear_dialog", false);
-        editor.apply();
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -826,5 +752,19 @@ NoteViewFragment.Listener {
         String jobName = getString(R.string.app_name) + " Document";
         printManager.print(jobName, printAdapter,
                 new PrintAttributes.Builder().build());
+    }
+
+    @Override
+    public void startMultiSelect() {
+        NoteListFragment fragment = null;
+
+        if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+            fragment = (NoteListFragment) getSupportFragmentManager().findFragmentById(R.id.noteViewEdit);
+
+        if(findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
+            fragment = (NoteListFragment) getSupportFragmentManager().findFragmentById(R.id.noteList);
+
+        if(fragment != null)
+            fragment.startMultiSelect();
     }
 }

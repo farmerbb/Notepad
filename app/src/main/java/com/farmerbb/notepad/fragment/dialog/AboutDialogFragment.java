@@ -15,6 +15,7 @@
 
 package com.farmerbb.notepad.fragment.dialog;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.farmerbb.notepad.R;
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity;
 
 public class AboutDialogFragment extends DialogFragment {
 
@@ -48,7 +50,14 @@ public class AboutDialogFragment extends DialogFragment {
 
         builder.setView(view)
         .setTitle(R.string.dialog_about_title)
-        .setPositiveButton(R.string.action_close, null);
+        .setPositiveButton(R.string.action_close, null)
+        .setNegativeButton(R.string.action_licenses, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getActivity(), OssLicensesMenuActivity.class);
+                startActivity(intent);
+            }
+        });
 
         textView = (TextView) view.findViewById(R.id.dialogMessage);
         textView.setText(R.string.dialog_about_message);

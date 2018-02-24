@@ -156,8 +156,7 @@ String external;
     @Override
     public boolean dispatchKeyShortcutEvent(KeyEvent event) {
         super.dispatchKeyShortcutEvent(event);
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB
-                && event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
+        if(event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
             NoteEditFragment fragment = (NoteEditFragment) getSupportFragmentManager().findFragmentByTag("NoteEditFragment");
             fragment.dispatchKeyShortcutEvent(event.getKeyCode());
 

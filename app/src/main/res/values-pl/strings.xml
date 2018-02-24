@@ -35,7 +35,7 @@
     <string name="cab_note_selected">notatka zaznaczona</string>
     <string name="cab_notes_selected">notatki zaznaczone</string>
     <string name="changes_discarded">Zmiany odrzucone</string>
-    <string name="dialog_about_message">Notatnik: prosta aplikacja do sporządzania notatek\n\n&#169; 2017 Braden Farmer\n\n<a href="http://github.com/farmerbb/Notepad">Kod źródłowy</a> tej aplikacji jest na licencji <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, z wyjątkiem wymienionych poniżej:\n\nTa aplikacja używa elementów graficznych pochodzących z następujących źródeł:\n\n&#8226; <a href="http://deleket.deviantart.com">Ikona notatnika (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
+    <string name="dialog_about_message">Notatnik: prosta aplikacja do sporządzania notatek\n\n&#169; 2018 Braden Farmer\n\n<a href="http://github.com/farmerbb/Notepad">Kod źródłowy</a> tej aplikacji jest na licencji <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, z wyjątkiem wymienionych poniżej:\n\nTa aplikacja używa elementów graficznych pochodzących z następujących źródeł:\n\n&#8226; <a href="http://deleket.deviantart.com">Ikona notatnika (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
     <string name="dialog_about_title">O Notatniku</string>
     <string name="dialog_are_you_sure">Czy jesteś pewien?</string>
     <string name="dialog_delete_button_title">Usuń notatkę</string>
@@ -70,15 +70,15 @@
     <string name="view_note">Podgląd notatki</string>
     <string name="action_install">Install</string>
     <string name="action_no_thanks">No Thanks</string>
-    <string name="install_wear_plugin_title">Android Wear Plugin</string>
-    <string name="install_wear_plugin_message">Notepad can save notes from your Android Wear device using the \"Ok Google, take a note\" command. This requires a separate plugin to be installed.\n\nInstall Notepad Plugin for Android Wear?</string>
-    <string name="congratulations">Congratulations! Notepad Plugin for Android Wear setup is now complete.\n\nTo take a note to save in Notepad, say \"Ok Google, take a note\". Your note will automatically be saved in the Notepad app on your device.</string>
     <string name="pref_title_show_date">Show date/time</string>
     <string name="action_theme">Theme</string>
     <string name="pref_title_direct_edit">Edit notes directly</string>
     <string name="pref_title_markdown">Markdown/HTML support</string>
-    <string name="wear_two_point_oh">If you have a Wear 2.0 device, please install the app on both your phone and your watch</string>
     <string name="action_print">Print</string>
+    <string name="action_start_selection">Select notes</string>
+    <string name="action_select_all">Select all</string>
+    <string name="no_notes_to_select">No notes to select</string>
+    <string name="action_licenses">Licenses</string>
 
     <string-array name="sort_by_list">
         <item>Daty (najnowsze na początku)</item>

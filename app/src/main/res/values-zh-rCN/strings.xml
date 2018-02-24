@@ -35,7 +35,7 @@
     <string name="cab_note_selected">项目已选</string>
     <string name="cab_notes_selected">项目已选</string>
     <string name="changes_discarded">已舍弃更改</string>
-    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2017 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/Notepad">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, except where noted below:\n\nThis app uses graphical assets from the following sources:\n\n&#8226; <a href="http://deleket.deviantart.com">Notepad icon (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
+    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2018 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/Notepad">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, except where noted below:\n\nThis app uses graphical assets from the following sources:\n\n&#8226; <a href="http://deleket.deviantart.com">Notepad icon (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
     <string name="dialog_about_title">关于Notepad</string>
     <string name="dialog_are_you_sure">确认？</string>
     <string name="dialog_delete_button_title">删除笔记</string>
@@ -70,15 +70,15 @@
     <string name="view_note">查看笔记</string>
     <string name="action_install">安装</string>
     <string name="action_no_thanks">不，谢了</string>
-    <string name="install_wear_plugin_title">Android Wear Plugin</string>
-    <string name="install_wear_plugin_message">Notepad can save notes from your Android Wear device using the \"Ok Google, take a note\" command. This requires a separate plugin to be installed.\n\nInstall Notepad Plugin for Android Wear?</string>
-    <string name="congratulations">Congratulations! Notepad Plugin for Android Wear setup is now complete.\n\nTo take a note to save in Notepad, say \"Ok Google, take a note\". Your note will automatically be saved in the Notepad app on your device.</string>
     <string name="pref_title_show_date">列表中显示修改时间</string>
     <string name="action_theme">主题</string>
     <string name="pref_title_direct_edit">打开笔记即开始编辑</string>
     <string name="pref_title_markdown">Markdown/HTML 支持</string>
-    <string name="wear_two_point_oh">If you have a Wear 2.0 device, please install the app on both your phone and your watch</string>
     <string name="action_print">Print</string>
+    <string name="action_start_selection">Select notes</string>
+    <string name="action_select_all">Select all</string>
+    <string name="no_notes_to_select">No notes to select</string>
+    <string name="action_licenses">Licenses</string>
 
     <string-array name="sort_by_list">
         <item>修改时间</item>

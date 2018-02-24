@@ -1,4 +1,5 @@
 *.iml
+*.apk
 .gradle
 /local.properties
 /.idea
@@ -6,4 +7,6 @@
 /build
 /captures
 /app/build
-/app/app-release.apk
+output.json
+/app/src/main/res/raw/third_party_license_metadata
+/app/src/main/res/raw/third_party_licenses

@@ -17,6 +17,12 @@ limitations under the License.
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_start_selection"
+        android:icon="@drawable/ic_playlist_add_check_black_24dp"
+        app:showAsAction="ifRoom"
+        android:title="@string/action_start_selection"/>
+
+    <item
         android:id="@+id/action_settings"
         app:showAsAction="never"
         android:title="@string/action_settings" />

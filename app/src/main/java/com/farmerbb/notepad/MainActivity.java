@@ -35,8 +35,8 @@ import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.provider.DocumentFile;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.KeyEvent;
-import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -699,49 +699,33 @@ NoteViewFragment.Listener {
         String leftRight = " " + Float.toString(getResources().getDimension(R.dimen.padding_left_right_print) / getResources().getDisplayMetrics().density) + "px";
         String fontSize = " " + Integer.toString(textSize) + "px";
 
-        final String css =
-                "body { " +
+        String css = "body { " +
                         "margin:" + topBottom + topBottom + leftRight + leftRight + "; " +
                         "font-family:" + fontFamily + "; " +
                         "font-size:" + fontSize + "; " +
                         "}";
 
-        final String js =
-                "var styleNode = document.createElement('style');\n" +
-                        "styleNode.type = \"text/css\";\n" +
-                        "var styleText = document.createTextNode('" + css + "');\n" +
-                        "styleNode.appendChild(styleText);\n" +
-                        "document.getElementsByTagName('head')[0].appendChild(styleNode);\n";
-
-        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setJavaScriptEnabled(false);
         webView.getSettings().setLoadsImagesAutomatically(false);
         webView.setWebViewClient(new WebViewClient() {
-            @TargetApi(Build.VERSION_CODES.N)
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
-            }
-
             @Override
             public void onPageFinished(final WebView view, String url) {
-                view.evaluateJavascript(js, new ValueCallback<String>() {
-                    @Override
-                    public void onReceiveValue(String s) {
-                        createWebPrintJob(view);
-                    }
-                });
+                createWebPrintJob(view);
             }
         });
 
         // Load content into WebView
         if(generateHtml) {
             webView.loadDataWithBaseURL(null,
-                    "<html><body><p>"
+                    "<link rel='stylesheet' type='text/css' href='data:text/css;base64,"
+                            + Base64.encodeToString(css.getBytes(), Base64.DEFAULT)
+                            +"' /><html><body><p>"
                             + StringUtils.replace(contentToPrint, "\n", "<br>")
                             + "</p></body></html>",
                     "text/HTML", "UTF-8", null);
         } else
-            ((MarkdownView) webView).loadMarkdown(contentToPrint);
+            ((MarkdownView) webView).loadMarkdown(contentToPrint,
+                    "data:text/css;base64," + Base64.encodeToString(css.getBytes(), Base64.DEFAULT));
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -753,7 +737,7 @@ NoteViewFragment.Listener {
         PrintDocumentAdapter printAdapter = webView.createPrintDocumentAdapter();
 
         // Create a print job with name and adapter instance
-        String jobName = getString(R.string.app_name) + " Document";
+        String jobName = getString(R.string.document, getString(R.string.app_name));
         printManager.print(jobName, printAdapter,
                 new PrintAttributes.Builder().build());
     }

@@ -15,12 +15,10 @@
 
 package com.farmerbb.notepad.fragment;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
-import android.net.Uri;
 import android.os.FileUriExposedException;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -37,6 +35,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -46,6 +45,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -138,7 +138,6 @@ public class NoteViewFragment extends Fragment {
                         : R.layout.fragment_note_view, container, false);
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -269,6 +268,7 @@ public class NoteViewFragment extends Fragment {
         if(noteContents != null)
             noteContents.setTextSize(textSize);
 
+        String css = "";
         if(markdownView != null) {
             String topBottom = " " + Float.toString(getResources().getDimension(R.dimen.padding_top_bottom) / getResources().getDisplayMetrics().density) + "px";
             String leftRight = " " + Float.toString(getResources().getDimension(R.dimen.padding_left_right) / getResources().getDisplayMetrics().density) + "px";
@@ -276,8 +276,7 @@ public class NoteViewFragment extends Fragment {
             String fontColor = " #" + StringUtils.remove(Integer.toHexString(textColor), "ff");
             String linkColor = " #" + StringUtils.remove(Integer.toHexString(new TextView(getActivity()).getLinkTextColors().getDefaultColor()), "ff");
 
-            final String css =
-                    "body { " +
+            css = "body { " +
                     "margin:" + topBottom + topBottom + leftRight + leftRight + "; " +
                     "font-family:" + fontFamily + "; " +
                     "font-size:" + fontSize + "; " +
@@ -287,21 +286,15 @@ public class NoteViewFragment extends Fragment {
                     "color:" + linkColor + "; " +
                     "}";
 
-            final String js =
-                    "var styleNode = document.createElement('style');\n" +
-                    "styleNode.type = \"text/css\";\n" +
-                    "var styleText = document.createTextNode('" + css + "');\n" +
-                    "styleNode.appendChild(styleText);\n" +
-                    "document.getElementsByTagName('head')[0].appendChild(styleNode);\n";
-
-            markdownView.getSettings().setJavaScriptEnabled(true);
+            markdownView.getSettings().setJavaScriptEnabled(false);
             markdownView.getSettings().setLoadsImagesAutomatically(false);
             markdownView.setWebViewClient(new WebViewClient() {
-                @TargetApi(Build.VERSION_CODES.N)
                 @Override
-                public void onLoadResource(WebView view, String url) {
-                    view.stopLoading();
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                    if(!request.hasGesture())
+                        return super.shouldOverrideUrlLoading(view, request);
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW, request.getUrl());
 
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                         try {
@@ -311,11 +304,8 @@ public class NoteViewFragment extends Fragment {
                         try {
                             startActivity(intent);
                         } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
-                }
 
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    view.evaluateJavascript(js, null);
+                    return true;
                 }
             });
         }
@@ -345,7 +335,8 @@ public class NoteViewFragment extends Fragment {
             noteContents.setText(contentsOnLoad);
 
         if(markdownView != null)
-            markdownView.loadMarkdown(contentsOnLoad);
+            markdownView.loadMarkdown(contentsOnLoad,
+                    "data:text/css;base64," + Base64.encodeToString(css.getBytes(), Base64.DEFAULT));
 
         // Show a toast message if this is the user's first time viewing a note
         final SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);

@@ -1,5 +1,5 @@
 ext {
-    SUPPORT_LIBRARY_VERSION = "27.0.2"
+    SUPPORT_LIBRARY_VERSION = "27.1.0"
 }
 
 apply plugin: 'com.android.application'
@@ -17,8 +17,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 27
 
-        versionCode 98
-        versionName "2.2.7"
+        versionCode 99
+        versionName "2.2.8"
 
         resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN"
         vectorDrawables.useSupportLibrary = true

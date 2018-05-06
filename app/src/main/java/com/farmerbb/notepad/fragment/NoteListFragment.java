@@ -431,13 +431,23 @@ public class NoteListFragment extends Fragment {
                         }
                         return false;
                     case R.id.action_export:
-                        mode.finish(); // Action picked, so close the CAB
-                        listener.exportNote(cab.toArray());
-                        return true;
+                        if(cab.size() > 0) {
+                            mode.finish(); // Action picked, so close the CAB
+                            listener.exportNote(cab.toArray());
+                            return true;
+                        } else {
+                            showToast(R.string.no_notes_to_export);
+                            return false;
+                        }
                     case R.id.action_delete:
-                        mode.finish(); // Action picked, so close the CAB
-                        listener.deleteNote(cab.toArray());
-                        return true;
+                        if(cab.size() > 0) {
+                            mode.finish(); // Action picked, so close the CAB
+                            listener.deleteNote(cab.toArray());
+                            return true;
+                        } else {
+                            showToast(R.string.no_notes_to_export);
+                            return false;
+                        }
                     default:
                         return false;
                 }

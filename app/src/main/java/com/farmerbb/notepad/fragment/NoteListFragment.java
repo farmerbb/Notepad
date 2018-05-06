@@ -445,7 +445,7 @@ public class NoteListFragment extends Fragment {
                             listener.deleteNote(cab.toArray());
                             return true;
                         } else {
-                            showToast(R.string.no_notes_to_export);
+                            showToast(R.string.no_notes_to_delete);
                             return false;
                         }
                     default:

@@ -49,6 +49,7 @@ import com.farmerbb.notepad.fragment.dialog.BackButtonDialogFragment;
 import com.farmerbb.notepad.fragment.dialog.DeleteDialogFragment;
 import com.farmerbb.notepad.fragment.dialog.FirstRunDialogFragment;
 import com.farmerbb.notepad.fragment.dialog.SaveButtonDialogFragment;
+import com.farmerbb.notepad.util.WebViewInitState;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -166,6 +167,14 @@ NoteViewFragment.Listener {
 
         // Commit fragment transaction
         transaction.commit();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        WebViewInitState wvState = WebViewInitState.getInstance();
+        wvState.initialize(this);
     }
 
     @Override

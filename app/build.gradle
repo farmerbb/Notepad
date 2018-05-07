@@ -20,7 +20,7 @@ android {
         versionCode 99
         versionName "2.2.8"
 
-        resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN"
+        resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it"
         vectorDrawables.useSupportLibrary = true
     }
 

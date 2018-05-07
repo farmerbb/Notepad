@@ -35,7 +35,8 @@
     <string name="cab_note_selected">nota selezionata</string>
     <string name="cab_notes_selected">note selezionate</string>
     <string name="changes_discarded">Modifiche annullate</string>
-    <string name="dialog_about_message">Notepad: una semplice app per appunti\n\n&#169; 2018 Braden Farmer\n\nIl <a href="http://github.com/farmerbb/Notepad">codice sorgente</a> di questa app &egrave <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, escluso dove esplicitamente scritto:\n\nQuesta app usa degli assets grafici provenienti da:\n\n&#8226; <a href="http://deleket.deviantart.com">icona Notepad (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
+    <string name="dialog_about_message">Notepad: una semplice app per appunti\n\n&#169; 2018 Braden Farmer\n\nIl <a href="http://github.com/farmerbb/Notepad">codice sorgente</a> di questa app &#232; <a href="http://www.apache.org/licenses/LICENSE-2.0.html">
+        Apache 2.0</a>, escluso dove esplicitamente scritto:\n\nQuesta app usa degli assets grafici provenienti da:\n\n&#8226; <a href="http://deleket.deviantart.com">icona Notepad (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
     <string name="dialog_about_title">Riguardo a Notepad</string>
     <string name="dialog_are_you_sure">Sei sicuro?</string>
     <string name="dialog_delete_button_title">Cancella nota</string>
@@ -44,19 +45,19 @@
     <string name="dialog_save_changes">Vuoi salvare le modifiche?</string>
     <string name="draft_restored">Bozza riaperta</string>
     <string name="draft_saved">Bozza salvata</string>
-    <string name="double_tap">Consiglio: Fai doppio-tap per passare in modalit&aacute Modifica</string>
+    <string name="double_tap">Consiglio: Fai doppio-tap per passare in modalit&#225; Modifica</string>
     <string name="edit_note">Modifica Nota</string>
     <string name="edit_text">Scrivi per aggiungere il testo</string>
     <string name="empty_note">Per favore, inserisi un testo!</string>
-    <string name="error_exporting_notes">Errore durante l'esportazione delle note!</string>
-    <string name="error_importing_notes">Errore durante l'importazione delle note!</string>
+    <string name="error_exporting_notes">Errore durante l\'esportazione delle note!</string>
+    <string name="error_importing_notes">Errore durante l\'importazione delle note!</string>
     <string name="error_loading_list">Errore nel caricamento della lista delle note!</string>
     <string name="error_loading_note">Errore nel caricamento della nota!</string>
-    <string name="failed_to_save">Errore: Il salvataggio della nota &egrave fallito!</string>
-    <string name="first_run">Benvenuto in Notepad!\n\nPer creare una nota, clicca sul tasto Nuova Nota (segno pi&ugrave).</string>
+    <string name="failed_to_save">Errore: Il salvataggio della nota &#232; fallito!</string>
+    <string name="first_run">Benvenuto in Notepad!\n\nPer creare una nota, clicca sul tasto Nuova Nota (segno pi&#249;).</string>
     <string name="first_view">Per modificare una nota salvata, fai doppio-tap sul testo o clicca il tasto Modifica (matita).</string>
     <string name="import_notes">Importa note</string>
-    <string name="loading_external_file">Il caricamento di files esterni non &egrave supportato</string>
+    <string name="loading_external_file">Il caricamento di files esterni non &#232; supportato</string>
     <string name="no_notes_found">Nessuna nota trovata</string>
     <string name="note_deleted">Nota cancellata</string>
     <string name="note_exported_to">Nota esportata con successo</string>
@@ -83,7 +84,7 @@
     <string name="no_notes_to_delete">Nessuna nota selezionata da cancellare</string>
 
     <string-array name="sort_by_list">
-        <item>Data (prima le pi&ugrave recenti)</item>
+        <item>Data (prima le pi&#249; recenti)</item>
         <item>Nome (A-Z)</item>
     </string-array>
     <string-array name="theme_list">

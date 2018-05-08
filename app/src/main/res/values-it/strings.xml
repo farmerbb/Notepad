@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2014 Braden Farmer
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+
+<resources>
+
+    <string name="action_cancel">Annulla</string>
+    <string name="action_close">Chiudi</string>
+    <string name="action_delete">Cancella</string>
+    <string name="action_discard">Dimentica</string>
+    <string name="action_edit">Modifica</string>
+    <string name="action_export">Esporta</string>
+    <string name="action_font_size">Dimensione font</string>
+    <string name="action_new">Nuova Nota</string>
+    <string name="action_save">Salva</string>
+    <string name="action_settings">Impostazioni</string>
+    <string name="action_share">Condividi</string>
+    <string name="action_sort_by">Ordina per</string>
+    <string name="app_name">Notepad</string>
+    <string name="app_name_debug">Notepad (Debug)</string>
+    <string name="cab_note_selected">nota selezionata</string>
+    <string name="cab_notes_selected">note selezionate</string>
+    <string name="changes_discarded">Modifiche annullate</string>
+    <string name="dialog_about_message">Notepad: una semplice app per appunti\n\n&#169; 2018 Braden Farmer\n\nIl <a href="http://github.com/farmerbb/Notepad">codice sorgente</a> di questa app &#232; <a href="http://www.apache.org/licenses/LICENSE-2.0.html">
+        Apache 2.0</a>, escluso dove esplicitamente scritto:\n\nQuesta app usa degli assets grafici provenienti da:\n\n&#8226; <a href="http://deleket.deviantart.com">icona Notepad (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
+    <string name="dialog_about_title">Riguardo a Notepad</string>
+    <string name="dialog_are_you_sure">Sei sicuro?</string>
+    <string name="dialog_delete_button_title">Cancella nota</string>
+    <string name="dialog_delete_button_title_plural">Cancella note</string>
+    <string name="dialog_save_button_title">Salva le modifiche</string>
+    <string name="dialog_save_changes">Vuoi salvare le modifiche?</string>
+    <string name="draft_restored">Bozza riaperta</string>
+    <string name="draft_saved">Bozza salvata</string>
+    <string name="double_tap">Consiglio: Fai doppio-tap per passare in modalit&#225; Modifica</string>
+    <string name="edit_note">Modifica Nota</string>
+    <string name="edit_text">Scrivi per aggiungere il testo</string>
+    <string name="empty_note">Per favore, inserisi un testo!</string>
+    <string name="error_exporting_notes">Errore durante l\'esportazione delle note!</string>
+    <string name="error_importing_notes">Errore durante l\'importazione delle note!</string>
+    <string name="error_loading_list">Errore nel caricamento della lista delle note!</string>
+    <string name="error_loading_note">Errore nel caricamento della nota!</string>
+    <string name="failed_to_save">Errore: Il salvataggio della nota &#232; fallito!</string>
+    <string name="first_run">Benvenuto in Notepad!\n\nPer creare una nota, clicca sul tasto Nuova Nota (segno pi&#249;).</string>
+    <string name="first_view">Per modificare una nota salvata, fai doppio-tap sul testo o clicca il tasto Modifica (matita).</string>
+    <string name="import_notes">Importa note</string>
+    <string name="loading_external_file">Il caricamento di files esterni non &#232; supportato</string>
+    <string name="no_notes_found">Nessuna nota trovata</string>
+    <string name="note_deleted">Nota cancellata</string>
+    <string name="note_exported_to">Nota esportata con successo</string>
+    <string name="note_saved">Nota salvata</string>
+    <string name="notes_deleted">Note cancellate</string>
+    <string name="notes_exported_to">Note esportate con successo</string>
+    <string name="note_imported_successfully">Nota importata con successo</string>
+    <string name="notes_imported_successfully">Note importate con successo</string>
+    <string name="pref_title_show_dialogs">Chiedi prima di salvare</string>
+    <string name="send_to">Condividi con&#8230;</string>
+    <string name="view_note">Visualizza Nota</string>
+    <string name="action_install">Installa</string>
+    <string name="action_no_thanks">No Grazie</string>
+    <string name="pref_title_show_date">Mostra data/ora</string>
+    <string name="action_theme">Tema</string>
+    <string name="pref_title_direct_edit">Modifica le note direttamente</string>
+    <string name="pref_title_markdown">Markdown/HTML support</string>
+    <string name="action_print">Stampa</string>
+    <string name="action_start_selection">Seleziona note</string>
+    <string name="action_select_all">Seleziona tutte</string>
+    <string name="no_notes_to_select">Nessuna nota da selezionare</string>
+    <string name="document">%1$s Documento</string>
+    <string name="no_notes_to_export">Nessuna nota selezionata da esportare</string>
+    <string name="no_notes_to_delete">Nessuna nota selezionata da cancellare</string>
+
+    <string-array name="sort_by_list">
+        <item>Data (prima le pi&#249; recenti)</item>
+        <item>Nome (A-Z)</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>Chiaro / sans serif</item>
+        <item>Chiaro / serif</item>
+        <item>Chiaro / monospace</item>
+        <item>Scuro / sans serif</item>
+        <item>Scuro / serif</item>
+        <item>Scuro / monospace</item>
+    </string-array>
+    <string-array name="font_size_list">
+        <item>Molto piccolo</item>
+        <item>Piccolo</item>
+        <item>Normale</item>
+        <item>Grande</item>
+        <item>Molto grande</item>
+    </string-array>
+
+</resources>

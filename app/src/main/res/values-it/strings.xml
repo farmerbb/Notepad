@@ -35,8 +35,7 @@
     <string name="cab_note_selected">nota selezionata</string>
     <string name="cab_notes_selected">note selezionate</string>
     <string name="changes_discarded">Modifiche annullate</string>
-    <string name="dialog_about_message">Notepad: una semplice app per appunti\n\n&#169; 2018 Braden Farmer\n\nIl <a href="http://github.com/farmerbb/Notepad">codice sorgente</a> di questa app &#232; <a href="http://www.apache.org/licenses/LICENSE-2.0.html">
-        Apache 2.0</a>, escluso dove esplicitamente scritto:\n\nQuesta app usa degli assets grafici provenienti da:\n\n&#8226; <a href="http://deleket.deviantart.com">icona Notepad (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
+    <string name="dialog_about_message">Notepad: una semplice app per appunti\n\n&#169; 2018 Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">Riguardo a Notepad</string>
     <string name="dialog_are_you_sure">Sei sicuro?</string>
     <string name="dialog_delete_button_title">Cancella nota</string>

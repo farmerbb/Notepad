@@ -36,7 +36,7 @@
     <string name="cab_note_selected">선택됨</string>
     <string name="cab_notes_selected">선택됨</string>
     <string name="changes_discarded">변경 취소됨</string>
-    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2018 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/Notepad">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>, except where noted below:\n\nThis app uses graphical assets from the following sources:\n\n&#8226; <a href="http://deleket.deviantart.com">Notepad icon (deleket)</a> <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/legalcode">(CC BY-NC-ND 3.0)</a></string>
+    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2018 Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">노트패드 정보</string>
     <string name="dialog_are_you_sure">노트를 삭제하시겠어요?</string>
     <string name="dialog_delete_button_title">노트 삭제</string>

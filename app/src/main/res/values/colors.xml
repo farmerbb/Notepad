@@ -26,4 +26,5 @@
     <color name="text_color_secondary">#606060</color>
     <color name="text_color_secondary_dark">#EEEEEE</color>
     <color name="close_button">#009688</color>
+    <color name="ic_launcher_adaptive_bg">#00B5E6</color>
 </resources>

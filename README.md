@@ -2,35 +2,35 @@
 
 A simple, bare-bones, no-frills note taking app
 
-<b>Features:</b>
+== Features ==
 
-&bull; Quickly create and save plain-text notes
+* Quickly create and save plain-text notes
 
-&bull; Optionally create rich-text notes using Markdown or HTML (Android 5.0+)
+* Optionally create rich-text notes using Markdown or HTML (Android 5.0+)
 
-&bull; Beautiful, easy-to-use UI with Material Design elements
+* Beautiful, easy-to-use UI with Material Design elements
 
-&bull; Dual-pane view for tablets
+* Dual-pane view for tablets
 
-&bull; Share notes to and receive text from other apps
+* Share notes to and receive text from other apps
 
-&bull; Auto-saves drafts
+* Auto-saves drafts
 
-&bull; View Mode for notes with clickable links
+* View Mode for notes with clickable links
 
-&bull; Sort notes by date or by name
+* Sort notes by date or by name
 
-&bull; Keyboard shortcuts for common actions (see below)
+* Keyboard shortcuts for common actions (see below)
 
-&bull; Integration with Google Now "note to self"
+* Integration with Google Now "note to self"
 
-&bull; Import and export notes to external storage (Android 4.4+)
+* Import and export notes to external storage (Android 4.4+)
 
-&bull; Zero permissions and absolutely zero ads
+* Zero permissions and absolutely zero ads
 
-&bull; Open-source
+* Open-source
 
-<b>Keyboard shortcuts</b>
+=== Keyboard shortcuts ===
 
 Search+M: launch Notepad from any application
 
@@ -43,3 +43,11 @@ Ctrl+S: Save
 Ctrl+D: Delete
 
 Ctrl+H: Share
+
+== Download ==
+
+* [Google Play](https://play.google.com/store/apps/details?id=com.farmerbb.notepad)
+
+* [F-Droid](https://f-droid.org/packages/com.farmerbb.notepad/)
+
+* [Amazon Appstore](https://www.amazon.com/Braden-Farmer-Notepad/dp/B00KZ79H3O/)

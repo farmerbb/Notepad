@@ -46,8 +46,8 @@ Ctrl+H: Share
 
 ## Download
 
-* [Google Play](https://play.google.com/store/apps/details?id=com.farmerbb.notepad)
+* Google Play (https://play.google.com/store/apps/details?id=com.farmerbb.notepad)
 
-* [F-Droid](https://f-droid.org/packages/com.farmerbb.notepad/)
+* F-Droid (https://f-droid.org/packages/com.farmerbb.notepad/)
 
-* [Amazon Appstore](https://www.amazon.com/Braden-Farmer-Notepad/dp/B00KZ79H3O/)
+* Amazon Appstore (https://www.amazon.com/Braden-Farmer-Notepad/dp/B00KZ79H3O/)

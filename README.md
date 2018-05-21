@@ -2,7 +2,7 @@
 
 A simple, bare-bones, no-frills note taking app
 
-== Features ==
+## Features
 
 * Quickly create and save plain-text notes
 
@@ -30,7 +30,7 @@ A simple, bare-bones, no-frills note taking app
 
 * Open-source
 
-=== Keyboard shortcuts ===
+#### Keyboard shortcuts
 
 Search+M: launch Notepad from any application
 
@@ -44,7 +44,7 @@ Ctrl+D: Delete
 
 Ctrl+H: Share
 
-== Download ==
+## Download
 
 * [Google Play](https://play.google.com/store/apps/details?id=com.farmerbb.notepad)
 

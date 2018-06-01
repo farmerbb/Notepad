@@ -21,6 +21,7 @@ import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.FileUriExposedException;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -47,7 +48,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
@@ -294,11 +294,8 @@ public class NoteViewFragment extends Fragment {
             markdownView.getSettings().setLoadsImagesAutomatically(false);
             markdownView.setWebViewClient(new WebViewClient() {
                 @Override
-                public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                    if(!request.hasGesture())
-                        return super.shouldOverrideUrlLoading(view, request);
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW, request.getUrl());
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                         try {

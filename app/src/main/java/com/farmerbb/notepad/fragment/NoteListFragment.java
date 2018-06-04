@@ -52,7 +52,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.farmerbb.notepad.MainActivity;
+import com.farmerbb.notepad.activity.MainActivity;
 import com.farmerbb.notepad.R;
 import com.farmerbb.notepad.activity.SettingsActivity;
 import com.farmerbb.notepad.adapter.NoteListAdapter;

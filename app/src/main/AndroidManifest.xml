@@ -46,10 +46,10 @@
         android:label="${appName}"
         android:theme="@style/Theme.Notepad"
         tools:replace="android:label" >
-        <activity
-            android:name="com.farmerbb.notepad.MainActivity"
-            android:label="${appName}"
-            android:launchMode="singleTop" >
+        <activity-alias
+            android:name="com.farmerbb.notepad.activity.MainActivity"
+            android:targetActivity="com.farmerbb.notepad.activity.MainActivity"
+            android:label="${appName}">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,8 +58,12 @@
                 <category android:name="android.intent.category.APP_MAPS" />
             </intent-filter>
             <meta-data android:name="android.app.shortcuts"
-                       android:resource="@xml/shortcuts" />
-        </activity>
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
+        <activity
+            android:name="com.farmerbb.notepad.activity.MainActivity"
+            android:label="${appName}"
+            android:launchMode="singleTop"/>
         <activity
             android:name="com.farmerbb.notepad.activity.NoteEditActivity"
             android:label="${appName}"

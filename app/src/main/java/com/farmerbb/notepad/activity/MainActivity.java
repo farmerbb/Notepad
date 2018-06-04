@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad;
+package com.farmerbb.notepad.activity;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -41,6 +41,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.farmerbb.notepad.R;
 import com.farmerbb.notepad.fragment.NoteEditFragment;
 import com.farmerbb.notepad.fragment.NoteListFragment;
 import com.farmerbb.notepad.fragment.NoteViewFragment;

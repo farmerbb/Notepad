@@ -47,7 +47,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.farmerbb.notepad.MainActivity;
+import com.farmerbb.notepad.activity.MainActivity;
 import com.farmerbb.notepad.R;
 
 import java.io.File;
@@ -589,7 +589,7 @@ public class NoteEditFragment extends Fragment {
         deleteNote(filename);
         showToast(R.string.note_deleted);
 
-        if(getActivity().getComponentName().getClassName().equals("com.farmerbb.notepad.MainActivity")
+        if(getActivity().getComponentName().getClassName().equals("com.farmerbb.notepad.activity.MainActivity")
                 && getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")) {
             // Send broadcast to NoteListFragment to refresh list of notes
             Intent listNotesIntent = new Intent();

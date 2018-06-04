@@ -65,8 +65,8 @@ public class WelcomeFragment extends Fragment {
         // Animate elevation change
         if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
-            LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);
+            LinearLayout noteViewEdit = getActivity().findViewById(R.id.noteViewEdit);
+            LinearLayout noteList = getActivity().findViewById(R.id.noteList);
 
             noteViewEdit.animate().z(0f);
             if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
@@ -115,24 +115,21 @@ public class WelcomeFragment extends Fragment {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(false);
 
             // Floating action button
-            FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
+            FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.button_floating_action_welcome);
             floatingActionButton.setImageResource(R.drawable.ic_action_new);
-            floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("filename", "new");
+            floatingActionButton.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putString("filename", "new");
 
-                    Fragment fragment = new NoteEditFragment();
-                    fragment.setArguments(bundle);
+                Fragment fragment = new NoteEditFragment();
+                fragment.setArguments(bundle);
 
-                    // Add NoteEditFragment
-                    getFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                            .commit();
-                    }
+                // Add NoteEditFragment
+                getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                        .commit();
                 });
 
         }
@@ -199,12 +196,12 @@ public class WelcomeFragment extends Fragment {
     }
 
     public void showFab() {
-        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
+        FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.button_floating_action_welcome);
         floatingActionButton.show();
     }
 
     public void hideFab() {
-        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
+        FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.button_floating_action_welcome);
         floatingActionButton.hide();
     }
 

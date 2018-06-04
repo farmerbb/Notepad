@@ -49,7 +49,7 @@ public class AboutDialogFragment extends DialogFragment {
         .setTitle(R.string.dialog_about_title)
         .setPositiveButton(R.string.action_close, null);
 
-        textView = (TextView) view.findViewById(R.id.dialogMessage);
+        textView = view.findViewById(R.id.dialogMessage);
         textView.setText(R.string.dialog_about_message);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
 

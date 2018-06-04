@@ -19,7 +19,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
@@ -60,16 +59,8 @@ public class SaveButtonDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.dialog_save_changes)
         .setTitle(R.string.dialog_save_button_title)
-        .setPositiveButton(R.string.action_save, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                listener.onSaveDialogPositiveClick();
-            }
-        })
-        .setNegativeButton(R.string.action_discard, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                listener.onSaveDialogNegativeClick();
-            }
-        });
+        .setPositiveButton(R.string.action_save, (dialog, id) -> listener.onSaveDialogPositiveClick())
+        .setNegativeButton(R.string.action_discard, (dialog, id) -> listener.onSaveDialogNegativeClick());
 
         // Create the AlertDialog object and return it
         return builder.create();

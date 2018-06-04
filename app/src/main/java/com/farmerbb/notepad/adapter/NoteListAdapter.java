@@ -47,7 +47,7 @@ public class NoteListAdapter extends ArrayAdapter<NoteListItem> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_layout, parent, false);
 
         // Lookup view for data population
-        TextView noteTitle = (TextView) convertView.findViewById(R.id.noteTitle);
+        TextView noteTitle = convertView.findViewById(R.id.noteTitle);
 
         // Populate the data into the template view using the data object
         noteTitle.setText(note);

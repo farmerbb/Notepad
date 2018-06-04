@@ -176,8 +176,8 @@ public class NoteViewFragment extends Fragment {
         // Animate elevation change
         if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
-            LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);
+            LinearLayout noteViewEdit = getActivity().findViewById(R.id.noteViewEdit);
+            LinearLayout noteList = getActivity().findViewById(R.id.noteList);
 
             noteList.animate().z(0f);
             if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
@@ -187,12 +187,12 @@ public class NoteViewFragment extends Fragment {
         }
 
         // Set up content view
-        TextView noteContents = (TextView) getActivity().findViewById(R.id.textView);
-        markdownView = (MarkdownView) getActivity().findViewById(R.id.markdownView);
+        TextView noteContents = getActivity().findViewById(R.id.textView);
+        markdownView = getActivity().findViewById(R.id.markdownView);
 
         // Apply theme
         SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
-        ScrollView scrollView = (ScrollView) getActivity().findViewById(R.id.scrollView);
+        ScrollView scrollView = getActivity().findViewById(R.id.scrollView);
         String theme = pref.getString("theme", "light-sans");
         int textSize = -1;
         int textColor = -1;
@@ -423,21 +423,15 @@ public class NoteViewFragment extends Fragment {
         });
 
         if(noteContents != null)
-            noteContents.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    detector.onTouchEvent(event);
-                    return false;
-                }
+            noteContents.setOnTouchListener((v, event) -> {
+                detector.onTouchEvent(event);
+                return false;
             });
 
         if(markdownView != null)
-            markdownView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    detector.onTouchEvent(event);
-                    return false;
-                }
+            markdownView.setOnTouchListener((v, event) -> {
+                detector.onTouchEvent(event);
+                return false;
             });
     }
 

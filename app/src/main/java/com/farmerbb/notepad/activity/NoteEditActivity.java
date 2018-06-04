@@ -60,7 +60,7 @@ String external;
         SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
         String theme = pref.getString("theme", "light-sans");
 
-        LinearLayout noteViewEdit = (LinearLayout) findViewById(R.id.noteViewEdit);
+        LinearLayout noteViewEdit = findViewById(R.id.noteViewEdit);
 
         if(theme.contains("light"))
             noteViewEdit.setBackgroundColor(ContextCompat.getColor(this, R.color.window_background));
@@ -146,7 +146,7 @@ String external;
 
         // Set text in EditView
         if(external != null) {
-            EditText noteContents = (EditText) findViewById(R.id.editText1);
+            EditText noteContents = findViewById(R.id.editText1);
             noteContents.setText(external);
             noteContents.setSelection(external.length(), external.length());
         }

@@ -20,7 +20,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.support.v4.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import com.farmerbb.notepad.R;
@@ -30,8 +29,8 @@ public class BackButtonDialogFragment extends DialogFragment {
     /* The activity that creates an instance of this fragment must
      * implement this interface in order to receive event call backs. */
     public interface Listener {
-        public void onBackDialogPositiveClick(String filename);
-        public void onBackDialogNegativeClick(String filename);
+        void onBackDialogPositiveClick(String filename);
+        void onBackDialogNegativeClick(String filename);
     }
 
     // Use this instance of the interface to deliver action events
@@ -60,16 +59,8 @@ public class BackButtonDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.dialog_save_changes)
         .setTitle(R.string.dialog_save_button_title)
-        .setPositiveButton(R.string.action_save, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                listener.onBackDialogPositiveClick(getArguments().getString("filename"));
-            }
-        })
-        .setNegativeButton(R.string.action_discard, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                listener.onBackDialogNegativeClick(getArguments().getString("filename"));
-            }
-        });
+        .setPositiveButton(R.string.action_save, (dialog, id) -> listener.onBackDialogPositiveClick(getArguments().getString("filename")))
+        .setNegativeButton(R.string.action_discard, (dialog, id) -> listener.onBackDialogNegativeClick(getArguments().getString("filename")));
 
         // Create the AlertDialog object and return it
         return builder.create();

@@ -461,11 +461,6 @@ NoteViewFragment.Listener {
         toast.show();
     }
 
-    private void showToastLong(int message) {
-        Toast toast = Toast.makeText(this, getResources().getString(message), Toast.LENGTH_LONG);
-        toast.show();
-    }
-
     // Loads note from /data/data/com.farmerbb.notepad/files
     public String loadNote(String filename) throws IOException {
 
@@ -738,6 +733,7 @@ NoteViewFragment.Listener {
                     "data:text/css;base64," + Base64.encodeToString(css.getBytes(), Base64.DEFAULT));
     }
 
+    @SuppressWarnings("deprecation")
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void createWebPrintJob(WebView webView) {
         // Get a PrintManager instance

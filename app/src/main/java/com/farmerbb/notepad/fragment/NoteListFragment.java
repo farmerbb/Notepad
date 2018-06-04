@@ -45,8 +45,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView.MultiChoiceModeListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -182,8 +180,8 @@ public class NoteListFragment extends Fragment {
             directEdit = pref.getBoolean("direct_edit", false);
 
             // Apply theme
-            LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
-            LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);
+            LinearLayout noteViewEdit = getActivity().findViewById(R.id.noteViewEdit);
+            LinearLayout noteList = getActivity().findViewById(R.id.noteList);
 
             if(theme.contains("light")) {
                 noteViewEdit.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
@@ -196,7 +194,7 @@ public class NoteListFragment extends Fragment {
             }
 
             // Declare ListView
-            listView = (ListView) getActivity().findViewById(R.id.listView1);
+            listView = getActivity().findViewById(R.id.listView1);
 
             // Refresh list of notes onResume (instead of onCreate) to reflect additions/deletions and preference changes
             listNotes();
@@ -211,7 +209,7 @@ public class NoteListFragment extends Fragment {
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, filter);
 
         // Floating action button
-        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
+        FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.button_floating_action);
         floatingActionButton.setImageResource(R.drawable.ic_action_new);
         if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
             floatingActionButton.hide();
@@ -220,24 +218,21 @@ public class NoteListFragment extends Fragment {
 
         if(getId() == R.id.noteViewEdit && prefMain.getLong("draft-name", 0) == 0) {
             floatingActionButton.show();
-            floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ScrollPositions.getInstance().setPosition(listView.getFirstVisiblePosition());
+            floatingActionButton.setOnClickListener(v -> {
+                ScrollPositions.getInstance().setPosition(listView.getFirstVisiblePosition());
 
-                    Bundle bundle = new Bundle();
-                    bundle.putString("filename", "new");
+                Bundle bundle = new Bundle();
+                bundle.putString("filename", "new");
 
-                    Fragment fragment = new NoteEditFragment();
-                    fragment.setArguments(bundle);
+                Fragment fragment = new NoteEditFragment();
+                fragment.setArguments(bundle);
 
-                    // Add NoteEditFragment
-                    getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                        .commit();
-                }
+                // Add NoteEditFragment
+                getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    .commit();
             });
         }
     }
@@ -317,7 +312,7 @@ public class NoteListFragment extends Fragment {
 
         // Remove any files from the list that aren't notes
         for(int i = 0; i < numOfFiles; i++) {
-            if(NumberUtils.isNumber(listOfFiles[i]))
+            if(NumberUtils.isCreatable(listOfFiles[i]))
                 listOfNotes.add(listOfFiles[i]);
             else
                 numOfNotes--;
@@ -398,22 +393,19 @@ public class NoteListFragment extends Fragment {
 
         // Make ListView handle clicked items
         listView.setClickable(true);
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                ScrollPositions.getInstance().setPosition(listView.getFirstVisiblePosition());
+        listView.setOnItemClickListener((arg0, arg1, position, arg3) -> {
+            ScrollPositions.getInstance().setPosition(listView.getFirstVisiblePosition());
 
-                if(sortBy.equals("date")) {
-                    if(directEdit)
-                        listener.editNote(finalListByDate[position]);
-                    else
-                        listener.viewNote(finalListByDate[position]);
-                } else if(sortBy.equals("name")) {
-                    if(directEdit)
-                        listener.editNote(finalListByName[position]);
-                    else
-                        listener.viewNote(finalListByName[position]);
-                }
+            if(sortBy.equals("date")) {
+                if(directEdit)
+                    listener.editNote(finalListByDate[position]);
+                else
+                    listener.viewNote(finalListByDate[position]);
+            } else if(sortBy.equals("name")) {
+                if(directEdit)
+                    listener.editNote(finalListByName[position]);
+                else
+                    listener.viewNote(finalListByName[position]);
             }
         });
 
@@ -507,7 +499,7 @@ public class NoteListFragment extends Fragment {
 
         // If there are no saved notes, then display the empty view
         if(numOfNotes == 0) {
-            TextView empty = (TextView) getActivity().findViewById(R.id.empty);
+            TextView empty = getActivity().findViewById(R.id.empty);
             listView.setEmptyView(empty);
         }
     }
@@ -547,12 +539,12 @@ public class NoteListFragment extends Fragment {
     }
 
     public void showFab() {
-        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
+        FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.button_floating_action);
         floatingActionButton.show();
     }
 
     public void hideFab() {
-        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
+        FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.button_floating_action);
         floatingActionButton.hide();
     }
 }

@@ -74,7 +74,7 @@ public class NoteEditFragment extends Fragment {
             for(Object file : filesToDelete) {
                 if(filename.equals(file)) {
                     // Hide soft keyboard
-                    EditText editText = (EditText) getActivity().findViewById(R.id.editText1);
+                    EditText editText = getActivity().findViewById(R.id.editText1);
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
@@ -151,8 +151,8 @@ public class NoteEditFragment extends Fragment {
         if(getActivity() instanceof MainActivity
                 && getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            LinearLayout noteViewEdit = (LinearLayout) getActivity().findViewById(R.id.noteViewEdit);
-            LinearLayout noteList = (LinearLayout) getActivity().findViewById(R.id.noteList);
+            LinearLayout noteViewEdit = getActivity().findViewById(R.id.noteViewEdit);
+            LinearLayout noteList = getActivity().findViewById(R.id.noteList);
 
             noteList.animate().z(0f);
             if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
@@ -162,11 +162,11 @@ public class NoteEditFragment extends Fragment {
         }
 
         // Set up content view
-        noteContents = (EditText) getActivity().findViewById(R.id.editText1);
+        noteContents = getActivity().findViewById(R.id.editText1);
 
         // Apply theme
         SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
-        ScrollView scrollView = (ScrollView) getActivity().findViewById(R.id.scrollView1);
+        ScrollView scrollView = getActivity().findViewById(R.id.scrollView1);
         String theme = pref.getString("theme", "light-sans");
 
         if(theme.contains("light")) {
@@ -257,7 +257,7 @@ public class NoteEditFragment extends Fragment {
         // Disable saving drafts if user launched Notepad through a share intent
         if(!listener.isShareIntent() && !isRemoving()) {
             // Set current note contents to a String
-            noteContents = (EditText) getActivity().findViewById(R.id.editText1);
+            noteContents = getActivity().findViewById(R.id.editText1);
             contents = noteContents.getText().toString();
 
             if(!contents.equals("")) {
@@ -384,7 +384,7 @@ public class NoteEditFragment extends Fragment {
                 // Save button
             case R.id.action_save:
                 // Get current note contents from EditText
-                noteContents = (EditText) getActivity().findViewById(R.id.editText1);
+                noteContents = getActivity().findViewById(R.id.editText1);
                 contents = noteContents.getText().toString();
 
                 // If EditText is empty, show toast informing user to enter some text
@@ -517,7 +517,7 @@ public class NoteEditFragment extends Fragment {
     // Saves notes to /data/data/com.farmerbb.notepad/files
     private void saveNote() throws IOException {
         // Set current note contents to a String
-        noteContents = (EditText) getActivity().findViewById(R.id.editText1);
+        noteContents = getActivity().findViewById(R.id.editText1);
         contents = noteContents.getText().toString();
 
         // Write the String to a new file with filename of current milliseconds of Unix time
@@ -784,7 +784,7 @@ public class NoteEditFragment extends Fragment {
 
     public void switchNotes(String filename) {
         // Hide soft keyboard
-        EditText editText = (EditText) getActivity().findViewById(R.id.editText1);
+        EditText editText = getActivity().findViewById(R.id.editText1);
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 

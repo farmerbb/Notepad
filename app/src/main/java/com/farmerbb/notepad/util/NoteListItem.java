@@ -35,10 +35,5 @@ public class NoteListItem {
         return date;
     }
 
-    public static Comparator<NoteListItem> NoteComparatorTitle = new Comparator<NoteListItem>() {
-        @Override
-        public int compare(NoteListItem arg1, NoteListItem arg2) {
-            return Collator.getInstance().compare(arg1.getNote(), arg2.getNote());
-        }
-    };
+    public static Comparator<NoteListItem> NoteComparatorTitle = (arg1, arg2) -> Collator.getInstance().compare(arg1.getNote(), arg2.getNote());
 }

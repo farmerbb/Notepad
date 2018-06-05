@@ -761,4 +761,9 @@ NoteViewFragment.Listener {
         if(fragment != null)
             fragment.startMultiSelect();
     }
+
+    @Override
+    public SharedPreferences getPreferences(int mode) {
+        return getSharedPreferences("MainActivity", mode);
+    }
 }

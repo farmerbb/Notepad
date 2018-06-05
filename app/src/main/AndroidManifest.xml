@@ -47,7 +47,7 @@
         android:theme="@style/Theme.Notepad"
         tools:replace="android:label" >
         <activity-alias
-            android:name="com.farmerbb.notepad.activity.MainActivity"
+            android:name="com.farmerbb.notepad.MainActivity"
             android:targetActivity="com.farmerbb.notepad.activity.MainActivity"
             android:label="${appName}">
             <intent-filter>

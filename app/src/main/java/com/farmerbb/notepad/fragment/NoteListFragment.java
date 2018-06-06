@@ -66,6 +66,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class NoteListFragment extends Fragment {
 
@@ -100,6 +101,7 @@ public class NoteListFragment extends Fragment {
         void showFab();
         void hideFab();
         void startMultiSelect();
+        ArrayList<String> getCabArray();
     }
 
     // Use this instance of the interface to deliver action events
@@ -410,7 +412,7 @@ public class NoteListFragment extends Fragment {
         });
 
         // Make ListView handle contextual action bar
-        final ArrayList<String> cab = new ArrayList<>(numOfNotes);
+        final ArrayList<String> cab = listener.getCabArray();
 
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(new MultiChoiceModeListener() {
@@ -496,6 +498,26 @@ public class NoteListFragment extends Fragment {
                 return false;
             }
         });
+
+        if(cab.size() > 0) {
+            List<String> cabClone = new ArrayList<>(cab);
+            cab.clear();
+
+            String[] array = null;
+            if(sortBy.equals("date"))
+                array = finalListByDate;
+            if(sortBy.equals("name"))
+                array = finalListByName;
+
+            if(array != null) {
+                for(String filename : cabClone) {
+                    for(int i = 0; i < array.length; i++) {
+                        if(filename.equals(array[i]))
+                            listView.setItemChecked(i, true);
+                    }
+                }
+            }
+        }
 
         // If there are no saved notes, then display the empty view
         if(numOfNotes == 0) {

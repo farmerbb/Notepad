@@ -63,6 +63,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -81,6 +82,9 @@ NoteViewFragment.Listener {
     Object[] filesToDelete;
     int fileBeingExported;
     boolean successful = true;
+
+    private ArrayList<String> cab = new ArrayList<>();
+    private boolean inCabMode = false;
 
     public static final int IMPORT = 42;
     public static final int EXPORT = 43;
@@ -168,6 +172,22 @@ NoteViewFragment.Listener {
 
         // Commit fragment transaction
         transaction.commit();
+        
+        if(savedInstanceState != null) {
+            ArrayList<String> filesToExportList = savedInstanceState.getStringArrayList("files_to_export");
+            if(filesToExportList != null)
+                filesToExport = filesToExportList.toArray();
+
+            ArrayList<String> filesToDeleteList = savedInstanceState.getStringArrayList("files_to_delete");
+            if(filesToDeleteList != null)
+                filesToDelete = filesToDeleteList.toArray();
+
+            ArrayList<String> savedCab = savedInstanceState.getStringArrayList("cab");
+            if(savedCab != null) {
+                inCabMode = true;
+                cab = savedCab;
+            }
+        }
     }
 
     @Override
@@ -515,6 +535,8 @@ NoteViewFragment.Listener {
 
     @Override
     public void showFab() {
+        inCabMode = false;
+
         if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
             NoteListFragment fragment = (NoteListFragment) getSupportFragmentManager().findFragmentByTag("NoteListFragment");
             fragment.showFab();
@@ -526,6 +548,8 @@ NoteViewFragment.Listener {
 
     @Override
     public void hideFab() {
+        inCabMode = true;
+
         if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteListFragment) {
             NoteListFragment fragment = (NoteListFragment) getSupportFragmentManager().findFragmentByTag("NoteListFragment");
             fragment.hideFab();
@@ -552,6 +576,7 @@ NoteViewFragment.Listener {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+
         if(resultCode == RESULT_OK && resultData != null) {
             successful = true;
 
@@ -765,5 +790,36 @@ NoteViewFragment.Listener {
     @Override
     public SharedPreferences getPreferences(int mode) {
         return getSharedPreferences("MainActivity", mode);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if(filesToExport != null && filesToExport.length > 0) {
+            ArrayList<String> filesToExportList = new ArrayList<>();
+            for(Object file : filesToExport) {
+                filesToExportList.add(file.toString());
+            }
+
+            outState.putStringArrayList("files_to_export", filesToExportList);
+        }
+
+        if(filesToDelete != null && filesToDelete.length > 0) {
+            ArrayList<String> filesToDeleteList = new ArrayList<>();
+            for(Object file : filesToDelete) {
+                filesToDeleteList.add(file.toString());
+            }
+
+            outState.putStringArrayList("files_to_delete", filesToDeleteList);
+        }
+
+        if(inCabMode && cab.size() > 0)
+            outState.putStringArrayList("cab", cab);
+        
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public ArrayList<String> getCabArray() {
+        return cab;
     }
 }

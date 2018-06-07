@@ -108,7 +108,7 @@ public class NoteViewFragment extends Fragment {
         void showDeleteDialog();
         String loadNote(String filename) throws IOException;
         String loadNoteTitle(String filename) throws IOException;
-        void exportNote(Object[] filesToExport);
+        void exportNote(String filename);
         void printNote(String contentToPrint);
     }
 
@@ -507,7 +507,7 @@ public class NoteViewFragment extends Fragment {
 
             // Export menu item
             case R.id.action_export:
-                listener.exportNote(new Object[] {filename});
+                listener.exportNote(filename);
                 return true;
 
             // Print menu item

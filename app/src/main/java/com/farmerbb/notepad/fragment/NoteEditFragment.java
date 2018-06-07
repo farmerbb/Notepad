@@ -107,7 +107,7 @@ public class NoteEditFragment extends Fragment {
         boolean isShareIntent();
         String loadNote(String filename) throws IOException;
         String loadNoteTitle(String filename) throws IOException;
-        void exportNote(Object[] filesToExport);
+        void exportNote(String filename);
         void printNote(String contentToPrint);
     }
 
@@ -485,7 +485,7 @@ public class NoteEditFragment extends Fragment {
 
                     filename = currentFilename;
 
-                    listener.exportNote(new Object[] {"exported_note"});
+                    listener.exportNote("exported_note");
                 }
 
                 return true;

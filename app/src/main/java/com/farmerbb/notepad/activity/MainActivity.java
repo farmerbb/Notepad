@@ -231,7 +231,7 @@ NoteViewFragment.Listener {
     @Override
     public void onDeleteDialogPositiveClick() {
         if(filesToDelete != null) {
-            reallyDeleteNote();
+            reallyDeleteNotes();
         } else if(getSupportFragmentManager().findFragmentById(R.id.noteViewEdit) instanceof NoteViewFragment) {
             NoteViewFragment fragment = (NoteViewFragment) getSupportFragmentManager().findFragmentByTag("NoteViewFragment");
             fragment.onDeleteDialogPositiveClick();
@@ -386,12 +386,14 @@ NoteViewFragment.Listener {
     }
 
     @Override
-    public void deleteNote(Object[] filesToDelete) {
-        this.filesToDelete = filesToDelete;
+    public void deleteNotes() {
+        filesToDelete = cab.toArray();
+        cab.clear();
+
         showDeleteDialog(false);
     }
 
-    private void reallyDeleteNote() {
+    private void reallyDeleteNotes() {
         // Build the pathname to delete each file, them perform delete operation
         for(Object file : filesToDelete) {
             File fileToDelete = new File(getFilesDir() + File.separator + file);
@@ -422,12 +424,13 @@ NoteViewFragment.Listener {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
-    public void exportNote(Object[] filesToExport) {
-        this.filesToExport = filesToExport;
+    public void exportNotes() {
+        filesToExport = cab.toArray();
+        cab.clear();
 
         if(filesToExport.length == 1 || Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             fileBeingExported = 0;
-            reallyExportNote();
+            reallyExportNotes();
         } else {
             Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
 
@@ -439,8 +442,15 @@ NoteViewFragment.Listener {
         }
     }
 
+    @Override
+    public void exportNote(String filename) {
+        filesToExport = new Object[] {filename};
+        fileBeingExported = 0;
+        reallyExportNotes();
+    }
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void reallyExportNote() {
+    private void reallyExportNotes() {
         String filename = "";
 
         try {
@@ -609,7 +619,7 @@ NoteViewFragment.Listener {
 
                 fileBeingExported++;
                 if(fileBeingExported < filesToExport.length)
-                    reallyExportNote();
+                    reallyExportNotes();
                 else
                     showToast(successful
                             ? (fileBeingExported == 1 ? R.string.note_exported_to : R.string.notes_exported_to)

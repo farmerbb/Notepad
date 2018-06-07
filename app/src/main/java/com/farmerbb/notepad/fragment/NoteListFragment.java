@@ -94,8 +94,8 @@ public class NoteListFragment extends Fragment {
         void viewNote(String filename);
         void editNote(String filename);
         String getCabString(int size);
-        void exportNote(Object[] filesToExport);
-        void deleteNote(Object[] filesToDelete);
+        void exportNotes();
+        void deleteNotes();
         String loadNoteTitle(String filename) throws IOException;
         String loadNoteDate(String filename) throws IOException;
         void showFab();
@@ -431,7 +431,7 @@ public class NoteListFragment extends Fragment {
                     case R.id.action_export:
                         if(cab.size() > 0) {
                             mode.finish(); // Action picked, so close the CAB
-                            listener.exportNote(cab.toArray());
+                            listener.exportNotes();
                             return true;
                         } else {
                             showToast(R.string.no_notes_to_export);
@@ -440,7 +440,7 @@ public class NoteListFragment extends Fragment {
                     case R.id.action_delete:
                         if(cab.size() > 0) {
                             mode.finish(); // Action picked, so close the CAB
-                            listener.deleteNote(cab.toArray());
+                            listener.deleteNotes();
                             return true;
                         } else {
                             showToast(R.string.no_notes_to_delete);

@@ -244,7 +244,7 @@ String external;
     }
 
     @Override
-    public void exportNote(Object[] filesToExport) {}
+    public void exportNote(String filename) {}
 
     @Override
     public void printNote(String contentToPrint) {}

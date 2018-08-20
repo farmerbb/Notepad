@@ -9,16 +9,16 @@ repositories {
 }
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.farmerbb.notepad"
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
 
-        versionCode 102
-        versionName "2.3.1"
+        versionCode 103
+        versionName "2.3.2"
 
         resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it"
         vectorDrawables.useSupportLibrary = true
@@ -52,6 +52,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt')
             signingConfig signingConfigs.release
             manifestPlaceholders = [appName: "@string/app_name"]
+
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "${project.parent.name}-${defaultConfig.versionName}.apk"
+                }
+            }
         }
     }
 }
@@ -61,6 +67,6 @@ dependencies {
 
     implementation "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
     implementation "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
-    implementation 'org.apache.commons:commons-lang3:3.7'
+    implementation 'org.apache.commons:commons-lang3:3.8'
     implementation 'us.feras.mdv:markdownview:1.1.0'
 }

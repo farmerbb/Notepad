@@ -78,11 +78,6 @@
 
                 <data android:mimeType="text/plain" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="org.chromium.arc.intent.action.CREATE_NOTE" />
-                
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.farmerbb.notepad.activity.SettingsActivity"

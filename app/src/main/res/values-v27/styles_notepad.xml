@@ -17,7 +17,6 @@
 <resources>
 
     <style name="Theme.Notepad" parent="Theme.Notepad.Base">
-        <item name="android:windowLightNavigationBar">true</item>
         <item name="android:navigationBarColor">@color/navbar_color_light</item>
         <item name="android:navigationBarDividerColor">@color/navbar_divider_color_light</item>
     </style>

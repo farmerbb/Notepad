@@ -17,7 +17,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 28
 
-        versionCode 105
+        versionCode 106
         versionName "2.3.3"
 
         resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it"

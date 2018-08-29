@@ -32,14 +32,10 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.provider.DocumentFile;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -72,7 +68,7 @@ import java.util.Date;
 
 import us.feras.mdv.MarkdownView;
 
-public class MainActivity extends AppCompatActivity implements
+public class MainActivity extends NotepadBaseActivity implements
 BackButtonDialogFragment.Listener, 
 DeleteDialogFragment.Listener, 
 SaveButtonDialogFragment.Listener,
@@ -199,33 +195,6 @@ NoteViewFragment.Listener {
 
         WebViewInitState wvState = WebViewInitState.getInstance();
         wvState.initialize(this);
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", Context.MODE_PRIVATE);
-            String theme = pref.getString("theme", "light-sans");
-
-            int navbarColorId = -1;
-            int navbarDividerColorId = -1;
-            int sysUiVisibility = -1;
-
-            if(theme.contains("light")) {
-                navbarColorId = R.color.navbar_color_light;
-                navbarDividerColorId = R.color.navbar_divider_color_light;
-                sysUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
-            }
-
-            if(theme.contains("dark")) {
-                navbarColorId = R.color.navbar_color_dark;
-                navbarDividerColorId = R.color.navbar_divider_color_dark;
-                sysUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE;
-            }
-
-            getWindow().setNavigationBarColor(ContextCompat.getColor(this, navbarColorId));
-            findViewById(Window.ID_ANDROID_CONTENT).setSystemUiVisibility(sysUiVisibility);
-
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-                getWindow().setNavigationBarDividerColor(ContextCompat.getColor(this, navbarDividerColorId));
-        }
     }
 
     @Override
@@ -536,7 +505,7 @@ NoteViewFragment.Listener {
     public String loadNote(String filename) throws IOException {
 
         // Initialize StringBuilder which will contain note
-        StringBuilder note = new StringBuilder("");
+        StringBuilder note = new StringBuilder();
 
         // Open the file on disk
         FileInputStream input = openFileInput(filename);
@@ -577,7 +546,7 @@ NoteViewFragment.Listener {
 
     // Calculates last modified date/time of a note for display in the ListView
     @Override
-    public String loadNoteDate(String filename) throws IOException {
+    public String loadNoteDate(String filename) {
         Date lastModified = new Date(Long.parseLong(filename));
         return(DateFormat
                 .getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)

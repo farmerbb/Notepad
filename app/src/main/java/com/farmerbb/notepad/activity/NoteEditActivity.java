@@ -23,7 +23,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -38,7 +37,7 @@ import com.farmerbb.notepad.fragment.dialog.SaveButtonDialogFragment;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class NoteEditActivity extends AppCompatActivity implements
+public class NoteEditActivity extends NotepadBaseActivity implements
 BackButtonDialogFragment.Listener, 
 DeleteDialogFragment.Listener, 
 SaveButtonDialogFragment.Listener, 

@@ -61,7 +61,6 @@ import com.farmerbb.notepad.util.ScrollPositions;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,7 +96,7 @@ public class NoteListFragment extends Fragment {
         void exportNotes();
         void deleteNotes();
         String loadNoteTitle(String filename) throws IOException;
-        String loadNoteDate(String filename) throws IOException;
+        String loadNoteDate(String filename);
         void showFab();
         void hideFab();
         void startMultiSelect();
@@ -293,29 +292,18 @@ public class NoteListFragment extends Fragment {
             showToast(R.string.no_notes_to_select);
     }
 
-    // Returns list of filenames in /data/data/com.farmerbb.notepad/files/
-    private static String[] getListOfNotes(File file) {
-        return file.list();
-    }
-
-    // Returns an integer with number of files in /data/data/com.farmerbb.notepad/files/
-    private static int getNumOfNotes(File file){
-        return new File(file.getPath()).list().length;
-    }
-
     private void listNotes() {
-        // Get number of files
-        int numOfFiles = getNumOfNotes(getActivity().getFilesDir());
-        int numOfNotes = numOfFiles;
-
         // Get array of file names
-        String[] listOfFiles = getListOfNotes(getActivity().getFilesDir());
+        String[] listOfFiles = getActivity().getFilesDir().list();
         ArrayList<String> listOfNotes = new ArrayList<>();
 
+        // Get number of files
+        int numOfNotes = listOfFiles.length;
+
         // Remove any files from the list that aren't notes
-        for(int i = 0; i < numOfFiles; i++) {
-            if(NumberUtils.isCreatable(listOfFiles[i]))
-                listOfNotes.add(listOfFiles[i]);
+        for(String listOfFile : listOfFiles) {
+            if(NumberUtils.isCreatable(listOfFile))
+                listOfNotes.add(listOfFile);
             else
                 numOfNotes--;
         }

@@ -221,6 +221,7 @@ public class NoteListFragment extends Fragment {
             floatingActionButton.show();
             floatingActionButton.setOnClickListener(v -> {
                 ScrollPositions.getInstance().setPosition(listView.getFirstVisiblePosition());
+                listener.getCabArray().clear();
 
                 Bundle bundle = new Bundle();
                 bundle.putString("filename", "new");

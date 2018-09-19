@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="font_size_list"><item>Наименьший</item><item>Мелкий</item><item>Нормальный</item><item>Большой</item><item>Наибольший</item></string-array>
+<string-array name="font_size_list_values"><item>smallest</item><item>small</item><item>normal</item><item>large</item><item>largest</item></string-array>
+<string-array name="sort_by_list"><item>Дата (сначала недавние)</item><item>Наименование (А – Я)</item></string-array>
+<string-array name="sort_by_list_values"><item>date</item><item>name</item></string-array>
+<string-array name="theme_list"><item>Светлая / sans serif</item><item>Светлая / serif</item><item>Светлая / monospace</item><item>Темная / sans serif</item><item>Темная / serif</item><item>Темная / monospace</item></string-array>
+<string-array name="theme_list_values"><item>light-sans</item><item>light-serif</item><item>light-monospace</item><item>dark-sans</item><item>dark-serif</item><item>dark-monospace</item></string-array>
+</resources>

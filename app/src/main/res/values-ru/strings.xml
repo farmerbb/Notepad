@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="abc_action_bar_home_description">Перейти домой</string>
+<string name="abc_action_bar_up_description">Перейти выше</string>
+<string name="abc_action_menu_overflow_description">Дополнительные опции</string>
+<string name="abc_action_mode_done">Готово</string>
+<string name="abc_activity_chooser_view_see_all">Просмотреть все</string>
+<string name="abc_activitychooserview_choose_application">Выберите приложение</string>
+<string name="abc_capital_off">ОТКЛ</string>
+<string name="abc_capital_on">ВКЛ</string>
+<string name="abc_search_hint">Поиск…</string>
+<string name="abc_searchview_description_clear">Очистить запрос</string>
+<string name="abc_searchview_description_query">Поисковый запрос</string>
+<string name="abc_searchview_description_search">Поиск</string>
+<string name="abc_searchview_description_submit">Отправить запрос</string>
+<string name="abc_searchview_description_voice">Голосовой поиск</string>
+<string name="abc_shareactionprovider_share_with">Поделиться с</string>
+<string name="abc_shareactionprovider_share_with_application">Поделиться с %s</string>
+<string name="abc_toolbar_collapse_description">Коллапс</string>
+<string name="action_cancel">Отмена</string>
+<string name="action_close">Закрыть</string>
+<string name="action_delete">Удалить</string>
+<string name="action_discard">Отменить</string>
+<string name="action_edit">Редактировать</string>
+<string name="action_export">Экспортировать</string>
+<string name="action_font_size">Размер шрифта</string>
+<string name="action_install">Установить</string>
+<string name="action_new">Новая заметка</string>
+<string name="action_no_thanks">Нет, спасибо</string>
+<string name="action_print">Распечатать</string>
+<string name="action_save">Сохранить</string>
+<string name="action_select_all">Выбрать все</string>
+<string name="action_settings">Настройки</string>
+<string name="action_share">Поделиться</string>
+<string name="action_sort_by">Сортировать заметки</string>
+<string name="action_start_selection">Выбрать заметки</string>
+<string name="action_theme">Тема</string>
+<string name="app_name">Заметки</string>
+<string name="app_name_debug">Заметки (Отладка)</string>
+<string name="changes_discarded">Изменения отменены</string>
+<string name="dialog_about_message">"Notepad: простое приложение для создания заметок
+
+© 2018 Braden Farmer
+App logo by Tobaloidee
+Russian translation by Vladimir Kosolapov"</string>
+<string name="dialog_about_title">О приложении</string>
+<string name="dialog_are_you_sure">Вы уверены?</string>
+<string name="dialog_delete_button_title">Удалить заметку</string>
+<string name="dialog_delete_button_title_plural">Удалить заметки</string>
+<string name="dialog_save_button_title">Сохранить изменения</string>
+<string name="dialog_save_changes">Хотите сохранить сделанные изменения?</string>
+<string name="double_tap">Подсказка: дважды нажмите на текст для перехода в режим редактирования</string>
+<string name="draft_restored">Черновик восстановлен</string>
+<string name="draft_saved">Черновик сохранен</string>
+<string name="edit_note">Редактировать заметку</string>
+<string name="edit_text">Введите текст</string>
+<string name="empty_note">Пожалуйста, введите текст!</string>
+<string name="error_exporting_notes">Ошибка при экспорте заметок!</string>
+<string name="error_importing_notes">Ошибка при импорте заметок!</string>
+<string name="error_loading_list">Ошибка при загрузке списка заметок!</string>
+<string name="error_loading_note">Ошибка при загрузке заметки!</string>
+<string name="failed_to_save">Невозможно сохранить заметку!</string>
+<string name="first_run">"Добро пожаловать в Notepad!
+
+Для начала нажмите на кнопку создания новой заметки."</string>
+<string name="first_view">Для изменения сохраненной заметки дважды нажмите на текст или воспользуйтесь кнопкой редактирования.</string>
+<string name="import_notes">Импортировать заметки</string>
+<string name="loading_external_file">Загрузка внешних файлов не поддерживается</string>
+<string name="no_notes_found">Заметки не найдены</string>
+<string name="no_notes_to_delete">Заметки для удаления не выбраны</string>
+<string name="no_notes_to_export">Заметки для экспорта не выбраны</string>
+<string name="no_notes_to_select">Нет заметок для выбора</string>
+<string name="note_deleted">Заметка удалена</string>
+<string name="note_exported_to">Заметка успешно экспортирована</string>
+<string name="note_imported_successfully">Заметка успешно импортирована</string>
+<string name="note_saved">Заметка сохранена</string>
+<string name="notes_deleted">Заметки удалены</string>
+<string name="notes_exported_to">Заметки успешно экспортированы</string>
+<string name="notes_imported_successfully">Заметки успешно импортированы</string>
+<string name="password_toggle_content_description">Показать пароль</string>
+<string name="pref_title_direct_edit">Редактировать сразу</string>
+<string name="pref_title_markdown">Поддержка языка разметки</string>
+<string name="pref_title_show_date">Показывать дату и время</string>
+<string name="pref_title_show_dialogs">Спрашивать перед сохранением</string>
+<string name="search_menu_title">Поиск</string>
+<string name="send_to">Поделиться заметкой с…</string>
+<string name="view_note">Просмотреть заметку</string>
+</resources>

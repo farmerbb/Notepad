@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2014 Braden Farmer
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+
+    <string name="action_cancel">Abbrechen</string>
+    <string name="action_close">Schließen</string>
+    <string name="action_delete">Löschen</string>
+    <string name="action_discard">Verwerfen</string>
+    <string name="action_edit">Editieren</string>
+    <string name="action_export">Exportieren</string>
+    <string name="action_font_size">Fontgröße</string>
+    <string name="action_new">Neue Notiz</string>
+    <string name="action_save">Speichern</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_share">Teilen</string>
+    <string name="action_sort_by">Notizen sortieren nach</string>
+    <string name="app_name">Notepad</string>
+    <string name="app_name_debug">Notepad (Debug)</string>
+    <string name="cab_note_selected">ausgewählte Notiz</string>
+    <string name="cab_notes_selected">ausgewählte Notizen</string>
+    <string name="changes_discarded">Änderungen verworfen</string>
+    <string name="dialog_about_message">Notepad: eine einfache Anwendung für Notizen\n\n&#169; 2018 Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_title">Über Notepad</string>
+    <string name="dialog_are_you_sure">Sind Sie sicher?</string>
+    <string name="dialog_delete_button_title">Notiz löschen</string>
+    <string name="dialog_delete_button_title_plural">Notizen löschen</string>
+    <string name="dialog_save_button_title">Änderungen speichern</string>
+    <string name="dialog_save_changes">Wollen Sie Ihre Änderungen speichern?</string>
+    <string name="draft_restored">Entwurf wiederhergestellt</string>
+    <string name="draft_saved">Entwurf gespeichert</string>
+    <string name="double_tap">Hinweis: Doppeltippen auf Text für den Wechsel in den Editiermodus</string>
+    <string name="edit_note">Notiz editieren</string>
+    <string name="edit_text">Tippen um Text zu ergänzen</string>
+    <string name="empty_note">Bitte Text eingeben!</string>
+    <string name="error_exporting_notes">Fehler Notizen exportieren!</string>
+    <string name="error_importing_notes">Fehler Notizen importieren!</string>
+    <string name="error_loading_list">Fehler laden Notizenliste!</string>
+    <string name="error_loading_note">Fehler laden Notiz!</string>
+    <string name="failed_to_save">Fehler: Notiz wurde nicht gespeichert!</string>
+    <string name="first_run">Willkommen bei Notepad!\n\nUm eine neue Notiz zu erstellen, auf den neue-Notiz-Knopf drücken (plus Zeichen).</string>
+    <string name="first_view">Um eine gespeicherte Notiz zu editieren, doppeltippen auf den Text oder den Editierknopf (Stift) drücken.</string>
+    <string name="import_notes">Notizen importieren</string>
+    <string name="loading_external_file">Laden von externen Dateien ist nicht unterstützt</string>
+    <string name="no_notes_found">Keine Notizen gefunden</string>
+    <string name="note_deleted">Notiz gelöscht</string>
+    <string name="note_exported_to">Notiz erfolgreich exportiert</string>
+    <string name="note_saved">Notiz gespeichert</string>
+    <string name="notes_deleted">Notizen gelöscht</string>
+    <string name="notes_exported_to">Notizen erfolgreich exportiert</string>
+    <string name="note_imported_successfully">Notiz erfolgreich importiert</string>
+    <string name="notes_imported_successfully">Notizen erfolgreich importiert</string>
+    <string name="pref_title_show_dialogs">Nachfrage vor dem Speichern</string>
+    <string name="send_to">Teile Notiz mit&#8230;</string>
+    <string name="view_note">Notiz ansehen</string>
+    <string name="action_install">Installieren</string>
+    <string name="action_no_thanks">Nein Danke</string>
+    <string name="pref_title_show_date">Datum/Zeit anzeigen</string>
+    <string name="action_theme">Thema</string>
+    <string name="pref_title_direct_edit">Notizen direkt editieren</string>
+    <string name="pref_title_markdown">Markdown/HTML Unterstützung</string>
+    <string name="action_print">Drucken</string>
+    <string name="action_start_selection">Notizen auswählen</string>
+    <string name="action_select_all">Alles auswählen</string>
+    <string name="no_notes_to_select">Keine Notizen zur Auswahl</string>
+    <string name="document">%1$s Dokument</string>
+    <string name="no_notes_to_export">Keine Notizen ausgewählt für Export</string>
+    <string name="no_notes_to_delete">Keine Notizen zum Löschen ausgewählt</string>
+
+    <string-array name="sort_by_list">
+        <item>Datum (Neueste zuerst)</item>
+        <item>Name (A bis Z)</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>Hell / sans serif</item>
+        <item>Hell / serif</item>
+        <item>Hell / monospace</item>
+        <item>Dunkel / sans serif</item>
+        <item>Dunkel / serif</item>
+        <item>Dunkel / monospace</item>
+    </string-array>
+    <string-array name="font_size_list">
+        <item>Winzig</item>
+        <item>Klein</item>
+        <item>Normal</item>
+        <item>Groß</item>
+        <item>Größer</item>
+    </string-array>
+
+</resources>

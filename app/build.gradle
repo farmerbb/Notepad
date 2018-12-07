@@ -20,7 +20,7 @@ android {
         versionCode 107
         versionName "2.3.3"
 
-        resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it", "de", "ru"
+        resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it", "de", "ru", "cs"
         vectorDrawables.useSupportLibrary = true
     }
 

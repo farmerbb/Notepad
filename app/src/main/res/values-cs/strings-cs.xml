@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2014 Braden Farmer
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+
+<resources>
+
+    <string name="action_cancel">Zrušit</string>
+    <string name="action_close">Zavřít</string>
+    <string name="action_delete">Smazat</string>
+    <string name="action_discard">Zahodit</string>
+    <string name="action_edit">Upravit</string>
+    <string name="action_export">Exportovat</string>
+    <string name="action_font_size">Velikost písma</string>
+    <string name="action_new">Nová poznámka</string>
+    <string name="action_save">Uložit</string>
+    <string name="action_settings">Nastavení</string>
+    <string name="action_share">Sdílet</string>
+    <string name="action_sort_by">Řadit dle</string>
+    <string name="app_name">Notepad</string>
+    <string name="app_name_debug">Notepad (Debug)</string>
+    <string name="cab_note_selected">poznámka vybrána</string>
+    <string name="cab_notes_selected">poznámky vybrány</string>
+    <string name="changes_discarded">Změny zrušeny</string>
+    <string name="dialog_about_message">Notepad: jednoduchá apka na poznámky\n\n&#169; 2018 Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_title">O Notepad</string>
+    <string name="dialog_are_you_sure">Jste si jistý?</string>
+    <string name="dialog_delete_button_title">Smazat poznámku</string>
+    <string name="dialog_delete_button_title_plural">Smazat poznámky</string>
+    <string name="dialog_save_button_title">Uložit změny</string>
+    <string name="dialog_save_changes">Přejete si uložit změny?</string>
+    <string name="draft_restored">Koncept obnoven</string>
+    <string name="draft_saved">Koncept uložen</string>
+    <string name="double_tap">Tip: dvojím klepnutím na text jej můžete upravit</string>
+    <string name="edit_note">Upravit poznámku</string>
+    <string name="edit_text">Pro zadání textu začněte psát</string>
+    <string name="empty_note">Něco prosím napište!</string>
+    <string name="error_exporting_notes">Chyba při exportu poznámek!</string>
+    <string name="error_importing_notes">Chyba při importu poznámek!</string>
+    <string name="error_loading_list">Chyba při načítání poznámek!</string>
+    <string name="error_loading_note">Chyba při načítání poznámky!</string>
+    <string name="failed_to_save">Chyba: Uložení poznámky selhalo!</string>
+    <string name="first_run">Vítejte v Notepadu!\n\nNovou poznámku vytvoříte klepnutím na tlačítko vpravo dole (znak plus).</string>
+    <string name="first_view">Poznámku upravíte buďto dvojím klepnutím nebo klepnutím na tlačítko Upravit (ikona tužky).</string>
+    <string name="import_notes">Importovat poznámky</string>
+    <string name="loading_external_file">Otevírání externích souborů není podporováno</string>
+    <string name="no_notes_found">Nenalezeny žádné poznámky</string>
+    <string name="note_deleted">Poznámka smazána</string>
+    <string name="note_exported_to">Poznámka úspěšně exportována</string>
+    <string name="note_saved">Poznámka uložena </string>
+    <string name="notes_deleted">Poznámky smazány</string>
+    <string name="notes_exported_to">Poznámky úspěšně exportovány</string>
+    <string name="note_imported_successfully">Poznámka úspěšně importována</string>
+    <string name="notes_imported_successfully">Poznámky úspěšně importovány</string>
+    <string name="pref_title_show_dialogs">Před uložením se zeptat</string>
+    <string name="send_to">Sdílet pomocí&#8230;</string>
+    <string name="view_note">Zobrazit poznámku</string>
+    <string name="action_install">Instalovat</string>
+    <string name="action_no_thanks">Ne, díky</string>
+    <string name="pref_title_show_date">Zobrazit datum/čas</string>
+    <string name="action_theme">Barevné téma</string>
+    <string name="pref_title_direct_edit">Upravit poznámky přímo</string>
+    <string name="pref_title_markdown">Podpora Markdown/HTML</string>
+    <string name="action_print">Tisknout</string>
+    <string name="action_start_selection">Vybrat poznámky</string>
+    <string name="action_select_all">Vybrat všechny</string>
+    <string name="no_notes_to_select">Nic k vybrání</string>
+    <string name="document">%1$s Dokument</string>
+    <string name="no_notes_to_export">Nejsou vybrány žádné poznámky pro export</string>
+    <string name="no_notes_to_delete">Nejsou vybrány žádné poznámky ke smazání</string>
+
+    <string-array name="sort_by_list">
+        <item>Data (nejnovější nejdříve)</item>
+        <item>Názvu (A do Z)</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>Světlé / sans serif</item>
+        <item>Světlé / serif</item>
+        <item>Světlé / monospace</item>
+        <item>Tmavé / sans serif</item>
+        <item>Tmavé / serif</item>
+        <item>Tmavé / monospace</item>
+    </string-array>
+    <string-array name="font_size_list">
+        <item>Nejmenší</item>
+        <item>Malé</item>
+        <item>Normální</item>
+        <item>Velké</item>
+        <item>Největší</item>
+    </string-array>
+
+</resources>

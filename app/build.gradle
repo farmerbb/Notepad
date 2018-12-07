@@ -65,6 +65,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation "com.android.support:support-v4:${SUPPORT_LIBRARY_VERSION}"
     implementation "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
     implementation "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
     implementation 'org.apache.commons:commons-lang3:3.8.1'

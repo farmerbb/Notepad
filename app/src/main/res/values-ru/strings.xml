@@ -1,22 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="abc_action_bar_home_description">Перейти домой</string>
-<string name="abc_action_bar_up_description">Перейти выше</string>
-<string name="abc_action_menu_overflow_description">Дополнительные опции</string>
-<string name="abc_action_mode_done">Готово</string>
-<string name="abc_activity_chooser_view_see_all">Просмотреть все</string>
-<string name="abc_activitychooserview_choose_application">Выберите приложение</string>
-<string name="abc_capital_off">ОТКЛ</string>
-<string name="abc_capital_on">ВКЛ</string>
-<string name="abc_search_hint">Поиск…</string>
-<string name="abc_searchview_description_clear">Очистить запрос</string>
-<string name="abc_searchview_description_query">Поисковый запрос</string>
-<string name="abc_searchview_description_search">Поиск</string>
-<string name="abc_searchview_description_submit">Отправить запрос</string>
-<string name="abc_searchview_description_voice">Голосовой поиск</string>
-<string name="abc_shareactionprovider_share_with">Поделиться с</string>
-<string name="abc_shareactionprovider_share_with_application">Поделиться с %s</string>
-<string name="abc_toolbar_collapse_description">Коллапс</string>
 <string name="action_cancel">Отмена</string>
 <string name="action_close">Закрыть</string>
 <string name="action_delete">Удалить</string>
@@ -77,12 +60,10 @@ Russian translation by Vladimir Kosolapov"</string>
 <string name="notes_deleted">Заметки удалены</string>
 <string name="notes_exported_to">Заметки успешно экспортированы</string>
 <string name="notes_imported_successfully">Заметки успешно импортированы</string>
-<string name="password_toggle_content_description">Показать пароль</string>
 <string name="pref_title_direct_edit">Редактировать сразу</string>
 <string name="pref_title_markdown">Поддержка языка разметки</string>
 <string name="pref_title_show_date">Показывать дату и время</string>
 <string name="pref_title_show_dialogs">Спрашивать перед сохранением</string>
-<string name="search_menu_title">Поиск</string>
 <string name="send_to">Поделиться заметкой с…</string>
 <string name="view_note">Просмотреть заметку</string>
 </resources>

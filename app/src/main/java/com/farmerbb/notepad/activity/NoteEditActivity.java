@@ -80,7 +80,7 @@ String external;
             // Intent sent through an external application
             if(Intent.ACTION_SEND.equals(action) && type != null) {
                 if("text/plain".equals(type)) {
-                    external = intent.getStringExtra(Intent.EXTRA_TEXT);
+                    external = getExternalContent();
                     if(external != null) {
                         newNote();
                     } else {
@@ -95,7 +95,7 @@ String external;
             // Intent sent through Google Now "note to self"
             } else if("com.google.android.gm.action.AUTO_SEND".equals(action) && type != null) {
                 if("text/plain".equals(type)) {
-                    external = intent.getStringExtra(Intent.EXTRA_TEXT);
+                    external = getExternalContent();
                     if(external != null) {
                         try {
                             // Write note to disk
@@ -123,6 +123,16 @@ String external;
             } else
                 newNote();
         }
+    }
+
+    private String getExternalContent() {
+        String text = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+        if(text == null) return null;
+
+        String subject = getIntent().getStringExtra(Intent.EXTRA_SUBJECT);
+        if(subject == null) return text;
+
+        return subject + "\n\n" + text;
     }
 
     private void newNote() {

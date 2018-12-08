@@ -81,6 +81,7 @@
     <string name="document">%1$s Document</string>
     <string name="no_notes_to_export">No notes selected to export</string>
     <string name="no_notes_to_delete">No notes selected to delete</string>
+    <string name="check_for_updates">Check for Updates</string>
 
     <string-array name="sort_by_list">
         <item>修改时间</item>

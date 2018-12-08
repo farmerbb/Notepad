@@ -66,4 +66,5 @@ Russian translation by Vladimir Kosolapov"</string>
 <string name="pref_title_show_dialogs">Спрашивать перед сохранением</string>
 <string name="send_to">Поделиться заметкой с…</string>
 <string name="view_note">Просмотреть заметку</string>
+<string name="check_for_updates">Check for Updates</string>
 </resources>

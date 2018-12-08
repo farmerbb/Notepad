@@ -79,6 +79,7 @@
     <string name="document">%1$s Dokument</string>
     <string name="no_notes_to_export">Keine Notizen ausgewählt für Export</string>
     <string name="no_notes_to_delete">Keine Notizen zum Löschen ausgewählt</string>
+    <string name="check_for_updates">Check for Updates</string>
 
     <string-array name="sort_by_list">
         <item>Datum (Neueste zuerst)</item>

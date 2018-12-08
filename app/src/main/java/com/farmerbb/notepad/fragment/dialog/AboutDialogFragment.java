@@ -15,6 +15,10 @@
 
 package com.farmerbb.notepad.fragment.dialog;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
@@ -25,7 +29,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.farmerbb.notepad.BuildConfig;
 import com.farmerbb.notepad.R;
+import com.farmerbb.notepad.util.SignatureUtils;
 
 public class AboutDialogFragment extends DialogFragment {
 
@@ -49,11 +55,52 @@ public class AboutDialogFragment extends DialogFragment {
         .setTitle(R.string.dialog_about_title)
         .setPositiveButton(R.string.action_close, null);
 
+        SignatureUtils.ReleaseType releaseType = SignatureUtils.getReleaseType(getActivity());
+        if(!releaseType.equals(SignatureUtils.ReleaseType.UNKNOWN)) {
+            builder.setNegativeButton(R.string.check_for_updates,
+                    (dialogInterface, i) -> checkForUpdates(releaseType));
+        }
+
         textView = view.findViewById(R.id.dialogMessage);
         textView.setText(R.string.dialog_about_message);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
 
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    private void checkForUpdates(SignatureUtils.ReleaseType releaseType) {
+        String url = "";
+
+        switch(releaseType) {
+            case PLAY_STORE:
+                url = isPlayStoreInstalled()
+                    ? "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
+                    : "https://github.com/farmerbb/Notepad/releases";
+                break;
+            case AMAZON:
+                url = "https://www.amazon.com/Braden-Farmer-Notepad/dp/B00KZ79H3O/";
+                break;
+            case F_DROID:
+                url = "https://f-droid.org/repository/browse/?fdid=" + BuildConfig.APPLICATION_ID;
+                break;
+        }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
+    }
+
+    private boolean isPlayStoreInstalled() {
+        try {
+            getActivity().getPackageManager().getPackageInfo("com.android.vending", 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 }

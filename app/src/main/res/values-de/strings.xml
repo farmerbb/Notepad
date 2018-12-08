@@ -82,7 +82,9 @@
 
     <string-array name="sort_by_list">
         <item>Datum (Neueste zuerst)</item>
+        <item>Datum (oldest first)</item>
         <item>Name (A bis Z)</item>
+        <item>Name (Z bis A)</item>
     </string-array>
     <string-array name="theme_list">
         <item>Hell / sans serif</item>

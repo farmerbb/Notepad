@@ -84,7 +84,9 @@
 
     <string-array name="sort_by_list">
         <item>修改时间</item>
+        <item>Date (oldest first)</item>
         <item>标题</item>
+        <item>Name (Z to A)</item>
     </string-array>
     <string-array name="theme_list">
         <item>亮色 sans-serif</item>

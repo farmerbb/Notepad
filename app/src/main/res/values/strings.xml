@@ -83,8 +83,10 @@
     <string name="no_notes_to_delete">No notes selected to delete</string>
 
     <string-array name="sort_by_list">
-        <item>Date (most recent first)</item>
+        <item>Date (newest first)</item>
+        <item>Date (oldest first)</item>
         <item>Name (A to Z)</item>
+        <item>Name (Z to A)</item>
     </string-array>
     <string-array name="theme_list">
         <item>Light / sans serif</item>

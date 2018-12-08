@@ -85,7 +85,9 @@
 
     <string-array name="sort_by_list">
         <item>날짜 (내림차순)</item>
+        <item>Date (oldest first</item>
         <item>내용 (가나다순)</item>
+        <item>Name (Z to A)</item>
     </string-array>
     <string-array name="theme_list">
         <item>Light / sans serif</item>

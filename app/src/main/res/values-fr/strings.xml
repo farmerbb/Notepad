@@ -84,7 +84,9 @@
 
     <string-array name="sort_by_list">
         <item>Date (la plus récente en premier)</item>
+        <item>Date (oldest first)</item>
         <item>Nom (de A à Z)</item>
+        <item>Nom (de Z à A)</item>
     </string-array>
     <string-array name="theme_list">
         <item>Light / sans serif</item>

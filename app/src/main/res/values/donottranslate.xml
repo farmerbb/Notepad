@@ -20,7 +20,9 @@
 
     <string-array name="sort_by_list_values">
         <item>date</item>
+        <item>date-reversed</item>
         <item>name</item>
+        <item>name-reversed</item>
     </string-array>
     <string-array name="theme_list_values">
         <item>light-sans</item>

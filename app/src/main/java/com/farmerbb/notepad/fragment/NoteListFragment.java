@@ -59,6 +59,7 @@ import com.farmerbb.notepad.fragment.dialog.AboutDialogFragment;
 import com.farmerbb.notepad.util.NoteListItem;
 import com.farmerbb.notepad.util.ScrollPositions;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.io.IOException;
@@ -323,8 +324,11 @@ public class NoteListFragment extends Fragment {
         }
 
         // If sort-by is "by date", sort in reverse order
-        if(sortBy.equals("date"))
+        if(sortBy.startsWith("date")) {
             Arrays.sort(listOfNotesByDate, Collections.reverseOrder());
+            if(sortBy.endsWith("reversed"))
+                ArrayUtils.reverse(listOfNotesByDate);
+        }
 
         // Get array of first lines of each note
         for(int i = 0; i < numOfNotes; i++) {
@@ -338,12 +342,14 @@ public class NoteListFragment extends Fragment {
         }
 
         // If sort-by is "by name", sort alphabetically
-        if(sortBy.equals("name")) {
+        if(sortBy.startsWith("name")) {
             // Copy titles array
             System.arraycopy(listOfTitlesByDate, 0, listOfTitlesByName, 0, numOfNotes);
 
             // Sort titles
             Arrays.sort(listOfTitlesByName, NoteListItem.NoteComparatorTitle);
+            if(sortBy.endsWith("reversed"))
+                ArrayUtils.reverse(listOfTitlesByName);
 
             // Initialize notes array
             for(int i = 0; i < numOfNotes; i++)
@@ -363,7 +369,7 @@ public class NoteListFragment extends Fragment {
 
             // Populate ArrayList with notes, showing name as first line of the notes
             list.addAll(Arrays.asList(listOfTitlesByName));
-        } else if(sortBy.equals("date"))
+        } else if(sortBy.startsWith("date"))
             list.addAll(Arrays.asList(listOfTitlesByDate));
 
         // Create the custom adapters to bind the array to the ListView
@@ -387,12 +393,12 @@ public class NoteListFragment extends Fragment {
         listView.setOnItemClickListener((arg0, arg1, position, arg3) -> {
             ScrollPositions.getInstance().setPosition(listView.getFirstVisiblePosition());
 
-            if(sortBy.equals("date")) {
+            if(sortBy.startsWith("date")) {
                 if(directEdit)
                     listener.editNote(finalListByDate[position]);
                 else
                     listener.viewNote(finalListByDate[position]);
-            } else if(sortBy.equals("name")) {
+            } else if(sortBy.startsWith("name")) {
                 if(directEdit)
                     listener.editNote(finalListByName[position]);
                 else
@@ -464,14 +470,14 @@ public class NoteListFragment extends Fragment {
                 if(position > -1) {
                     // Add/remove filenames to cab array as they are checked/unchecked
                     if(checked) {
-                        if(sortBy.equals("date"))
+                        if(sortBy.startsWith("date"))
                             cab.add(finalListByDate[position]);
-                        if(sortBy.equals("name"))
+                        if(sortBy.startsWith("name"))
                             cab.add(finalListByName[position]);
                     } else {
-                        if(sortBy.equals("date"))
+                        if(sortBy.startsWith("date"))
                             cab.remove(finalListByDate[position]);
-                        if(sortBy.equals("name"))
+                        if(sortBy.startsWith("name"))
                             cab.remove(finalListByName[position]);
                     }
 
@@ -493,9 +499,9 @@ public class NoteListFragment extends Fragment {
             cab.clear();
 
             String[] array = null;
-            if(sortBy.equals("date"))
+            if(sortBy.startsWith("date"))
                 array = finalListByDate;
-            if(sortBy.equals("name"))
+            if(sortBy.startsWith("name"))
                 array = finalListByName;
 
             if(array != null) {

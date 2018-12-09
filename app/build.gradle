@@ -17,7 +17,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 28
 
-        versionCode 108
+        versionCode 109
         versionName "2.3.4"
 
         resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it", "de", "ru", "cs"
@@ -49,7 +49,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             manifestPlaceholders = [appName: "@string/app_name"]
 

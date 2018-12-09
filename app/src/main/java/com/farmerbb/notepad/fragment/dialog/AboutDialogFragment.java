@@ -79,7 +79,7 @@ public class AboutDialogFragment extends DialogFragment {
                     : "https://github.com/farmerbb/Notepad/releases";
                 break;
             case AMAZON:
-                url = "https://www.amazon.com/Braden-Farmer-Notepad/dp/B00KZ79H3O/";
+                url = "https://www.amazon.com/gp/mas/dl/android?p=" + BuildConfig.APPLICATION_ID;
                 break;
             case F_DROID:
                 url = "https://f-droid.org/repository/browse/?fdid=" + BuildConfig.APPLICATION_ID;

@@ -22,87 +22,87 @@
     <string name="action_close">Fermer</string>
     <string name="action_delete">Supprimer</string>
     <string name="action_discard">Annuler</string>
-    <string name="action_edit">Éditer</string>
-    <string name="action_export">Export</string>
-    <string name="action_font_size">Font size</string>
+    <string name="action_edit">Editer</string>
+    <string name="action_export">Exporter</string>
+    <string name="action_font_size">Taille de police</string>
     <string name="action_new">Nouvelle Note</string>
     <string name="action_save">Enregistrer</string>
     <string name="action_settings">Paramètres</string>
     <string name="action_share">Partager</string>
-    <string name="action_sort_by">Trier les notes par</string>
+    <string name="action_sort_by">Trier par</string>
     <string name="app_name">Bloc-Notes</string>
     <string name="app_name_debug">@string/app_name</string>
-    <string name="cab_note_selected">note sélectionnée</string>
-    <string name="cab_notes_selected">notes sélectionnées</string>
+    <string name="cab_note_selected">Note sélectionnée</string>
+    <string name="cab_notes_selected">Notes sélectionnées</string>
     <string name="changes_discarded">Modifications abandonnées</string>
-    <string name="dialog_about_message">Bloc-Notes\u00A0: une application de prise de notes simple\n\n&#169; 2018 Braden Farmer\nApp logo by Tobaloidee</string>
-    <string name="dialog_about_title">À Propos de Bloc-Notes</string>
-    <string name="dialog_are_you_sure">Êtes-vous sûr\u00A0?</string>
+    <string name="dialog_about_message">Bloc-Notes&nbsp;: une application de prise de notes simple\n\n&#169; 2018 Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_title">A propos de Bloc-Notes</string>
+    <string name="dialog_are_you_sure">Etes-vous sûr&nbsp;?</string>
     <string name="dialog_delete_button_title">Supprimer la note</string>
-    <string name="dialog_delete_button_title_plural">Supprimer la note</string>
+    <string name="dialog_delete_button_title_plural">Supprimer les notes</string>
     <string name="dialog_save_button_title">Enregistrer les modifications</string>
-    <string name="dialog_save_changes">Voulez-vous enregistrer vos modifications\u00A0?</string>
+    <string name="dialog_save_changes">Enregistrer les modifications&nbsp;?</string>
     <string name="draft_restored">Brouillon restauré</string>
     <string name="draft_saved">Brouillon enregistré</string>
-    <string name="double_tap">Tip: double-tap text to switch to Edit mode</string>
-    <string name="edit_note">Édition</string>
+    <string name="double_tap">Astuce : double cliquer sur la note pour l\'éditer</string>
+    <string name="edit_note">Editer la note</string>
     <string name="edit_text">Saisissez votre texte</string>
-    <string name="empty_note">S\'il vous plaît saisissez un texte\u00A0!</string>
-    <string name="error_exporting_notes">Error exporting notes!</string>
-    <string name="error_importing_notes">Error importing notes!</string>
-    <string name="error_loading_list">Erreur lors du chargement de la liste de notes\u00A0!</string>
-    <string name="error_loading_note">Erreur lors du chargement de la note\u00A0!</string>
-    <string name="failed_to_save">Erreur\u00A0: Impossible d\'enregistrer la note\u00A0!</string>
-    <string name="first_run">Bienvenue dans Bloc-Notes\u00A0!\n\nPour créer une note, appuyez sur le bouton Ajouter\u00A0(+) en haut.</string>
-    <string name="first_view">Pour modifier une note, appuyez sur l\'écran ou appuyez sur le bouton Éditer\u00A0(Crayon) en haut.</string>
-    <string name="import_notes">Import notes</string>
-    <string name="loading_external_file">Loading external files is not supported</string>
-    <string name="no_notes_found">Aucune note trouvée</string>
+    <string name="empty_note">Note vide&nbsp;!</string>
+    <string name="error_exporting_notes">Erreur d\'exportation des notes!</string>
+    <string name="error_importing_notes">Erreur d\'importation des notes!</string>
+    <string name="error_loading_list">Erreur lors du chargement de la liste&nbsp;!</string>
+    <string name="error_loading_note">Erreur lors du chargement de la note&nbsp;!</string>
+    <string name="failed_to_save">Erreur&nbsp;: impossible d\'enregistrer la note&nbsp;!</string>
+    <string name="first_run">Bienvenue dans Bloc-Notes&nbsp;!\n\nPour créer une note, appuyez sur le bouton Ajouter&nbsp;(+) en haut.</string>
+    <string name="first_view">Pour modifier une note, appuyez sur l\'écran ou appuyez sur le bouton Editer&nbsp;(Crayon) en haut.</string>
+    <string name="import_notes">Importer des notes</string>
+    <string name="loading_external_file">Le chargement de fichier externe est impossible</string>
+    <string name="no_notes_found">Aucune note trouvée&nbsp;!</string>
     <string name="note_deleted">Note supprimée</string>
-    <string name="note_exported_to">Note exported successfully</string>
+    <string name="note_exported_to">Note exportée avec succès</string>
     <string name="note_saved">Note enregistrée</string>
     <string name="notes_deleted">Notes supprimées</string>
-    <string name="notes_exported_to">Notes exported successfully</string>
-    <string name="note_imported_successfully">Note imported successfully</string>
-    <string name="notes_imported_successfully">Notes imported successfully</string>
+    <string name="notes_exported_to">Notes exportées avec succès</string>
+    <string name="note_imported_successfully">Note importée avec succès</string>
+    <string name="notes_imported_successfully">Notes importées avec succès</string>
     <string name="pref_title_show_dialogs">Confirmer avant d\'enregistrer</string>
-    <string name="send_to">Partager la note par&#8230;</string>
-    <string name="view_note">Affichage</string>
-    <string name="action_install">Install</string>
-    <string name="action_no_thanks">No Thanks</string>
-    <string name="pref_title_show_date">Show date/time</string>
-    <string name="action_theme">Theme</string>
-    <string name="pref_title_direct_edit">Edit notes directly</string>
-    <string name="pref_title_markdown">Markdown/HTML support</string>
-    <string name="action_print">Print</string>
-    <string name="action_start_selection">Select notes</string>
-    <string name="action_select_all">Select all</string>
-    <string name="no_notes_to_select">No notes to select</string>
+    <string name="send_to">Envoyer à</string>
+    <string name="view_note">Afficher</string>
+    <string name="action_install">Installer</string>
+    <string name="action_no_thanks">Non merci</string>
+    <string name="pref_title_show_date">Afficher la date</string>
+    <string name="action_theme">Thème</string>
+    <string name="pref_title_direct_edit">Editer directement les notes</string>
+    <string name="pref_title_markdown">Surligner les liens HTML</string>
+    <string name="action_print">Imprimer</string>
+    <string name="action_start_selection">Sélectionner les notes</string>
+    <string name="action_select_all">Sélectionner tout</string>
+    <string name="no_notes_to_select">Pas de note à sélectionner</string>
     <string name="document">%1$s Document</string>
-    <string name="no_notes_to_export">No notes selected to export</string>
-    <string name="no_notes_to_delete">No notes selected to delete</string>
-    <string name="check_for_updates">Check for Updates</string>
+    <string name="no_notes_to_export">Pas de note à exporter</string>
+    <string name="no_notes_to_delete">Pas de note à supprimer</string>
+    <string name="check_for_updates">Vérifier les mises à jour</string>
 
     <string-array name="sort_by_list">
         <item>Date (la plus récente en premier)</item>
-        <item>Date (oldest first)</item>
+        <item>Date (la moins récente en premier)</item>
         <item>Nom (de A à Z)</item>
         <item>Nom (de Z à A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Light / sans serif</item>
-        <item>Light / serif</item>
-        <item>Light / monospace</item>
-        <item>Dark / sans serif</item>
-        <item>Dark / serif</item>
-        <item>Dark / monospace</item>
+        <item>Clair / sans serif</item>
+        <item>Clair / serif</item>
+        <item>Clair / monospace</item>
+        <item>Sombre / sans serif</item>
+        <item>Sombre / serif</item>
+        <item>Sombre / monospace</item>
     </string-array>
     <string-array name="font_size_list">
-        <item>Smallest</item>
-        <item>Small</item>
+        <item>Plus petit</item>
+        <item>Petit</item>
         <item>Normal</item>
-        <item>Large</item>
-        <item>Largest</item>
+        <item>Grand</item>
+        <item>Plus grand</item>
     </string-array>
 
 </resources>

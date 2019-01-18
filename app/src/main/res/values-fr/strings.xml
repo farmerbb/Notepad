@@ -35,7 +35,7 @@
     <string name="cab_note_selected">Note sélectionnée</string>
     <string name="cab_notes_selected">Notes sélectionnées</string>
     <string name="changes_discarded">Modifications abandonnées</string>
-    <string name="dialog_about_message">Bloc-Notes&nbsp;: une application de prise de notes simple\n\n&#169; 2018 Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_message">Bloc-Notes&nbsp;: une application de prise de notes simple\n\n&#169; 2019 Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">A propos de Bloc-Notes</string>
     <string name="dialog_are_you_sure">Etes-vous sûr&nbsp;?</string>
     <string name="dialog_delete_button_title">Supprimer la note</string>

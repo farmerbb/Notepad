@@ -35,7 +35,7 @@
     <string name="cab_note_selected">项目已选</string>
     <string name="cab_notes_selected">项目已选</string>
     <string name="changes_discarded">已舍弃更改</string>
-    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2018 Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2019 Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">关于Notepad</string>
     <string name="dialog_are_you_sure">确认？</string>
     <string name="dialog_delete_button_title">删除笔记</string>

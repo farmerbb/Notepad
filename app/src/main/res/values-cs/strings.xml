@@ -35,7 +35,7 @@
     <string name="cab_note_selected">poznámka vybrána</string>
     <string name="cab_notes_selected">poznámky vybrány</string>
     <string name="changes_discarded">Změny zrušeny</string>
-    <string name="dialog_about_message">Notepad: jednoduchá apka na poznámky\n\n&#169; 2018 Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_message">Notepad: jednoduchá apka na poznámky\n\n&#169; 2019 Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">O Notepad</string>
     <string name="dialog_are_you_sure">Jste si jistý?</string>
     <string name="dialog_delete_button_title">Smazat poznámku</string>

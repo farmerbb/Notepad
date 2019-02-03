@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
      Copyright 2014 Braden Farmer
 
@@ -23,86 +23,86 @@
     <string name="action_delete">Usuń</string>
     <string name="action_discard">Odrzuć</string>
     <string name="action_edit">Edytuj</string>
-    <string name="action_export">Zapisz do pliku</string>
-    <string name="action_font_size">Font size</string>
+    <string name="action_export">Eksportuj</string>
+    <string name="action_font_size">Rozmiar czcionki</string>
     <string name="action_new">Nowa notatka</string>
     <string name="action_save">Zapisz</string>
     <string name="action_settings">Ustawienia</string>
     <string name="action_share">Udostępnij</string>
     <string name="action_sort_by">Sortuj notatki według</string>
     <string name="app_name">Notatnik</string>
-    <string name="app_name_debug">@string/app_name</string>
+    <string name="app_name_debug">Notatnik (debugowanie)</string>
     <string name="cab_note_selected">notatka zaznaczona</string>
     <string name="cab_notes_selected">notatki zaznaczone</string>
     <string name="changes_discarded">Zmiany odrzucone</string>
-    <string name="dialog_about_message">Notatnik: prosta aplikacja do sporządzania notatek\n\n&#169; 2019 Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_message">Notatnik: prosta aplikacja do sporządzania notatek\n\n&#169; 2019 Braden Farmer\nLogo aplikacji autorstwa Tobaloidee</string>
     <string name="dialog_about_title">O Notatniku</string>
     <string name="dialog_are_you_sure">Czy jesteś pewien?</string>
     <string name="dialog_delete_button_title">Usuń notatkę</string>
-    <string name="dialog_delete_button_title_plural">Usuń notatkę</string>
+    <string name="dialog_delete_button_title_plural">Usuń notatki</string>
     <string name="dialog_save_button_title">Zapisz zmiany</string>
     <string name="dialog_save_changes">Czy chcesz zapisać zmiany?</string>
     <string name="draft_restored">Wersja robocza przywrócona</string>
     <string name="draft_saved">Wersja robocza zapisana</string>
-    <string name="double_tap">Wskazówka: dotnij dwa razy, by przełączyć się do trybu edycji</string>
+    <string name="double_tap">Wskazówka: dotknij dwa razy, by przełączyć się do trybu edycji</string>
     <string name="edit_note">Edytuj notatkę</string>
-    <string name="edit_text">Napisz by wprowadzić tekst</string>
+    <string name="edit_text">Napisz, by wprowadzić tekst</string>
     <string name="empty_note">Wprowadź jakiś tekst!</string>
-    <string name="error_exporting_notes">Błąd podczas zapisywania notatek do plików!</string>
+    <string name="error_exporting_notes">Błąd podczas eksportowania notatek!</string>
     <string name="error_importing_notes">Błąd podczas importowania notatek!</string>
     <string name="error_loading_list">Błąd podczas wczytywania listy notatek!</string>
     <string name="error_loading_note">Błąd podczas wczytywania notatki!</string>
-    <string name="failed_to_save">Błąd: Nie udało się zapisać notatki!</string>
-    <string name="first_run">Witamy w Notatniku!\n\nAby stworzyć notatkę, dotknij przycisku Nowa Notatka (znak plus) na górze.</string>
-    <string name="first_view">Aby zmienić zapisaną notatkę, dotknij ekranu albo przycisku Edytuj na górze.</string>
+    <string name="failed_to_save">Błąd: nie udało się zapisać notatki!</string>
+    <string name="first_run">Witamy w Notatniku!\n\nAby stworzyć notatkę, dotknij przycisku "Nowa Notatka" (znak plus).</string>
+    <string name="first_view">Aby zmienić zapisaną notatkę, dotknij dwa razy tekstu albo przycisku "Edytuj" (symbol ołówka).</string>
     <string name="import_notes">Zaimportuj notatki</string>
     <string name="loading_external_file">Wczytywanie zewnętrznych plików nie jest obsługiwane</string>
     <string name="no_notes_found">Nie znaleziono notatek</string>
-    <string name="note_deleted">Notatka usunęta</string>
-    <string name="note_exported_to">Notatka zapisana w</string>
+    <string name="note_deleted">Notatka usunięta</string>
+    <string name="note_exported_to">Notatka wyeksportowana pomyślnie</string>
     <string name="note_saved">Notatka zapisana</string>
     <string name="notes_deleted">Notatki usunięte</string>
-    <string name="notes_exported_to">Notatki zapisane w</string>
-    <string name="note_imported_successfully">Notatki pomyślnie zaimportowane</string>
-    <string name="notes_imported_successfully">Notatki pomyślnie zaimportowane</string>
+    <string name="notes_exported_to">Notatki wyeksportowane pomyślnie</string>
+    <string name="note_imported_successfully">Notatka zaimportowana pomyślnie</string>
+    <string name="notes_imported_successfully">Notatki zaimportowane pomyślnie</string>
     <string name="pref_title_show_dialogs">Pytaj przed zapisaniem</string>
     <string name="send_to">Udostępnij za pomocą&#8230;</string>
-    <string name="view_note">Podgląd notatki</string>
-    <string name="action_install">Install</string>
-    <string name="action_no_thanks">No Thanks</string>
-    <string name="pref_title_show_date">Show date/time</string>
-    <string name="action_theme">Theme</string>
-    <string name="pref_title_direct_edit">Edit notes directly</string>
-    <string name="pref_title_markdown">Markdown/HTML support</string>
-    <string name="action_print">Print</string>
-    <string name="action_start_selection">Select notes</string>
-    <string name="action_select_all">Select all</string>
-    <string name="no_notes_to_select">No notes to select</string>
-    <string name="document">%1$s Document</string>
-    <string name="no_notes_to_export">No notes selected to export</string>
-    <string name="no_notes_to_delete">No notes selected to delete</string>
-    <string name="check_for_updates">Check for Updates</string>
+    <string name="view_note">Wyświetl notatkę</string>
+    <string name="action_install">Zainstaluj</string>
+    <string name="action_no_thanks">Nie, dziękuję</string>
+    <string name="pref_title_show_date">Pokazuj datę/czas</string>
+    <string name="action_theme">Motyw</string>
+    <string name="pref_title_direct_edit">Edytuj notatki od razu</string>
+    <string name="pref_title_markdown">Obsługa języków Markdown/HTML</string>
+    <string name="action_print">Drukuj</string>
+    <string name="action_start_selection">Zaznacz notatki</string>
+    <string name="action_select_all">Zaznacz wszystkie</string>
+    <string name="no_notes_to_select">Nie zaznaczono żadnych notatek</string>
+    <string name="document">%1$s dokument</string>
+    <string name="no_notes_to_export">Nie zaznaczono notatek do wyeksportowania</string>
+    <string name="no_notes_to_delete">Nie zaznaczono notatek do usunięcia</string>
+    <string name="check_for_updates">Sprawdź aktualizacje</string>
 
     <string-array name="sort_by_list">
         <item>Daty (najnowsze na początku)</item>
-        <item>Daty (oldest first)</item>
+        <item>Daty (najstarsze na początku)</item>
         <item>Nazwy (Od A do Z)</item>
         <item>Nazwy (Od Z do A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Light / sans serif</item>
-        <item>Light / serif</item>
-        <item>Light / monospace</item>
-        <item>Dark / sans serif</item>
-        <item>Dark / serif</item>
-        <item>Dark / monospace</item>
+        <item>Jasny / Sans Serif</item>
+        <item>Jasny / Serif</item>
+        <item>Jasny / Monospace</item>
+        <item>Ciemny / Sans Serif</item>
+        <item>Ciemny / Serif</item>
+        <item>Ciemny / Monospace</item>
     </string-array>
     <string-array name="font_size_list">
-        <item>Smallest</item>
-        <item>Small</item>
-        <item>Normal</item>
-        <item>Large</item>
-        <item>Largest</item>
+        <item>Najmniejsza</item>
+        <item>Mała</item>
+        <item>Normalna</item>
+        <item>Duża</item>
+        <item>Największa</item>
     </string-array>
 
 </resources>

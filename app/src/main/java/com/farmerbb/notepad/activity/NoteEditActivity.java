@@ -36,6 +36,9 @@ import com.farmerbb.notepad.fragment.dialog.SaveButtonDialogFragment;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 public class NoteEditActivity extends NotepadBaseActivity implements
 BackButtonDialogFragment.Listener, 
@@ -115,6 +118,27 @@ String external;
                 }
             } else if(Intent.ACTION_EDIT.equals(action) && "text/plain".equals(type)) {
                 external = intent.getStringExtra(Intent.EXTRA_TEXT);
+                if(external != null) {
+                    newNote();
+                    return;
+                }
+                finish();
+            } else if(Intent.ACTION_VIEW.equals(action) && "text/plain".equals(type)) {
+                try{
+                    InputStream in = getContentResolver().openInputStream(intent.getData());
+                    Reader rd = new InputStreamReader(in, "UTF-8");
+                    char[] buffer = new char[4096];
+                    int len;
+                    StringBuilder sb = new StringBuilder();
+                    while ((len = rd.read(buffer)) != -1) {
+                        sb.append(buffer, 0, len);
+                    }
+                    rd.close();
+                    in.close();
+                    external= sb.toString();
+                } catch(Exception e) {
+                    // show msg error loading data?
+                }
                 if(external != null) {
                     newNote();
                     return;

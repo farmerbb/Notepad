@@ -74,20 +74,20 @@
     <string name="action_theme">主题</string>
     <string name="pref_title_direct_edit">打开笔记即开始编辑</string>
     <string name="pref_title_markdown">Markdown/HTML 支持</string>
-    <string name="action_print">Print</string>
-    <string name="action_start_selection">Select notes</string>
-    <string name="action_select_all">Select all</string>
-    <string name="no_notes_to_select">No notes to select</string>
+    <string name="action_print">打印</string>
+    <string name="action_start_selection">批量选择笔记</string>
+    <string name="action_select_all">全选</string>
+    <string name="no_notes_to_select">无笔记可选</string>
     <string name="document">%1$s Document</string>
-    <string name="no_notes_to_export">No notes selected to export</string>
-    <string name="no_notes_to_delete">No notes selected to delete</string>
-    <string name="check_for_updates">Check for Updates</string>
+    <string name="no_notes_to_export">导出：未选择任何笔记</string>
+    <string name="no_notes_to_delete">删除：未选择任何笔记</string>
+    <string name="check_for_updates">检查更新</string>
 
     <string-array name="sort_by_list">
-        <item>修改时间</item>
-        <item>Date (oldest first)</item>
-        <item>标题</item>
-        <item>Name (Z to A)</item>
+        <item>由新至旧</item>
+        <item>由旧至新</item>
+        <item>标题顺序</item>
+        <item>标题逆序</item>
     </string-array>
     <string-array name="theme_list">
         <item>亮色 sans-serif</item>

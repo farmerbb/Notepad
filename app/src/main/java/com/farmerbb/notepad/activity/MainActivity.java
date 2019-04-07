@@ -22,9 +22,6 @@ import android.content.ClipData;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -32,8 +29,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.provider.DocumentFile;
 import android.util.Base64;
 import android.view.KeyEvent;
 import android.webkit.WebView;
@@ -66,6 +61,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import androidx.documentfile.provider.DocumentFile;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import us.feras.mdv.MarkdownView;
 
 public class MainActivity extends NotepadBaseActivity implements

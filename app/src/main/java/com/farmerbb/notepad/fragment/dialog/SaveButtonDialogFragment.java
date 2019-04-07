@@ -17,12 +17,13 @@ package com.farmerbb.notepad.fragment.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 
 import com.farmerbb.notepad.R;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 
 public class SaveButtonDialogFragment extends DialogFragment {
 

@@ -2,12 +2,13 @@ package com.farmerbb.notepad.activity;
 
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 
 import com.farmerbb.notepad.R;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 public abstract class NotepadBaseActivity extends AppCompatActivity {
     @Override

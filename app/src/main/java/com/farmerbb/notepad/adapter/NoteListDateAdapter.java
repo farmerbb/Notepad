@@ -19,18 +19,18 @@ package com.farmerbb.notepad.adapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.farmerbb.notepad.R;
 import com.farmerbb.notepad.util.NoteListItem;
 
 import java.util.ArrayList;
+
+import androidx.core.content.ContextCompat;
 
 public class NoteListDateAdapter extends ArrayAdapter<NoteListItem> {
     public NoteListDateAdapter(Context context, ArrayList<NoteListItem> notes) {

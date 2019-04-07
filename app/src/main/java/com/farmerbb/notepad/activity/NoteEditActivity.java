@@ -15,14 +15,11 @@
 
 package com.farmerbb.notepad.activity;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -39,6 +36,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 public class NoteEditActivity extends NotepadBaseActivity implements
 BackButtonDialogFragment.Listener, 

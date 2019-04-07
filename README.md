@@ -50,7 +50,7 @@ Ctrl+H: Share
       alt="Google Play"
       height="80"
       align="middle">](https://play.google.com/store/apps/details?id=com.farmerbb.notepad)
-[<img src="https://f-droid.org/badge/get-it-on.png"
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
       alt="F-Droid"
       height="80"
       align="middle">](https://f-droid.org/packages/com.farmerbb.notepad/)

@@ -16,7 +16,7 @@ android {
         versionCode 110
         versionName "2.3.5"
 
-        resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it", "de", "ru", "cs", "pt-rBR", "nb-NO"
+        resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it", "de", "ru", "cs", "pt-rBR", "no"
         vectorDrawables.useSupportLibrary = true
     }
 

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2014 Braden Farmer
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+
+<resources>
+
+    <string name="action_cancel">Avbryt</string>
+    <string name="action_close">Lukk</string>
+    <string name="action_delete">Slett</string>
+    <string name="action_discard">Forkast</string>
+    <string name="action_edit">Endre</string>
+    <string name="action_export">Eksporter</string>
+    <string name="action_font_size">Skriftstørrelse</string>
+    <string name="action_new">Nytt notat</string>
+    <string name="action_save">algre</string>
+    <string name="action_settings">Instillinger</string>
+    <string name="action_share">Del</string>
+    <string name="action_sort_by">Sorter notater etter</string>
+    <string name="app_name">Notatblokk</string>
+    <string name="app_name_debug">Notatblokk (Debug)</string>
+    <string name="cab_note_selected">notat markert</string>
+    <string name="cab_notes_selected">notater markert</string>
+    <string name="changes_discarded">Endringer forkastet</string>
+    <string name="dialog_about_message">Notatblokk: en enkel app som lar deg ta notater\n\n&#169; 2019 Braden Farmer\nApp logo av Tobaloidee</string>
+    <string name="dialog_about_title">Om Notatblokk</string>
+    <string name="dialog_are_you_sure">Er du sikker?</string>
+    <string name="dialog_delete_button_title">Slett notat</string>
+    <string name="dialog_delete_button_title_plural">Slett ntoater</string>
+    <string name="dialog_save_button_title">Lagre endringer</string>
+    <string name="dialog_save_changes">Vil du lagre endringene dine?</string>
+    <string name="draft_restored">Utkast gjenopprettet</string>
+    <string name="draft_saved">Utkast lagret</string>
+    <string name="double_tap">Tips: dobbeltrykk på teksten for å bytte til redigeringsmodus</string>
+    <string name="edit_note">Endre notat</string>
+    <string name="edit_text">Skriv for å legge til tekst</string>
+    <string name="empty_note">Vennligst skriv noe tekst!</string>
+    <string name="error_exporting_notes">En feil oppstod under eksportering av notater!</string>
+    <string name="error_importing_notes">En feil oppstod under importering av notater!</string>
+    <string name="error_loading_list">En feil oppstod under lasting av notatlisten!</string>
+    <string name="error_loading_note">En feil oppstod under lasting av notat!</string>
+    <string name="failed_to_save">Feil: Klarte ikke å lagre notat!</string>
+    <string name="first_run">Velkommen til Notatblokk!\n\nFor å lage et notat, klikk på Nytt notat-knappen (plusstegnet).</string>
+    <string name="first_view">For å redigere et lagret notat, dobbelklikk teksten eller klikk på rediger-knappen (blyanten).</string>
+    <string name="import_notes">Importer notater</string>
+    <string name="loading_external_file">Lasting av eksterne filer er ikke støttet</string>
+    <string name="no_notes_found">Ingen notater funnet</string>
+    <string name="note_deleted">Notat slettet</string>
+    <string name="note_exported_to">Eksportering av notat vellykket</string>
+    <string name="note_saved">Notat lagret</string>
+    <string name="notes_deleted">Notater slettet</string>
+    <string name="notes_exported_to">Eksportering av notater vellykket</string>
+    <string name="note_imported_successfully">Importering av notat vellykket</string>
+    <string name="notes_imported_successfully">Importering av notater vellykket</string>
+    <string name="pref_title_show_dialogs">Spør før lagring</string>
+    <string name="send_to">Del notat til&#8230;</string>
+    <string name="view_note">Vis notat</string>
+    <string name="action_install">Installer</string>
+    <string name="action_no_thanks">Nei takk</string>
+    <string name="pref_title_show_date">Vis dato/tid</string>
+    <string name="action_theme">Tema</string>
+    <string name="pref_title_direct_edit">Rediger notater direkte</string>
+    <string name="pref_title_markdown">Markdown/HTML-støtte</string>
+    <string name="action_print">Skriv ut</string>
+    <string name="action_start_selection">Marker notater</string>
+    <string name="action_select_all">Marker alle</string>
+    <string name="no_notes_to_select">Ingen notater å markere</string>
+    <string name="document">%1$s dokument</string>
+    <string name="no_notes_to_export">Ingen notater markert for eksportering</string>
+    <string name="no_notes_to_delete">Ingen notater markert for sletting</string>
+    <string name="check_for_updates">Se etter oppdateringer</string>
+
+    <string-array name="sort_by_list">
+        <item>Dato (nyeste first)</item>
+        <item>Dato (eldste first)</item>
+        <item>Navn (A to Å)</item>
+        <item>Navn (Å to A)</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>Lyst / grotesk</item>
+        <item>Lyst / seriffer</item>
+        <item>Lyst / monospace</item>
+        <item>Mørkt / grotesk</item>
+        <item>Mørkt / seriffer</item>
+        <item>Mørkt / monospace</item>
+    </string-array>
+    <string-array name="font_size_list">
+        <item>Minst</item>
+        <item>Liten</item>
+        <item>Normal</item>
+        <item>Stor</item>
+        <item>Størst</item>
+    </string-array>
+
+</resources>

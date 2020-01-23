@@ -57,9 +57,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Locale;
 
 import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.DialogFragment;
@@ -462,15 +464,23 @@ NoteViewFragment.Listener {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void reallyExportNotes() {
         String filename = "";
+        String fileSuffix = "";
 
         try {
             filename = loadNoteTitle(filesToExport[fileBeingExported].toString());
         } catch (IOException e) { /* Gracefully fail */ }
 
+        try {
+            fileSuffix = getNoteTimestamp(filesToExport[fileBeingExported].toString());
+        } catch (NumberFormatException e) {
+            //For draft notes, get current time
+            fileSuffix = getNoteTimestamp(String.valueOf(System.currentTimeMillis()));
+        }
+
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TITLE, generateFilename(filename));
+        intent.putExtra(Intent.EXTRA_TITLE, generateFilename(filename, fileSuffix));
 
         try {
             startActivityForResult(intent, EXPORT);
@@ -479,7 +489,7 @@ NoteViewFragment.Listener {
         }
     }
 
-    private String generateFilename(String filename) {
+    private String generateFilename(String filename, String lastModified) {
         // Remove any invalid characters
         final String[] characters = new String[]{"<", ">", ":", "\"", "/", "\\\\", "\\|", "\\?", "\\*"};
 
@@ -487,10 +497,30 @@ NoteViewFragment.Listener {
             filename = filename.replaceAll(character, "");
         }
 
+        SharedPreferences pref = getSharedPreferences(getPackageName() + "_preferences", MODE_PRIVATE);
+        String fileNameType = pref.getString("export_filename", "text-only");
+
         // To ensure that the generated filename fits within filesystem limitations,
         // truncate the filename to ~245 characters.
-        if(filename.length() > 245)
-            filename = filename.substring(0, 245);
+        if(fileNameType.equals("text-only")) {
+            int maxLength = 245;
+            if(filename.length() > maxLength)
+                filename = filename.substring(0, maxLength);
+        } else {
+            int maxLength = 245 - (lastModified.length() + 1);
+            if(filename.length() > maxLength)
+                filename = filename.substring(0, maxLength);
+
+            if(fileNameType.equals("text-timestamp")) {
+                //Add timestamp as suffix
+                filename = filename + "_" + lastModified;
+            } else {
+                //Add timestamp as prefix
+                filename = lastModified + "_" + filename;
+            }
+        }
+
+
 
         return filename + ".txt";
     }
@@ -551,6 +581,19 @@ NoteViewFragment.Listener {
         return(DateFormat
                 .getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
                 .format(lastModified));
+    }
+
+    // Calculates last modified date/time of a note for exporting
+    private String getNoteTimestamp(String filename) {
+        //Get the current locale
+        Locale locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+            locale = getResources().getConfiguration().getLocales().get(0);
+        } else{
+            locale = getResources().getConfiguration().locale;
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm", locale);
+        return dateFormat.format(new Date(Long.parseLong(filename)));
     }
 
     @Override
@@ -644,7 +687,9 @@ NoteViewFragment.Listener {
                     try {
                         DocumentFile file = tree.createFile(
                                 "text/plain",
-                                generateFilename(loadNoteTitle(exportFilename.toString())));
+                                generateFilename(
+                                        loadNoteTitle(exportFilename.toString()),
+                                        getNoteTimestamp(exportFilename.toString())));
 
                         if(file != null)
                             saveExportedNote(loadNote(exportFilename.toString()), file.getUri());

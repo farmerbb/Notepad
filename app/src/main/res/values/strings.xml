@@ -30,6 +30,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_share">Share</string>
     <string name="action_sort_by">Sort notes by</string>
+    <string name="action_export_filename">Exported filename</string>
     <string name="app_name">Notepad</string>
     <string name="app_name_debug">Notepad (Debug)</string>
     <string name="cab_note_selected">note selected</string>
@@ -103,6 +104,11 @@
         <item>Normal</item>
         <item>Large</item>
         <item>Largest</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>First line of text</item>
+        <item>First line + timestamp</item>
+        <item>Timestamp + first line</item>
     </string-array>
 
 </resources>

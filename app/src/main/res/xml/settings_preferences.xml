@@ -41,6 +41,14 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null"
         android:title="@string/action_sort_by" />
+    <ListPreference
+        android:defaultValue="text-only"
+        android:entries="@array/exported_filename_list"
+        android:entryValues="@array/exported_filename_list_values"
+        android:key="export_filename"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:title="@string/action_export_filename" />
 
     <CheckBoxPreference
         android:defaultValue="true"

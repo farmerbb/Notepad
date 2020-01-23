@@ -42,6 +42,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         bindPreferenceSummaryToValue(findPreference("theme"));
         bindPreferenceSummaryToValue(findPreference("font_size"));
         bindPreferenceSummaryToValue(findPreference("sort_by"));
+        bindPreferenceSummaryToValue(findPreference("export_filename"));
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             addPreferencesFromResource(R.xml.settings_preferences_md);

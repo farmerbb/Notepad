@@ -34,6 +34,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class AboutDialogFragment extends DialogFragment {
 
     TextView textView;
@@ -62,8 +65,13 @@ public class AboutDialogFragment extends DialogFragment {
                     (dialogInterface, i) -> checkForUpdates(releaseType));
         }
 
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("America/Denver"));
+        calendar.setTimeInMillis(BuildConfig.TIMESTAMP);
+
+        int year = calendar.get(Calendar.YEAR);
+
         textView = view.findViewById(R.id.dialogMessage);
-        textView.setText(R.string.dialog_about_message);
+        textView.setText(getString(R.string.dialog_about_message, year));
         textView.setMovementMethod(LinkMovementMethod.getInstance());
 
         // Create the AlertDialog object and return it

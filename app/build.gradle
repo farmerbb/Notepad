@@ -18,6 +18,8 @@ android {
 
         resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it", "de", "ru", "cs", "pt-rBR", "no"
         vectorDrawables.useSupportLibrary = true
+
+        buildConfigField "long", "TIMESTAMP", "${System.currentTimeMillis()}L"
     }
 
     compileOptions {

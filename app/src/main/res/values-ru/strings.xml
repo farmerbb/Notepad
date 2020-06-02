@@ -23,7 +23,7 @@
 <string name="changes_discarded">Изменения отменены</string>
 <string name="dialog_about_message">"Notepad: простое приложение для создания заметок
 
-© 2019 Braden Farmer
+© %d Braden Farmer
 App logo by Tobaloidee
 Russian translation by Vladimir Kosolapov"</string>
 <string name="dialog_about_title">О приложении</string>

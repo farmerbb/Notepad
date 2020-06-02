@@ -36,7 +36,7 @@
     <string name="cab_note_selected">선택됨</string>
     <string name="cab_notes_selected">선택됨</string>
     <string name="changes_discarded">변경 취소됨</string>
-    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2019 Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">노트패드 정보</string>
     <string name="dialog_are_you_sure">노트를 삭제하시겠어요?</string>
     <string name="dialog_delete_button_title">노트 삭제</string>

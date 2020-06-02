@@ -35,7 +35,7 @@
     <string name="cab_note_selected">note selected</string>
     <string name="cab_notes_selected">notes selected</string>
     <string name="changes_discarded">Changes discarded</string>
-    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; 2019 Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">About Notepad</string>
     <string name="dialog_are_you_sure">Are you sure?</string>
     <string name="dialog_delete_button_title">Delete note</string>

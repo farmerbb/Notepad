@@ -33,7 +33,7 @@
     <string name="cab_note_selected">ausgewählte Notiz</string>
     <string name="cab_notes_selected">ausgewählte Notizen</string>
     <string name="changes_discarded">Änderungen verworfen</string>
-    <string name="dialog_about_message">Notepad: eine einfache Anwendung für Notizen\n\n&#169; 2019 Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_message">Notepad: eine einfache Anwendung für Notizen\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">Über Notepad</string>
     <string name="dialog_are_you_sure">Sind Sie sicher?</string>
     <string name="dialog_delete_button_title">Notiz löschen</string>

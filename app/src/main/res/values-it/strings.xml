@@ -35,7 +35,7 @@
     <string name="cab_note_selected">nota selezionata</string>
     <string name="cab_notes_selected">note selezionate</string>
     <string name="changes_discarded">Modifiche annullate</string>
-    <string name="dialog_about_message">Notepad: una semplice app per appunti\n\n&#169; 2019 Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_message">Notepad: una semplice app per appunti\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">Riguardo a Notepad</string>
     <string name="dialog_are_you_sure">Sei sicuro?</string>
     <string name="dialog_delete_button_title">Elimina nota</string>

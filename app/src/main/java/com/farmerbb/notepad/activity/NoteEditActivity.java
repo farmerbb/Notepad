@@ -190,7 +190,6 @@ String external;
     // Keyboard shortcuts
     @Override
     public boolean dispatchKeyShortcutEvent(KeyEvent event) {
-        super.dispatchKeyShortcutEvent(event);
         if(event.getAction() == KeyEvent.ACTION_DOWN && event.isCtrlPressed()) {
             NoteEditFragment fragment = (NoteEditFragment) getSupportFragmentManager().findFragmentByTag("NoteEditFragment");
             fragment.dispatchKeyShortcutEvent(event.getKeyCode());

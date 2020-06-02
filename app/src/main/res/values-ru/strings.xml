@@ -67,4 +67,10 @@ Russian translation by Vladimir Kosolapov"</string>
 <string name="send_to">Поделиться заметкой с…</string>
 <string name="view_note">Просмотреть заметку</string>
 <string name="check_for_updates">Check for Updates</string>
+
+    <string name="action_export_filename">Exported filename</string>
+    <string name="cab_note_selected">note selected</string>
+    <string name="cab_notes_selected">notes selected</string>
+    <string name="document">%1$s Document</string>
+
 </resources>

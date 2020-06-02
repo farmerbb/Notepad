@@ -30,6 +30,7 @@
     <string name="action_settings">Instellingen</string>
     <string name="action_share">Delen</string>
     <string name="action_sort_by">Sorteren op</string>
+    <string name="action_export_filename">Exported filename</string>
     <string name="app_name">Notitieblok</string>
     <string name="app_name_debug">Notitieblok (foutopsporing)</string>
     <string name="cab_note_selected">notitie geselecteerd</string>
@@ -103,6 +104,11 @@
         <item>Normaal</item>
         <item>Groot</item>
         <item>Grootst</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>First line of text</item>
+        <item>First line + timestamp</item>
+        <item>Timestamp + first line</item>
     </string-array>
 
 </resources>

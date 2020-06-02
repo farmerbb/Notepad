@@ -30,6 +30,7 @@
     <string name="action_settings">Instillinger</string>
     <string name="action_share">Del</string>
     <string name="action_sort_by">Sorter notater etter</string>
+    <string name="action_export_filename">Exported filename</string>
     <string name="app_name">Notatblokk</string>
     <string name="app_name_debug">Notatblokk (Debug)</string>
     <string name="cab_note_selected">notat markert</string>
@@ -103,6 +104,11 @@
         <item>Normal</item>
         <item>Stor</item>
         <item>Størst</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>First line of text</item>
+        <item>First line + timestamp</item>
+        <item>Timestamp + first line</item>
     </string-array>
 
 </resources>

@@ -28,6 +28,7 @@
     <string name="action_settings">Einstellungen</string>
     <string name="action_share">Teilen</string>
     <string name="action_sort_by">Notizen sortieren nach</string>
+    <string name="action_export_filename">Exported filename</string>
     <string name="app_name">Notepad</string>
     <string name="app_name_debug">Notepad (Debug)</string>
     <string name="cab_note_selected">ausgewählte Notiz</string>
@@ -101,6 +102,11 @@
         <item>Normal</item>
         <item>Groß</item>
         <item>Größer</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>First line of text</item>
+        <item>First line + timestamp</item>
+        <item>Timestamp + first line</item>
     </string-array>
 
 </resources>

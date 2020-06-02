@@ -30,6 +30,7 @@
     <string name="action_save">저장</string>
     <string name="action_settings">설정</string>
     <string name="action_share">공유</string>
+    <string name="action_export_filename">Exported filename</string>
     <string name="action_sort_by">정렬 순서</string>
     <string name="app_name">노트패드</string>
     <string name="app_name_debug">@string/app_name</string>
@@ -104,6 +105,11 @@
         <item>Normal</item>
         <item>Large</item>
         <item>Largest</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>First line of text</item>
+        <item>First line + timestamp</item>
+        <item>Timestamp + first line</item>
     </string-array>
 
 </resources>

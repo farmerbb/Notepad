@@ -39,5 +39,10 @@
         <item>large</item>
         <item>largest</item>
     </string-array>
+    <string-array name="exported_filename_list_values">
+        <item>text-only</item>
+        <item>text-timestamp</item>
+        <item>timestamp-text</item>
+    </string-array>
 
 </resources>

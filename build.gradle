@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:4.0.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -15,9 +15,8 @@ buildscript {
 }
 
 plugins {
-    id 'se.patrikerdes.use-latest-versions' version '0.2.9'
-    id 'com.github.ben-manes.versions' version '0.21.0'
-    id 'com.github.plnice.canidropjetifier' version '0.4'
+    id 'se.patrikerdes.use-latest-versions' version '0.2.14'
+    id 'com.github.ben-manes.versions' version '0.28.0'
 }
 
 dependencyUpdates {

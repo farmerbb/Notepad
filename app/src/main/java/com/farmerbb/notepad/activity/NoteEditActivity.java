@@ -183,6 +183,7 @@ String external;
             EditText noteContents = findViewById(R.id.editText1);
             noteContents.setText(external);
             noteContents.setSelection(external.length(), external.length());
+            external = null;
         }
     }
 

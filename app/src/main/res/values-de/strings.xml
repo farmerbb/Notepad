@@ -28,13 +28,13 @@
     <string name="action_settings">Einstellungen</string>
     <string name="action_share">Teilen</string>
     <string name="action_sort_by">Notizen sortieren nach</string>
-    <string name="action_export_filename">Exported filename</string>
+    <string name="action_export_filename">Dateiname</string>
     <string name="app_name">Notepad</string>
     <string name="app_name_debug">Notepad (Debug)</string>
     <string name="cab_note_selected">ausgewählte Notiz</string>
     <string name="cab_notes_selected">ausgewählte Notizen</string>
     <string name="changes_discarded">Änderungen verworfen</string>
-    <string name="dialog_about_message">Notepad: eine einfache Anwendung für Notizen\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_message">Notepad: eine einfache Anwendung für Notizen\n\n&#169; %d Braden Farmer\nLogo von Tobaloidee</string>
     <string name="dialog_about_title">Über Notepad</string>
     <string name="dialog_are_you_sure">Sind Sie sicher?</string>
     <string name="dialog_delete_button_title">Notiz löschen</string>
@@ -47,10 +47,10 @@
     <string name="edit_note">Notiz editieren</string>
     <string name="edit_text">Tippen um Text zu ergänzen</string>
     <string name="empty_note">Bitte Text eingeben!</string>
-    <string name="error_exporting_notes">Fehler Notizen exportieren!</string>
-    <string name="error_importing_notes">Fehler Notizen importieren!</string>
-    <string name="error_loading_list">Fehler laden Notizenliste!</string>
-    <string name="error_loading_note">Fehler laden Notiz!</string>
+    <string name="error_exporting_notes">Fehler beim Exportieren der Notizen!</string>
+    <string name="error_importing_notes">Fehler beim Importieren der Notizen!</string>
+    <string name="error_loading_list">Fehler beim Laden der Notizenliste!</string>
+    <string name="error_loading_note">Fehler beim Laden der Notiz!</string>
     <string name="failed_to_save">Fehler: Notiz wurde nicht gespeichert!</string>
     <string name="first_run">Willkommen bei Notepad!\n\nUm eine neue Notiz zu erstellen, auf den neue-Notiz-Knopf drücken (plus Zeichen).</string>
     <string name="first_view">Um eine gespeicherte Notiz zu editieren, doppeltippen auf den Text oder den Editierknopf (Stift) drücken.</string>
@@ -80,11 +80,11 @@
     <string name="document">%1$s Dokument</string>
     <string name="no_notes_to_export">Keine Notizen ausgewählt für Export</string>
     <string name="no_notes_to_delete">Keine Notizen zum Löschen ausgewählt</string>
-    <string name="check_for_updates">Check for Updates</string>
+    <string name="check_for_updates">Nach Updates suchen</string>
 
     <string-array name="sort_by_list">
         <item>Datum (Neueste zuerst)</item>
-        <item>Datum (oldest first)</item>
+        <item>Datum (Älteste zuerst)</item>
         <item>Name (A bis Z)</item>
         <item>Name (Z bis A)</item>
     </string-array>
@@ -104,9 +104,9 @@
         <item>Größer</item>
     </string-array>
     <string-array name="exported_filename_list">
-        <item>First line of text</item>
-        <item>First line + timestamp</item>
-        <item>Timestamp + first line</item>
+        <item>Erste Textzeile</item>
+        <item>Erste Textzeile + Datum</item>
+        <item>Datum + Erste Textzeile</item>
     </string-array>
 
 </resources>

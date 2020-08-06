@@ -30,6 +30,7 @@ import com.farmerbb.notepad.fragment.NoteEditFragment;
 import com.farmerbb.notepad.fragment.dialog.BackButtonDialogFragment;
 import com.farmerbb.notepad.fragment.dialog.DeleteDialogFragment;
 import com.farmerbb.notepad.fragment.dialog.SaveButtonDialogFragment;
+import com.farmerbb.notepad.managers.ThemeManager;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -65,11 +66,8 @@ String external;
 
         LinearLayout noteViewEdit = findViewById(R.id.noteViewEdit);
 
-        if(theme.contains("light"))
-            noteViewEdit.setBackgroundColor(ContextCompat.getColor(this, R.color.window_background));
+        ThemeManager.setBackgroundColor(this, theme, noteViewEdit);
 
-        if(theme.contains("dark"))
-            noteViewEdit.setBackgroundColor(ContextCompat.getColor(this, R.color.window_background_dark));
 
         // Set action bar elevation
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)

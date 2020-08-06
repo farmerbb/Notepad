@@ -18,19 +18,15 @@ package com.farmerbb.notepad.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import com.farmerbb.notepad.R;
+import com.farmerbb.notepad.managers.ThemeManager;
 import com.farmerbb.notepad.util.NoteListItem;
-
 import java.util.ArrayList;
-
-import androidx.core.content.ContextCompat;
 
 public class NoteListAdapter extends ArrayAdapter<NoteListItem> {
     public NoteListAdapter(Context context, ArrayList<NoteListItem> notes) {
@@ -57,38 +53,9 @@ public class NoteListAdapter extends ArrayAdapter<NoteListItem> {
         SharedPreferences pref = getContext().getSharedPreferences(getContext().getPackageName() + "_preferences", Context.MODE_PRIVATE);
         String theme = pref.getString("theme", "light-sans");
 
-        if(theme.contains("light"))
-            noteTitle.setTextColor(ContextCompat.getColor(getContext(), R.color.text_color_primary));
-
-        if(theme.contains("dark"))
-            noteTitle.setTextColor(ContextCompat.getColor(getContext(), R.color.text_color_primary_dark));
-
-        if(theme.contains("sans"))
-            noteTitle.setTypeface(Typeface.SANS_SERIF);
-
-        if(theme.contains("serif"))
-            noteTitle.setTypeface(Typeface.SERIF);
-
-        if(theme.contains("monospace"))
-            noteTitle.setTypeface(Typeface.MONOSPACE);
-
-        switch(pref.getString("font_size", "normal")) {
-            case "smallest":
-                noteTitle.setTextSize(12);
-                break;
-            case "small":
-                noteTitle.setTextSize(14);
-                break;
-            case "normal":
-                noteTitle.setTextSize(16);
-                break;
-            case "large":
-                noteTitle.setTextSize(18);
-                break;
-            case "largest":
-                noteTitle.setTextSize(20);
-                break;
-        }
+        ThemeManager.setTextColor(getContext(), theme, noteTitle);
+        ThemeManager.setFont(pref, noteTitle);
+        ThemeManager.setFontSize(pref, noteTitle);
 
         // Return the completed view to render on screen
         return convertView;

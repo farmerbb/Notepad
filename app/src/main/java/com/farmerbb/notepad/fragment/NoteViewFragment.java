@@ -51,6 +51,7 @@ import android.widget.Toast;
 
 import com.farmerbb.notepad.R;
 import com.farmerbb.notepad.fragment.dialog.FirstViewDialogFragment;
+import com.farmerbb.notepad.managers.ThemeManager;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -140,7 +141,7 @@ public class NoteViewFragment extends Fragment {
                         : R.layout.fragment_note_view, container, false);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @androidx.annotation.RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -191,125 +192,8 @@ public class NoteViewFragment extends Fragment {
         markdownView = getActivity().findViewById(R.id.markdownView);
 
         // Apply theme
-        SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
-        ScrollView scrollView = getActivity().findViewById(R.id.scrollView);
-        String theme = pref.getString("theme", "light-sans");
-        int textSize = -1;
-        int textColor = -1;
 
-        String fontFamily = null;
-
-        if(theme.contains("light")) {
-            if(noteContents != null) {
-                noteContents.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color_primary));
-                noteContents.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
-            }
-
-            if(markdownView != null) {
-                markdownView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
-                textColor = ContextCompat.getColor(getActivity(), R.color.text_color_primary);
-            }
-
-            scrollView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
-        }
-
-        if(theme.contains("dark")) {
-            if(noteContents != null) {
-                noteContents.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color_primary_dark));
-                noteContents.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
-            }
-
-            if(markdownView != null) {
-                markdownView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
-                textColor = ContextCompat.getColor(getActivity(), R.color.text_color_primary_dark);
-            }
-
-            scrollView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
-        }
-
-        if(theme.contains("sans")) {
-            if(noteContents != null)
-                noteContents.setTypeface(Typeface.SANS_SERIF);
-
-            if(markdownView != null)
-                fontFamily = "sans-serif";
-        }
-
-        if(theme.contains("serif")) {
-            if(noteContents != null)
-                noteContents.setTypeface(Typeface.SERIF);
-
-            if(markdownView != null)
-                fontFamily = "serif";
-        }
-
-        if(theme.contains("monospace")) {
-            if(noteContents != null)
-                noteContents.setTypeface(Typeface.MONOSPACE);
-
-            if(markdownView != null)
-                fontFamily = "monospace";
-        }
-
-        switch(pref.getString("font_size", "normal")) {
-            case "smallest":
-                textSize = 12;
-                break;
-            case "small":
-                textSize = 14;
-                break;
-            case "normal":
-                textSize = 16;
-                break;
-            case "large":
-                textSize = 18;
-                break;
-            case "largest":
-                textSize = 20;
-                break;
-        }
-
-        if(noteContents != null)
-            noteContents.setTextSize(textSize);
-
-        String css = "";
-        if(markdownView != null) {
-            String topBottom = " " + Float.toString(getResources().getDimension(R.dimen.padding_top_bottom) / getResources().getDisplayMetrics().density) + "px";
-            String leftRight = " " + Float.toString(getResources().getDimension(R.dimen.padding_left_right) / getResources().getDisplayMetrics().density) + "px";
-            String fontSize = " " + Integer.toString(textSize) + "px";
-            String fontColor = " #" + StringUtils.remove(Integer.toHexString(textColor), "ff");
-            String linkColor = " #" + StringUtils.remove(Integer.toHexString(new TextView(getActivity()).getLinkTextColors().getDefaultColor()), "ff");
-
-            css = "body { " +
-                    "margin:" + topBottom + topBottom + leftRight + leftRight + "; " +
-                    "font-family:" + fontFamily + "; " +
-                    "font-size:" + fontSize + "; " +
-                    "color:" + fontColor + "; " +
-                    "}" +
-                    "a { " +
-                    "color:" + linkColor + "; " +
-                    "}";
-
-            markdownView.getSettings().setJavaScriptEnabled(false);
-            markdownView.getSettings().setLoadsImagesAutomatically(false);
-            markdownView.setWebViewClient(new WebViewClient() {
-                @Override
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-
-                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                        try {
-                            startActivity(intent);
-                        } catch (ActivityNotFoundException | FileUriExposedException e) { /* Gracefully fail */ }
-                    else
-                        try {
-                            startActivity(intent);
-                        } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
-
-                    return true;
-                }
-            });
-        }
+        String css = ThemeManager.applyNoteViewTheme(getActivity(), noteContents, markdownView, getResources());
 
         // Load note contents
         try {

@@ -40,10 +40,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.ThemedSpinnerAdapter;
 import android.widget.Toast;
 
 import com.farmerbb.notepad.activity.MainActivity;
 import com.farmerbb.notepad.R;
+import com.farmerbb.notepad.managers.ThemeManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -166,48 +168,12 @@ public class NoteEditFragment extends Fragment {
         noteContents = getActivity().findViewById(R.id.editText1);
 
         // Apply theme
+        ThemeManager.applyTextSettings(getActivity(), noteContents);
+        
         SharedPreferences pref = getActivity().getSharedPreferences(getActivity().getPackageName() + "_preferences", Context.MODE_PRIVATE);
         ScrollView scrollView = getActivity().findViewById(R.id.scrollView1);
         String theme = pref.getString("theme", "light-sans");
 
-        if(theme.contains("light")) {
-            noteContents.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color_primary));
-            noteContents.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
-            scrollView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background));
-        }
-
-        if(theme.contains("dark")) {
-            noteContents.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color_primary_dark));
-            noteContents.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
-            scrollView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.window_background_dark));
-        }
-
-        if(theme.contains("sans"))
-            noteContents.setTypeface(Typeface.SANS_SERIF);
-
-        if(theme.contains("serif"))
-            noteContents.setTypeface(Typeface.SERIF);
-
-        if(theme.contains("monospace"))
-            noteContents.setTypeface(Typeface.MONOSPACE);
-
-        switch(pref.getString("font_size", "normal")) {
-            case "smallest":
-                noteContents.setTextSize(12);
-                break;
-            case "small":
-                noteContents.setTextSize(14);
-                break;
-            case "normal":
-                noteContents.setTextSize(16);
-                break;
-            case "large":
-                noteContents.setTextSize(18);
-                break;
-            case "largest":
-                noteContents.setTextSize(20);
-                break;
-        }
 
         // Get filename
         try {

@@ -15,21 +15,16 @@
 
 package com.farmerbb.notepad.fragment;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.ActivityNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.os.FileUriExposedException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
@@ -42,18 +37,13 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farmerbb.notepad.R;
 import com.farmerbb.notepad.fragment.dialog.FirstViewDialogFragment;
 import com.farmerbb.notepad.managers.ThemeManager;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -192,8 +182,7 @@ public class NoteViewFragment extends Fragment {
         markdownView = getActivity().findViewById(R.id.markdownView);
 
         // Apply theme
-
-        String css = ThemeManager.applyNoteViewTheme(getActivity(), noteContents, markdownView, getResources());
+        String css = ThemeManager.applyNoteViewTheme(getActivity(), noteContents, markdownView);
 
         // Load note contents
         try {

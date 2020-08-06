@@ -68,7 +68,6 @@ String external;
 
         ThemeManager.setBackgroundColor(this, theme, noteViewEdit);
 
-
         // Set action bar elevation
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
             getSupportActionBar().setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));

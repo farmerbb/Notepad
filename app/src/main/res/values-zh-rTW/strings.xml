@@ -21,7 +21,7 @@
     <string name="action_cancel">取消</string>
     <string name="action_close">關閉</string>
     <string name="action_delete">移除</string>
-    <string name="action_discard">廢棄</string>
+    <string name="action_discard">放棄</string>
     <string name="action_edit">編輯</string>
     <string name="action_export">匯出</string>
     <string name="action_font_size">字型大小</string>
@@ -33,70 +33,70 @@
     <string name="action_export_filename">匯出檔案名</string>
     <string name="app_name">Notepad</string>
     <string name="app_name_debug">@string/app_name</string>
-    <string name="cab_note_selected">項目已選</string>
-    <string name="cab_notes_selected">項目已選</string>
-    <string name="changes_discarded">已廢棄更改</string>
+    <string name="cab_note_selected">已選筆記</string>
+    <string name="cab_notes_selected">已選筆記</string>
+    <string name="changes_discarded">已放棄更改</string>
     <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
-    <string name="dialog_about_title">關於Notepad</string>
-    <string name="dialog_are_you_sure">確認？</string>
+    <string name="dialog_about_title">關於 Notepad</string>
+    <string name="dialog_are_you_sure">確定？</string>
     <string name="dialog_delete_button_title">移除筆記</string>
     <string name="dialog_delete_button_title_plural">移除筆記</string>
     <string name="dialog_save_button_title">存儲更改</string>
-    <string name="dialog_save_changes">是否存存儲更改？</string>
+    <string name="dialog_save_changes">是否存儲更改？</string>
     <string name="draft_restored">已恢復草稿</string>
     <string name="draft_saved">已存儲草稿</string>
-    <string name="double_tap">提示：連按兩次文本以進入編輯模式</string>
+    <string name="double_tap">提示：連按兩次文字以進入編輯模式</string>
     <string name="edit_note">編輯筆記</string>
-    <string name="edit_text">請鍵入文字</string>
-    <string name="empty_note">文本是空的！</string>
-    <string name="error_exporting_notes">匯出筆記出錯！</string>
-    <string name="error_importing_notes">匯入筆記出錯！</string>
-    <string name="error_loading_list">載入筆記列表出錯！</string>
-    <string name="error_loading_note">載入筆記出錯！</string>
+    <string name="edit_text">請輸入文字</string>
+    <string name="empty_note">筆記是空的！</string>
+    <string name="error_exporting_notes">匯出筆記時發生錯誤！</string>
+    <string name="error_importing_notes">匯入筆記時發生錯誤！</string>
+    <string name="error_loading_list">載入筆記清單時發生錯誤！</string>
+    <string name="error_loading_note">載入筆記時發生錯誤！</string>
     <string name="failed_to_save">存儲筆記失敗！</string>
-    <string name="first_run">歡迎使用 Notepad!\n\n點按加號以建立新筆記。</string>
-    <string name="first_view">要開始編輯，連按兩下文本或點按小鉛筆。</string>
+    <string name="first_run">歡迎使用 Notepad!\n\n點擊加號以建立新筆記。</string>
+    <string name="first_view">要開始編輯，請按兩下文字或點擊小鉛筆。</string>
     <string name="import_notes">匯入筆記</string>
     <string name="loading_external_file">不支援匯入外部檔案</string>
     <string name="no_notes_found">無筆記</string>
     <string name="note_deleted">已移除筆記</string>
     <string name="note_exported_to">匯出筆記成功</string>
-    <string name="note_saved">已存儲筆記</string>
-    <string name="notes_deleted">已移除筆記</string>
+    <string name="note_saved">筆記已存儲</string>
+    <string name="notes_deleted">筆記已移除</string>
     <string name="notes_exported_to">匯出筆記成功</string>
     <string name="note_imported_successfully">匯入筆記成功</string>
     <string name="notes_imported_successfully">匯入筆記成功</string>
-    <string name="pref_title_show_dialogs">請確認是否存儲筆記</string>
+    <string name="pref_title_show_dialogs">請確定是否存儲筆記</string>
     <string name="send_to">筆記分享方式</string>
     <string name="view_note">檢視筆記</string>
     <string name="action_install">安裝</string>
     <string name="action_no_thanks">不，謝謝</string>
-    <string name="pref_title_show_date">列表中顯示修改時間</string>
+    <string name="pref_title_show_date">在清單中顯示修改時間</string>
     <string name="action_theme">主題</string>
     <string name="pref_title_direct_edit">打開筆記即可編輯</string>
     <string name="pref_title_markdown">Markdown/HTML 支援</string>
     <string name="action_print">列印</string>
-    <string name="action_start_selection">批量選擇筆記</string>
+    <string name="action_start_selection">批次選取筆記</string>
     <string name="action_select_all">全選</string>
     <string name="no_notes_to_select">無筆記可選</string>
     <string name="document">%1$s 個文件</string>
-    <string name="no_notes_to_export">匯出：未選擇任何筆記</string>
-    <string name="no_notes_to_delete">移除：未選擇任何筆記</string>
+    <string name="no_notes_to_export">匯出：未選取任何筆記</string>
+    <string name="no_notes_to_delete">移除：未選取任何筆記</string>
     <string name="check_for_updates">檢查更新</string>
 
     <string-array name="sort_by_list">
         <item>由新至舊</item>
         <item>由舊至新</item>
-        <item>標題順序</item>
-        <item>標題逆序</item>
+        <item>名字（A 到 Z）</item>
+        <item>名字（Z 到 A）</item>
     </string-array>
     <string-array name="theme_list">
-        <item>亮色無襯線體</item>
-        <item>亮色襯線體</item>
-        <item>亮色等寬字型</item>
-        <item>暗色無襯線體</item>
-        <item>暗色襯線體</item>
-        <item>暗色等寬字型</item>
+        <item>淺色無襯線體</item>
+        <item>淺色襯線體</item>
+        <item>淺色等寬</item>
+        <item>深色無襯線體</item>
+        <item>深色襯線體</item>
+        <item>深色等寬</item>
     </string-array>
     <string-array name="font_size_list">
         <item>極小</item>
@@ -106,9 +106,9 @@
         <item>極大</item>
     </string-array>
     <string-array name="exported_filename_list">
-        <item>文本首行</item>
-        <item>文本首行 + 時間戳記</item>
-        <item>時間戳記 + 文本首行</item>
+        <item>文字的第一行</item>
+        <item>第一行文字 + 時間戳</item>
+        <item>時間戳 + 第一行文字</item>
     </string-array>
 
 </resources>

@@ -30,14 +30,14 @@
     <string name="action_settings">设置</string>
     <string name="action_share">分享</string>
     <string name="action_sort_by">排序方式</string>
-    <string name="action_export_filename">Exported filename</string>
+    <string name="action_export_filename">导出文件名</string>
     <string name="app_name">Notepad</string>
     <string name="app_name_debug">@string/app_name</string>
     <string name="cab_note_selected">项目已选</string>
     <string name="cab_notes_selected">项目已选</string>
     <string name="changes_discarded">已舍弃更改</string>
     <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
-    <string name="dialog_about_title">关于Notepad</string>
+    <string name="dialog_about_title">关于 Notepad</string>
     <string name="dialog_are_you_sure">确认？</string>
     <string name="dialog_delete_button_title">删除笔记</string>
     <string name="dialog_delete_button_title_plural">删除笔记</string>
@@ -49,13 +49,13 @@
     <string name="edit_note">编辑笔记</string>
     <string name="edit_text">请键入文字</string>
     <string name="empty_note">文本为空！</string>
-    <string name="error_exporting_notes">导出笔记出错！</string>
-    <string name="error_importing_notes">导入笔记出错！</string>
-    <string name="error_loading_list">加载笔记列表出错！</string>
-    <string name="error_loading_note">加载笔记出错！</string>
+    <string name="error_exporting_notes">导出笔记时出错！</string>
+    <string name="error_importing_notes">导入笔记时出错！</string>
+    <string name="error_loading_list">加载笔记列表时出错！</string>
+    <string name="error_loading_note">加载笔记时出错！</string>
     <string name="failed_to_save">保存笔记失败！</string>
-    <string name="first_run">欢迎使用 Notepad!\n\n点击加号以创建新笔记。</string>
-    <string name="first_view">要开始编辑，双击文本或点击小铅笔。</string>
+    <string name="first_run">欢迎使用 Notepad！\n\n点击加号以创建新笔记。</string>
+    <string name="first_view">要开始编辑，请双击文本或点击小铅笔。</string>
     <string name="import_notes">导入笔记</string>
     <string name="loading_external_file">不支持导入外部文件</string>
     <string name="no_notes_found">无笔记</string>
@@ -79,7 +79,7 @@
     <string name="action_start_selection">批量选择笔记</string>
     <string name="action_select_all">全选</string>
     <string name="no_notes_to_select">无笔记可选</string>
-    <string name="document">%1$s Document</string>
+    <string name="document">%1$s 个文档</string>
     <string name="no_notes_to_export">导出：未选择任何笔记</string>
     <string name="no_notes_to_delete">删除：未选择任何笔记</string>
     <string name="check_for_updates">检查更新</string>
@@ -91,12 +91,12 @@
         <item>标题逆序</item>
     </string-array>
     <string-array name="theme_list">
-        <item>亮色 sans-serif</item>
-        <item>亮色 serif</item>
-        <item>亮色 monospace</item>
-        <item>暗色 sans-serif</item>
-        <item>暗色 serif</item>
-        <item>暗色 monospace</item>
+        <item>亮色无衬线体</item>
+        <item>亮色衬线体</item>
+        <item>亮色等宽字体</item>
+        <item>暗色无衬线体</item>
+        <item>暗色衬线体</item>
+        <item>暗色等宽字体</item>
     </string-array>
     <string-array name="font_size_list">
         <item>极小</item>
@@ -106,9 +106,9 @@
         <item>极大</item>
     </string-array>
     <string-array name="exported_filename_list">
-        <item>First line of text</item>
-        <item>First line + timestamp</item>
-        <item>Timestamp + first line</item>
+        <item>文本的第一行</item>
+        <item>第一行文字 + 时间戳</item>
+        <item>时间戳 + 第一行文字</item>
     </string-array>
 
 </resources>

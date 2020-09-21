@@ -54,7 +54,7 @@
     <string name="error_loading_list">載入筆記清單時發生錯誤！</string>
     <string name="error_loading_note">載入筆記時發生錯誤！</string>
     <string name="failed_to_save">存儲筆記失敗！</string>
-    <string name="first_run">歡迎使用 Notepad!\n\n點擊加號以建立新筆記。</string>
+    <string name="first_run">歡迎使用 Notepad！\n\n點擊加號以建立新筆記。</string>
     <string name="first_view">要開始編輯，請按兩下文字或點擊小鉛筆。</string>
     <string name="import_notes">匯入筆記</string>
     <string name="loading_external_file">不支援匯入外部檔案</string>

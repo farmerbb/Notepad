@@ -2,7 +2,8 @@
 
 A simple, bare-bones, no-frills note taking app
 
-## Features
+## Features 
+## Best software for use and also east to use
 
 * Quickly create and save plain-text notes
 

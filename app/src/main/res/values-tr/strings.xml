@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string name="action_cancel">İptal</string>
+<string name="action_close">Kapat</string>
+<string name="action_delete">Sil</string>
+<string name="action_discard">Gözardı</string>
+<string name="action_edit">Düzenle</string>
+<string name="action_export">Dışa aktar</string>
+<string name="action_export_filename">Dışa aktarılan dosya adı</string>
+<string name="action_font_size">Yazı boyutu</string>
+<string name="action_install">Yükle</string>
+<string name="action_new">Yeni Not</string>
+<string name="action_no_thanks">Hayır, Teşekkürler</string>
+<string name="action_print">Yazdır</string>
+<string name="action_save">Kaydet</string>
+<string name="action_select_all">Hepsini seç</string>
+<string name="action_settings">Ayarlar</string>
+<string name="action_share">Paylaş</string>
+<string name="action_sort_by">Sıralama ölçütü</string>
+<string name="action_start_selection">Notları seç</string>
+<string name="action_theme">Tema</string>
+<string name="app_name">Not Defteri</string>
+<string name="app_name_debug">Not Defteri (Hata Ayıklama)</string>
+<string name="cab_note_selected">Not seçildi</string>
+<string name="cab_notes_selected">Notlar seçildi</string>
+<string name="changes_discarded">Değişiklikler silindi</string>
+<string name="check_for_updates">Güncellemeleri kontrol et</string>
+<string name="dialog_about_message">"Not Defteri, basit bir not alma uygulamasıdır.
+
+© %d Braden Farmer
+App logo by Tobaloidee"</string>
+<string name="dialog_about_title">Hakkında</string>
+<string name="dialog_are_you_sure">Silmek istediğinizden emin misiniz?</string>
+<string name="dialog_delete_button_title">Notu sil</string>
+<string name="dialog_delete_button_title_plural">Notları sil</string>
+<string name="dialog_save_button_title">Değişiklikleri kaydet</string>
+<string name="dialog_save_changes">Değişikliklerinizi kaydetmek istiyor musunuz?</string>
+<string name="document">%1$s Belge</string>
+<string name="double_tap">İpucu: Düzenleme moduna geçmek için metne iki kez dokunun</string>
+<string name="draft_restored">Taslak geri yüklendi</string>
+<string name="draft_saved">Taslak kaydedildi</string>
+<string name="edit_note">Notu düzenle</string>
+<string name="edit_text">Metin eklemek için yazın</string>
+<string name="empty_note">Lütfen bir metin girin!</string>
+<string name="error_exporting_notes">Notlar dışa aktarılırken hata oluştu!</string>
+<string name="error_importing_notes">Notlar içe aktarılırken hata oluştu!</string>
+<string name="error_loading_list">Not listesi yüklenirken hata oluştu!</string>
+<string name="error_loading_note">Not yüklenirken hata oluştu!</string>
+<string name="failed_to_save">Hata: Not kaydedilemedi!</string>
+<string name="first_run">"Not Defterine Hoş Geldiniz!
+
+Bir not oluşturmak için Yeni Not düğmesine (artı işareti) tıklayın."</string>
+<string name="first_view">Kaydedilmiş bir notu düzenlemek için metne çift dokunun veya Düzenle düğmesini (kalem) tıklayın</string>
+<string name="import_notes">İçe aktar</string>
+<string name="loading_external_file">Harici dosyaların yüklenmesi desteklenmiyor</string>
+<string name="no_notes_found">Not bulunamadı</string>
+<string name="no_notes_to_delete">Silinmek için not seçilmedi!</string>
+<string name="no_notes_to_export">Dışa aktarmak için not seçilmedi</string>
+<string name="no_notes_to_select">Seçilecek not yok!</string>
+<string name="note_deleted">Not silindi</string>
+<string name="note_exported_to">Not başarıyla dışa aktarıldı</string>
+<string name="note_imported_successfully">Not başarıyla içe aktarıldı</string>
+<string name="note_saved">Not kaydedildi</string>
+<string name="notes_deleted">Notlar silindi</string>
+<string name="notes_exported_to">Notlar başarıyla dışa aktarıldı</string>
+<string name="notes_imported_successfully">Notlar başarıyla içe aktarıldı</string>
+<string name="pref_title_direct_edit">Notları doğrudan düzenleyin</string>
+<string name="pref_title_markdown">Markdown/HTML desteği</string>
+<string name="pref_title_show_date">Tarih / Saat göster</string>
+<string name="pref_title_show_dialogs">Kaydetmeden önce sor</string>
+<string name="send_to">Notu paylaş…</string>
+<string name="view_note">Notu görüntüle</string>
+
+    <string-array name="sort_by_list">
+        <item>Date (newest first)</item>
+        <item>Date (oldest first)</item>
+        <item>Name (A to Z)</item>
+        <item>Name (Z to A)</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>Light / sans serif</item>
+        <item>Light / serif</item>
+        <item>Light / monospace</item>
+        <item>Dark / sans serif</item>
+        <item>Dark / serif</item>
+        <item>Dark / monospace</item>
+    </string-array>
+    <string-array name="font_size_list">
+        <item>Smallest</item>
+        <item>Small</item>
+        <item>Normal</item>
+        <item>Large</item>
+        <item>Largest</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>First line of text</item>
+        <item>First line + timestamp</item>
+        <item>Timestamp + first line</item>
+    </string-array>
+
+</resources>

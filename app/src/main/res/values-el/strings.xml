@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2014 Braden Farmer
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+
+    <string name="action_cancel">Άκυρο</string>
+    <string name="action_close">Κλείσιμο</string>
+    <string name="action_delete">Διαγραφή</string>
+    <string name="action_discard">Απόρριψη</string>
+    <string name="action_edit">Διόρθωση</string>
+    <string name="action_export">Εξαγωγή</string>
+    <string name="action_font_size">Μέγεθος font</string>
+    <string name="action_new">Νέα σημείωση</string>
+    <string name="action_save">Αποθήκευση</string>
+    <string name="action_settings">Ρυθμίσεις</string>
+    <string name="action_share">Μοίρασμα</string>
+    <string name="action_sort_by">Ταξινόμιση ανά</string>
+    <string name="action_export_filename">Όνομα εξαγμένου αρχείου</string>
+    <string name="app_name">Σημειώσεις</string>
+    <string name="app_name_debug">Notepad (Debug)</string>
+    <string name="cab_note_selected">σημείωση επιλέχθηκε</string>
+    <string name="cab_notes_selected">σημειώσεις επιλέχθηκαν</string>
+    <string name="changes_discarded">Οι αλλαγές απορρίφθηκαν</string>
+    <string name="dialog_about_message">Σημειώσεις: μια απλή εφαρμογή σημειώσεων\n\n&#169; %d Braden Farmer\nΛογότυπο εφαρμογής από Tobaloidee</string>
+    <string name="dialog_about_title">Σχετικά με το Σημειώσεις</string>
+    <string name="dialog_are_you_sure">Σίγουρα;?</string>
+    <string name="dialog_delete_button_title">Διαγραφή σημείωσης</string>
+    <string name="dialog_delete_button_title_plural">Διαγραφή σημειώσεων</string>
+    <string name="dialog_save_button_title">Αποθήκευση αλλαγών</string>
+    <string name="dialog_save_changes">Θέλετε να αποθηκεύσετε τις αλλαγές;</string>
+    <string name="draft_restored">Ανακτήθηκε το πρόχειρο</string>
+    <string name="draft_saved">Αποθηκεύτηκε το πρόχειρο</string>
+    <string name="double_tap">Συμβουλή: εναλλαγή σε κατάσταση επεξεργασίας με διπλό πάτημα στο κείμενο</string>
+    <string name="edit_note">Επεξεργασία σημείωσης</string>
+    <string name="edit_text">Πληκτρολογήστε για προσθήκη κειμένου</string>
+    <string name="empty_note">Παρακαλώ βάλτε κάποιο κείμενο!</string>
+    <string name="error_exporting_notes">Σφάλμα εξαγωγής σημειώσεων!</string>
+    <string name="error_importing_notes">Σφάλμα εισαγωγής σημειώσεων!</string>
+    <string name="error_loading_list">Σφάλμα φόρτωσης λίστας σημειώσεων!</string>
+    <string name="error_loading_note">Σφάλμα φόρτωσης σημείωσης!</string>
+    <string name="failed_to_save">Σφάλμα: Αποτυχία αποθήκευσης σημείωσης!</string>
+    <string name="first_run">Καλώς ήλθατε στο Σημειώσεις!\n\nΓια δημιουργία σημείωσης, κάντε κλικ στο κουμπί νέας σημείωσης (σύμβολο συν).</string>
+    <string name="first_view">Για επεξεργασία μιας αποθηκευμένης σημείωσης, κάντε διπλό κλικ στο κείμενο ή κάντε κλικ στο κουμπί επεξεργασίας (μολύβι).</string>
+    <string name="import_notes">Εισαγωγή σημειώσεων</string>
+    <string name="loading_external_file">Η φόρτωση εξωτερικών αρχείων δεν υποστηρίζεται</string>
+    <string name="no_notes_found">Δεν βρέθηκαν σημειώσεις</string>
+    <string name="note_deleted">Η σημείωση διαγράφηκε</string>
+    <string name="note_exported_to">Η σημείωση εξήχθηκε επιτυχώς</string>
+    <string name="note_saved">Η σημείωση αποθηκεύτηκε</string>
+    <string name="notes_deleted">Οι σημειώσεις διαγράφηκαν</string>
+    <string name="notes_exported_to">Οι σημειώσεις εξήχθηκαν με επιτυχία</string>
+    <string name="note_imported_successfully">Η σημείωση εισήχθηκε με επιτυχία</string>
+    <string name="notes_imported_successfully">Οι σημειώσεις εισήχθηκαν με επιτυχία</string>
+    <string name="pref_title_show_dialogs">Ερώτηση πριν την αποθήκευση</string>
+    <string name="send_to">Μοίρασμα σημείωσης σε&#8230;</string>
+    <string name="view_note">Προβολή σημείωσης</string>
+    <string name="action_install">Εγκατάσταση</string>
+    <string name="action_no_thanks">Όχι, ευχαριστώ</string>
+    <string name="pref_title_show_date">Εμφάνιση ημερομηνίας/ώρας</string>
+    <string name="action_theme">Θέμα</string>
+    <string name="pref_title_direct_edit">Άμεση επεξεργασία σημειώσεων</string>
+    <string name="pref_title_markdown">Υποστήριξη Markdown/HTML</string>
+    <string name="action_print">Εκτύπωση</string>
+    <string name="action_start_selection">Επιλογή σημειώσεων</string>
+    <string name="action_select_all">Επιλογή όλων</string>
+    <string name="no_notes_to_select">Δεν υπάρχουν σημειώσεις για επιλογή</string>
+    <string name="document">%1$s έγγραφο</string>
+    <string name="no_notes_to_export">Δεν επιλέχθηκαν σημειώσεις για εξαγωγή</string>
+    <string name="no_notes_to_delete">Δεν επιλέχθηκαν σημειώσεις για διαγραφή</string>
+    <string name="check_for_updates">Έλεγχος για ενημερώσεις</string>
+
+    <string-array name="sort_by_list">
+        <item>Ημερομηνία (νεότερη πρώτα)</item>
+        <item>Ημερομηνία (παλαιότερη πρώτα)</item>
+        <item>Όνομα (Α-Ω)</item>
+        <item>Όνομα (Ω-Α)</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>Ανοιχτό / sans serif</item>
+        <item>Ανοιχτό / serif</item>
+        <item>Ανοιχτό / monospace</item>
+        <item>Σκούρο / sans serif</item>
+        <item>Σκούρο / serif</item>
+        <item>Σκούρο / monospace</item>
+    </string-array>
+    <string-array name="font_size_list">
+        <item>Μικρότερα</item>
+        <item>Μικρά</item>
+        <item>Φυσιολογικά</item>
+        <item>Μεγάλα</item>
+        <item>Μεγαλύτερα</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>Πρώτη σειρά του κειμένου</item>
+        <item>Πρώτη σειρά + χρονοσήμανση</item>
+        <item>Χρονοσήμανση + πρώτη σειρά</item>
+    </string-array>
+
+</resources>

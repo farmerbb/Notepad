@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2014 Braden Farmer
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+
+<resources>
+
+    <string name="action_cancel">বাতিল করুন</string>
+    <string name="action_close">বন্ধ করুন</string>
+    <string name="action_delete">মুছুন</string>
+    <string name="action_discard">অগ্রাহ্য করুন</string>
+    <string name="action_edit">সম্পাদনা</string>
+    <string name="action_export">এক্সপোর্ট</string>
+    <string name="action_font_size">ফন্টের আয়তন</string>
+    <string name="action_new">নতুন নোট</string>
+    <string name="action_save">সংরক্ষণ</string>
+    <string name="action_settings">সেটিংস</string>
+    <string name="action_share">শেয়ার</string>
+    <string name="action_sort_by">নোট বাছাই করুন</string>
+    <string name="action_export_filename">এক্সপোর্টকৃত ফাইল নাম</string>
+    <string name="app_name">নোটপ্যাড</string>
+    <string name="app_name_debug">নোটপ্যাড (ডিবাগ)</string>
+    <string name="cab_note_selected">নোট নির্বাচিত হয়েছে</string>
+    <string name="cab_notes_selected">নোটগুলো নির্বাচিত হয়েছে</string>
+    <string name="changes_discarded">পরিবর্তন অগ্রাহ্য করা হয়েছে</string>
+    <string name="dialog_about_message">নোটপ্যাড: একটা সিম্পল নোট নেয়ার অ্যাপলিকেশন\n\n&#169; %d ব্র্যাডেন ফার্মার\nঅ্যাপ লোগো বানিয়েছে টোবলোইডি</string>
+    <string name="dialog_about_title">নোটপ্যাড সম্পর্কে</string>
+    <string name="dialog_are_you_sure">আপনি কি নিশ্চিত?</string>
+    <string name="dialog_delete_button_title">নোট মুছে ফেলুন</string>
+    <string name="dialog_delete_button_title_plural">নোটগুলো মুছে ফেলুন</string>
+    <string name="dialog_save_button_title">পরিবর্তন সংরক্ষণ করুন</string>
+    <string name="dialog_save_changes">আপনি কি আপনার পরিবর্তন সংরক্ষণ করতে চান?</string>
+    <string name="draft_restored">খসড়া পুনরুদ্ধার করুন</string>
+    <string name="draft_saved">খসড়া সংরক্ষিত হয়েছে</string>
+    <string name="double_tap">টিপ: লেখায় দুবার ট্যাপ করে সম্পাদনা মুডে যান</string>
+    <string name="edit_note">নোট সম্পাদনা করুন</string>
+    <string name="edit_text">লেখা যুক্ত করতে টাইপ করুন</string>
+    <string name="empty_note">কিছু লেখা যোগ করুন!</string>
+    <string name="error_exporting_notes">নোট এক্সপোর্ট ব্যর্থ হয়েছে!</string>
+    <string name="error_importing_notes">নোট ইমপোর্ট ব্যর্থ হয়েছে!</string>
+    <string name="error_loading_list">নোটের তালিকা লোড হতে ব্যর্থ হয়েছে!</string>
+    <string name="error_loading_note">নোট লোড হতে ব্যর্থ হয়েছে!</string>
+    <string name="failed_to_save">নোট সংরক্ষণ করতে ব্যর্থ হয়েছে!</string>
+    <string name="first_run">নোটপ্যাডে স্বাগতম!\n\nনোট তৈরী করতে, নিউ নোট বাটনে ক্লিক করুন (প্লাস চিহ্ন)।</string>
+    <string name="first_view">সংরক্ষিত নোট সম্পাদনা করতে, লেখাতে দুইবার ট্যাপ করুন (পেন্সিল চিহ্ন)।</string>
+    <string name="import_notes"> নোটগুলো ইমপোর্ট করুন</string>
+    <string name="loading_external_file">বাইরে ফাইল লোড করা সমর্থন করে না</string>
+    <string name="no_notes_found">কোন নোট পাওয়া যায়নি</string>
+    <string name="note_deleted">নোটগুলো মুছে ফেলা হয়েছে</string>
+    <string name="note_exported_to">নোট সফলভাবে এক্সপোর্ট হয়েছে</string>
+    <string name="note_saved">নোটগুলো সংরক্ষিত হয়েছে</string>
+    <string name="notes_deleted">নোটগুলো মুছে ফেলা হয়েছে</string>
+    <string name="notes_exported_to">নোটগুলো সফলভাবে এক্সপোর্ট করা হয়েছে</string>
+    <string name="note_imported_successfully">নোট সফলভাবে ইমপোর্ট করা হয়েছে</string>
+    <string name="notes_imported_successfully">নোটগুলো সফলভাবে এক্সপোর্ট করা হয়েছে</string>
+    <string name="pref_title_show_dialogs">সংরক্ষণের আগে জিজ্ঞেস করুন</string>
+    <string name="send_to">শেয়ার করুন&#8230;</string>
+    <string name="view_note">নোট দেখুন</string>
+    <string name="action_install">ইন্সটল করুন</string>
+    <string name="action_no_thanks">না থাক</string>
+    <string name="pref_title_show_date">তারিখ/সময় দেখান</string>
+    <string name="action_theme">থিম</string>
+    <string name="pref_title_direct_edit">সরাসরি নোটগুলো সম্পাদনা করুন</string>
+    <string name="pref_title_markdown">মার্কডাউন/এইচটিএমএল সমর্থন</string>
+    <string name="action_print">ছাপান</string>
+    <string name="action_start_selection">নোটগুলো নির্বাচন করুন</string>
+    <string name="action_select_all">সবগুলো নির্বাচন করুন</string>
+    <string name="no_notes_to_select">নির্বাচনের জন্য কোন নোট নেই</string>
+    <string name="document">%1$s ডকুমেন্ট</string>
+    <string name="no_notes_to_export">এক্সপোর্ট করার জন্য কোন নোট নির্বাচন করা হয়নি</string>
+    <string name="no_notes_to_delete">মুছে ফেলার জন্য কোন নোট নির্বাচন করা হয়নি</string>
+    <string name="check_for_updates">হালনাগাদ আছে কি না দেখুন</string>
+
+    <string-array name="sort_by_list">
+        <item>তারিখ (একদম নতুন)</item>
+        <item>তারিখ (একদম পুরোনো)</item>
+        <item>নাম (অ থেকে চন্দ্রবিন্দু)</item>
+        <item>নাম (চন্দ্রবিন্দু থেকে অ)</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>উজ্জ্বল / সানস সিরিফ</item>
+        <item>উজ্জ্বল / সেরিফ</item>
+        <item>উজ্জ্বল / মনোস্পেস</item>
+        <item>কৃষ্ণাভ / সানস সিরিফ</item>
+        <item>কৃষ্ণাভ / সেরিফ</item>
+        <item>কৃষ্ণাভ / মনোস্পেস</item>
+    </string-array>
+    <string-array name="font_size_list">
+        <item>একদম ছোট</item>
+        <item>ছোট</item>
+        <item>সাধারণ</item>
+        <item>বড়</item>
+        <item>একদম বড়</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>লেখার প্রথম বাক্য</item>
+        <item>প্রথম বাক্য + টাইমস্ট্যাম্প</item>
+        <item>টাইমস্ট্যাম্প + প্রথম বাক্য</item>
+    </string-array>
+
+</resources>

@@ -42,7 +42,8 @@
             android:paddingBottom="@dimen/padding_top_bottom"
             android:paddingLeft="@dimen/padding_left_right"
             android:paddingRight="@dimen/padding_left_right"
-            android:textColorHint="@color/text_color_hint" >
+            android:textColorHint="@color/text_color_hint"
+            android:background="@null" >
 
             <requestFocus />
         </EditText>

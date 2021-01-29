@@ -36,8 +36,8 @@
     <string name="error_loading_list">حدث خطأٌ أثناء تحميل قائمة الملاحظات!</string>
     <string name="error_loading_note">حدث خطأٌ أثناء تحميل الملاحظة!</string>
     <string name="failed_to_save">خطأ: فشلت محاولة حفظ الملاحظة!</string>
-    <string name="first_run">أهلًا بك في تطبيق (الدفتر)!\n\nلفتح ملاحظةٍ جديدة, اضغط زرّ (ملاحظة جديدة) - إشارة الإضافة.</string>
-    <string name="first_view">لتعديل ملاحظةٍ محفوظة, اضغط مرتين على نصّها أو اضغط زرّ التعديل (القلم).</string>
+    <string name="first_run">أهلًا بك في تطبيق (الدفتر)!\n\nلفتح ملاحظةٍ جديدة، اضغط زرّ (ملاحظة جديدة) - إشارة الإضافة.</string>
+    <string name="first_view">لتعديل ملاحظةٍ محفوظة، اضغط مرتين على نصّها أو اضغط زرّ التعديل (القلم).</string>
     <string name="import_notes">استيراد الملاحظات</string>
     <string name="loading_external_file">فتح الملفات الخارجيّة غير مدعوم.</string>
     <string name="no_notes_found">لا توجد ملاحظات</string>

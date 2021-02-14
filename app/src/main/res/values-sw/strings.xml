@@ -36,7 +36,7 @@
     <string name="cab_note_selected">Kidokezo kilichochaguliwa</string>
     <string name="cab_notes_selected">Vidokezo Vilivyochaguliwa</string>
     <string name="changes_discarded">Mabadiliko Hayajahifadhiwa</string>
-    <string name="dialog_about_message">Kichukua Matini: programu nyepesi ya kuchukulia matini\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_message">Kichukua Matini: programu nyepesi ya kuchukulia matini\n\n&#169; %d Braden Farmer\nNembo ya programu iliundwa na Tobaloidee</string>
     <string name="dialog_about_title">Kuhusu Kichukua Matini</string>
     <string name="dialog_are_you_sure">Una Uhakika?</string>
     <string name="dialog_delete_button_title">Futa kidokezo</string>

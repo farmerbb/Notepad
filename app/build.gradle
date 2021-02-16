@@ -18,7 +18,7 @@ android {
         versionCode 112
         versionName "2.3.7"
 
-        resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it", "de", "ru", "cs", "pt-rBR", "no", "zh-rTW", "ar", "tr", "el", "bn"
+        resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it", "de", "ru", "cs", "pt-rBR", "no", "zh-rTW", "ar", "tr", "el", "bn", "sw"
         vectorDrawables.useSupportLibrary = true
 
         buildConfigField "long", "TIMESTAMP", "${System.currentTimeMillis()}L"

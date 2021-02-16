@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2014 Braden Farmer
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+
+<resources>
+
+    <string name="action_cancel">Sitisha</string>
+    <string name="action_close">Funga</string>
+    <string name="action_delete">Futa</string>
+    <string name="action_discard">Ondoa</string>
+    <string name="action_edit">Hariri</string>
+    <string name="action_export">Hamisha</string>
+    <string name="action_font_size">Ukubwa wa Hati</string>
+    <string name="action_new">Kidokezo Kipya</string>
+    <string name="action_save">Hifadhi</string>
+    <string name="action_settings">Mabadilisho</string>
+    <string name="action_share">Sambaza</string>
+    <string name="action_sort_by">Panga Vidokezo Kwa</string>
+    <string name="action_export_filename">Anwani ya faili lililohamishwa</string>
+    <string name="app_name">Kichukua Matini</string>
+    <string name="app_name_debug">Kichukua Matini (Tatuzi)</string>
+    <string name="cab_note_selected">Kidokezo kilichochaguliwa</string>
+    <string name="cab_notes_selected">Vidokezo Vilivyochaguliwa</string>
+    <string name="changes_discarded">Mabadiliko Hayajahifadhiwa</string>
+    <string name="dialog_about_message">Kichukua Matini: programu nyepesi ya kuchukulia matini\n\n&#169; %d Braden Farmer\nNembo ya programu iliundwa na Tobaloidee</string>
+    <string name="dialog_about_title">Kuhusu Kichukua Matini</string>
+    <string name="dialog_are_you_sure">Una Uhakika?</string>
+    <string name="dialog_delete_button_title">Futa kidokezo</string>
+    <string name="dialog_delete_button_title_plural">Futa Vidokezo</string>
+    <string name="dialog_save_button_title">Hifadhi Mabadiliko</string>
+    <string name="dialog_save_changes">Je, Unataka Kuhifadhi Mabadiliko?</string>
+    <string name="draft_restored">Rasimu imerejeshwa</string>
+    <string name="draft_saved">Rasimu imehifadhiwa</string>
+    <string name="double_tap">Nasaha: finya matini mara mbili ili uweze kuhariri</string>
+    <string name="edit_note">Hariri kidokezo</string>
+    <string name="edit_text">Tumia kiibodi kuongeza matini</string>
+    <string name="empty_note">Tafadhali ongeza matini!</string>
+    <string name="error_exporting_notes">Tatizo katika kuhamisha vidokezo!</string>
+    <string name="error_importing_notes">Tatizo katika kuingiza vidokezo!</string>
+    <string name="error_loading_list">Tatizo katika mchakato wa kuingiza orodha ya vidokezo!</string>
+    <string name="error_loading_note">Tatizo katika mchakato wa kufungua vidokezo!</string>
+    <string name="failed_to_save">Tatizo: matini hayakuhifadhiwa!</string>
+    <string name="first_run">Karibu katika Kichukua Matini!\n\nKuunda kidokezo, bonyeza kibonyezo cha kidokezo kipya (ishara ya kuongeza).</string>
+    <string name="first_view">Kuhariri kidokezo kilichohifadhiwa, finya matini mara mbili au bonyeza kibonyezo cha Kuhariri (penseli).</string>
+    <string name="import_notes">Ingiza vidokezo</string>
+    <string name="loading_external_file">Kuingiza mafaili ya nje hakuwezekani</string>
+    <string name="no_notes_found">Vidokezo havijapatikana</string>
+    <string name="note_deleted">Kidokezo kimefutwa</string>
+    <string name="note_exported_to">kidokezo kimehamishwa kwa mafanikio</string>
+    <string name="note_saved">Kidokezo kimehifadhiwa</string>
+    <string name="notes_deleted">Vidokezo vimefutwa</string>
+    <string name="notes_exported_to">Vidokezo vimehamishwa kwa mafanikio</string>
+    <string name="note_imported_successfully">Kidokezo kimehifashiwa kwa mafanikio</string>
+    <string name="notes_imported_successfully">Vidokezo vimeingizwa kwa mafanikio</string>
+    <string name="pref_title_show_dialogs">Uliza kabla ya kuhifadhi</string>
+    <string name="send_to">Sambaza kidokezo kwa&#8230;</string>
+    <string name="view_note">Angalia kidokezo</string>
+    <string name="action_install">Jumisha na simu</string>
+    <string name="action_no_thanks">Hapana</string>
+    <string name="pref_title_show_date">Onyesha tarehe/wakati</string>
+    <string name="action_theme">Mfumo wa rangi</string>
+    <string name="pref_title_direct_edit">Hariri vidokezo moja kwa moja</string>
+    <string name="pref_title_markdown">Uwezekano wa kutumia mfumo wa kudokeza wa "Markdown" au "HTML"</string>
+    <string name="action_print">Chapisha</string>
+    <string name="action_start_selection">Chagua Vidokezo</string>
+    <string name="action_select_all">Chagua vyote</string>
+    <string name="no_notes_to_select">Hakuna vidokezo vya kuchagua</string>
+    <string name="document">%1$s Hati</string>
+    <string name="no_notes_to_export">Hakuna vidokezo vilivyochaguliwa vya kuhamisha</string>
+    <string name="no_notes_to_delete">Hakuna vidokezo vilivyochaguliwa vya kufuta</string>
+    <string name="check_for_updates">Angalia kama kuna Toleo Jipya</string>
+
+    <string-array name="sort_by_list">
+        <item>Date (vipya kwanza)</item>
+        <item>Date (vizee kwanza)</item>
+        <item>Name (A hadi Z)</item>
+        <item>Name (Z hadi A)</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>Jepesi / sans serif</item>
+        <item>Jepesi / serif</item>
+        <item>Jepesi / monospace</item>
+        <item>Nyeusi / sans serif</item>
+        <item>Nyeusi / serif</item>
+        <item>Nyeusi / monospace</item>
+    </string-array>
+    <string-array name="font_size_list">
+        <item>Ndogo zaidi</item>
+        <item>Ndogo</item>
+        <item>Kawaida</item>
+        <item>Kubwa</item>
+        <item>Kubwa zaidi</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>Mshororo wa kwanza wa matini</item>
+        <item>Mshororo wa kwanza + wakati</item>
+        <item>Wakati + mshororo wa kwanza</item>
+    </string-array>
+
+</resources>

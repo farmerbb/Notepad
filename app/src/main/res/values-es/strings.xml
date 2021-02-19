@@ -3,7 +3,7 @@
      Copyright 2014 Braden Farmer
 
      Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
+     you may not use this except in compliance with the License.
      You may obtain a copy of the License at
   
           http://www.apache.org/licenses/LICENSE-2.0
@@ -30,11 +30,11 @@
     <string name="action_settings">Configuración</string>
     <string name="action_share">Compartir</string>
     <string name="action_sort_by">Ordenar notas por</string>
-    <string name="action_export_filename">Exported filename</string>
+    <string name="action_export_filename">Exportado nombre de archivo</string>
     <string name="app_name">Notepad</string>
     <string name="app_name_debug">Notepad (Depuración)</string>
-    <string name="cab_note_selected">nota seleccionada</string>
-    <string name="cab_notes_selected">notas seleccionadas</string>
+    <string name="cab_note_selected">Nota seleccionada</string>
+    <string name="cab_notes_selected">Notas seleccionadas</string>
     <string name="changes_discarded">Cambios descartados</string>
     <string name="dialog_about_message">Notepad: una app simple de toma de notas\n\n&#169; %d Braden Farmer\nlogotipo de la aplicación por Tobaloidee</string>
     <string name="dialog_about_title">Sobre Notepad</string>
@@ -51,8 +51,8 @@
     <string name="empty_note">¡Por favor, pon texto!</string>
     <string name="error_exporting_notes">¡Error exportando notas!</string>
     <string name="error_importing_notes">¡Error importando notas!</string>
-    <string name="error_loading_list">Error cargando lista de notas!</string>
-    <string name="error_loading_note">Error cargando nota!</string>
+    <string name="error_loading_list">¡Error cargando lista de notas!</string>
+    <string name="error_loading_note">¡Error cargando nota!</string>
     <string name="failed_to_save">¡Error: no se ha podido guardar la nota!</string>
     <string name="first_run">Bienvenido al Notepad!\n\nPara crear una nota, clica en el botón Nota Nueva (signo de más).</string>
     <string name="first_view">Para editar una nota guardada, toca dos veces en el texto o clica en el botón Editar (lápiz).</string>
@@ -99,16 +99,16 @@
         <item>Oscuro / monospace</item>
     </string-array>
     <string-array name="font_size_list">
-        <item>Más pqueño</item>
+        <item>Más pequeño</item>
         <item>Pequeño</item>
         <item>Normal</item>
         <item>Grande</item>
         <item>Más grande</item>
     </string-array>
     <string-array name="exported_filename_list">
-        <item>First line of text</item>
-        <item>First line + timestamp</item>
-        <item>Timestamp + first line</item>
+        <item>Primera línea de texto</item>
+        <item>Primera línea + marca de tiempo</item>
+        <item>Marca de tiempo + primera línea</item>
     </string-array>
 
 </resources>

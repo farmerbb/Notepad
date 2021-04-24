@@ -1,3 +1,18 @@
+/* Copyright 2021 Braden Farmer
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.farmerbb.notepad.activity
 
 import android.os.Bundle
@@ -16,26 +31,31 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.util.NoteListItem
+import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.data.NoteMigrator
+import com.farmerbb.notepad.data.NotepadDAO
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.apache.commons.lang3.math.NumberUtils
-import java.io.BufferedReader
-import java.io.InputStreamReader
+import javax.inject.Inject
 
-class MainActivityCompose: ComponentActivity() {
+@AndroidEntryPoint class MainActivityCompose: ComponentActivity() {
+  @Inject lateinit var migrator: NoteMigrator
+  @Inject lateinit var dao: NotepadDAO
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
     lifecycleScope.launch {
-      val notes = listNotes()
+      migrator.migrate()
+
+      val notes = dao.getNoteMetadataSortedByTitle()
       setContent {
         NotesList(notes)
       }
     }
   }
 
-
-  @Composable fun NotesList(notes: List<NoteListItem>) = MaterialTheme {
+  @Composable fun NotesList(notes: List<NoteMetadata>) = MaterialTheme {
     Scaffold(
       topBar = {
         TopAppBar(
@@ -57,7 +77,7 @@ class MainActivityCompose: ComponentActivity() {
               }
             ) {
               Text(
-                text = notes[it].note,
+                text = notes[it].title,
                 modifier = Modifier
                   .padding(
                     horizontal = 16.dp,
@@ -74,51 +94,8 @@ class MainActivityCompose: ComponentActivity() {
 
   @Preview @Composable fun Preview() {
     NotesList(listOf(
-      NoteListItem(
-        "Test Note 1",
-        "123456"
-      ),
-      NoteListItem(
-        "Test Note 2",
-        "123456"
-      )
+      NoteMetadata(title = "Test Note 1"),
+      NoteMetadata(title = "Test Note 2")
     ))
-  }
-
-  fun listNotes(): List<NoteListItem> {
-    // Get array of file names
-    val listOfNotes = arrayListOf<String>()
-    val noteListItems = arrayListOf<NoteListItem>()
-
-    // Remove any files from the list that aren't notes
-    for(file in filesDir.list().orEmpty()) {
-      if(NumberUtils.isCreatable(file))
-        listOfNotes.add(file)
-    }
-
-    // Get array of first lines of each note
-    for(file in listOfNotes) {
-      noteListItems.add(NoteListItem(
-        loadNoteTitle(file),
-        file
-      ))
-    }
-
-    return noteListItems
-  }
-
-  fun loadNoteTitle(filename: String): String {
-    // Open the file on disk
-    val input = openFileInput(filename)
-    val reader = InputStreamReader(input)
-    val buffer = BufferedReader(reader)
-
-    // Load the file
-    val line = buffer.readLine()
-
-    // Close file on disk
-    reader.close()
-
-    return line
   }
 }

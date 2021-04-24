@@ -30,9 +30,6 @@
         android:name="android.hardware.type.pc"
         android:required="false" />
 
-    <uses-sdk
-        tools:overrideLibrary="us.feras.mdv" />
-
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -41,6 +38,7 @@
         android:xlargeScreens="true" />
 
     <application
+        android:name=".NotepadApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="${appName}"

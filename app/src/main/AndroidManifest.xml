@@ -48,7 +48,7 @@
         tools:replace="android:label" >
         <activity-alias
             android:name="com.farmerbb.notepad.MainActivity"
-            android:targetActivity="com.farmerbb.notepad.activity.MainActivity"
+            android:targetActivity="com.farmerbb.notepad.activity.MainActivityCompose"
             android:label="${appName}">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -86,6 +86,11 @@
             android:label="@string/action_settings"
             android:theme="@style/Theme.Notepad.Dialog" >
         </activity>
+        <activity
+            android:name="com.farmerbb.notepad.activity.MainActivityCompose"
+            android:exported="true"
+            android:label="${appName}"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

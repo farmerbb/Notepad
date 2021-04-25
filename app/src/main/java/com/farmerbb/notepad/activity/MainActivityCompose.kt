@@ -18,22 +18,19 @@ package com.farmerbb.notepad.activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.material.MaterialTheme
 import androidx.lifecycle.lifecycleScope
-import com.farmerbb.notepad.R
-import com.farmerbb.notepad.models.NoteMetadata
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.navArgument
+import androidx.navigation.compose.rememberNavController
 import com.farmerbb.notepad.data.NoteMigrator
 import com.farmerbb.notepad.data.NotepadDAO
+import com.farmerbb.notepad.ui.NoteList
+import com.farmerbb.notepad.ui.NoteListRoute
+import com.farmerbb.notepad.ui.NoteView
+import com.farmerbb.notepad.ui.NoteViewRoute
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -48,54 +45,18 @@ import javax.inject.Inject
     lifecycleScope.launch {
       migrator.migrate()
 
-      val notes = dao.getNoteMetadataSortedByTitle()
       setContent {
-        NotesList(notes)
-      }
-    }
-  }
-
-  @Composable fun NotesList(notes: List<NoteMetadata>) = MaterialTheme {
-    Scaffold(
-      topBar = {
-        TopAppBar(
-          title = {
-            Text(
-              text = stringResource(id = R.string.app_name),
-              color = Color.White
-            )
-          },
-          backgroundColor = colorResource(id = R.color.primary)
-        )
-      },
-      content = {
-        LazyColumn {
-          items(notes.size) {
-            Column(modifier = Modifier
-              .clickable {
-                // TODO navigate to note view
-              }
-            ) {
-              Text(
-                text = notes[it].title,
-                modifier = Modifier
-                  .padding(
-                    horizontal = 16.dp,
-                    vertical = 12.dp
-                  )
-              )
-
-              Divider()
-            }
+        val navController = rememberNavController()
+        MaterialTheme {
+          NavHost(
+            navController = navController,
+            startDestination = "NoteList"
+          ) {
+            NoteListRoute(dao = dao, navController = navController)
+            NoteViewRoute(dao = dao, navController = navController)
           }
         }
-      })
-  }
-
-  @Preview @Composable fun Preview() {
-    NotesList(listOf(
-      NoteMetadata(title = "Test Note 1"),
-      NoteMetadata(title = "Test Note 2")
-    ))
+      }
+    }
   }
 }

@@ -37,16 +37,16 @@ import java.util.*
   indices = [Index("contentsId")]
 )
 data class CrossRef(
-  val metadataId: Long,
-  val contentsId: Long
+  val metadataId: Long = 0,
+  val contentsId: Long = 0
 )
 
 data class Note(
-  @Embedded val metadata: NoteMetadata,
+  @Embedded val metadata: NoteMetadata = NoteMetadata(),
   @Relation(
     parentColumn = "metadataId",
     entityColumn = "contentsId",
     associateBy = Junction(CrossRef::class)
   )
-  val contents: NoteContents
+  val contents: NoteContents = NoteContents()
 )

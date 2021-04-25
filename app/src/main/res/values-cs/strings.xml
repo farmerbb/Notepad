@@ -83,6 +83,10 @@
     <string name="no_notes_to_export">Nejsou vybrány žádné poznámky pro export</string>
     <string name="no_notes_to_delete">Nejsou vybrány žádné poznámky ke smazání</string>
     <string name="check_for_updates">Check for Updates</string>
+    <string name="preview_app_title">Notepad app preview</string>
+    <string name="preview_app_message">Switch to the preview version of the app? There\'s no going back without a reinstall.</string>
+    <string name="blue_pill">Take the blue pill</string>
+    <string name="red_pill">Take the red pill</string>
 
     <string-array name="sort_by_list">
         <item>Data (nejnovější nejdříve)</item>

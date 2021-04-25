@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.fragment.dialog;
+package com.farmerbb.notepad.old.fragment.dialog;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -26,9 +26,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.farmerbb.notepad.BuildConfig;
+import com.farmerbb.notepad.old.BuildConfig;
 import com.farmerbb.notepad.R;
-import com.farmerbb.notepad.util.SignatureUtils;
+import com.farmerbb.notepad.old.util.SignatureUtils;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;

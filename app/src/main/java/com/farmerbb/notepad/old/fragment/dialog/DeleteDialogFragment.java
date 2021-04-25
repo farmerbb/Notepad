@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.fragment.dialog;
+package com.farmerbb.notepad.old.fragment.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -25,13 +25,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
-public class SaveButtonDialogFragment extends DialogFragment {
+public class DeleteDialogFragment extends DialogFragment {
 
     /* The activity that creates an instance of this fragment must
      * implement this interface in order to receive event call backs. */
     public interface Listener {
-        void onSaveDialogPositiveClick();
-        void onSaveDialogNegativeClick();
+        void onDeleteDialogPositiveClick();
     }
 
     // Use this instance of the interface to deliver action events
@@ -58,10 +57,10 @@ public class SaveButtonDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(R.string.dialog_save_changes)
-        .setTitle(R.string.dialog_save_button_title)
-        .setPositiveButton(R.string.action_save, (dialog, id) -> listener.onSaveDialogPositiveClick())
-        .setNegativeButton(R.string.action_discard, (dialog, id) -> listener.onSaveDialogNegativeClick());
+        builder.setMessage(R.string.dialog_are_you_sure)
+        .setTitle(getArguments().getInt("dialog_title"))
+        .setPositiveButton(R.string.action_delete, (dialog, id) -> listener.onDeleteDialogPositiveClick())
+        .setNegativeButton(R.string.action_cancel, null);
 
         // Create the AlertDialog object and return it
         return builder.create();

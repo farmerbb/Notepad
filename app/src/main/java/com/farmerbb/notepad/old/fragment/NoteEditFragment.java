@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.fragment;
+package com.farmerbb.notepad.old.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -41,9 +41,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.farmerbb.notepad.activity.MainActivity;
+import com.farmerbb.notepad.old.activity.MainActivity;
 import com.farmerbb.notepad.R;
-import com.farmerbb.notepad.managers.ThemeManager;
+import com.farmerbb.notepad.old.managers.ThemeManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -96,7 +96,7 @@ public class NoteEditFragment extends Fragment {
         }
     }
 
-    IntentFilter filter = new IntentFilter("com.farmerbb.notepad.DELETE_NOTES");
+    IntentFilter filter = new IntentFilter("com.farmerbb.notepad.old.DELETE_NOTES");
     DeleteNotesReceiver receiver = new DeleteNotesReceiver();
 
     /* The activity that creates an instance of this fragment must
@@ -476,7 +476,7 @@ public class NoteEditFragment extends Fragment {
         fileToDelete.delete();
     }
 
-    // Saves notes to /data/data/com.farmerbb.notepad/files
+    // Saves notes to /data/data/com.farmerbb.notepad.old/files
     private void saveNote() throws IOException {
         // Set current note contents to a String
         noteContents = getActivity().findViewById(R.id.editText1);
@@ -518,7 +518,7 @@ public class NoteEditFragment extends Fragment {
 
             // Send broadcast to MainActivity to refresh list of notes
             Intent listNotesIntent = new Intent();
-            listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+            listNotesIntent.setAction("com.farmerbb.notepad.old.LIST_NOTES");
             LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(listNotesIntent);
         }
     }
@@ -551,11 +551,11 @@ public class NoteEditFragment extends Fragment {
         deleteNote(filename);
         showToast(R.string.note_deleted);
 
-        if(getActivity().getComponentName().getClassName().equals("com.farmerbb.notepad.activity.MainActivity")
+        if(getActivity().getComponentName().getClassName().equals("com.farmerbb.notepad.old.activity.MainActivity")
                 && getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")) {
             // Send broadcast to NoteListFragment to refresh list of notes
             Intent listNotesIntent = new Intent();
-            listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+            listNotesIntent.setAction("com.farmerbb.notepad.old.LIST_NOTES");
             LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(listNotesIntent);
         }
 

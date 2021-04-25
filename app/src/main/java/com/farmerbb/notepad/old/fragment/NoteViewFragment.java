@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.fragment;
+package com.farmerbb.notepad.old.fragment;
 
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -42,8 +42,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.farmerbb.notepad.R;
-import com.farmerbb.notepad.fragment.dialog.FirstViewDialogFragment;
-import com.farmerbb.notepad.managers.ThemeManager;
+import com.farmerbb.notepad.old.fragment.dialog.FirstViewDialogFragment;
+import com.farmerbb.notepad.old.managers.ThemeManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,7 +90,7 @@ public class NoteViewFragment extends Fragment {
         }
     }
 
-    IntentFilter filter = new IntentFilter("com.farmerbb.notepad.DELETE_NOTES");
+    IntentFilter filter = new IntentFilter("com.farmerbb.notepad.old.DELETE_NOTES");
     DeleteNotesReceiver receiver = new DeleteNotesReceiver();
 
     /* The activity that creates an instance of this fragment must
@@ -417,7 +417,7 @@ public class NoteViewFragment extends Fragment {
         if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")) {
             // Send broadcast to NoteListFragment to refresh list of notes
             Intent listNotesIntent = new Intent();
-            listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+            listNotesIntent.setAction("com.farmerbb.notepad.old.LIST_NOTES");
             LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(listNotesIntent);
         }
 

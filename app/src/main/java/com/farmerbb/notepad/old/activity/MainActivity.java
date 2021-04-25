@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.activity;
+package com.farmerbb.notepad.old.activity;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -36,15 +36,15 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.farmerbb.notepad.R;
-import com.farmerbb.notepad.fragment.NoteEditFragment;
-import com.farmerbb.notepad.fragment.NoteListFragment;
-import com.farmerbb.notepad.fragment.NoteViewFragment;
-import com.farmerbb.notepad.fragment.WelcomeFragment;
-import com.farmerbb.notepad.fragment.dialog.BackButtonDialogFragment;
-import com.farmerbb.notepad.fragment.dialog.DeleteDialogFragment;
-import com.farmerbb.notepad.fragment.dialog.FirstRunDialogFragment;
-import com.farmerbb.notepad.fragment.dialog.SaveButtonDialogFragment;
-import com.farmerbb.notepad.util.WebViewInitState;
+import com.farmerbb.notepad.old.fragment.NoteEditFragment;
+import com.farmerbb.notepad.old.fragment.NoteListFragment;
+import com.farmerbb.notepad.old.fragment.NoteViewFragment;
+import com.farmerbb.notepad.old.fragment.WelcomeFragment;
+import com.farmerbb.notepad.old.fragment.dialog.BackButtonDialogFragment;
+import com.farmerbb.notepad.old.fragment.dialog.DeleteDialogFragment;
+import com.farmerbb.notepad.old.fragment.dialog.FirstRunDialogFragment;
+import com.farmerbb.notepad.old.fragment.dialog.SaveButtonDialogFragment;
+import com.farmerbb.notepad.old.util.WebViewInitState;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -417,12 +417,12 @@ NoteViewFragment.Listener {
 
         // Send broadcasts to update UI
         Intent deleteIntent = new Intent();
-        deleteIntent.setAction("com.farmerbb.notepad.DELETE_NOTES");
+        deleteIntent.setAction("com.farmerbb.notepad.old.DELETE_NOTES");
         deleteIntent.putExtra("files", filesToDelete2);
         LocalBroadcastManager.getInstance(this).sendBroadcast(deleteIntent);
 
         Intent listIntent = new Intent();
-        listIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+        listIntent.setAction("com.farmerbb.notepad.old.LIST_NOTES");
         LocalBroadcastManager.getInstance(this).sendBroadcast(listIntent);
 
         // Show toast notification
@@ -531,7 +531,7 @@ NoteViewFragment.Listener {
         toast.show();
     }
 
-    // Loads note from /data/data/com.farmerbb.notepad/files
+    // Loads note from /data/data/com.farmerbb.notepad.old/files
     public String loadNote(String filename) throws IOException {
 
         // Initialize StringBuilder which will contain note
@@ -661,7 +661,7 @@ NoteViewFragment.Listener {
 
                 // Send broadcast to NoteListFragment to refresh list of notes
                 Intent listNotesIntent = new Intent();
-                listNotesIntent.setAction("com.farmerbb.notepad.LIST_NOTES");
+                listNotesIntent.setAction("com.farmerbb.notepad.old.LIST_NOTES");
                 LocalBroadcastManager.getInstance(this).sendBroadcast(listNotesIntent);
             } else if(requestCode == EXPORT) {
                 try {

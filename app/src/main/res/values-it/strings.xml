@@ -83,6 +83,10 @@
     <string name="no_notes_to_export">Nessuna nota selezionata da esportare</string>
     <string name="no_notes_to_delete">Nessuna nota selezionata da cancellare</string>
     <string name="check_for_updates">Controlla aggiornamenti</string>
+    <string name="preview_app_title">Notepad app preview</string>
+    <string name="preview_app_message">Switch to the preview version of the app? There\'s no going back without a reinstall.</string>
+    <string name="blue_pill">Take the blue pill</string>
+    <string name="red_pill">Take the red pill</string>
 
     <string-array name="sort_by_list">
         <item>Data (prima le pi&#249; recenti)</item>

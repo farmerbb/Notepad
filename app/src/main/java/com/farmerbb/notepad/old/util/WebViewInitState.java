@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.util;
+package com.farmerbb.notepad.old.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;

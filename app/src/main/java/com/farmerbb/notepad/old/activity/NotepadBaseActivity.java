@@ -1,4 +1,4 @@
-package com.farmerbb.notepad.activity;
+package com.farmerbb.notepad.old.activity;
 
 import android.content.SharedPreferences;
 import android.os.Build;

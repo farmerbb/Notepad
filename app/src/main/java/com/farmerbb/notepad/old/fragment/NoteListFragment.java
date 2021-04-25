@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.fragment;
+package com.farmerbb.notepad.old.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -43,14 +43,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.farmerbb.notepad.activity.MainActivity;
+import com.farmerbb.notepad.old.activity.MainActivity;
 import com.farmerbb.notepad.R;
-import com.farmerbb.notepad.activity.SettingsActivity;
-import com.farmerbb.notepad.adapter.NoteListAdapter;
-import com.farmerbb.notepad.adapter.NoteListDateAdapter;
-import com.farmerbb.notepad.fragment.dialog.AboutDialogFragment;
-import com.farmerbb.notepad.util.NoteListItem;
-import com.farmerbb.notepad.util.ScrollPositions;
+import com.farmerbb.notepad.old.activity.SettingsActivity;
+import com.farmerbb.notepad.old.adapter.NoteListAdapter;
+import com.farmerbb.notepad.old.adapter.NoteListDateAdapter;
+import com.farmerbb.notepad.old.fragment.dialog.AboutDialogFragment;
+import com.farmerbb.notepad.old.util.NoteListItem;
+import com.farmerbb.notepad.old.util.ScrollPositions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -86,7 +86,7 @@ public class NoteListFragment extends Fragment {
         }
     }
 
-    IntentFilter filter = new IntentFilter("com.farmerbb.notepad.LIST_NOTES");
+    IntentFilter filter = new IntentFilter("com.farmerbb.notepad.old.LIST_NOTES");
     ListNotesReceiver receiver = new ListNotesReceiver();
 
     /* The activity that creates an instance of this fragment must

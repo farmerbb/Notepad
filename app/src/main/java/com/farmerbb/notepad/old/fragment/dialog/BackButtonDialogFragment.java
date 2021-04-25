@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.fragment.dialog;
+package com.farmerbb.notepad.old.fragment.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;

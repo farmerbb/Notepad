@@ -1,4 +1,4 @@
-package com.farmerbb.notepad.managers
+package com.farmerbb.notepad.old.managers
 
 import android.content.Context
 import android.content.Intent

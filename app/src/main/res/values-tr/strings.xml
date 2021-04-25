@@ -70,6 +70,10 @@ Bir not oluşturmak için Yeni Not düğmesine (artı işareti) tıklayın."</st
 <string name="pref_title_show_dialogs">Kaydetmeden önce sor</string>
 <string name="send_to">Notu paylaş…</string>
 <string name="view_note">Notu görüntüle</string>
+    <string name="preview_app_title">Notepad app preview</string>
+    <string name="preview_app_message">Switch to the preview version of the app? There\'s no going back without a reinstall.</string>
+    <string name="blue_pill">Take the blue pill</string>
+    <string name="red_pill">Take the red pill</string>
 
     <string-array name="sort_by_list">
         <item>Date (newest first)</item>

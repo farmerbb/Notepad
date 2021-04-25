@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.fragment;
+package com.farmerbb.notepad.old.fragment;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
@@ -37,8 +37,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.farmerbb.notepad.R;
-import com.farmerbb.notepad.activity.SettingsActivity;
-import com.farmerbb.notepad.fragment.dialog.AboutDialogFragment;
+import com.farmerbb.notepad.old.activity.SettingsActivity;
+import com.farmerbb.notepad.old.fragment.dialog.AboutDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.activity;
+package com.farmerbb.notepad.old.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,11 +26,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.farmerbb.notepad.R;
-import com.farmerbb.notepad.fragment.NoteEditFragment;
-import com.farmerbb.notepad.fragment.dialog.BackButtonDialogFragment;
-import com.farmerbb.notepad.fragment.dialog.DeleteDialogFragment;
-import com.farmerbb.notepad.fragment.dialog.SaveButtonDialogFragment;
-import com.farmerbb.notepad.managers.ThemeManager;
+import com.farmerbb.notepad.old.fragment.NoteEditFragment;
+import com.farmerbb.notepad.old.fragment.dialog.BackButtonDialogFragment;
+import com.farmerbb.notepad.old.fragment.dialog.DeleteDialogFragment;
+import com.farmerbb.notepad.old.fragment.dialog.SaveButtonDialogFragment;
+import com.farmerbb.notepad.old.managers.ThemeManager;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

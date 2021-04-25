@@ -46,7 +46,7 @@
         tools:replace="android:label" >
         <activity-alias
             android:name="com.farmerbb.notepad.MainActivity"
-            android:targetActivity="com.farmerbb.notepad.activity.MainActivityCompose"
+            android:targetActivity="com.farmerbb.notepad.old.activity.MainActivity"
             android:label="${appName}">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,12 +59,12 @@
                 android:resource="@xml/shortcuts" />
         </activity-alias>
         <activity
-            android:name="com.farmerbb.notepad.activity.MainActivity"
+            android:name="com.farmerbb.notepad.old.activity.MainActivity"
             android:exported="true"
             android:label="${appName}"
             android:launchMode="singleTop"/>
         <activity
-            android:name="com.farmerbb.notepad.activity.NoteEditActivity"
+            android:name="com.farmerbb.notepad.old.activity.NoteEditActivity"
             android:label="${appName}"
             android:launchMode="singleTop" >
             <intent-filter>
@@ -80,7 +80,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.farmerbb.notepad.activity.SettingsActivity"
+            android:name="com.farmerbb.notepad.old.activity.SettingsActivity"
             android:label="@string/action_settings"
             android:theme="@style/Theme.Notepad.Dialog" >
         </activity>

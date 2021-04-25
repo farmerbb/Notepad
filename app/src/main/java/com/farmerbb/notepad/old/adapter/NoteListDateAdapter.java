@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.adapter;
+package com.farmerbb.notepad.old.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,8 +24,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import com.farmerbb.notepad.R;
-import com.farmerbb.notepad.managers.ThemeManager;
-import com.farmerbb.notepad.util.NoteListItem;
+import com.farmerbb.notepad.old.managers.ThemeManager;
+import com.farmerbb.notepad.old.util.NoteListItem;
 import java.util.ArrayList;
 
 public class NoteListDateAdapter extends ArrayAdapter<NoteListItem> {

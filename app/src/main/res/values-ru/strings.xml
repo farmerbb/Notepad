@@ -72,5 +72,9 @@ Russian translation by Vladimir Kosolapov"</string>
     <string name="cab_note_selected">note selected</string>
     <string name="cab_notes_selected">notes selected</string>
     <string name="document">%1$s Document</string>
+    <string name="preview_app_title">Notepad app preview</string>
+    <string name="preview_app_message">Switch to the preview version of the app? There\'s no going back without a reinstall.</string>
+    <string name="blue_pill">Take the blue pill</string>
+    <string name="red_pill">Take the red pill</string>
 
 </resources>

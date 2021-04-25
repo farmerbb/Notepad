@@ -27,10 +27,7 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.farmerbb.notepad.data.NoteMigrator
 import com.farmerbb.notepad.data.NotepadDAO
-import com.farmerbb.notepad.ui.NoteList
-import com.farmerbb.notepad.ui.NoteListRoute
-import com.farmerbb.notepad.ui.NoteView
-import com.farmerbb.notepad.ui.NoteViewRoute
+import com.farmerbb.notepad.ui.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -52,8 +49,9 @@ import javax.inject.Inject
             navController = navController,
             startDestination = "NoteList"
           ) {
-            NoteListRoute(dao = dao, navController = navController)
-            NoteViewRoute(dao = dao, navController = navController)
+            NoteListRoute(dao, navController)
+            NoteViewRoute(dao, navController)
+            NoteEditRoute(dao, navController)
           }
         }
       }

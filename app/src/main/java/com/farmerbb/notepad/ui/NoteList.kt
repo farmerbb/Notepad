@@ -19,12 +19,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -72,13 +73,11 @@ import kotlinx.coroutines.launch
     },
     floatingActionButton = {
       FloatingActionButton(
-        onClick = {
-          // TODO create new note
-        },
+        onClick = { navController.navigate("NoteEdit") },
         backgroundColor = colorResource(id = R.color.primary),
         content = {
           Icon(
-            painter = painterResource(id = R.drawable.ic_action_new),
+            imageVector = Icons.Filled.Add,
             contentDescription = null,
             tint = Color.White
           )

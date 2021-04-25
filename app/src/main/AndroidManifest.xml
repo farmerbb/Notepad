@@ -43,7 +43,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="${appName}"
         android:theme="@style/Theme.Notepad"
-        tools:replace="android:label" >
+        tools:replace="android:label"
+        tools:ignore="AppLinkUrlError">
         <activity-alias
             android:name="com.farmerbb.notepad.MainActivity"
             android:targetActivity="com.farmerbb.notepad.old.activity.MainActivity"
@@ -87,6 +88,7 @@
         <activity
             android:name="com.farmerbb.notepad.activity.MainActivityCompose"
             android:exported="true"
+            android:enabled="false"
             android:label="${appName}"
             android:launchMode="singleTop"/>
     </application>

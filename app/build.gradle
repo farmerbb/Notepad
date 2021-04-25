@@ -12,6 +12,7 @@ ext {
 repositories {
     google()
     mavenCentral()
+    gradlePluginPortal()
 }
 
 android {

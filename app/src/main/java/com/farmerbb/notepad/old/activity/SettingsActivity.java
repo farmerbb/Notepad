@@ -22,12 +22,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.widget.Button;
 
 import com.farmerbb.notepad.R;
 import com.farmerbb.notepad.activity.MainActivityCompose;
@@ -60,24 +62,20 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
             findPreference("markdown").setEnabled(!pref.getBoolean("direct_edit", false));
         }
 
-        findPreference("morpheus").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle(R.string.preview_app_title)
-                        .setMessage(R.string.preview_app_message)
-                        .setNegativeButton(R.string.blue_pill, null)
-                        .setPositiveButton(R.string.red_pill, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                setComponentEnabled(MainActivity.class, false);
-                                setComponentEnabled(MainActivityCompose.class, false);
-                                enterTheMatrix();
-                            }
-                        });
+        findPreference("morpheus").setOnPreferenceClickListener(preference -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
+            builder.setTitle(R.string.preview_app_title)
+                    .setMessage(R.string.preview_app_message)
+                    .setNegativeButton(R.string.blue_pill, null)
+                    .setPositiveButton(R.string.red_pill, (dialog, which) -> enterTheMatrix());
 
-                builder.create().show();
-            }
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            Button redPill = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+            redPill.setTextColor(Color.RED);
+
+            return true;
         });
     }
 
@@ -143,23 +141,17 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         return true;
     }
 
-    public void setComponentEnabled(Class<?> clazz, boolean enabled) {
-        ComponentName component = new ComponentName(this, clazz);
-        getPackageManager().setComponentEnabledSetting(component,
-                enabled ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED
-                        : PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                PackageManager.DONT_KILL_APP);
-    }
-
     public void enterTheMatrix() {
-        Intent restartIntent = new Intent(this, MainActivityCompose.class);
+        ComponentName component = new ComponentName(this, MainActivityCompose.class);
+        getPackageManager().setComponentEnabledSetting(component,
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+        );
+
+        Intent restartIntent = new Intent(this, MainActivity.class);
         restartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(restartIntent);
-
-        overridePendingTransition(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out
-        );
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         System.exit(0);
     }

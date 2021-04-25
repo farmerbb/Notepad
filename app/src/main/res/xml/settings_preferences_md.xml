@@ -21,4 +21,8 @@
         android:key="markdown"
         android:title="@string/pref_title_markdown" />
 
+    <Preference
+        android:key="morpheus"
+        android:title="@string/preview_app_title" />
+
 </PreferenceScreen>

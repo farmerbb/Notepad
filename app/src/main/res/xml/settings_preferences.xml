@@ -62,8 +62,5 @@
         android:defaultValue="false"
         android:key="direct_edit"
         android:title="@string/pref_title_direct_edit" />
-    <Preference
-        android:key="morpheus"
-        android:title="@string/preview_app_title" />
 
 </PreferenceScreen>

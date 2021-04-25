@@ -19,6 +19,8 @@ package com.farmerbb.notepad.old.activity;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ClipData;
+import android.content.ComponentName;
+import android.content.pm.PackageManager;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
@@ -36,6 +38,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.farmerbb.notepad.R;
+import com.farmerbb.notepad.activity.MainActivityCompose;
 import com.farmerbb.notepad.old.fragment.NoteEditFragment;
 import com.farmerbb.notepad.old.fragment.NoteListFragment;
 import com.farmerbb.notepad.old.fragment.NoteViewFragment;
@@ -94,6 +97,16 @@ NoteViewFragment.Listener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(getPackageManager().getComponentEnabledSetting(
+                new ComponentName(this, MainActivityCompose.class)
+        ) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
+            Intent intent = new Intent(this, MainActivityCompose.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_main);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

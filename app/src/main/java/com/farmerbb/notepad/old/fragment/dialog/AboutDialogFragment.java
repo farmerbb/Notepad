@@ -26,7 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.farmerbb.notepad.old.BuildConfig;
+import com.farmerbb.notepad.BuildConfig;
 import com.farmerbb.notepad.R;
 import com.farmerbb.notepad.old.util.SignatureUtils;
 

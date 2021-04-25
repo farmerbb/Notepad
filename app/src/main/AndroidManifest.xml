@@ -30,9 +30,6 @@
         android:name="android.hardware.type.pc"
         android:required="false" />
 
-    <uses-sdk
-        tools:overrideLibrary="us.feras.mdv" />
-
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -41,11 +38,13 @@
         android:xlargeScreens="true" />
 
     <application
+        android:name=".NotepadApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="${appName}"
         android:theme="@style/Theme.Notepad"
-        tools:replace="android:label" >
+        tools:replace="android:label"
+        tools:ignore="AppLinkUrlError">
         <activity-alias
             android:name="com.farmerbb.notepad.MainActivity"
             android:targetActivity="com.farmerbb.notepad.old.activity.MainActivity"
@@ -86,6 +85,12 @@
             android:label="@string/action_settings"
             android:theme="@style/Theme.Notepad.Dialog" >
         </activity>
+        <activity
+            android:name="com.farmerbb.notepad.activity.MainActivityCompose"
+            android:exported="true"
+            android:enabled="false"
+            android:label="${appName}"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

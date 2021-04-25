@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2014 Braden Farmer
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this except in compliance with the License.
+     You may obtain a copy of the License at
+  
+          http://www.apache.org/licenses/LICENSE-2.0
+  
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+
+<resources>
+
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_close">Cerrar</string>
+    <string name="action_delete">Eliminar</string>
+    <string name="action_discard">Descartar</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_export">Exportar</string>
+    <string name="action_font_size">Tamaño de letra</string>
+    <string name="action_new">Nota nueva</string>
+    <string name="action_save">Guardar</string>
+    <string name="action_settings">Configuración</string>
+    <string name="action_share">Compartir</string>
+    <string name="action_sort_by">Ordenar notas por</string>
+    <string name="action_export_filename">Exportado nombre de archivo</string>
+    <string name="app_name">Notepad</string>
+    <string name="app_name_debug">Notepad (Depuración)</string>
+    <string name="cab_note_selected">Nota seleccionada</string>
+    <string name="cab_notes_selected">Notas seleccionadas</string>
+    <string name="changes_discarded">Cambios descartados</string>
+    <string name="dialog_about_message">Notepad: una app simple de toma de notas\n\n&#169; %d Braden Farmer\nlogotipo de la aplicación por Tobaloidee</string>
+    <string name="dialog_about_title">Sobre Notepad</string>
+    <string name="dialog_are_you_sure">¿Estás seguro?</string>
+    <string name="dialog_delete_button_title">Eliminar nota</string>
+    <string name="dialog_delete_button_title_plural">Eliminar notas</string>
+    <string name="dialog_save_button_title">Guardar cambios</string>
+    <string name="dialog_save_changes">¿Quieres guardar los cambios?</string>
+    <string name="draft_restored">Borrador restaurado</string>
+    <string name="draft_saved">Borrador guardado</string>
+    <string name="double_tap">Consejo: toca dos veces en el texto para cambiar al modo edición</string>
+    <string name="edit_note">Editar Nota</string>
+    <string name="edit_text">Digita para añadir texto</string>
+    <string name="empty_note">¡Por favor, pon texto!</string>
+    <string name="error_exporting_notes">¡Error exportando notas!</string>
+    <string name="error_importing_notes">¡Error importando notas!</string>
+    <string name="error_loading_list">¡Error cargando lista de notas!</string>
+    <string name="error_loading_note">¡Error cargando nota!</string>
+    <string name="failed_to_save">¡Error: no se ha podido guardar la nota!</string>
+    <string name="first_run">Bienvenido al Notepad!\n\nPara crear una nota, clica en el botón Nota Nueva (signo de más).</string>
+    <string name="first_view">Para editar una nota guardada, toca dos veces en el texto o clica en el botón Editar (lápiz).</string>
+    <string name="import_notes">Importar notas</string>
+    <string name="loading_external_file">Cargar archivos externos no está soportado</string>
+    <string name="no_notes_found">No se han encontrado notas</string>
+    <string name="note_deleted">Nota eliminada</string>
+    <string name="note_exported_to">Nota exportada exitosamente</string>
+    <string name="note_saved">Nota guardada</string>
+    <string name="notes_deleted">Notas eliminadas</string>
+    <string name="notes_exported_to">Notas exportadas exitosamente</string>
+    <string name="note_imported_successfully">Nota importada exitosamente</string>
+    <string name="notes_imported_successfully">Notas importadas exitosamente</string>
+    <string name="pref_title_show_dialogs">Preguntar antes de guardar</string>
+    <string name="send_to">Compartir nota con&#8230;</string>
+    <string name="view_note">Ver Nota</string>
+    <string name="action_install">Instalar</string>
+    <string name="action_no_thanks">No, Gracias</string>
+    <string name="pref_title_show_date">Mostrar fecha/hora</string>
+    <string name="action_theme">Tema</string>
+    <string name="pref_title_direct_edit">Editar notas directamente</string>
+    <string name="pref_title_markdown">Soporte para Markdown/HTML</string>
+    <string name="action_print">Imprimir</string>
+    <string name="action_start_selection">Seleccionar notas</string>
+    <string name="action_select_all">Seleccionar todo</string>
+    <string name="no_notes_to_select">Ninguna nota que seleccionar</string>
+    <string name="document">%1$s Documento</string>
+    <string name="no_notes_to_export">Ninguna nota seleccionada para exportar</string>
+    <string name="no_notes_to_delete">Ninguna nota seleccionada para eliminar</string>
+    <string name="check_for_updates">Comprobar actualizaciones</string>
+
+    <string-array name="sort_by_list">
+        <item>Fecha (más reciente primero)</item>
+        <item>Fecha (más antigua primero)</item>
+        <item>Nombre (A a Z)</item>
+        <item>Nombre (Z a A)</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>Claro / sans serif</item>
+        <item>Claro / serif</item>
+        <item>Claro / monospace</item>
+        <item>Oscuro / sans serif</item>
+        <item>Oscuro / serif</item>
+        <item>Oscuro / monospace</item>
+    </string-array>
+    <string-array name="font_size_list">
+        <item>Más pequeño</item>
+        <item>Pequeño</item>
+        <item>Normal</item>
+        <item>Grande</item>
+        <item>Más grande</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>Primera línea de texto</item>
+        <item>Primera línea + marca de tiempo</item>
+        <item>Marca de tiempo + primera línea</item>
+    </string-array>
+
+</resources>

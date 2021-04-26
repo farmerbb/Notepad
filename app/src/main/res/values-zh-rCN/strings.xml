@@ -83,10 +83,10 @@
     <string name="no_notes_to_export">导出：未选择任何笔记</string>
     <string name="no_notes_to_delete">删除：未选择任何笔记</string>
     <string name="check_for_updates">检查更新</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Switch to the preview version of the app? There\'s no going back without a reinstall.</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
+    <string name="preview_app_title">Notepad 预览版</string>
+    <string name="preview_app_message">切换到本应用的预览版本吗？警告：要回到稳定版，除卸载重装外别无他法。 </string>
+    <string name="blue_pill">停留在稳定版</string>
+    <string name="red_pill">尝试预览版</string>
 
     <string-array name="sort_by_list">
         <item>由新至旧</item>
@@ -95,12 +95,12 @@
         <item>标题逆序</item>
     </string-array>
     <string-array name="theme_list">
-        <item>亮色无衬线体</item>
-        <item>亮色衬线体</item>
-        <item>亮色等宽字体</item>
-        <item>暗色无衬线体</item>
-        <item>暗色衬线体</item>
-        <item>暗色等宽字体</item>
+        <item>浅色无衬线体</item>
+        <item>浅色衬线体</item>
+        <item>浅色等宽字体</item>
+        <item>深色无衬线体</item>
+        <item>深色衬线体</item>
+        <item>深色等宽字体</item>
     </string-array>
     <string-array name="font_size_list">
         <item>极小</item>

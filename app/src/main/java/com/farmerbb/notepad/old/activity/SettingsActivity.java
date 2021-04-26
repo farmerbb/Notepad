@@ -31,6 +31,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.widget.Button;
 
+import com.farmerbb.notepad.BuildConfig;
 import com.farmerbb.notepad.R;
 import com.farmerbb.notepad.activity.MainActivityCompose;
 
@@ -60,6 +61,12 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 
             findPreference("markdown").setOnPreferenceChangeListener(this);
             findPreference("markdown").setEnabled(!pref.getBoolean("direct_edit", false));
+        }
+
+        boolean userIsNeo = BuildConfig.DEBUG;
+        if(!userIsNeo) {
+            getPreferenceScreen().removePreference(findPreference("morpheus"));
+            return;
         }
 
         findPreference("morpheus").setOnPreferenceClickListener(preference -> {

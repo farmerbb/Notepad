@@ -78,7 +78,7 @@ import kotlinx.coroutines.launch
         actions = {
           EditButton(navController, id)
           DeleteButton(navController, id, vm)
-          ShareButton(navController, note.contents.text)
+          ShareButton(note.contents.text, vm)
         }
       )
     },

@@ -93,7 +93,7 @@ import kotlinx.coroutines.launch
         actions = {
           SaveButton(navController, id, textState.value.text, vm)
           DeleteButton(navController, id, vm)
-          ShareButton(navController, textState.value.text)
+          ShareButton(textState.value.text, vm)
         }
       )
     },

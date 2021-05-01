@@ -105,11 +105,11 @@ import com.farmerbb.notepad.ui.screens.viewNote
 }
 
 @Composable fun ShareButton(
-  navController: NavController,
-  text: String
+  text: String,
+  vm: NotepadViewModel?
 ) {
   IconButton(
-    onClick = { /* TODO */ }
+    onClick = { vm?.share(text) }
   ) {
     Icon(
       imageVector = Icons.Filled.Share,

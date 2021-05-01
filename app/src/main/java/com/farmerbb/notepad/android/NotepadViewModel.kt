@@ -15,7 +15,9 @@
 
 package com.farmerbb.notepad.android
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import android.content.Intent
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.farmerbb.notepad.data.NotepadDAO
 import com.farmerbb.notepad.models.CrossRef
@@ -26,8 +28,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel class NotepadViewModel @Inject constructor(
+  private val context: Application,
   private val dao: NotepadDAO
-): ViewModel() {
+): AndroidViewModel(context) {
   suspend fun getNoteMetadata() = dao.getNoteMetadataSortedByTitle()
   suspend fun getNote(id: Long) = dao.getNote(id)
 
@@ -61,7 +64,7 @@ import javax.inject.Inject
             onSuccess.invoke(id)
         }
       } catch (e: Exception) {
-        // Something bad happened
+        e.printStackTrace()
       }
     }
   }
@@ -79,8 +82,19 @@ import javax.inject.Inject
 
         onSuccess.invoke()
       } catch (e: Exception) {
-        // Something bad happened
+        e.printStackTrace()
       }
     }
+  }
+
+  fun share(text: String) = try {
+    context.startActivity(Intent().apply {
+      action = Intent.ACTION_SEND
+      flags = Intent.FLAG_ACTIVITY_NEW_TASK
+      type = "text/plain"
+      putExtra(Intent.EXTRA_TEXT, text)
+    })
+  } catch (e: Exception) {
+    e.printStackTrace()
   }
 }

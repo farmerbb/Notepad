@@ -65,4 +65,22 @@ import javax.inject.Inject
       }
     }
   }
+
+  fun delete(id: Long, onSuccess: () -> Unit) {
+    viewModelScope.launch {
+      try {
+        with(dao) {
+          getCrossRef(id)?.let {
+            deleteNoteMetadata(it.metadataId)
+            deleteNoteContents(it.contentsId)
+            deleteCrossRef(id)
+          }
+        }
+
+        onSuccess.invoke()
+      } catch (e: Exception) {
+        // Something bad happened
+      }
+    }
+  }
 }

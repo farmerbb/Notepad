@@ -87,10 +87,15 @@ import com.farmerbb.notepad.ui.screens.viewNote
 
 @Composable fun DeleteButton(
   navController: NavController,
-  id: Long
+  id: Long,
+  vm: NotepadViewModel = hiltNavGraphViewModel()
 ) {
   IconButton(
-    onClick = { /* TODO */ }
+    onClick = {
+      vm.delete(id) {
+        navController.popBackStack()
+      }
+    }
   ) {
     Icon(
       imageVector = Icons.Filled.Delete,

@@ -30,7 +30,7 @@ import javax.inject.Inject
 
 class NoteMigrator @Inject constructor(
   @ApplicationContext val context: Context,
-  val dao: NotepadDAO
+  private val dao: NotepadDAO
 ) {
   suspend fun migrate() {
     for(filename in context.filesDir.list().orEmpty()) {

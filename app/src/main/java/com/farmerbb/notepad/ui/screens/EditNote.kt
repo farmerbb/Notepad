@@ -29,6 +29,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -36,7 +37,7 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.data.NotepadDAO
+import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
@@ -45,8 +46,8 @@ import kotlinx.coroutines.launch
 
 @Composable fun EditNote(
   id: Long?,
-  dao: NotepadDAO,
-  navController: NavController
+  navController: NavController,
+  vm: NotepadViewModel = hiltNavGraphViewModel()
 ) {
   val state = produceState(
     Note(
@@ -57,7 +58,7 @@ import kotlinx.coroutines.launch
   ) {
     id?.let {
       launch {
-        value = dao.getNote(it)
+        value = vm.getNote(it)
       }
     }
   }
@@ -88,7 +89,7 @@ import kotlinx.coroutines.launch
         title = { AppBarText(note.metadata.title) },
         backgroundColor = colorResource(id = R.color.primary),
         actions = {
-          SaveButton(navController, id)
+          SaveButton(navController, id, textState.value.text)
           DeleteButton(navController, id)
           ShareButton(navController, textState.value.text)
         }
@@ -114,7 +115,6 @@ import kotlinx.coroutines.launch
 
 @Suppress("FunctionName")
 fun NavGraphBuilder.EditNoteRoute(
-  dao: NotepadDAO,
   navController: NavController
 ) = composable(
   route = "EditNote?id={id}",
@@ -124,7 +124,6 @@ fun NavGraphBuilder.EditNoteRoute(
 ) {
   EditNote(
     id = it.arguments?.getString("id")?.toLong(),
-    dao = dao,
     navController = navController
   )
 }

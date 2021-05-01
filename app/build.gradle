@@ -138,4 +138,5 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-rxjava2:$compose_version"
 
     implementation "androidx.navigation:navigation-compose:1.0.0-alpha10"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha01"
 }

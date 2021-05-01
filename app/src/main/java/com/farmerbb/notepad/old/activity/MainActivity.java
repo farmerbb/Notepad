@@ -38,7 +38,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.farmerbb.notepad.R;
-import com.farmerbb.notepad.activity.MainActivityCompose;
+import com.farmerbb.notepad.android.NotepadActivity;
 import com.farmerbb.notepad.old.fragment.NoteEditFragment;
 import com.farmerbb.notepad.old.fragment.NoteListFragment;
 import com.farmerbb.notepad.old.fragment.NoteViewFragment;
@@ -99,9 +99,9 @@ NoteViewFragment.Listener {
         super.onCreate(savedInstanceState);
 
         if(getPackageManager().getComponentEnabledSetting(
-                new ComponentName(this, MainActivityCompose.class)
+                new ComponentName(this, NotepadActivity.class)
         ) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
-            Intent intent = new Intent(this, MainActivityCompose.class);
+            Intent intent = new Intent(this, NotepadActivity.class);
             startActivity(intent);
             finish();
             return;

@@ -33,7 +33,7 @@ import android.widget.Button;
 
 import com.farmerbb.notepad.BuildConfig;
 import com.farmerbb.notepad.R;
-import com.farmerbb.notepad.activity.MainActivityCompose;
+import com.farmerbb.notepad.android.NotepadActivity;
 
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener{
 
@@ -149,7 +149,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     }
 
     public void enterTheMatrix() {
-        ComponentName component = new ComponentName(this, MainActivityCompose.class);
+        ComponentName component = new ComponentName(this, NotepadActivity.class);
         getPackageManager().setComponentEnabledSetting(component,
                 PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                 PackageManager.DONT_KILL_APP

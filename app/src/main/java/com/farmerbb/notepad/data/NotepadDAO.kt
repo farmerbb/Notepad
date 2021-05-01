@@ -42,6 +42,9 @@ import com.farmerbb.notepad.models.NoteMetadata
   @Query("SELECT * FROM NoteMetadata ORDER BY date")
   suspend fun getNoteMetadataSortedByDate(): List<NoteMetadata>
 
+  @Query("SELECT * FROM CrossRef WHERE metadataId = :id")
+  suspend fun getCrossRef(id: Long): CrossRef?
+
   @Transaction
   @Query("SELECT * FROM NoteMetadata WHERE metadataId = :id")
   suspend fun getNote(id: Long): Note

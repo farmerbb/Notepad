@@ -13,22 +13,20 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.activity
+package com.farmerbb.notepad.android
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
 import com.farmerbb.notepad.data.NoteMigrator
-import com.farmerbb.notepad.data.NotepadDAO
 import com.farmerbb.notepad.ui.NotepadComposeApp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@AndroidEntryPoint class MainActivityCompose: ComponentActivity() {
+@AndroidEntryPoint class NotepadActivity: ComponentActivity() {
   @Inject lateinit var migrator: NoteMigrator
-  @Inject lateinit var dao: NotepadDAO
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -36,7 +34,7 @@ import javax.inject.Inject
     lifecycleScope.launch {
       migrator.migrate()
       setContent {
-        NotepadComposeApp(dao)
+        NotepadComposeApp()
       }
     }
   }

@@ -29,23 +29,24 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.data.NotepadDAO
+import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.widgets.AppBarText
 import kotlinx.coroutines.launch
 
 @Composable fun NoteList(
-  dao: NotepadDAO,
-  navController: NavController
+  navController: NavController,
+  vm: NotepadViewModel = hiltNavGraphViewModel()
 ) {
   val state = produceState(listOf<NoteMetadata>()) {
     launch {
-      value = dao.getNoteMetadataSortedByTitle()
+      value = vm.getNoteMetadata()
     }
   }
 
@@ -57,7 +58,7 @@ import kotlinx.coroutines.launch
 
 @Composable fun NoteList(
   notes: List<NoteMetadata>,
-  navController: NavController,
+  navController: NavController
 ) {
   Scaffold(
     topBar = {
@@ -106,11 +107,9 @@ import kotlinx.coroutines.launch
 
 @Suppress("FunctionName")
 fun NavGraphBuilder.NoteListRoute(
-  dao: NotepadDAO,
   navController: NavController
 ) = composable(route = "NoteList") {
   NoteList(
-    dao = dao,
     navController = navController
   )
 }

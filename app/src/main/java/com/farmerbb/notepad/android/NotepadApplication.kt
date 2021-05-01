@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad
+package com.farmerbb.notepad.android
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

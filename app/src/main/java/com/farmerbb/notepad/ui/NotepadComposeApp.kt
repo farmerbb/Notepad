@@ -19,21 +19,20 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.farmerbb.notepad.data.NotepadDAO
 import com.farmerbb.notepad.ui.screens.EditNoteRoute
 import com.farmerbb.notepad.ui.screens.NoteListRoute
 import com.farmerbb.notepad.ui.screens.ViewNoteRoute
 
-@Composable fun NotepadComposeApp(dao: NotepadDAO) {
+@Composable fun NotepadComposeApp() {
   val navController = rememberNavController()
   MaterialTheme {
     NavHost(
       navController = navController,
       startDestination = "NoteList"
     ) {
-      NoteListRoute(dao, navController)
-      ViewNoteRoute(dao, navController)
-      EditNoteRoute(dao, navController)
+      NoteListRoute(navController)
+      ViewNoteRoute(navController)
+      EditNoteRoute(navController)
     }
   }
 }

@@ -22,8 +22,10 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import com.farmerbb.notepad.R
+import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.ui.screens.editNote
 import com.farmerbb.notepad.ui.screens.viewNote
 
@@ -61,14 +63,17 @@ import com.farmerbb.notepad.ui.screens.viewNote
 
 @Composable fun SaveButton(
   navController: NavController,
-  id: Long
+  id: Long,
+  text: String,
+  vm: NotepadViewModel = hiltNavGraphViewModel()
 ) {
   IconButton(
     onClick = {
-      // TODO actually save note
-      with(navController) {
-        popBackStack()
-        viewNote(id)
+      vm.save(id, text) {
+        with(navController) {
+          popBackStack()
+          viewNote(it)
+        }
       }
     }
   ) {

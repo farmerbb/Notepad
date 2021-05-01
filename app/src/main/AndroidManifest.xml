@@ -38,7 +38,7 @@
         android:xlargeScreens="true" />
 
     <application
-        android:name=".NotepadApplication"
+        android:name=".android.NotepadApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="${appName}"
@@ -86,7 +86,7 @@
             android:theme="@style/Theme.Notepad.Dialog" >
         </activity>
         <activity
-            android:name="com.farmerbb.notepad.activity.MainActivityCompose"
+            android:name="com.farmerbb.notepad.android.NotepadActivity"
             android:exported="true"
             android:enabled="false"
             android:label="${appName}"

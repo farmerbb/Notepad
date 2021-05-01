@@ -65,13 +65,15 @@ import kotlinx.coroutines.launch
 
   EditNote(
     note = state.value,
-    navController = navController
+    navController = navController,
+    vm = vm
   )
 }
 
 @Composable fun EditNote(
   note: Note,
-  navController: NavController
+  navController: NavController,
+  vm: NotepadViewModel? = null
 ) {
   val id = note.metadata.metadataId
   val textState = remember {
@@ -89,8 +91,8 @@ import kotlinx.coroutines.launch
         title = { AppBarText(note.metadata.title) },
         backgroundColor = colorResource(id = R.color.primary),
         actions = {
-          SaveButton(navController, id, textState.value.text)
-          DeleteButton(navController, id)
+          SaveButton(navController, id, textState.value.text, vm)
+          DeleteButton(navController, id, vm)
           ShareButton(navController, textState.value.text)
         }
       )

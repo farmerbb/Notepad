@@ -57,13 +57,15 @@ import kotlinx.coroutines.launch
 
   ViewNote(
     note = state.value,
-    navController = navController
+    navController = navController,
+    vm = vm
   )
 }
 
 @Composable fun ViewNote(
   note: Note,
-  navController: NavController
+  navController: NavController,
+  vm: NotepadViewModel? = null
 ) {
   val id = note.metadata.metadataId
 
@@ -75,7 +77,7 @@ import kotlinx.coroutines.launch
         backgroundColor = colorResource(id = R.color.primary),
         actions = {
           EditButton(navController, id)
-          DeleteButton(navController, id)
+          DeleteButton(navController, id, vm)
           ShareButton(navController, note.contents.text)
         }
       )

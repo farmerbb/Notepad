@@ -13,110 +13,78 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.ui
+package com.farmerbb.notepad.ui.screens
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.InteractionSource
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
+import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.data.NotepadDAO
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.ui.widgets.*
 import kotlinx.coroutines.launch
 
-@Composable fun NoteEdit(
-  id: Long?,
+@Composable fun ViewNote(
+  id: Long,
   dao: NotepadDAO,
   navController: NavController
 ) {
-  val state = produceState(
-    Note(
-      metadata = NoteMetadata(
-        title = stringResource(id = R.string.action_new)
-      )
-    )
-  ) {
-    id?.let {
-      launch {
-        value = dao.getNote(it)
-      }
+  val state = produceState(Note()) {
+    launch {
+      value = dao.getNote(id)
     }
   }
 
-  NoteEdit(
+  ViewNote(
     note = state.value,
     navController = navController
   )
 }
 
-@Composable fun NoteEdit(
+@Composable fun ViewNote(
   note: Note,
   navController: NavController
 ) {
-  val textState = remember {
-    mutableStateOf(TextFieldValue())
-  }.apply {
-    value = TextFieldValue(
-      text = note.contents.text
-    )
-  }
+  val id = note.metadata.metadataId
 
   Scaffold(
     topBar = {
       TopAppBar(
-        navigationIcon = {
-          Box(
-            modifier = Modifier
-              .clickable {
-                navController.popBackStack()
-              }
-          ) {
-            Icon(
-              imageVector = Icons.Filled.ArrowBack,
-              contentDescription = null,
-              tint = Color.White,
-              modifier = Modifier
-                .padding(12.dp)
-            )
-          }
-        },
-        title = {
-          Text(
-            text = note.metadata.title,
-            color = Color.White
-          )
-        },
-        backgroundColor = colorResource(id = R.color.primary)
+        navigationIcon = { BackButton(navController) },
+        title = { AppBarText(note.metadata.title) },
+        backgroundColor = colorResource(id = R.color.primary),
+        actions = {
+          EditButton(navController, id)
+          DeleteButton(navController, id)
+          ShareButton(navController, note.contents.text)
+        }
       )
     },
     content = {
-      BasicTextField(
-        value = textState.value,
-        onValueChange = { textState.value = it },
-        textStyle = TextStyle(
+      BasicText(
+        text = note.contents.text,
+        style = TextStyle(
           fontSize = 16.sp
         ),
         modifier = Modifier
@@ -131,24 +99,28 @@ import kotlinx.coroutines.launch
 }
 
 @Suppress("FunctionName")
-fun NavGraphBuilder.NoteEditRoute(
+fun NavGraphBuilder.ViewNoteRoute(
   dao: NotepadDAO,
   navController: NavController
 ) = composable(
-  route = "NoteEdit?id={id}",
+  route = "ViewNote/{id}",
   arguments = listOf(
-    navArgument("id") { nullable = true }
+    navArgument("id") { NavType.StringType }
   )
 ) {
-  NoteEdit(
-    id = it.arguments?.getString("id")?.toLong(),
-    dao = dao,
-    navController = navController
-  )
+  it.arguments?.getString("id")?.let { id ->
+    ViewNote(
+      id = id.toLong(),
+      dao = dao,
+      navController = navController
+    )
+  }
 }
 
-@Preview @Composable fun NoteEditPreview() = MaterialTheme {
-  NoteEdit(
+fun NavController.viewNote(id: Long) = navigate("ViewNote/$id")
+
+@Preview @Composable fun ViewNotePreview() = MaterialTheme {
+  ViewNote(
     note = Note(
       metadata = NoteMetadata(
         title = "Title"

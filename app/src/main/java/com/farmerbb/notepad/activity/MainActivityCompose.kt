@@ -18,16 +18,10 @@ package com.farmerbb.notepad.activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
-import androidx.navigation.compose.rememberNavController
 import com.farmerbb.notepad.data.NoteMigrator
 import com.farmerbb.notepad.data.NotepadDAO
-import com.farmerbb.notepad.ui.*
+import com.farmerbb.notepad.ui.NotepadComposeApp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -41,19 +35,8 @@ import javax.inject.Inject
 
     lifecycleScope.launch {
       migrator.migrate()
-
       setContent {
-        val navController = rememberNavController()
-        MaterialTheme {
-          NavHost(
-            navController = navController,
-            startDestination = "NoteList"
-          ) {
-            NoteListRoute(dao, navController)
-            NoteViewRoute(dao, navController)
-            NoteEditRoute(dao, navController)
-          }
-        }
+        NotepadComposeApp(dao)
       }
     }
   }

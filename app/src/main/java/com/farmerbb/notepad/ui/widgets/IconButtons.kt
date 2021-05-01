@@ -20,6 +20,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
@@ -89,17 +91,27 @@ import com.farmerbb.notepad.ui.screens.viewNote
   id: Long,
   vm: NotepadViewModel?
 ) {
-  IconButton(
-    onClick = {
-      vm?.delete(id) {
-        navController.popBackStack()
-      }
-    }
-  ) {
+  val dialogIsOpen = remember { mutableStateOf(false) }
+
+  IconButton(onClick = { dialogIsOpen.value = true }) {
     Icon(
       imageVector = Icons.Filled.Delete,
       contentDescription = stringResource(R.string.action_delete),
       tint = Color.White
+    )
+  }
+
+  if(dialogIsOpen.value) {
+    DeleteAlertDialog(
+      onConfirm = {
+        dialogIsOpen.value = false
+        vm?.delete(id) {
+          navController.popBackStack()
+        }
+      },
+      onDismiss = {
+        dialogIsOpen.value = false
+      }
     )
   }
 }

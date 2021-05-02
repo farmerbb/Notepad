@@ -22,8 +22,12 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -79,8 +83,10 @@ import kotlinx.coroutines.launch
   val textState = remember {
     mutableStateOf(TextFieldValue())
   }.apply {
+    val text = note.contents.text
     value = TextFieldValue(
-      text = note.contents.text
+      text = text,
+      selection = TextRange(text.length)
     )
   }
 
@@ -98,6 +104,7 @@ import kotlinx.coroutines.launch
       )
     },
     content = {
+      val focusRequester = remember { FocusRequester() }
       BasicTextField(
         value = textState.value,
         onValueChange = { textState.value = it },
@@ -111,7 +118,13 @@ import kotlinx.coroutines.launch
           )
           .fillMaxWidth()
           .fillMaxHeight()
+          .focusRequester(focusRequester)
       )
+
+      DisposableEffect(Unit) {
+        focusRequester.requestFocus()
+        onDispose {}
+      }
     })
 }
 

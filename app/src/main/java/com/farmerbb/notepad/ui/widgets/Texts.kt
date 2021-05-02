@@ -18,10 +18,17 @@ package com.farmerbb.notepad.ui.widgets
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import java.util.Locale
 
 @Composable fun AppBarText(text: String) {
   Text(
     text = text,
     color = Color.White
+  )
+}
+
+@Composable fun UppercaseText(text: String) {
+  Text(
+    text = text.toUpperCase(Locale.getDefault())
   )
 }

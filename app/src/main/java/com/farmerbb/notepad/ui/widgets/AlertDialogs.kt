@@ -32,12 +32,12 @@ import com.farmerbb.notepad.R
     text = { Text(text = stringResource(id = R.string.dialog_are_you_sure)) },
     confirmButton = {
       TextButton(onClick = onConfirm) {
-        Text(text = stringResource(id = R.string.action_delete))
+        UppercaseText(text = stringResource(id = R.string.action_delete))
       }
     },
     dismissButton = {
       TextButton(onClick = onDismiss) {
-        Text(text = stringResource(id = R.string.action_cancel))
+        UppercaseText(text = stringResource(id = R.string.action_cancel))
       }
     }
   )

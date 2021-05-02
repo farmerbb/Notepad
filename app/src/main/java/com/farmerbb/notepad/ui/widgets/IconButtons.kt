@@ -27,8 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
-import com.farmerbb.notepad.ui.screens.editNote
-import com.farmerbb.notepad.ui.screens.viewNote
+import com.farmerbb.notepad.ui.routes.editNote
+import com.farmerbb.notepad.ui.routes.viewNote
 
 @Composable fun BackButton(navController: NavController) {
   IconButton(
@@ -43,8 +43,8 @@ import com.farmerbb.notepad.ui.screens.viewNote
 }
 
 @Composable fun EditButton(
-  navController: NavController,
-  id: Long
+  id: Long,
+  navController: NavController
 ) {
   IconButton(
     onClick = {
@@ -63,14 +63,14 @@ import com.farmerbb.notepad.ui.screens.viewNote
 }
 
 @Composable fun SaveButton(
-  navController: NavController,
   id: Long,
   text: String,
+  navController: NavController,
   vm: NotepadViewModel?
 ) {
   IconButton(
     onClick = {
-      vm?.save(id, text) {
+      vm?.saveNote(id, text) {
         with(navController) {
           popBackStack()
           viewNote(it)
@@ -87,8 +87,8 @@ import com.farmerbb.notepad.ui.screens.viewNote
 }
 
 @Composable fun DeleteButton(
-  navController: NavController,
   id: Long,
+  navController: NavController,
   vm: NotepadViewModel?
 ) {
   val dialogIsOpen = remember { mutableStateOf(false) }
@@ -105,7 +105,7 @@ import com.farmerbb.notepad.ui.screens.viewNote
     DeleteAlertDialog(
       onConfirm = {
         dialogIsOpen.value = false
-        vm?.delete(id) {
+        vm?.deleteNote(id) {
           navController.popBackStack()
         }
       },
@@ -121,7 +121,7 @@ import com.farmerbb.notepad.ui.screens.viewNote
   vm: NotepadViewModel?
 ) {
   IconButton(
-    onClick = { vm?.share(text) }
+    onClick = { vm?.shareNote(text) }
   ) {
     Icon(
       imageVector = Icons.Filled.Share,

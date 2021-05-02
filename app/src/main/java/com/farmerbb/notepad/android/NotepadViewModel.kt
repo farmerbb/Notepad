@@ -20,6 +20,7 @@ import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.farmerbb.notepad.data.NotepadDAO
+import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.models.CrossRef
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
@@ -29,65 +30,27 @@ import javax.inject.Inject
 
 @HiltViewModel class NotepadViewModel @Inject constructor(
   private val context: Application,
-  private val dao: NotepadDAO
+  private val repo: NotepadRepository
 ): AndroidViewModel(context) {
-  suspend fun getNoteMetadata() = dao.getNoteMetadataSortedByTitle()
-  suspend fun getNote(id: Long) = dao.getNote(id)
+  suspend fun getNoteMetadata() = repo.getNoteMetadata()
+  suspend fun getNote(id: Long) = repo.getNote(id)
 
-  fun save(id: Long, text: String, onSuccess: (Long) -> Unit) {
-    viewModelScope.launch {
-      try {
-        val crossRef = dao.getCrossRef(id) ?: CrossRef()
-
-        val metadata = NoteMetadata(
-          metadataId = crossRef.metadataId,
-          title = text.substringBefore("\n")
-        )
-
-        val contents = NoteContents(
-          contentsId = crossRef.contentsId,
-          text = text
-        )
-
-        with(dao) {
-          val metadataId = insertNoteMetadata(metadata)
-          val contentsId = insertNoteContents(contents)
-
-          if(id == 0L) {
-            insertCrossRef(CrossRef(
-              metadataId = metadataId,
-              contentsId = contentsId
-            ))
-
-            onSuccess.invoke(metadataId)
-          } else
-            onSuccess.invoke(id)
-        }
-      } catch (e: Exception) {
-        e.printStackTrace()
-      }
-    }
+  fun saveNote(
+    id: Long,
+    text: String,
+    onSuccess: (Long) -> Unit
+  ) = viewModelScope.launch {
+    repo.saveNote(id, text, onSuccess)
   }
 
-  fun delete(id: Long, onSuccess: () -> Unit) {
-    viewModelScope.launch {
-      try {
-        with(dao) {
-          getCrossRef(id)?.let {
-            deleteNoteMetadata(it.metadataId)
-            deleteNoteContents(it.contentsId)
-            deleteCrossRef(id)
-          }
-        }
-
-        onSuccess.invoke()
-      } catch (e: Exception) {
-        e.printStackTrace()
-      }
-    }
+  fun deleteNote(
+    id: Long,
+    onSuccess: () -> Unit
+  ) = viewModelScope.launch {
+    repo.deleteNote(id, onSuccess)
   }
 
-  fun share(text: String) = try {
+  fun shareNote(text: String) = try {
     context.startActivity(Intent().apply {
       action = Intent.ACTION_SEND
       flags = Intent.FLAG_ACTIVITY_NEW_TASK

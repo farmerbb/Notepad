@@ -19,9 +19,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.farmerbb.notepad.ui.screens.EditNoteRoute
-import com.farmerbb.notepad.ui.screens.NoteListRoute
-import com.farmerbb.notepad.ui.screens.ViewNoteRoute
+import com.farmerbb.notepad.ui.routes.EditNoteRoute
+import com.farmerbb.notepad.ui.routes.NoteListRoute
+import com.farmerbb.notepad.ui.routes.ViewNoteRoute
 
 @Composable fun NotepadComposeApp() {
   val navController = rememberNavController()

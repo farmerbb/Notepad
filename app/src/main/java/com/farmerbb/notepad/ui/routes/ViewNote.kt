@@ -13,29 +13,25 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.ui.screens
+package com.farmerbb.notepad.ui.routes
 
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusModifier
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
@@ -48,47 +44,30 @@ import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.widgets.*
 import kotlinx.coroutines.launch
 
-@Composable fun EditNote(
-  id: Long?,
+@Composable fun ViewNote(
+  id: Long,
   navController: NavController,
   vm: NotepadViewModel = hiltNavGraphViewModel()
 ) {
-  val state = produceState(
-    Note(
-      metadata = NoteMetadata(
-        title = stringResource(id = R.string.action_new)
-      )
-    )
-  ) {
-    id?.let {
-      launch {
-        value = vm.getNote(it)
-      }
+  val state = produceState(Note()) {
+    launch {
+      value = vm.getNote(id)
     }
   }
 
-  EditNote(
+  ViewNote(
     note = state.value,
     navController = navController,
     vm = vm
   )
 }
 
-@Composable fun EditNote(
+@Composable fun ViewNote(
   note: Note,
   navController: NavController,
   vm: NotepadViewModel? = null
 ) {
   val id = note.metadata.metadataId
-  val textState = remember {
-    mutableStateOf(TextFieldValue())
-  }.apply {
-    val text = note.contents.text
-    value = TextFieldValue(
-      text = text,
-      selection = TextRange(text.length)
-    )
-  }
 
   Scaffold(
     topBar = {
@@ -97,18 +76,16 @@ import kotlinx.coroutines.launch
         title = { AppBarText(note.metadata.title) },
         backgroundColor = colorResource(id = R.color.primary),
         actions = {
-          SaveButton(navController, id, textState.value.text, vm)
-          DeleteButton(navController, id, vm)
-          ShareButton(textState.value.text, vm)
+          EditButton(id, navController)
+          DeleteButton(id, navController, vm)
+          ShareButton(note.contents.text, vm)
         }
       )
     },
     content = {
-      val focusRequester = remember { FocusRequester() }
-      BasicTextField(
-        value = textState.value,
-        onValueChange = { textState.value = it },
-        textStyle = TextStyle(
+      BasicText(
+        text = note.contents.text,
+        style = TextStyle(
           fontSize = 16.sp
         ),
         modifier = Modifier
@@ -118,36 +95,31 @@ import kotlinx.coroutines.launch
           )
           .fillMaxWidth()
           .fillMaxHeight()
-          .focusRequester(focusRequester)
       )
-
-      DisposableEffect(Unit) {
-        focusRequester.requestFocus()
-        onDispose {}
-      }
     })
 }
 
 @Suppress("FunctionName")
-fun NavGraphBuilder.EditNoteRoute(
+fun NavGraphBuilder.ViewNoteRoute(
   navController: NavController
 ) = composable(
-  route = "EditNote?id={id}",
+  route = "ViewNote/{id}",
   arguments = listOf(
-    navArgument("id") { nullable = true }
+    navArgument("id") { NavType.StringType }
   )
 ) {
-  EditNote(
-    id = it.arguments?.getString("id")?.toLong(),
-    navController = navController
-  )
+  it.arguments?.getString("id")?.let { id ->
+    ViewNote(
+      id = id.toLong(),
+      navController = navController
+    )
+  }
 }
 
-fun NavController.newNote() = navigate("EditNote")
-fun NavController.editNote(id: Long) = navigate("EditNote?id=$id")
+fun NavController.viewNote(id: Long) = navigate("ViewNote/$id")
 
-@Preview @Composable fun EditNotePreview() = MaterialTheme {
-  EditNote(
+@Preview @Composable fun ViewNotePreview() = MaterialTheme {
+  ViewNote(
     note = Note(
       metadata = NoteMetadata(
         title = "Title"

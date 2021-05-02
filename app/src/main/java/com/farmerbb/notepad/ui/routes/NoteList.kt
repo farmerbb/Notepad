@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.ui.screens
+package com.farmerbb.notepad.ui.routes
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

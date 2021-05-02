@@ -8,6 +8,7 @@ repositories {
   google()
   mavenCentral()
   gradlePluginPortal()
+  maven { url "https://jitpack.io" }
 }
 
 android {
@@ -120,4 +121,8 @@ dependencies {
   implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha04"
   implementation "androidx.navigation:navigation-compose:1.0.0-alpha10"
   implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha01"
+
+  implementation 'androidx.datastore:datastore-preferences:1.0.0-beta01'
+  implementation 'com.github.rk779.ComposePreferences:preferences-datastore:1.0.3'
+  implementation 'com.github.rk779.ComposePreferences:preferences-ui:1.0.3'
 }

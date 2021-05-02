@@ -16,6 +16,9 @@
 package com.farmerbb.notepad.data
 
 import android.content.Context
+import androidx.datastore.preferences.SharedPreferencesMigration
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
 import com.farmerbb.notepad.models.CrossRef
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
@@ -28,10 +31,20 @@ import java.lang.StringBuilder
 import java.util.*
 import javax.inject.Inject
 
-class NoteMigrator @Inject constructor(
+class DataMigrator @Inject constructor(
   @ApplicationContext val context: Context,
   private val dao: NotepadDAO
 ) {
+  private val Context.dataStore by preferencesDataStore(
+    name = "settings",
+    produceMigrations = { context ->
+      listOf(
+        SharedPreferencesMigration(context, "${context.packageName}_preferences"),
+        SharedPreferencesMigration(context, "MainActivity")
+      )
+    }
+  )
+
   suspend fun migrate() {
     for(filename in context.filesDir.list().orEmpty()) {
       if(!NumberUtils.isCreatable(filename)) continue
@@ -65,6 +78,10 @@ class NoteMigrator @Inject constructor(
 
       dao.insertNoteContents(contents)
       draft.delete()
+    }
+
+    context.dataStore.edit {
+      // no-op to force SharedPreferences migration to trigger
     }
   }
 

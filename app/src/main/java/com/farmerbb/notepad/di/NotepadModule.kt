@@ -16,7 +16,6 @@
 package com.farmerbb.notepad.di
 
 import android.content.Context
-import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.farmerbb.notepad.data.NotepadDatabase
 import dagger.Module
@@ -27,9 +26,6 @@ import dagger.hilt.components.SingletonComponent
 
 @InstallIn(SingletonComponent::class)
 @Module class NotepadModule {
-  @Provides fun provideSharedPreferences(@ApplicationContext context: Context)
-          = PreferenceManager.getDefaultSharedPreferences(context)
-
   @Provides fun provideDatabase(@ApplicationContext context: Context)
           = Room.databaseBuilder(context, NotepadDatabase::class.java, "notepad").build()
 

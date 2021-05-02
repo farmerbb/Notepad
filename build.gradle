@@ -1,38 +1,35 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext {
-        kotlin_version = '1.4.32'
-        hilt_version = '2.35'
-    }
+  apply from: 'dependencies.gradle'
 
-    repositories {
-        google()
-        mavenCentral()
-    }
+  repositories {
+    google()
+    mavenCentral()
+  }
 
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0-alpha15'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
-    }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:7.0.0-alpha15'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+  }
 }
 
 plugins {
-    id 'se.patrikerdes.use-latest-versions' version '0.2.15'
-    id 'com.github.ben-manes.versions' version '0.36.0'
+  id 'se.patrikerdes.use-latest-versions' version '0.2.15'
+  id 'com.github.ben-manes.versions' version '0.36.0'
 }
 
 dependencyUpdates {
-    revision = 'release'
+  revision = 'release'
 }
 
 allprojects {
-    repositories {
-        mavenCentral()
-    }
+  repositories {
+    mavenCentral()
+  }
 }
 
 task clean(type: Delete) {
-    delete rootProject.buildDir
+  delete rootProject.buildDir
 }

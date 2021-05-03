@@ -90,7 +90,8 @@
             android:exported="true"
             android:enabled="false"
             android:label="${appName}"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

@@ -35,6 +35,7 @@ This table will track the features of the app as they are reimplemented in the n
 | Settings screen                       |                        |
 | About screen                          |                        |
 | Overflow menus                        |                        |
+| Double-tap to edit                    |                        |
 | Notes list empty state                |                        |
 | Multi-select notes list (long-press)  |                        |
 | Multi-select notes list (button)      |                        |

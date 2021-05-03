@@ -125,4 +125,6 @@ dependencies {
   implementation 'androidx.datastore:datastore-preferences:1.0.0-beta01'
   implementation "com.github.rk779.ComposePreferences:preferences-datastore:$compose_prefs_version"
   implementation "com.github.rk779.ComposePreferences:preferences-ui:$compose_prefs_version"
+
+  implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
 }

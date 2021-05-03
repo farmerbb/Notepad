@@ -123,6 +123,6 @@ dependencies {
   implementation "androidx.hilt:hilt-navigation-compose:1.0.0-alpha01"
 
   implementation 'androidx.datastore:datastore-preferences:1.0.0-beta01'
-  implementation 'com.github.rk779.ComposePreferences:preferences-datastore:1.0.3'
-  implementation 'com.github.rk779.ComposePreferences:preferences-ui:1.0.3'
+  implementation "com.github.rk779.ComposePreferences:preferences-datastore:$compose_prefs_version"
+  implementation "com.github.rk779.ComposePreferences:preferences-ui:$compose_prefs_version"
 }

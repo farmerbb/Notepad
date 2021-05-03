@@ -1,9 +1,10 @@
 allprojects {
   ext {
     kotlin_version = '1.4.32'
-    hilt_version = '2.35'
+    hilt_version = '2.35.1'
     coroutines_version = '1.4.3'
     room_version = '2.3.0'
     compose_version = '1.0.0-beta05'
+    compose_prefs_version = '1.0.3'
   }
 }

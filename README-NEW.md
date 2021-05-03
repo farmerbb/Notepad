@@ -23,6 +23,7 @@ This table will track the features of the app as they are reimplemented in the n
 |---------------------------------------|------------------------|
 | Migrate old notes and preferences     | ✔                      |
 | List all notes                        | ✔                      |
+| Notes list empty state                | ✔                      |
 | Create new note                       | ✔                      |
 | View saved notes                      | ✔                      |
 | Edit saved notes                      | ✔                      |
@@ -36,7 +37,6 @@ This table will track the features of the app as they are reimplemented in the n
 | About screen                          |                        |
 | Overflow menus                        |                        |
 | Double-tap to edit                    |                        |
-| Notes list empty state                |                        |
 | Multi-select notes list (long-press)  |                        |
 | Multi-select notes list (button)      |                        |
 | Light/dark themes                     |                        |

@@ -15,12 +15,14 @@
 
 package com.farmerbb.notepad.ui.routes
 
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
@@ -85,23 +87,25 @@ import kotlinx.coroutines.launch
       )
     },
     content = {
-      LazyColumn {
-        item {
-          SelectionContainer {
-            BasicText(
-              text = note.contents.text,
-              style = TextStyle(
-                fontSize = 16.sp
-              ),
-              modifier = Modifier
-                .padding(
-                  horizontal = 16.dp,
-                  vertical = 12.dp
-                )
-                .fillMaxWidth()
-                .fillMaxHeight()
-            )
-          }
+      Box(
+        modifier = Modifier.verticalScroll(
+          state = ScrollState(initial = 0)
+        )
+      ) {
+        SelectionContainer {
+          BasicText(
+            text = note.contents.text,
+            style = TextStyle(
+              fontSize = 16.sp
+            ),
+            modifier = Modifier
+              .padding(
+                horizontal = 16.dp,
+                vertical = 12.dp
+              )
+              .fillMaxWidth()
+              .fillMaxHeight()
+          )
         }
       }
     })

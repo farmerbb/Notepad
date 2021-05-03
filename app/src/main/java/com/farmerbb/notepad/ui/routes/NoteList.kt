@@ -37,7 +37,6 @@ import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
@@ -62,7 +61,7 @@ import kotlinx.coroutines.launch
 
 @Composable fun NoteList(
   notes: List<NoteMetadata>,
-  navController: NavController
+  navController: NavController? = null
 ) {
   Scaffold(
     topBar = {
@@ -73,7 +72,7 @@ import kotlinx.coroutines.launch
     },
     floatingActionButton = {
       FloatingActionButton(
-        onClick = { navController.newNote() },
+        onClick = { navController?.newNote() },
         backgroundColor = colorResource(id = R.color.primary),
         content = {
           Icon(
@@ -106,7 +105,7 @@ import kotlinx.coroutines.launch
             Column(modifier = Modifier
               .clickable {
                 val id = notes[it].metadataId
-                navController.viewNote(id)
+                navController?.viewNote(id)
               }
             ) {
               Text(
@@ -142,14 +141,12 @@ fun NavGraphBuilder.NoteListRoute(
     notes = listOf(
       NoteMetadata(title = "Test Note 1"),
       NoteMetadata(title = "Test Note 2")
-    ),
-    navController = rememberNavController()
+    )
   )
 }
 
 @Preview @Composable fun NoteListEmptyPreview() = MaterialTheme {
   NoteList(
-    notes = emptyList(),
-    navController = rememberNavController()
+    notes = emptyList()
   )
 }

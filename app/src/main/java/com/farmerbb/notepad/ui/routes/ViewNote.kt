@@ -39,7 +39,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
-import androidx.navigation.compose.rememberNavController
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
@@ -68,7 +67,7 @@ import kotlinx.coroutines.launch
 
 @Composable fun ViewNote(
   note: Note,
-  navController: NavController,
+  navController: NavController? = null,
   vm: NotepadViewModel? = null
 ) {
   val id = note.metadata.metadataId
@@ -139,7 +138,6 @@ fun NavController.viewNote(id: Long) = navigate("ViewNote/$id")
       contents = NoteContents(
         text = "This is some text"
       )
-    ),
-    navController = rememberNavController()
+    )
   )
 }

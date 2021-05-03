@@ -30,9 +30,9 @@ import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.ui.routes.editNote
 import com.farmerbb.notepad.ui.routes.viewNote
 
-@Composable fun BackButton(navController: NavController) {
+@Composable fun BackButton(navController: NavController?) {
   IconButton(
-    onClick = { navController.popBackStack() }
+    onClick = { navController?.popBackStack() }
   ) {
     Icon(
       imageVector = Icons.Filled.ArrowBack,
@@ -44,11 +44,11 @@ import com.farmerbb.notepad.ui.routes.viewNote
 
 @Composable fun EditButton(
   id: Long,
-  navController: NavController
+  navController: NavController?
 ) {
   IconButton(
     onClick = {
-      with(navController) {
+      navController?.apply {
         popBackStack()
         editNote(id)
       }
@@ -65,13 +65,13 @@ import com.farmerbb.notepad.ui.routes.viewNote
 @Composable fun SaveButton(
   id: Long,
   text: String,
-  navController: NavController,
+  navController: NavController?,
   vm: NotepadViewModel?
 ) {
   IconButton(
     onClick = {
       vm?.saveNote(id, text) {
-        with(navController) {
+        navController?.apply {
           popBackStack()
           viewNote(it)
         }
@@ -88,7 +88,7 @@ import com.farmerbb.notepad.ui.routes.viewNote
 
 @Composable fun DeleteButton(
   id: Long,
-  navController: NavController,
+  navController: NavController?,
   vm: NotepadViewModel?
 ) {
   val dialogIsOpen = remember { mutableStateOf(false) }
@@ -106,7 +106,7 @@ import com.farmerbb.notepad.ui.routes.viewNote
       onConfirm = {
         dialogIsOpen.value = false
         vm?.deleteNote(id) {
-          navController.popBackStack()
+          navController?.popBackStack()
         }
       },
       onDismiss = {

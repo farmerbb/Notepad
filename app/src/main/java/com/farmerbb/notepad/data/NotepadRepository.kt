@@ -49,9 +49,9 @@ class NotepadRepository @Inject constructor(
           contentsId = contentsId
         ))
 
-        onSuccess.invoke(metadataId)
+        onSuccess(metadataId)
       } else
-        onSuccess.invoke(id)
+        onSuccess(id)
     }
   } catch (e: Exception) {
     e.printStackTrace()
@@ -66,7 +66,7 @@ class NotepadRepository @Inject constructor(
       }
     }
 
-    onSuccess.invoke()
+    onSuccess()
   } catch (e: Exception) {
     e.printStackTrace()
   }

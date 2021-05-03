@@ -19,11 +19,9 @@ import android.app.Application
 import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.farmerbb.notepad.data.NotepadDAO
 import com.farmerbb.notepad.data.NotepadRepository
-import com.farmerbb.notepad.models.CrossRef
-import com.farmerbb.notepad.models.NoteContents
-import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.utils.showToast
+import com.farmerbb.notepad.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -40,7 +38,9 @@ import javax.inject.Inject
     text: String,
     onSuccess: (Long) -> Unit
   ) = viewModelScope.launch {
-    repo.saveNote(id, text, onSuccess)
+    text.checkLength {
+      repo.saveNote(id, text, onSuccess)
+    }
   }
 
   fun deleteNote(
@@ -50,14 +50,35 @@ import javax.inject.Inject
     repo.deleteNote(id, onSuccess)
   }
 
-  fun shareNote(text: String) = try {
-    context.startActivity(Intent().apply {
-      action = Intent.ACTION_SEND
-      flags = Intent.FLAG_ACTIVITY_NEW_TASK
-      type = "text/plain"
-      putExtra(Intent.EXTRA_TEXT, text)
-    })
-  } catch (e: Exception) {
-    e.printStackTrace()
+  fun shareNote(text: String) = viewModelScope.launch {
+    text.checkLength {
+      showShareSheet(text)
+    }
+  }
+
+  private fun showShareSheet(text: String) = with(context) {
+    try {
+      startActivity(
+        Intent.createChooser(
+          Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, text)
+          },
+          getString(R.string.send_to)
+        ).apply {
+          flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+      )
+    } catch (e: Exception) {
+      e.printStackTrace()
+    }
+  }
+
+  private suspend fun String.checkLength(
+    onSuccess: suspend () -> Unit
+  ) = when(length) {
+    0 -> context.showToast(R.string.empty_note)
+    else -> onSuccess()
   }
 }

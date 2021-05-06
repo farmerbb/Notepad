@@ -41,6 +41,7 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.widgets.AppBarText
+import com.farmerbb.notepad.ui.widgets.SettingsButton
 import kotlinx.coroutines.launch
 
 @Composable fun NoteList(
@@ -67,7 +68,10 @@ import kotlinx.coroutines.launch
     topBar = {
       TopAppBar(
         title = { AppBarText(stringResource(id = R.string.app_name)) },
-        backgroundColor = colorResource(id = R.color.primary)
+        backgroundColor = colorResource(id = R.color.primary),
+        actions = {
+          SettingsButton(navController)
+        }
       )
     },
     floatingActionButton = {

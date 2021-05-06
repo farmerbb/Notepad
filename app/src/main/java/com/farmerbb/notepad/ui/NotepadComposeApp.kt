@@ -15,29 +15,38 @@
 
 package com.farmerbb.notepad.ui
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.farmerbb.notepad.ui.routes.AppSettingsRoute
 import com.farmerbb.notepad.ui.routes.EditNoteRoute
 import com.farmerbb.notepad.ui.routes.NoteListRoute
 import com.farmerbb.notepad.ui.routes.ViewNoteRoute
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import de.schnettler.datastore.compose.ProvideDataStoreManager
+import de.schnettler.datastore.manager.DataStoreManager
 
+@ExperimentalMaterialApi
 @Composable fun NotepadComposeApp() {
   val navController = rememberNavController()
   val systemUiController = rememberSystemUiController()
 
   MaterialTheme {
-    NavHost(
-      navController = navController,
-      startDestination = "NoteList"
-    ) {
-      NoteListRoute(navController)
-      ViewNoteRoute(navController)
-      EditNoteRoute(navController)
+    ProvideDataStoreManager(dataStoreManager = DataStoreManager(LocalContext.current)) {
+      NavHost(
+        navController = navController,
+        startDestination = "NoteList"
+      ) {
+        NoteListRoute(navController)
+        ViewNoteRoute(navController)
+        EditNoteRoute(navController)
+        AppSettingsRoute(navController)
+      }
     }
   }
 

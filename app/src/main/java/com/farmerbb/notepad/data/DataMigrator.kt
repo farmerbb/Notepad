@@ -23,6 +23,8 @@ import com.farmerbb.notepad.models.CrossRef
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import org.apache.commons.lang3.math.NumberUtils
 import java.io.BufferedReader
 import java.io.File
@@ -35,6 +37,8 @@ class DataMigrator @Inject constructor(
   @ApplicationContext val context: Context,
   private val dao: NotepadDAO
 ) {
+  private val job = Job()
+
   private val Context.dataStore by preferencesDataStore(
     name = "settings",
     produceMigrations = { context ->
@@ -42,7 +46,8 @@ class DataMigrator @Inject constructor(
         SharedPreferencesMigration(context, "${context.packageName}_preferences"),
         SharedPreferencesMigration(context, "MainActivity")
       )
-    }
+    },
+    scope = CoroutineScope(job)
   )
 
   suspend fun migrate() {
@@ -83,6 +88,8 @@ class DataMigrator @Inject constructor(
     context.dataStore.edit {
       // no-op to force SharedPreferences migration to trigger
     }
+
+    job.complete()
   }
 
   private fun loadNoteTitle(filename: String): String {

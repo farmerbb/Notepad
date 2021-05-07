@@ -29,11 +29,11 @@ This table will track the features of the app as they are reimplemented in the n
 | Edit saved notes                      | ✔                      |
 | Share notes                           | ✔                      |
 | Delete note (while viewing/editing)   | ✔                      |
+| Settings screen                       | ✔                      |
 | Delete notes (from list)              |                        |
 | Print notes                           |                        |
 | Import text files                     |                        |
 | Export to filesystem                  |                        |
-| Settings screen                       |                        |
 | About screen                          |                        |
 | Overflow menus                        |                        |
 | Double-tap to edit                    |                        |

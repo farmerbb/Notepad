@@ -15,12 +15,12 @@
 
 package com.farmerbb.notepad.ui.widgets
 
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.farmerbb.notepad.R
+import androidx.compose.ui.window.Dialog
+import com.farmerbb.notepad.ui.AppSettings
 
 @Composable fun DeleteAlertDialog(
   onConfirm: () -> Unit,
@@ -41,4 +41,12 @@ import com.farmerbb.notepad.R
       }
     }
   )
+}
+
+@Composable fun SettingsDialog(onDismiss: () -> Unit) {
+  Dialog(onDismissRequest = onDismiss) {
+    Surface(shape = MaterialTheme.shapes.medium) {
+      AppSettings()
+    }
+  }
 }

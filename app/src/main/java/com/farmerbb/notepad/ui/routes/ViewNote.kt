@@ -32,13 +32,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
-import androidx.navigation.compose.navigate
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
@@ -50,7 +49,7 @@ import kotlinx.coroutines.launch
 @Composable fun ViewNote(
   id: Long,
   navController: NavController,
-  vm: NotepadViewModel = hiltNavGraphViewModel()
+  vm: NotepadViewModel = hiltViewModel()
 ) {
   val state = produceState(Note()) {
     launch {

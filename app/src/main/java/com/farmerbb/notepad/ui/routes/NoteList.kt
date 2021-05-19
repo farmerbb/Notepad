@@ -33,7 +33,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltNavGraphViewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -41,12 +41,11 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.widgets.AppBarText
-import com.farmerbb.notepad.ui.widgets.SettingsButton
 import kotlinx.coroutines.launch
 
 @Composable fun NoteList(
   navController: NavController,
-  vm: NotepadViewModel = hiltNavGraphViewModel()
+  vm: NotepadViewModel = hiltViewModel()
 ) {
   val state = produceState(listOf<NoteMetadata>()) {
     launch {
@@ -70,7 +69,7 @@ import kotlinx.coroutines.launch
         title = { AppBarText(stringResource(id = R.string.app_name)) },
         backgroundColor = colorResource(id = R.color.primary),
         actions = {
-          SettingsButton()
+//        SettingsButton()
         }
       )
     },

@@ -40,6 +40,7 @@ import androidx.navigation.compose.composable
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.ui.widgets.AboutButton
 import com.farmerbb.notepad.ui.widgets.AppBarText
 import com.farmerbb.notepad.ui.widgets.SettingsButton
 import kotlinx.coroutines.launch
@@ -56,13 +57,15 @@ import kotlinx.coroutines.launch
 
   NoteList(
     notes = state.value,
-    navController = navController
+    navController = navController,
+    vm = vm
   )
 }
 
 @Composable fun NoteList(
   notes: List<NoteMetadata>,
-  navController: NavController? = null
+  navController: NavController? = null,
+  vm: NotepadViewModel? = null
 ) {
   Scaffold(
     topBar = {
@@ -71,6 +74,7 @@ import kotlinx.coroutines.launch
         backgroundColor = colorResource(id = R.color.primary),
         actions = {
           SettingsButton()
+          AboutButton(vm)
         }
       )
     },

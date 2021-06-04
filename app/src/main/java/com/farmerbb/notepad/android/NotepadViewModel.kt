@@ -16,12 +16,21 @@
 package com.farmerbb.notepad.android
 
 import android.app.Application
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.farmerbb.notepad.BuildConfig
 import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.utils.showToast
 import com.farmerbb.notepad.R
+import com.farmerbb.notepad.utils.ReleaseType.PlayStore
+import com.farmerbb.notepad.utils.ReleaseType.Amazon
+import com.farmerbb.notepad.utils.ReleaseType.FDroid
+import com.farmerbb.notepad.utils.ReleaseType.Unknown
+import com.farmerbb.notepad.utils.isPlayStoreInstalled
+import com.farmerbb.notepad.utils.releaseType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -54,6 +63,27 @@ import javax.inject.Inject
     text.checkLength {
       showShareSheet(text)
     }
+  }
+
+  fun checkForUpdates() = with(context) {
+    val url = when(releaseType) {
+      PlayStore -> {
+        if(isPlayStoreInstalled)
+          "https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}"
+        else
+          "https://github.com/farmerbb/Notepad/releases"
+      }
+      Amazon -> "https://www.amazon.com/gp/mas/dl/android?p=${BuildConfig.APPLICATION_ID}"
+      FDroid -> "https://f-droid.org/repository/browse/?fdid=${BuildConfig.APPLICATION_ID}"
+      Unknown -> ""
+    }
+
+    try {
+      startActivity(Intent(Intent.ACTION_VIEW).apply {
+        data = Uri.parse(url)
+        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+      })
+    } catch (ignored: ActivityNotFoundException) {}
   }
 
   private fun showShareSheet(text: String) = with(context) {

@@ -21,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import com.farmerbb.notepad.R
 import androidx.compose.ui.window.Dialog
 import com.farmerbb.notepad.ui.AppSettings
+import com.farmerbb.notepad.utils.buildYear
 
 @Composable fun DeleteAlertDialog(
   onConfirm: () -> Unit,
@@ -49,4 +50,25 @@ import com.farmerbb.notepad.ui.AppSettings
       AppSettings()
     }
   }
+}
+
+@Composable fun AboutDialog(
+  onDismiss: () -> Unit,
+  checkForUpdates: () -> Unit
+) {
+  AlertDialog(
+    onDismissRequest = onDismiss,
+    title = { Text(text = stringResource(id = R.string.dialog_about_title)) },
+    text = { Text(text = stringResource(id = R.string.dialog_about_message, buildYear)) },
+    confirmButton = {
+      TextButton(onClick = onDismiss) { // dismissing the dialog is the primary action
+        UppercaseText(text = stringResource(id = R.string.action_close))
+      }
+    },
+    dismissButton = {
+      TextButton(onClick = checkForUpdates) {
+        UppercaseText(text = stringResource(id = R.string.check_for_updates))
+      }
+    }
+  )
 }

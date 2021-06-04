@@ -150,3 +150,27 @@ import com.farmerbb.notepad.ui.routes.viewNote
     )
   }
 }
+
+@Composable fun AboutButton(vm: NotepadViewModel?) {
+  val dialogIsOpen = remember { mutableStateOf(false) }
+
+  IconButton(onClick = { dialogIsOpen.value = true }) {
+    Icon(
+      imageVector = Icons.Filled.Info,
+      contentDescription = stringResource(R.string.dialog_about_title),
+      tint = Color.White
+    )
+  }
+
+  if(dialogIsOpen.value) {
+    AboutDialog(
+      onDismiss = {
+        dialogIsOpen.value = false
+      },
+      checkForUpdates = {
+        dialogIsOpen.value = false
+        vm?.checkForUpdates()
+      }
+    )
+  }
+}

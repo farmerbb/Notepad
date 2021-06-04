@@ -31,16 +31,14 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
   val systemUiController = rememberSystemUiController()
 
   MaterialTheme {
-//  ProvideDataStoreManager(dataStoreManager = DataStoreManager(LocalContext.current)) {
-      NavHost(
-        navController = navController,
-        startDestination = "NoteList"
-      ) {
-        NoteListRoute(navController)
-        ViewNoteRoute(navController)
-        EditNoteRoute(navController)
-      }
-//  }
+    NavHost(
+      navController = navController,
+      startDestination = "NoteList"
+    ) {
+      NoteListRoute(navController)
+      ViewNoteRoute(navController)
+      EditNoteRoute(navController)
+    }
   }
 
   SideEffect {

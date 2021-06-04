@@ -45,8 +45,6 @@ android {
   }
 
   kotlinOptions {
-    jvmTarget = "1.8"
-    useIR = true
     freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
   }
 
@@ -123,8 +121,7 @@ dependencies {
   implementation 'androidx.hilt:hilt-navigation-compose:1.0.0-alpha02'
 
   implementation 'androidx.datastore:datastore-preferences:1.0.0-beta01'
-  implementation "com.github.rk779.ComposePreferences:preferences-datastore:$compose_prefs_version"
-  implementation "com.github.rk779.ComposePreferences:preferences-ui:$compose_prefs_version"
+  implementation 'com.github.rk779.ComposePreferences:compose-preferences:1.0.5'
 
   implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanist_version"
 }

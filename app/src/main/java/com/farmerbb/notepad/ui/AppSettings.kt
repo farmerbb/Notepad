@@ -18,23 +18,33 @@
 package com.farmerbb.notepad.ui
 
 import androidx.annotation.ArrayRes
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.models.NotepadPrefs
-import de.schnettler.datastore.compose.PreferenceScreen
-import de.schnettler.datastore.compose.model.BasePreferenceItem.PreferenceItem.RadioBoxListPreferenceItem
-import de.schnettler.datastore.compose.model.BasePreferenceItem.PreferenceItem.SwitchPreferenceItem
+import com.farmerbb.notepad.models.Prefs
+import com.farmerbb.notepad.utils.dataStore
+import de.schnettler.datastore.compose.model.Preference.PreferenceItem.ListPreference
+import de.schnettler.datastore.compose.model.Preference.PreferenceItem.SwitchPreference
+import de.schnettler.datastore.compose.ui.PreferenceScreen
+import de.schnettler.datastore.manager.DataStoreManager
 
 @Composable fun AppSettings() {
+  val dataStore = LocalContext.current.dataStore
+  val dataStoreManager = remember { DataStoreManager(dataStore) }
+
   PreferenceScreen(
     items = listOf(
-      RadioBoxListPreferenceItem(
-        metaData = NotepadPrefs.Theme,
+      ListPreference(
+        request = Prefs.Theme,
         title = stringResource(id = R.string.action_theme),
         summary = "",
         singleLineTitle = true,
@@ -44,8 +54,8 @@ import de.schnettler.datastore.compose.model.BasePreferenceItem.PreferenceItem.S
           valueRes = R.array.theme_list
         ),
       ),
-      RadioBoxListPreferenceItem(
-        metaData = NotepadPrefs.FontSize,
+      ListPreference(
+        request = Prefs.FontSize,
         title = stringResource(id = R.string.action_font_size),
         summary = "",
         singleLineTitle = true,
@@ -55,8 +65,8 @@ import de.schnettler.datastore.compose.model.BasePreferenceItem.PreferenceItem.S
           valueRes = R.array.font_size_list
         ),
       ),
-      RadioBoxListPreferenceItem(
-        metaData = NotepadPrefs.SortBy,
+      ListPreference(
+        request = Prefs.SortBy,
         title = stringResource(id = R.string.action_sort_by),
         summary = "",
         singleLineTitle = true,
@@ -66,8 +76,8 @@ import de.schnettler.datastore.compose.model.BasePreferenceItem.PreferenceItem.S
           valueRes = R.array.sort_by_list
         ),
       ),
-      RadioBoxListPreferenceItem(
-        metaData = NotepadPrefs.ExportFilename,
+      ListPreference(
+        request = Prefs.ExportFilename,
         title = stringResource(id = R.string.action_export_filename),
         summary = "",
         singleLineTitle = true,
@@ -77,35 +87,37 @@ import de.schnettler.datastore.compose.model.BasePreferenceItem.PreferenceItem.S
           valueRes = R.array.exported_filename_list
         ),
       ),
-      SwitchPreferenceItem(
-        metaData = NotepadPrefs.ShowDialogs,
+      SwitchPreference(
+        request = Prefs.ShowDialogs,
         title = stringResource(id = R.string.pref_title_show_dialogs),
         summary = "",
         singleLineTitle = true,
         icon = {}
       ),
-      SwitchPreferenceItem(
-        metaData = NotepadPrefs.ShowDate,
+      SwitchPreference(
+        request = Prefs.ShowDate,
         title = stringResource(id = R.string.pref_title_show_date),
         summary = "",
         singleLineTitle = true,
         icon = {}
       ),
-      SwitchPreferenceItem(
-        metaData = NotepadPrefs.DirectEdit,
+      SwitchPreference(
+        request = Prefs.DirectEdit,
         title = stringResource(id = R.string.pref_title_direct_edit),
         summary = "",
         singleLineTitle = true,
         icon = {}
       ),
-      SwitchPreferenceItem(
-        metaData = NotepadPrefs.Markdown,
+      SwitchPreference(
+        request = Prefs.Markdown,
         title = stringResource(id = R.string.pref_title_markdown),
         summary = "",
         singleLineTitle = true,
         icon = {}
       )
-    )
+    ),
+    contentPadding = PaddingValues(0.dp),
+    dataStoreManager = dataStoreManager
   )
 }
 
@@ -130,5 +142,7 @@ import de.schnettler.datastore.compose.model.BasePreferenceItem.PreferenceItem.S
 }
 
 @Preview @Composable fun AppSettingsPreview() = MaterialTheme {
-  AppSettings()
+  Surface(color = Color.White) {
+    AppSettings()
+  }
 }

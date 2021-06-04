@@ -3,8 +3,7 @@ allprojects {
     hilt_version = '2.36'
     coroutines_version = '1.5.0'
     room_version = '2.3.0'
-    compose_version = '1.0.0-beta07'
-    compose_prefs_version = '1.0.3'
+    compose_version = '1.0.0-beta08'
     accompanist_version = '0.10.0'
   }
 }

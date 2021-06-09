@@ -33,12 +33,12 @@ import com.farmerbb.notepad.utils.buildYear
     text = { Text(text = stringResource(id = R.string.dialog_are_you_sure)) },
     confirmButton = {
       TextButton(onClick = onConfirm) {
-        UppercaseText(text = stringResource(id = R.string.action_delete))
+        Text(text = stringResource(id = R.string.action_delete).uppercase())
       }
     },
     dismissButton = {
       TextButton(onClick = onDismiss) {
-        UppercaseText(text = stringResource(id = R.string.action_cancel))
+        Text(text = stringResource(id = R.string.action_cancel).uppercase())
       }
     }
   )
@@ -62,12 +62,12 @@ import com.farmerbb.notepad.utils.buildYear
     text = { Text(text = stringResource(id = R.string.dialog_about_message, buildYear)) },
     confirmButton = {
       TextButton(onClick = onDismiss) { // dismissing the dialog is the primary action
-        UppercaseText(text = stringResource(id = R.string.action_close))
+        Text(text = stringResource(id = R.string.action_close).uppercase())
       }
     },
     dismissButton = {
       TextButton(onClick = checkForUpdates) {
-        UppercaseText(text = stringResource(id = R.string.check_for_updates))
+        Text(text = stringResource(id = R.string.check_for_updates).uppercase())
       }
     }
   )

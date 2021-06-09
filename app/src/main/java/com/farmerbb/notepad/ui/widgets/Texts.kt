@@ -29,9 +29,3 @@ import java.util.Locale
     overflow = TextOverflow.Ellipsis
   )
 }
-
-@Composable fun UppercaseText(text: String) {
-  Text(
-    text = text.toUpperCase(Locale.getDefault())
-  )
-}

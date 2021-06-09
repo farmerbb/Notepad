@@ -65,10 +65,12 @@ class DataMigrator @Inject constructor(
       )
 
       with(dao) {
-        insertCrossRef(CrossRef(
-          metadataId = insertNoteMetadata(metadata),
-          contentsId = insertNoteContents(contents)
-        ))
+        insertCrossRef(
+          CrossRef(
+            metadataId = insertNoteMetadata(metadata),
+            contentsId = insertNoteContents(contents)
+          )
+        )
       }
 
       File(context.filesDir, filename).delete()

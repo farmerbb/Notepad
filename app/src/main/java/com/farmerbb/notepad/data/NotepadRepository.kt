@@ -44,10 +44,12 @@ class NotepadRepository @Inject constructor(
       val contentsId = insertNoteContents(contents)
 
       if(id == 0L) {
-        insertCrossRef(CrossRef(
-          metadataId = metadataId,
-          contentsId = contentsId
-        ))
+        insertCrossRef(
+          CrossRef(
+            metadataId = metadataId,
+            contentsId = contentsId
+          )
+        )
 
         onSuccess(metadataId)
       } else

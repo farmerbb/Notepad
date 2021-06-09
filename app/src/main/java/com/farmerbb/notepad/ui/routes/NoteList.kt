@@ -132,7 +132,8 @@ import kotlinx.coroutines.launch
           }
         }
       }
-    })
+    }
+  )
 }
 
 @Suppress("FunctionName")

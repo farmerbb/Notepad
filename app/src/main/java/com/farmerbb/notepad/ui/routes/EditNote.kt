@@ -122,7 +122,8 @@ import kotlinx.coroutines.launch
         focusRequester.requestFocus()
         onDispose {}
       }
-    })
+    }
+  )
 }
 
 @Suppress("FunctionName")

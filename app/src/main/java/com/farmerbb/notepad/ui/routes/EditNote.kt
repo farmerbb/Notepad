@@ -43,6 +43,7 @@ import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.widgets.*
+import com.farmerbb.notepad.utils.UnitDisposableEffect
 import kotlinx.coroutines.launch
 
 @Composable fun EditNote(
@@ -118,9 +119,8 @@ import kotlinx.coroutines.launch
           .focusRequester(focusRequester)
       )
 
-      DisposableEffect(Unit) {
+      UnitDisposableEffect {
         focusRequester.requestFocus()
-        onDispose {}
       }
     }
   )

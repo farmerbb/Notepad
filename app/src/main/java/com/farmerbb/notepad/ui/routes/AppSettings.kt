@@ -15,7 +15,7 @@
 
 @file:OptIn(ExperimentalMaterialApi::class)
 
-package com.farmerbb.notepad.ui
+package com.farmerbb.notepad.ui.routes
 
 import androidx.annotation.ArrayRes
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,21 +23,41 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.models.Prefs
+import com.farmerbb.notepad.ui.widgets.AppBarText
+import com.farmerbb.notepad.ui.widgets.BackButton
 import com.farmerbb.notepad.utils.dataStore
 import de.schnettler.datastore.compose.model.Preference.PreferenceItem.ListPreference
 import de.schnettler.datastore.compose.model.Preference.PreferenceItem.SwitchPreference
 import de.schnettler.datastore.compose.ui.PreferenceScreen
 import de.schnettler.datastore.manager.DataStoreManager
 
-@Composable fun AppSettings() {
+@Composable fun AppSettings(
+  navController: NavController? = null
+) {
+  Scaffold(
+    topBar = {
+      TopAppBar(
+        navigationIcon = { BackButton(navController) },
+        title = { AppBarText(stringResource(id = R.string.action_settings)) },
+        backgroundColor = colorResource(id = R.color.primary)
+      )
+    },
+    content = { NotepadPreferenceScreen() }
+  )
+}
+
+@Composable fun NotepadPreferenceScreen() {
   val dataStore = LocalContext.current.dataStore
   val dataStoreManager = remember { DataStoreManager(dataStore) }
 
@@ -141,8 +161,15 @@ import de.schnettler.datastore.manager.DataStoreManager
   return map.toMutableMap()
 }
 
+@Suppress("FunctionName")
+fun NavGraphBuilder.AppSettingsRoute(
+  navController: NavController
+) = composable(route = "AppSettings") {
+  AppSettings(navController)
+}
+
+fun NavController.appSettings() = navigate("AppSettings")
+
 @Preview @Composable fun AppSettingsPreview() = MaterialTheme {
-  Surface(color = Color.White) {
-    AppSettings()
-  }
+  AppSettings()
 }

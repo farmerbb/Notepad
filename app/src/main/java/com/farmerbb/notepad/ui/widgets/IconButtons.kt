@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
+import com.farmerbb.notepad.ui.routes.appSettings
 import com.farmerbb.notepad.ui.routes.editNote
 import com.farmerbb.notepad.ui.routes.viewNote
 
@@ -131,7 +132,19 @@ import com.farmerbb.notepad.ui.routes.viewNote
   }
 }
 
-@Composable fun SettingsButton() {
+@Composable fun SettingsButton(
+  navController: NavController?
+) {
+  IconButton(onClick = { navController?.appSettings() }) {
+    Icon(
+      imageVector = Icons.Filled.Settings,
+      contentDescription = stringResource(R.string.action_settings),
+      tint = Color.White
+    )
+  }
+}
+
+@Composable fun SettingsDialogButton() {
   val dialogIsOpen = remember { mutableStateOf(false) }
 
   IconButton(onClick = { dialogIsOpen.value = true }) {

@@ -73,7 +73,7 @@ import kotlinx.coroutines.launch
         title = { AppBarText(stringResource(id = R.string.app_name)) },
         backgroundColor = colorResource(id = R.color.primary),
         actions = {
-          SettingsButton()
+          SettingsButton(navController)
           AboutButton(vm)
         }
       )

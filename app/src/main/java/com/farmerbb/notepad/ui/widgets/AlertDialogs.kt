@@ -20,7 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.farmerbb.notepad.R
 import androidx.compose.ui.window.Dialog
-import com.farmerbb.notepad.ui.AppSettings
+import com.farmerbb.notepad.ui.routes.NotepadPreferenceScreen
 import com.farmerbb.notepad.utils.buildYear
 
 @Composable fun DeleteAlertDialog(
@@ -47,7 +47,7 @@ import com.farmerbb.notepad.utils.buildYear
 @Composable fun SettingsDialog(onDismiss: () -> Unit) {
   Dialog(onDismissRequest = onDismiss) {
     Surface(shape = MaterialTheme.shapes.medium) {
-      AppSettings()
+      NotepadPreferenceScreen()
     }
   }
 }

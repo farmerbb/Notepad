@@ -21,6 +21,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.farmerbb.notepad.ui.routes.AppSettingsRoute
 import com.farmerbb.notepad.ui.routes.EditNoteRoute
 import com.farmerbb.notepad.ui.routes.NoteListRoute
 import com.farmerbb.notepad.ui.routes.ViewNoteRoute
@@ -38,6 +39,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
       NoteListRoute(navController)
       ViewNoteRoute(navController)
       EditNoteRoute(navController)
+      AppSettingsRoute(navController)
     }
   }
 

@@ -15,23 +15,13 @@
 
 package com.farmerbb.notepad.ui.routes
 
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -42,8 +32,8 @@ import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.widgets.*
-import com.farmerbb.notepad.utils.UnitDisposableEffect
 import kotlinx.coroutines.launch
 
 @Composable fun EditNote(
@@ -102,26 +92,7 @@ import kotlinx.coroutines.launch
       )
     },
     content = {
-      val focusRequester = remember { FocusRequester() }
-      BasicTextField(
-        value = textState.value,
-        onValueChange = { textState.value = it },
-        textStyle = TextStyle(
-          fontSize = 16.sp
-        ),
-        modifier = Modifier
-          .padding(
-            horizontal = 16.dp,
-            vertical = 12.dp
-          )
-          .fillMaxWidth()
-          .fillMaxHeight()
-          .focusRequester(focusRequester)
-      )
-
-      UnitDisposableEffect {
-        focusRequester.requestFocus()
-      }
+      EditNoteContent(textState)
     }
   )
 }

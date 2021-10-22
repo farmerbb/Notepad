@@ -15,23 +15,11 @@
 
 package com.farmerbb.notepad.ui.routes
 
-import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicText
-import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.produceState
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -43,6 +31,7 @@ import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.ui.content.ViewNoteContent
 import com.farmerbb.notepad.ui.widgets.*
 import kotlinx.coroutines.launch
 
@@ -85,27 +74,7 @@ import kotlinx.coroutines.launch
       )
     },
     content = {
-      Box(
-        modifier = Modifier.verticalScroll(
-          state = ScrollState(initial = 0)
-        )
-      ) {
-        SelectionContainer {
-          BasicText(
-            text = note.contents.text,
-            style = TextStyle(
-              fontSize = 16.sp
-            ),
-            modifier = Modifier
-              .padding(
-                horizontal = 16.dp,
-                vertical = 12.dp
-              )
-              .fillMaxWidth()
-              .fillMaxHeight()
-          )
-        }
-      }
+      ViewNoteContent(note)
     }
   )
 }

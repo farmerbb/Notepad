@@ -1,8 +1,8 @@
 allprojects {
   ext {
-    hilt_version = '2.38.1'
-    coroutines_version = '1.5.1'
+    hilt_version = '2.39.1'
+    coroutines_version = '1.5.2'
     room_version = '2.3.0'
-    compose_version = '1.0.0'
+    compose_version = '1.0.4'
   }
 }

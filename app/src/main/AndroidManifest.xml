@@ -48,7 +48,8 @@
         <activity-alias
             android:name="com.farmerbb.notepad.MainActivity"
             android:targetActivity="com.farmerbb.notepad.old.activity.MainActivity"
-            android:label="${appName}">
+            android:label="${appName}"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -67,7 +68,8 @@
         <activity
             android:name="com.farmerbb.notepad.old.activity.NoteEditActivity"
             android:label="${appName}"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.EDIT" />

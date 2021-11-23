@@ -122,7 +122,7 @@ fun NavController.editNote(id: Long) = navigate("EditNote?id=$id")
         title = "Title"
       ),
       contents = NoteContents(
-        text = "This is some text"
+        text = ""
       )
     )
   )

@@ -26,9 +26,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.models.Note
+import com.farmerbb.notepad.ui.routes.ViewNotePreview
 
 @Composable fun ViewNoteContent(note: Note) {
   Box(
@@ -53,3 +55,5 @@ import com.farmerbb.notepad.models.Note
     }
   }
 }
+
+@Preview @Composable fun ViewNoteContentPreview() = ViewNotePreview()

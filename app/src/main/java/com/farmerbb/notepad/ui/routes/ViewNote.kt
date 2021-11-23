@@ -32,6 +32,7 @@ import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.ViewNoteContent
+import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
 import com.farmerbb.notepad.ui.widgets.*
 import kotlinx.coroutines.launch
 
@@ -69,7 +70,7 @@ import kotlinx.coroutines.launch
         actions = {
           EditButton(id, navController)
           DeleteButton(id, navController, vm)
-          ShareButton(note.contents.text, vm)
+          NoteViewEditMenu(note.contents.text, vm)
         }
       )
     },

@@ -20,6 +20,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
@@ -117,16 +118,15 @@ import com.farmerbb.notepad.ui.routes.viewNote
   }
 }
 
-@Composable fun ShareButton(
-  text: String,
-  vm: NotepadViewModel?
+@Composable fun MoreButton(
+  showMenu: MutableState<Boolean>
 ) {
   IconButton(
-    onClick = { vm?.shareNote(text) }
+    onClick = { showMenu.value = true }
   ) {
     Icon(
-      imageVector = Icons.Filled.Share,
-      contentDescription = stringResource(R.string.action_share),
+      imageVector = Icons.Filled.MoreVert,
+      contentDescription = null,
       tint = Color.White
     )
   }

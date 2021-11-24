@@ -17,9 +17,11 @@ package com.farmerbb.notepad.ui.widgets
 
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.res.stringResource
 import com.farmerbb.notepad.R
 import androidx.compose.ui.window.Dialog
+import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.ui.routes.NotepadPreferenceScreen
 import com.farmerbb.notepad.utils.buildYear
 
@@ -44,7 +46,19 @@ import com.farmerbb.notepad.utils.buildYear
   )
 }
 
-@Composable fun SettingsDialog(onDismiss: () -> Unit) {
+@Composable fun SettingsDialog(
+  showSettingsDialog: MutableState<Boolean>
+) {
+  if(showSettingsDialog.value) {
+    SettingsDialogImpl(
+      onDismiss = {
+        showSettingsDialog.value = false
+      }
+    )
+  }
+}
+
+@Composable fun SettingsDialogImpl(onDismiss: () -> Unit) {
   Dialog(onDismissRequest = onDismiss) {
     Surface(shape = MaterialTheme.shapes.medium) {
       NotepadPreferenceScreen()
@@ -53,6 +67,23 @@ import com.farmerbb.notepad.utils.buildYear
 }
 
 @Composable fun AboutDialog(
+  showAboutDialog: MutableState<Boolean>,
+  vm: NotepadViewModel?
+) {
+  if(showAboutDialog.value) {
+    AboutDialogImpl(
+      onDismiss = {
+        showAboutDialog.value = false
+      },
+      checkForUpdates = {
+        showAboutDialog.value = false
+        vm?.checkForUpdates()
+      }
+    )
+  }
+}
+
+@Composable fun AboutDialogImpl(
   onDismiss: () -> Unit,
   checkForUpdates: () -> Unit
 ) {

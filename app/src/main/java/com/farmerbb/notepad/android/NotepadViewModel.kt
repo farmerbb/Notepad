@@ -111,4 +111,9 @@ import javax.inject.Inject
     0 -> context.showToast(R.string.empty_note)
     else -> onSuccess()
   }
+
+  // TODO implement the following functions:
+  fun importNotes() {}
+  fun exportNote(text: String) {}
+  fun printNote(text: String) {}
 }

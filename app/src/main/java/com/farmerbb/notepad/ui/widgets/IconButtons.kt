@@ -28,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
-import com.farmerbb.notepad.ui.routes.appSettings
 import com.farmerbb.notepad.ui.routes.editNote
 import com.farmerbb.notepad.ui.routes.viewNote
 
@@ -128,62 +127,6 @@ import com.farmerbb.notepad.ui.routes.viewNote
       imageVector = Icons.Filled.MoreVert,
       contentDescription = null,
       tint = Color.White
-    )
-  }
-}
-
-@Composable fun SettingsButton(
-  navController: NavController?
-) {
-  IconButton(onClick = { navController?.appSettings() }) {
-    Icon(
-      imageVector = Icons.Filled.Settings,
-      contentDescription = stringResource(R.string.action_settings),
-      tint = Color.White
-    )
-  }
-}
-
-@Composable fun SettingsDialogButton() {
-  val dialogIsOpen = remember { mutableStateOf(false) }
-
-  IconButton(onClick = { dialogIsOpen.value = true }) {
-    Icon(
-      imageVector = Icons.Filled.Settings,
-      contentDescription = stringResource(R.string.action_settings),
-      tint = Color.White
-    )
-  }
-
-  if(dialogIsOpen.value) {
-    SettingsDialog(
-      onDismiss = {
-        dialogIsOpen.value = false
-      }
-    )
-  }
-}
-
-@Composable fun AboutButton(vm: NotepadViewModel?) {
-  val dialogIsOpen = remember { mutableStateOf(false) }
-
-  IconButton(onClick = { dialogIsOpen.value = true }) {
-    Icon(
-      imageVector = Icons.Filled.Info,
-      contentDescription = stringResource(R.string.dialog_about_title),
-      tint = Color.White
-    )
-  }
-
-  if(dialogIsOpen.value) {
-    AboutDialog(
-      onDismiss = {
-        dialogIsOpen.value = false
-      },
-      checkForUpdates = {
-        dialogIsOpen.value = false
-        vm?.checkForUpdates()
-      }
     )
   }
 }

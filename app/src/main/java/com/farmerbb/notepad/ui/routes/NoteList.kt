@@ -19,7 +19,9 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -32,9 +34,10 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.NoteListContent
-import com.farmerbb.notepad.ui.widgets.AboutButton
+import com.farmerbb.notepad.ui.menus.NoteListMenu
+import com.farmerbb.notepad.ui.widgets.AboutDialog
 import com.farmerbb.notepad.ui.widgets.AppBarText
-import com.farmerbb.notepad.ui.widgets.SettingsButton
+import com.farmerbb.notepad.ui.widgets.SettingsDialog
 import kotlinx.coroutines.launch
 
 @Composable fun NoteList(
@@ -59,14 +62,20 @@ import kotlinx.coroutines.launch
   navController: NavController? = null,
   vm: NotepadViewModel? = null
 ) {
+  val showAboutDialog = remember { mutableStateOf(false) }
+  AboutDialog(showAboutDialog, vm)
+
   Scaffold(
     topBar = {
       TopAppBar(
         title = { AppBarText(stringResource(id = R.string.app_name)) },
         backgroundColor = colorResource(id = R.color.primary),
         actions = {
-          SettingsButton(navController)
-          AboutButton(vm)
+          NoteListMenu(
+            navController = navController,
+            vm = vm,
+            showAboutDialog = showAboutDialog
+          )
         }
       )
     },

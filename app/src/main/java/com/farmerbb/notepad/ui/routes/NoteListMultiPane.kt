@@ -21,7 +21,9 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -39,9 +41,10 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.NoteListContent
-import com.farmerbb.notepad.ui.widgets.AboutButton
+import com.farmerbb.notepad.ui.menus.NoteListMenu
+import com.farmerbb.notepad.ui.widgets.AboutDialog
 import com.farmerbb.notepad.ui.widgets.AppBarText
-import com.farmerbb.notepad.ui.widgets.SettingsDialogButton
+import com.farmerbb.notepad.ui.widgets.SettingsDialog
 import kotlinx.coroutines.launch
 
 @Composable fun NoteListMultiPane(
@@ -66,55 +69,65 @@ import kotlinx.coroutines.launch
     navController: NavController? = null,
     vm: NotepadViewModel? = null
 ) {
+  val showAboutDialog = remember { mutableStateOf(false) }
+  AboutDialog(showAboutDialog, vm)
+
+  val showSettingsDialog = remember { mutableStateOf(false) }
+  SettingsDialog(showSettingsDialog)
+
   Scaffold(
-      topBar = {
-        TopAppBar(
-            title = { AppBarText(stringResource(id = R.string.app_name)) },
-            backgroundColor = colorResource(id = R.color.primary),
-            actions = {
-              SettingsDialogButton()
-              AboutButton(vm)
-            }
-        )
-      },
-      floatingActionButton = {
-        FloatingActionButton(
-            onClick = { navController?.newNote() },
-            backgroundColor = colorResource(id = R.color.primary),
-            content = {
-              Icon(
-                  imageVector = Icons.Filled.Add,
-                  contentDescription = null,
-                  tint = Color.White
-              )
-            }
-        )
-      },
-      content = {
-          Row {
-              Box(modifier = Modifier.weight(1f)) {
-                  NoteListContent(notes, navController)
-              }
-
-              Divider(
-                  modifier = Modifier
-                      .fillMaxHeight()
-                      .width(1.dp)
-              )
-
-              Box(modifier = Modifier.weight(2f)) {
-                  EmptyDetails()
-              }
+    topBar = {
+      TopAppBar(
+          title = { AppBarText(stringResource(id = R.string.app_name)) },
+          backgroundColor = colorResource(id = R.color.primary),
+          actions = {
+            NoteListMenu(
+              navController = navController,
+              vm = vm,
+              showAboutDialog = showAboutDialog,
+              showSettingsDialog = showSettingsDialog,
+            )
           }
-      }
+      )
+    },
+    floatingActionButton = {
+      FloatingActionButton(
+          onClick = { navController?.newNote() },
+          backgroundColor = colorResource(id = R.color.primary),
+          content = {
+            Icon(
+                imageVector = Icons.Filled.Add,
+                contentDescription = null,
+                tint = Color.White
+            )
+          }
+      )
+    },
+    content = {
+        Row {
+            Box(modifier = Modifier.weight(1f)) {
+                NoteListContent(notes, navController)
+            }
+
+            Divider(
+                modifier = Modifier
+                        .fillMaxHeight()
+                        .width(1.dp)
+            )
+
+            Box(modifier = Modifier.weight(2f)) {
+                EmptyDetails()
+            }
+        }
+    }
   )
 }
 
 @Composable fun EmptyDetails() {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
+                .fillMaxWidth()
+                .fillMaxHeight(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -122,9 +135,9 @@ import kotlinx.coroutines.launch
             painter = painterResource(id = R.drawable.notepad_logo),
             contentDescription = null,
             modifier = Modifier
-                .height(512.dp)
-                .width(512.dp)
-                .alpha(0.5f)
+                    .height(512.dp)
+                    .width(512.dp)
+                    .alpha(0.5f)
         )
     }
 }

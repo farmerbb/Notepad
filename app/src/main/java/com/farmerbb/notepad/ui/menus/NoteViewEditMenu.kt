@@ -15,7 +15,7 @@ import com.farmerbb.notepad.ui.widgets.MoreButton
 
 @Composable fun NoteViewEditMenu(
   text: String,
-  vm: NotepadViewModel? = null,
+  vm: NotepadViewModel?
 ) {
   val showMenu = remember { mutableStateOf(false) }
 
@@ -55,7 +55,7 @@ import com.farmerbb.notepad.ui.widgets.MoreButton
   DropdownMenuItem(
     onClick = {
       showMenu.value = false
-   // vm?.exportNote(text)
+      vm?.exportNote(text)
     }
   ) {
     Text(text = stringResource(R.string.action_export))
@@ -70,7 +70,7 @@ import com.farmerbb.notepad.ui.widgets.MoreButton
   DropdownMenuItem(
     onClick = {
       showMenu.value = false
-   // vm?.printNote(text)
+      vm?.printNote(text)
     }
   ) {
     Text(text = stringResource(R.string.action_print))

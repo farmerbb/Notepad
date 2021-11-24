@@ -36,12 +36,12 @@ import com.farmerbb.notepad.ui.routes.EditNotePreview
 import com.farmerbb.notepad.utils.UnitDisposableEffect
 
 @Composable fun EditNoteContent(
-  textState: MutableState<TextFieldValue>
+  textState: MutableState<TextFieldValue>?
 ) {
   val focusRequester = remember { FocusRequester() }
   BasicTextField(
-    value = textState.value,
-    onValueChange = { textState.value = it },
+    value = textState?.value ?: TextFieldValue(),
+    onValueChange = { textState?.value = it },
     textStyle = TextStyle(
       fontSize = 16.sp
     ),
@@ -55,7 +55,7 @@ import com.farmerbb.notepad.utils.UnitDisposableEffect
       .focusRequester(focusRequester)
   )
 
-  if(textState.value.text.isEmpty()) {
+  if(textState?.value?.text.isNullOrEmpty()) {
     BasicText(
       text = stringResource(id = R.string.edit_text),
       style = TextStyle(

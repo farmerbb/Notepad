@@ -24,9 +24,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.farmerbb.notepad.ui.routes.AppSettingsRoute
 import com.farmerbb.notepad.ui.routes.EditNoteRoute
+import com.farmerbb.notepad.ui.routes.MultiPaneRoute
 import com.farmerbb.notepad.ui.routes.NoteListRoute
 import com.farmerbb.notepad.ui.routes.ViewNoteRoute
-import com.farmerbb.notepad.ui.routes.multipane.NoteListMultiPaneRoute
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable fun NotepadComposeApp() {
@@ -36,7 +36,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
   val configuration = LocalConfiguration.current
   val startDestination =
     if(configuration.screenWidthDp >= 600)
-      "NoteListMultiPane"
+      "MultiPane"
     else
       "NoteList"
 
@@ -46,9 +46,9 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
       startDestination = startDestination
     ) {
       NoteListRoute(navController)
-      NoteListMultiPaneRoute(navController)
       ViewNoteRoute(navController)
       EditNoteRoute(navController)
+      MultiPaneRoute(navController)
       AppSettingsRoute(navController)
     }
   }

@@ -37,7 +37,6 @@ import com.farmerbb.notepad.ui.content.NoteListContent
 import com.farmerbb.notepad.ui.menus.NoteListMenu
 import com.farmerbb.notepad.ui.widgets.AboutDialog
 import com.farmerbb.notepad.ui.widgets.AppBarText
-import com.farmerbb.notepad.ui.widgets.SettingsDialog
 import kotlinx.coroutines.launch
 
 @Composable fun NoteList(
@@ -93,7 +92,10 @@ import kotlinx.coroutines.launch
       )
     },
     content = {
-      NoteListContent(notes, navController)
+      NoteListContent(
+        notes = notes,
+        navController = navController
+      )
     }
   )
 }

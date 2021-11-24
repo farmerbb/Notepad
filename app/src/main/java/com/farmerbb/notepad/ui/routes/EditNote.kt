@@ -39,8 +39,9 @@ import kotlinx.coroutines.launch
 
 @Composable fun EditNote(
   id: Long?,
-  navController: NavController,
-  vm: NotepadViewModel = hiltViewModel()
+  navController: NavController? = null,
+  vm: NotepadViewModel = hiltViewModel(),
+  isMultiPane: Boolean = false
 ) {
   val state = produceState(
     Note(
@@ -56,28 +57,35 @@ import kotlinx.coroutines.launch
     }
   }
 
-  EditNote(
-    note = state.value,
-    navController = navController,
-    vm = vm
-  )
-}
-
-@Composable fun EditNote(
-  note: Note,
-  navController: NavController? = null,
-  vm: NotepadViewModel? = null
-) {
-  val id = note.metadata.metadataId
   val textState = remember {
     mutableStateOf(TextFieldValue())
   }.apply {
-    val text = note.contents.text
+    val text = state.value.contents.text
     value = TextFieldValue(
       text = text,
       selection = TextRange(text.length)
     )
   }
+
+  if(isMultiPane) {
+    EditNoteContent(textState)
+  } else {
+    EditNote(
+      note = state.value,
+      textState = textState,
+      navController = navController,
+      vm = vm
+    )
+  }
+}
+
+@Composable fun EditNote(
+  note: Note,
+  textState: MutableState<TextFieldValue>,
+  navController: NavController? = null,
+  vm: NotepadViewModel? = null
+) {
+  val id = note.metadata.metadataId
 
   Scaffold(
     topBar = {
@@ -125,6 +133,7 @@ fun NavController.editNote(id: Long) = navigate("EditNote?id=$id")
       contents = NoteContents(
         text = "This is some text"
       )
-    )
+    ),
+    textState = remember { mutableStateOf(TextFieldValue()) }
   )
 }

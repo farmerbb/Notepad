@@ -38,8 +38,9 @@ import kotlinx.coroutines.launch
 
 @Composable fun ViewNote(
   id: Long,
-  navController: NavController,
-  vm: NotepadViewModel = hiltViewModel()
+  navController: NavController? = null,
+  vm: NotepadViewModel = hiltViewModel(),
+  isMultiPane: Boolean = false
 ) {
   val state = produceState(Note()) {
     launch {
@@ -47,11 +48,15 @@ import kotlinx.coroutines.launch
     }
   }
 
-  ViewNote(
-    note = state.value,
-    navController = navController,
-    vm = vm
-  )
+  if(isMultiPane) {
+    ViewNoteContent(state.value)
+  } else {
+    ViewNote(
+      note = state.value,
+      navController = navController,
+      vm = vm
+    )
+  }
 }
 
 @Composable fun ViewNote(

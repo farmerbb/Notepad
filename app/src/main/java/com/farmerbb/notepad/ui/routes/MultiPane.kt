@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.ui.routes.multipane
+package com.farmerbb.notepad.ui.routes
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -43,13 +43,20 @@ import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.NoteListContent
 import com.farmerbb.notepad.ui.menus.NoteListMenu
-import com.farmerbb.notepad.ui.routes.newNote
-import com.farmerbb.notepad.ui.widgets.AboutDialog
-import com.farmerbb.notepad.ui.widgets.AppBarText
-import com.farmerbb.notepad.ui.widgets.SettingsDialog
+import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
+import com.farmerbb.notepad.ui.routes.RightPaneState.Edit
+import com.farmerbb.notepad.ui.routes.RightPaneState.Empty
+import com.farmerbb.notepad.ui.routes.RightPaneState.View
+import com.farmerbb.notepad.ui.widgets.*
 import kotlinx.coroutines.launch
 
-@Composable fun NoteListMultiPane(
+sealed interface RightPaneState {
+  object Empty: RightPaneState
+  data class View(val id: Long): RightPaneState
+  data class Edit(val id: Long? = null): RightPaneState
+}
+
+@Composable fun MultiPane(
   navController: NavController,
   vm: NotepadViewModel = hiltViewModel()
 ) {
@@ -59,18 +66,20 @@ import kotlinx.coroutines.launch
     }
   }
 
-  NoteListMultiPane(
+  MultiPane(
     notes = state.value,
     navController = navController,
     vm = vm
   )
 }
 
-@Composable fun NoteListMultiPane(
+@Composable fun MultiPane(
   notes: List<NoteMetadata>,
   navController: NavController? = null,
   vm: NotepadViewModel? = null
 ) {
+  val rightPaneState = remember { mutableStateOf<RightPaneState>(Empty) }
+
   val showAboutDialog = remember { mutableStateOf(false) }
   AboutDialog(showAboutDialog, vm)
 
@@ -83,32 +92,52 @@ import kotlinx.coroutines.launch
         title = { AppBarText(stringResource(id = R.string.app_name)) },
         backgroundColor = colorResource(id = R.color.primary),
         actions = {
-          NoteListMenu(
-            navController = navController,
-            vm = vm,
-            showAboutDialog = showAboutDialog,
-            showSettingsDialog = showSettingsDialog,
-          )
+          when(val state = rightPaneState.value) {
+            Empty -> {
+              NoteListMenu(
+                navController = navController,
+                vm = vm,
+                showAboutDialog = showAboutDialog,
+                showSettingsDialog = showSettingsDialog,
+              )
+            }
+/*
+
+            is View -> {
+              EditButton(state.id, navController)
+              DeleteButton(state.id, navController, vm)
+              NoteViewEditMenu(note.contents.text, vm)
+            }
+
+            is Edit -> {
+              SaveButton(state.id, textState.value.text, navController, vm)
+              DeleteButton(state.id, navController, vm)
+              NoteViewEditMenu(textState.value.text, vm)
+            }
+ */
+          }
         }
       )
     },
     floatingActionButton = {
-      FloatingActionButton(
-        onClick = { navController?.newNote() },
-        backgroundColor = colorResource(id = R.color.primary),
-        content = {
-          Icon(
-            imageVector = Icons.Filled.Add,
-            contentDescription = null,
-            tint = Color.White
-          )
-        }
-      )
+      if(rightPaneState.value == Empty) {
+        FloatingActionButton(
+          onClick = { rightPaneState.value = Edit() },
+          backgroundColor = colorResource(id = R.color.primary),
+          content = {
+            Icon(
+              imageVector = Icons.Filled.Add,
+              contentDescription = null,
+              tint = Color.White
+            )
+          }
+        )
+      }
     },
     content = {
       Row {
         Box(modifier = Modifier.weight(1f)) {
-          NoteListContent(notes, navController)
+          NoteListContent(notes, rightPaneState, navController)
         }
 
         Divider(
@@ -118,7 +147,11 @@ import kotlinx.coroutines.launch
         )
 
         Box(modifier = Modifier.weight(2f)) {
-          EmptyDetails()
+          when(val state = rightPaneState.value) {
+            Empty -> EmptyDetails()
+            is View -> ViewNote(id = state.id, isMultiPane = true)
+            is Edit -> EditNote(id = state.id, isMultiPane = true)
+          }
         }
       }
     }
@@ -145,17 +178,17 @@ import kotlinx.coroutines.launch
 }
 
 @Suppress("FunctionName")
-fun NavGraphBuilder.NoteListMultiPaneRoute(
+fun NavGraphBuilder.MultiPaneRoute(
   navController: NavController
-) = composable(route = "NoteListMultiPane") {
-  NoteListMultiPane(
+) = composable(route = "MultiPane") {
+  MultiPane(
     navController = navController
   )
 }
 
 @Preview(device = Devices.PIXEL_C)
-@Composable fun NoteListMultiPanePreview() = MaterialTheme {
-  NoteListMultiPane(
+@Composable fun MultiPanePreview() = MaterialTheme {
+  MultiPane(
     notes = listOf(
       NoteMetadata(title = "Test Note 1"),
       NoteMetadata(title = "Test Note 2")
@@ -164,8 +197,8 @@ fun NavGraphBuilder.NoteListMultiPaneRoute(
 }
 
 @Preview(device = Devices.PIXEL_C)
-@Composable fun NoteListMultiPaneEmptyPreview() = MaterialTheme {
-  NoteListMultiPane(
+@Composable fun MultiPaneEmptyPreview() = MaterialTheme {
+  MultiPane(
     notes = emptyList()
   )
 }

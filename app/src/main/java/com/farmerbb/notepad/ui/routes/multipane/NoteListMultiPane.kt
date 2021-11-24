@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.ui.routes
+package com.farmerbb.notepad.ui.routes.multipane
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -43,6 +43,7 @@ import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.NoteListContent
 import com.farmerbb.notepad.ui.menus.NoteListMenu
+import com.farmerbb.notepad.ui.routes.newNote
 import com.farmerbb.notepad.ui.widgets.AboutDialog
 import com.farmerbb.notepad.ui.widgets.AppBarText
 import com.farmerbb.notepad.ui.widgets.SettingsDialog

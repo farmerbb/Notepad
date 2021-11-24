@@ -25,8 +25,8 @@ import androidx.navigation.compose.rememberNavController
 import com.farmerbb.notepad.ui.routes.AppSettingsRoute
 import com.farmerbb.notepad.ui.routes.EditNoteRoute
 import com.farmerbb.notepad.ui.routes.NoteListRoute
-import com.farmerbb.notepad.ui.routes.NoteListMultiPaneRoute
 import com.farmerbb.notepad.ui.routes.ViewNoteRoute
+import com.farmerbb.notepad.ui.routes.multipane.NoteListMultiPaneRoute
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable fun NotepadComposeApp() {

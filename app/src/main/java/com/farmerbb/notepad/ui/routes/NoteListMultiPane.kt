@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -48,8 +49,8 @@ import com.farmerbb.notepad.ui.widgets.SettingsDialog
 import kotlinx.coroutines.launch
 
 @Composable fun NoteListMultiPane(
-    navController: NavController,
-    vm: NotepadViewModel = hiltViewModel()
+  navController: NavController,
+  vm: NotepadViewModel = hiltViewModel()
 ) {
   val state = produceState(listOf<NoteMetadata>()) {
     launch {
@@ -58,16 +59,16 @@ import kotlinx.coroutines.launch
   }
 
   NoteListMultiPane(
-      notes = state.value,
-      navController = navController,
-      vm = vm
+    notes = state.value,
+    navController = navController,
+    vm = vm
   )
 }
 
 @Composable fun NoteListMultiPane(
-    notes: List<NoteMetadata>,
-    navController: NavController? = null,
-    vm: NotepadViewModel? = null
+  notes: List<NoteMetadata>,
+  navController: NavController? = null,
+  vm: NotepadViewModel? = null
 ) {
   val showAboutDialog = remember { mutableStateOf(false) }
   AboutDialog(showAboutDialog, vm)
@@ -78,90 +79,92 @@ import kotlinx.coroutines.launch
   Scaffold(
     topBar = {
       TopAppBar(
-          title = { AppBarText(stringResource(id = R.string.app_name)) },
-          backgroundColor = colorResource(id = R.color.primary),
-          actions = {
-            NoteListMenu(
-              navController = navController,
-              vm = vm,
-              showAboutDialog = showAboutDialog,
-              showSettingsDialog = showSettingsDialog,
-            )
-          }
+        title = { AppBarText(stringResource(id = R.string.app_name)) },
+        backgroundColor = colorResource(id = R.color.primary),
+        actions = {
+          NoteListMenu(
+            navController = navController,
+            vm = vm,
+            showAboutDialog = showAboutDialog,
+            showSettingsDialog = showSettingsDialog,
+          )
+        }
       )
     },
     floatingActionButton = {
       FloatingActionButton(
-          onClick = { navController?.newNote() },
-          backgroundColor = colorResource(id = R.color.primary),
-          content = {
-            Icon(
-                imageVector = Icons.Filled.Add,
-                contentDescription = null,
-                tint = Color.White
-            )
-          }
+        onClick = { navController?.newNote() },
+        backgroundColor = colorResource(id = R.color.primary),
+        content = {
+          Icon(
+            imageVector = Icons.Filled.Add,
+            contentDescription = null,
+            tint = Color.White
+          )
+        }
       )
     },
     content = {
-        Row {
-            Box(modifier = Modifier.weight(1f)) {
-                NoteListContent(notes, navController)
-            }
-
-            Divider(
-                modifier = Modifier
-                        .fillMaxHeight()
-                        .width(1.dp)
-            )
-
-            Box(modifier = Modifier.weight(2f)) {
-                EmptyDetails()
-            }
+      Row {
+        Box(modifier = Modifier.weight(1f)) {
+          NoteListContent(notes, navController)
         }
+
+        Divider(
+          modifier = Modifier
+            .fillMaxHeight()
+            .width(1.dp)
+        )
+
+        Box(modifier = Modifier.weight(2f)) {
+          EmptyDetails()
+        }
+      }
     }
   )
 }
 
 @Composable fun EmptyDetails() {
-    Column(
-        modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.notepad_logo),
-            contentDescription = null,
-            modifier = Modifier
-                    .height(512.dp)
-                    .width(512.dp)
-                    .alpha(0.5f)
-        )
-    }
+  Column(
+    modifier = Modifier
+      .fillMaxWidth()
+      .fillMaxHeight(),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
+  ) {
+    Image(
+      painter = painterResource(id = R.drawable.notepad_logo),
+      contentDescription = null,
+      modifier = Modifier
+        .height(512.dp)
+        .width(512.dp)
+        .alpha(0.5f)
+    )
+  }
 }
 
 @Suppress("FunctionName")
 fun NavGraphBuilder.NoteListMultiPaneRoute(
-    navController: NavController
+  navController: NavController
 ) = composable(route = "NoteListMultiPane") {
   NoteListMultiPane(
-      navController = navController
+    navController = navController
   )
 }
 
-@Preview @Composable fun NoteListMultiPanePreview() = MaterialTheme {
+@Preview(device = Devices.PIXEL_C)
+@Composable fun NoteListMultiPanePreview() = MaterialTheme {
   NoteListMultiPane(
-      notes = listOf(
-          NoteMetadata(title = "Test Note 1"),
-          NoteMetadata(title = "Test Note 2")
-      )
+    notes = listOf(
+      NoteMetadata(title = "Test Note 1"),
+      NoteMetadata(title = "Test Note 2")
+    )
   )
 }
 
-@Preview @Composable fun NoteListMultiPaneEmptyPreview() = MaterialTheme {
+@Preview(device = Devices.PIXEL_C)
+@Composable fun NoteListMultiPaneEmptyPreview() = MaterialTheme {
   NoteListMultiPane(
-      notes = emptyList()
+    notes = emptyList()
   )
 }

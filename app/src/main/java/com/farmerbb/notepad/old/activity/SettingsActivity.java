@@ -35,9 +35,9 @@ import com.farmerbb.notepad.BuildConfig;
 import com.farmerbb.notepad.R;
 import com.farmerbb.notepad.android.NotepadActivity;
 
+@SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener{
 
-    @SuppressWarnings("deprecation")
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -133,7 +133,6 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                                 ""));
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public boolean onPreferenceChange(Preference preference, Object value) {
         switch(preference.getKey()) {

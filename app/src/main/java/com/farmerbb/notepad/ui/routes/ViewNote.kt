@@ -33,7 +33,7 @@ import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.ViewNoteContent
 import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
-import com.farmerbb.notepad.ui.state.viewState
+import com.farmerbb.notepad.ui.content.viewState
 import com.farmerbb.notepad.ui.widgets.*
 
 @Composable fun ViewNote(

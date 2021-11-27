@@ -20,7 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -34,20 +33,16 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.NoteListContent
+import com.farmerbb.notepad.ui.content.noteListState
 import com.farmerbb.notepad.ui.menus.NoteListMenu
 import com.farmerbb.notepad.ui.widgets.AboutDialog
 import com.farmerbb.notepad.ui.widgets.AppBarText
-import kotlinx.coroutines.launch
 
 @Composable fun NoteList(
   navController: NavController,
   vm: NotepadViewModel = hiltViewModel()
 ) {
-  val state = produceState(listOf<NoteMetadata>()) {
-    launch {
-      value = vm.getNoteMetadata()
-    }
-  }
+  val state = noteListState(vm)
 
   NoteList(
     notes = state.value,

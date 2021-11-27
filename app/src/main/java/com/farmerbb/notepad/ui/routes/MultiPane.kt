@@ -22,7 +22,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,17 +40,13 @@ import androidx.navigation.compose.composable
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
-import com.farmerbb.notepad.ui.content.NoteListContent
+import com.farmerbb.notepad.ui.content.*
 import com.farmerbb.notepad.ui.menus.NoteListMenu
 import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
 import com.farmerbb.notepad.ui.routes.RightPaneState.Edit
 import com.farmerbb.notepad.ui.routes.RightPaneState.Empty
 import com.farmerbb.notepad.ui.routes.RightPaneState.View
-import com.farmerbb.notepad.ui.state.editState
-import com.farmerbb.notepad.ui.state.textState
-import com.farmerbb.notepad.ui.state.viewState
 import com.farmerbb.notepad.ui.widgets.*
-import kotlinx.coroutines.launch
 
 sealed interface RightPaneState {
   object Empty: RightPaneState
@@ -63,11 +58,7 @@ sealed interface RightPaneState {
   navController: NavController,
   vm: NotepadViewModel = hiltViewModel()
 ) {
-  val state = produceState(listOf<NoteMetadata>()) {
-    launch {
-      value = vm.getNoteMetadata()
-    }
-  }
+  val state = noteListState(vm)
 
   MultiPane(
     notes = state.value,
@@ -89,11 +80,13 @@ sealed interface RightPaneState {
   val showSettingsDialog = remember { mutableStateOf(false) }
   SettingsDialog(showSettingsDialog)
 
+  val title: String
   val actions: @Composable RowScope.() -> Unit
   val content: @Composable BoxScope.() -> Unit
 
   when(val state = rightPaneState.value) {
     Empty -> {
+      title = stringResource(id = R.string.app_name)
       actions = {
         NoteListMenu(
           navController = navController,
@@ -108,6 +101,7 @@ sealed interface RightPaneState {
     is View -> {
       val viewState = viewState(state.id, vm)
 
+      title = viewState.value.metadata.title
       actions = {
         EditButton(state.id, navController, rightPaneState)
         DeleteButton(state.id, navController, vm, rightPaneState)
@@ -124,9 +118,10 @@ sealed interface RightPaneState {
 
     is Edit -> {
       val editState = editState(state.id, vm)
-      val textState = textState(editState)
+      val textState = textState(editState.value.contents.text)
       val id = editState.value.metadata.metadataId
 
+      title = editState.value.metadata.title
       actions = {
         SaveButton(id, textState.value.text, navController, vm, rightPaneState)
         DeleteButton(id, navController, vm, rightPaneState)
@@ -146,7 +141,7 @@ sealed interface RightPaneState {
   Scaffold(
     topBar = {
       TopAppBar(
-        title = { AppBarText(stringResource(id = R.string.app_name)) },
+        title = { AppBarText(title) },
         backgroundColor = colorResource(id = R.color.primary),
         actions = actions
       )

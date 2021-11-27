@@ -32,8 +32,8 @@ import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
-import com.farmerbb.notepad.ui.state.editState
-import com.farmerbb.notepad.ui.state.textState
+import com.farmerbb.notepad.ui.content.editState
+import com.farmerbb.notepad.ui.content.textState
 import com.farmerbb.notepad.ui.widgets.*
 
 @Composable fun EditNote(
@@ -42,7 +42,7 @@ import com.farmerbb.notepad.ui.widgets.*
   vm: NotepadViewModel = hiltViewModel(),
   isMultiPane: Boolean = false,
   state: State<Note> = editState(id, vm),
-  textState: MutableState<TextFieldValue> = textState(state)
+  textState: MutableState<TextFieldValue> = textState(state.value.contents.text)
 ) {
   if(isMultiPane) {
     EditNoteContent(textState)

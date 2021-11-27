@@ -26,14 +26,47 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
+import com.farmerbb.notepad.android.NotepadViewModel
+import com.farmerbb.notepad.models.Note
+import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.routes.EditNotePreview
 import com.farmerbb.notepad.utils.UnitDisposableEffect
+import kotlinx.coroutines.launch
+
+@Composable fun editState(
+  id: Long?,
+  vm: NotepadViewModel?
+) = produceState(
+  Note(
+    metadata = NoteMetadata(
+      title = stringResource(id = R.string.action_new)
+    )
+  )
+) {
+  id?.let {
+    launch {
+      vm?.getNote(it)?.let { value = it }
+    }
+  }
+}
+
+@Composable fun textState(
+  text: String
+) = remember {
+  mutableStateOf(TextFieldValue())
+}.apply {
+  value = TextFieldValue(
+    text = text,
+    selection = TextRange(text.length)
+  )
+}
 
 @Composable fun EditNoteContent(
   textState: MutableState<TextFieldValue>?

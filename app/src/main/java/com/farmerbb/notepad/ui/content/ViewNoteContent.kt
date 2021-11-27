@@ -24,13 +24,25 @@ import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.ui.routes.ViewNotePreview
+import kotlinx.coroutines.launch
+
+@Composable fun viewState(
+  id: Long,
+  vm: NotepadViewModel?
+) = produceState(Note()) {
+  launch {
+    vm?.getNote(id)?.let { value = it }
+  }
+}
 
 @Composable fun ViewNoteContent(note: Note) {
   Box(

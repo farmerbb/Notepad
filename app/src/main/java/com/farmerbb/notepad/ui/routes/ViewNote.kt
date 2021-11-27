@@ -17,7 +17,7 @@ package com.farmerbb.notepad.ui.routes
 
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.State
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -33,21 +33,16 @@ import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.ViewNoteContent
 import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
+import com.farmerbb.notepad.ui.state.viewState
 import com.farmerbb.notepad.ui.widgets.*
-import kotlinx.coroutines.launch
 
 @Composable fun ViewNote(
   id: Long,
   navController: NavController? = null,
   vm: NotepadViewModel = hiltViewModel(),
-  isMultiPane: Boolean = false
+  isMultiPane: Boolean = false,
+  state: State<Note> = viewState(id, vm)
 ) {
-  val state = produceState(Note()) {
-    launch {
-      value = vm.getNote(id)
-    }
-  }
-
   if(isMultiPane) {
     ViewNoteContent(state.value)
   } else {

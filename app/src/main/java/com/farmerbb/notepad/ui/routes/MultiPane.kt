@@ -47,6 +47,9 @@ import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
 import com.farmerbb.notepad.ui.routes.RightPaneState.Edit
 import com.farmerbb.notepad.ui.routes.RightPaneState.Empty
 import com.farmerbb.notepad.ui.routes.RightPaneState.View
+import com.farmerbb.notepad.ui.state.editState
+import com.farmerbb.notepad.ui.state.textState
+import com.farmerbb.notepad.ui.state.viewState
 import com.farmerbb.notepad.ui.widgets.*
 import kotlinx.coroutines.launch
 
@@ -86,37 +89,66 @@ sealed interface RightPaneState {
   val showSettingsDialog = remember { mutableStateOf(false) }
   SettingsDialog(showSettingsDialog)
 
+  val actions: @Composable RowScope.() -> Unit
+  val content: @Composable BoxScope.() -> Unit
+
+  when(val state = rightPaneState.value) {
+    Empty -> {
+      actions = {
+        NoteListMenu(
+          navController = navController,
+          vm = vm,
+          showAboutDialog = showAboutDialog,
+          showSettingsDialog = showSettingsDialog,
+        )
+      }
+      content = { EmptyDetails() }
+    }
+
+    is View -> {
+      val viewState = viewState(state.id, vm)
+
+      actions = {
+        EditButton(state.id, navController, rightPaneState)
+        DeleteButton(state.id, navController, vm, rightPaneState)
+        NoteViewEditMenu(viewState.value.contents.text, vm)
+      }
+      content = {
+        ViewNote(
+          id = state.id,
+          isMultiPane = true,
+          state = viewState
+        )
+      }
+    }
+
+    is Edit -> {
+      val editState = editState(state.id, vm)
+      val textState = textState(editState)
+      val id = editState.value.metadata.metadataId
+
+      actions = {
+        SaveButton(id, textState.value.text, navController, vm, rightPaneState)
+        DeleteButton(id, navController, vm, rightPaneState)
+        NoteViewEditMenu(textState.value.text, vm)
+      }
+      content = {
+        EditNote(
+          id = id,
+          isMultiPane = true,
+          state = editState,
+          textState = textState
+        )
+      }
+    }
+  }
+
   Scaffold(
     topBar = {
       TopAppBar(
         title = { AppBarText(stringResource(id = R.string.app_name)) },
         backgroundColor = colorResource(id = R.color.primary),
-        actions = {
-          when(val state = rightPaneState.value) {
-            Empty -> {
-              NoteListMenu(
-                navController = navController,
-                vm = vm,
-                showAboutDialog = showAboutDialog,
-                showSettingsDialog = showSettingsDialog,
-              )
-            }
-/*
-
-            is View -> {
-              EditButton(state.id, navController)
-              DeleteButton(state.id, navController, vm)
-              NoteViewEditMenu(note.contents.text, vm)
-            }
-
-            is Edit -> {
-              SaveButton(state.id, textState.value.text, navController, vm)
-              DeleteButton(state.id, navController, vm)
-              NoteViewEditMenu(textState.value.text, vm)
-            }
- */
-          }
-        }
+        actions = actions
       )
     },
     floatingActionButton = {
@@ -146,13 +178,10 @@ sealed interface RightPaneState {
             .width(1.dp)
         )
 
-        Box(modifier = Modifier.weight(2f)) {
-          when(val state = rightPaneState.value) {
-            Empty -> EmptyDetails()
-            is View -> ViewNote(id = state.id, isMultiPane = true)
-            is Edit -> EditNote(id = state.id, isMultiPane = true)
-          }
-        }
+        Box(
+          modifier = Modifier.weight(2f),
+          content = content
+        )
       }
     }
   )

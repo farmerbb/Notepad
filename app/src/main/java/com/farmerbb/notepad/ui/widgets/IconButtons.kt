@@ -28,6 +28,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
+import com.farmerbb.notepad.ui.routes.RightPaneState
+import com.farmerbb.notepad.ui.routes.RightPaneState.Edit
+import com.farmerbb.notepad.ui.routes.RightPaneState.Empty
+import com.farmerbb.notepad.ui.routes.RightPaneState.View
 import com.farmerbb.notepad.ui.routes.editNote
 import com.farmerbb.notepad.ui.routes.viewNote
 
@@ -45,11 +49,14 @@ import com.farmerbb.notepad.ui.routes.viewNote
 
 @Composable fun EditButton(
   id: Long,
-  navController: NavController?
+  navController: NavController?,
+  rightPaneState: MutableState<RightPaneState>? = null
 ) {
   IconButton(
     onClick = {
-      navController?.apply {
+      rightPaneState?.let {
+        it.value = Edit(id)
+      } ?: navController?.apply {
         popBackStack()
         editNote(id)
       }
@@ -67,14 +74,17 @@ import com.farmerbb.notepad.ui.routes.viewNote
   id: Long,
   text: String,
   navController: NavController?,
-  vm: NotepadViewModel?
+  vm: NotepadViewModel?,
+  rightPaneState: MutableState<RightPaneState>? = null
 ) {
   IconButton(
     onClick = {
       vm?.saveNote(id, text) {
-        navController?.apply {
+        rightPaneState?.let {
+          it.value = View(id)
+        } ?: navController?.apply {
           popBackStack()
-          viewNote(it)
+          viewNote(id)
         }
       }
     }
@@ -90,7 +100,8 @@ import com.farmerbb.notepad.ui.routes.viewNote
 @Composable fun DeleteButton(
   id: Long,
   navController: NavController?,
-  vm: NotepadViewModel?
+  vm: NotepadViewModel?,
+  rightPaneState: MutableState<RightPaneState>? = null
 ) {
   val dialogIsOpen = remember { mutableStateOf(false) }
 
@@ -107,7 +118,9 @@ import com.farmerbb.notepad.ui.routes.viewNote
       onConfirm = {
         dialogIsOpen.value = false
         vm?.deleteNote(id) {
-          navController?.popBackStack()
+          rightPaneState?.let {
+            it.value = Empty
+          } ?: navController?.popBackStack()
         }
       },
       onDismiss = {

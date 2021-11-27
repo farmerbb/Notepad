@@ -18,8 +18,6 @@ package com.farmerbb.notepad.ui.routes
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -34,39 +32,18 @@ import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
+import com.farmerbb.notepad.ui.state.editState
+import com.farmerbb.notepad.ui.state.textState
 import com.farmerbb.notepad.ui.widgets.*
-import kotlinx.coroutines.launch
 
 @Composable fun EditNote(
   id: Long?,
   navController: NavController? = null,
   vm: NotepadViewModel = hiltViewModel(),
-  isMultiPane: Boolean = false
+  isMultiPane: Boolean = false,
+  state: State<Note> = editState(id, vm),
+  textState: MutableState<TextFieldValue> = textState(state)
 ) {
-  val state = produceState(
-    Note(
-      metadata = NoteMetadata(
-        title = stringResource(id = R.string.action_new)
-      )
-    )
-  ) {
-    id?.let {
-      launch {
-        value = vm.getNote(it)
-      }
-    }
-  }
-
-  val textState = remember {
-    mutableStateOf(TextFieldValue())
-  }.apply {
-    val text = state.value.contents.text
-    value = TextFieldValue(
-      text = text,
-      selection = TextRange(text.length)
-    )
-  }
-
   if(isMultiPane) {
     EditNoteContent(textState)
   } else {

@@ -20,11 +20,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
@@ -38,8 +33,7 @@ import com.farmerbb.notepad.ui.widgets.*
 
 @Composable fun EditNote(
   id: Long?,
-  navController: NavController? = null,
-  vm: NotepadViewModel = hiltViewModel(),
+  vm: NotepadViewModel?,
   isMultiPane: Boolean = false,
   state: State<Note> = editState(id, vm),
   textState: MutableState<TextFieldValue> = textState(state.value.contents.text)
@@ -50,7 +44,6 @@ import com.farmerbb.notepad.ui.widgets.*
     EditNote(
       note = state.value,
       textState = textState,
-      navController = navController,
       vm = vm
     )
   }
@@ -59,7 +52,6 @@ import com.farmerbb.notepad.ui.widgets.*
 @Composable fun EditNote(
   note: Note,
   textState: MutableState<TextFieldValue>,
-  navController: NavController? = null,
   vm: NotepadViewModel? = null
 ) {
   val id = note.metadata.metadataId
@@ -67,12 +59,12 @@ import com.farmerbb.notepad.ui.widgets.*
   Scaffold(
     topBar = {
       TopAppBar(
-        navigationIcon = { BackButton(navController) },
+        navigationIcon = { BackButton() },
         title = { AppBarText(note.metadata.title) },
         backgroundColor = colorResource(id = R.color.primary),
         actions = {
-          SaveButton(id, textState.value.text, navController, vm)
-          DeleteButton(id, navController, vm)
+          SaveButton(id, textState.value.text, vm)
+          DeleteButton(id, vm)
           NoteViewEditMenu(textState.value.text, vm)
         }
       )
@@ -82,24 +74,6 @@ import com.farmerbb.notepad.ui.widgets.*
     }
   )
 }
-
-@Suppress("FunctionName")
-fun NavGraphBuilder.EditNoteRoute(
-  navController: NavController
-) = composable(
-  route = "EditNote?id={id}",
-  arguments = listOf(
-    navArgument("id") { nullable = true }
-  )
-) {
-  EditNote(
-    id = it.arguments?.getString("id")?.toLong(),
-    navController = navController
-  )
-}
-
-fun NavController.newNote() = navigate("EditNote")
-fun NavController.editNote(id: Long) = navigate("EditNote?id=$id")
 
 @Preview @Composable fun EditNotePreview() = MaterialTheme {
   EditNote(

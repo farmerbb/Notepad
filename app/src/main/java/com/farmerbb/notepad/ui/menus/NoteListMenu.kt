@@ -24,14 +24,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
-import com.farmerbb.notepad.ui.routes.appSettings
 import com.farmerbb.notepad.ui.widgets.MoreButton
 
 @Composable fun NoteListMenu(
-  navController: NavController?,
   vm: NotepadViewModel?,
   showAboutDialog: MutableState<Boolean>,
   showSettingsDialog: MutableState<Boolean>? = null,
@@ -46,7 +43,7 @@ import com.farmerbb.notepad.ui.widgets.MoreButton
     ) {
       showSettingsDialog?.let {
         SettingsDialogMenuItem(showMenu, showSettingsDialog)
-      } ?: SettingsMenuItem(showMenu, navController)
+      } ?: SettingsMenuItem(showMenu)
 
       ImportMenuItem(showMenu, vm)
       AboutMenuItem(showMenu, showAboutDialog)
@@ -55,13 +52,12 @@ import com.farmerbb.notepad.ui.widgets.MoreButton
 }
 
 @Composable fun SettingsMenuItem(
-  showMenu: MutableState<Boolean>,
-  navController: NavController?
+  showMenu: MutableState<Boolean>
 ) {
   DropdownMenuItem(
     onClick = {
       showMenu.value = false
-      navController?.appSettings()
+      // TODO navigate to app settings
     }
   ) {
     Text(text = stringResource(R.string.action_settings))

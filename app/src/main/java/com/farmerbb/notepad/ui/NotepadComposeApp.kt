@@ -20,37 +20,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
-import com.farmerbb.notepad.ui.routes.AppSettingsRoute
-import com.farmerbb.notepad.ui.routes.EditNoteRoute
-import com.farmerbb.notepad.ui.routes.MultiPaneRoute
-import com.farmerbb.notepad.ui.routes.NoteListRoute
-import com.farmerbb.notepad.ui.routes.ViewNoteRoute
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.farmerbb.notepad.android.NotepadViewModel
+import com.farmerbb.notepad.ui.routes.MultiPane
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable fun NotepadComposeApp() {
-  val navController = rememberNavController()
+  val vm = viewModel<NotepadViewModel>()
   val systemUiController = rememberSystemUiController()
-
   val configuration = LocalConfiguration.current
-  val startDestination =
-    if(configuration.screenWidthDp >= 600)
-      "MultiPane"
-    else
-      "NoteList"
 
   MaterialTheme {
-    NavHost(
-      navController = navController,
-      startDestination = startDestination
-    ) {
-      NoteListRoute(navController)
-      ViewNoteRoute(navController)
-      EditNoteRoute(navController)
-      MultiPaneRoute(navController)
-      AppSettingsRoute(navController)
-    }
+    MultiPane(
+      vm = vm,
+      isMultiPane = configuration.screenWidthDp >= 600
+    )
   }
 
   SideEffect {

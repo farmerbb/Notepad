@@ -20,12 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
-import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
@@ -38,8 +32,7 @@ import com.farmerbb.notepad.ui.widgets.*
 
 @Composable fun ViewNote(
   id: Long,
-  navController: NavController? = null,
-  vm: NotepadViewModel = hiltViewModel(),
+  vm: NotepadViewModel?,
   isMultiPane: Boolean = false,
   state: State<Note> = viewState(id, vm)
 ) {
@@ -48,7 +41,6 @@ import com.farmerbb.notepad.ui.widgets.*
   } else {
     ViewNote(
       note = state.value,
-      navController = navController,
       vm = vm
     )
   }
@@ -56,7 +48,6 @@ import com.farmerbb.notepad.ui.widgets.*
 
 @Composable fun ViewNote(
   note: Note,
-  navController: NavController? = null,
   vm: NotepadViewModel? = null
 ) {
   val id = note.metadata.metadataId
@@ -64,12 +55,12 @@ import com.farmerbb.notepad.ui.widgets.*
   Scaffold(
     topBar = {
       TopAppBar(
-        navigationIcon = { BackButton(navController) },
+        navigationIcon = { BackButton() },
         title = { AppBarText(note.metadata.title) },
         backgroundColor = colorResource(id = R.color.primary),
         actions = {
-          EditButton(id, navController)
-          DeleteButton(id, navController, vm)
+          EditButton(id)
+          DeleteButton(id, vm)
           NoteViewEditMenu(note.contents.text, vm)
         }
       )
@@ -79,25 +70,6 @@ import com.farmerbb.notepad.ui.widgets.*
     }
   )
 }
-
-@Suppress("FunctionName")
-fun NavGraphBuilder.ViewNoteRoute(
-  navController: NavController
-) = composable(
-  route = "ViewNote/{id}",
-  arguments = listOf(
-    navArgument("id") { NavType.StringType }
-  )
-) {
-  it.arguments?.getString("id")?.let { id ->
-    ViewNote(
-      id = id.toLong(),
-      navController = navController
-    )
-  }
-}
-
-fun NavController.viewNote(id: Long) = navigate("ViewNote/$id")
 
 @Preview @Composable fun ViewNotePreview() = MaterialTheme {
   ViewNote(

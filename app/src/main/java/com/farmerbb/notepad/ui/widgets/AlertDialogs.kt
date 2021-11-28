@@ -19,8 +19,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.res.stringResource
-import com.farmerbb.notepad.R
 import androidx.compose.ui.window.Dialog
+import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.ui.routes.NotepadPreferenceScreen
 import com.farmerbb.notepad.utils.buildYear

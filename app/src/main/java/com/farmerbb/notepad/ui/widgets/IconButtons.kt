@@ -25,19 +25,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.ui.routes.RightPaneState
 import com.farmerbb.notepad.ui.routes.RightPaneState.Edit
 import com.farmerbb.notepad.ui.routes.RightPaneState.Empty
 import com.farmerbb.notepad.ui.routes.RightPaneState.View
-import com.farmerbb.notepad.ui.routes.editNote
-import com.farmerbb.notepad.ui.routes.viewNote
 
-@Composable fun BackButton(navController: NavController?) {
+@Composable fun BackButton() {
   IconButton(
-    onClick = { navController?.popBackStack() }
+    onClick = { /* TODO navigate to previous screen */ }
   ) {
     Icon(
       imageVector = Icons.Filled.ArrowBack,
@@ -49,16 +46,12 @@ import com.farmerbb.notepad.ui.routes.viewNote
 
 @Composable fun EditButton(
   id: Long,
-  navController: NavController?,
   rightPaneState: MutableState<RightPaneState>? = null
 ) {
   IconButton(
     onClick = {
       rightPaneState?.let {
         it.value = Edit(id)
-      } ?: navController?.apply {
-        popBackStack()
-        editNote(id)
       }
     }
   ) {
@@ -73,7 +66,6 @@ import com.farmerbb.notepad.ui.routes.viewNote
 @Composable fun SaveButton(
   id: Long,
   text: String,
-  navController: NavController?,
   vm: NotepadViewModel?,
   rightPaneState: MutableState<RightPaneState>? = null
 ) {
@@ -82,9 +74,6 @@ import com.farmerbb.notepad.ui.routes.viewNote
       vm?.saveNote(id, text) {
         rightPaneState?.let {
           it.value = View(id)
-        } ?: navController?.apply {
-          popBackStack()
-          viewNote(id)
         }
       }
     }
@@ -99,7 +88,6 @@ import com.farmerbb.notepad.ui.routes.viewNote
 
 @Composable fun DeleteButton(
   id: Long,
-  navController: NavController?,
   vm: NotepadViewModel?,
   rightPaneState: MutableState<RightPaneState>? = null
 ) {
@@ -120,7 +108,7 @@ import com.farmerbb.notepad.ui.routes.viewNote
         vm?.deleteNote(id) {
           rightPaneState?.let {
             it.value = Empty
-          } ?: navController?.popBackStack()
+          }
         }
       },
       onDismiss = {

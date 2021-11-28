@@ -25,35 +25,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.NoteListContent
-import com.farmerbb.notepad.ui.content.noteListState
 import com.farmerbb.notepad.ui.menus.NoteListMenu
 import com.farmerbb.notepad.ui.widgets.AboutDialog
 import com.farmerbb.notepad.ui.widgets.AppBarText
 
 @Composable fun NoteList(
-  navController: NavController,
-  vm: NotepadViewModel = hiltViewModel()
-) {
-  val state = noteListState(vm)
-
-  NoteList(
-    notes = state.value,
-    navController = navController,
-    vm = vm
-  )
-}
-
-@Composable fun NoteList(
   notes: List<NoteMetadata>,
-  navController: NavController? = null,
   vm: NotepadViewModel? = null
 ) {
   val showAboutDialog = remember { mutableStateOf(false) }
@@ -66,7 +47,6 @@ import com.farmerbb.notepad.ui.widgets.AppBarText
         backgroundColor = colorResource(id = R.color.primary),
         actions = {
           NoteListMenu(
-            navController = navController,
             vm = vm,
             showAboutDialog = showAboutDialog
           )
@@ -75,7 +55,7 @@ import com.farmerbb.notepad.ui.widgets.AppBarText
     },
     floatingActionButton = {
       FloatingActionButton(
-        onClick = { navController?.newNote() },
+        onClick = { /* TODO navigate to new note */ },
         backgroundColor = colorResource(id = R.color.primary),
         content = {
           Icon(
@@ -87,20 +67,8 @@ import com.farmerbb.notepad.ui.widgets.AppBarText
       )
     },
     content = {
-      NoteListContent(
-        notes = notes,
-        navController = navController
-      )
+      NoteListContent(notes)
     }
-  )
-}
-
-@Suppress("FunctionName")
-fun NavGraphBuilder.NoteListRoute(
-  navController: NavController
-) = composable(route = "NoteList") {
-  NoteList(
-    navController = navController
   )
 }
 

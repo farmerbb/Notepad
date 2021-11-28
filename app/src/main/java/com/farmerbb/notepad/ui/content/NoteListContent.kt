@@ -31,14 +31,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.routes.NoteListPreview
 import com.farmerbb.notepad.ui.routes.RightPaneState
 import com.farmerbb.notepad.ui.routes.RightPaneState.View
-import com.farmerbb.notepad.ui.routes.viewNote
 import kotlinx.coroutines.launch
 
 @Composable fun noteListState(
@@ -51,8 +49,7 @@ import kotlinx.coroutines.launch
 
 @Composable fun NoteListContent(
   notes: List<NoteMetadata>,
-  rightPaneState: MutableState<RightPaneState>? = null,
-  navController: NavController? = null
+  rightPaneState: MutableState<RightPaneState>? = null
 ) {
   when(notes.size) {
     0 -> Column(
@@ -78,7 +75,7 @@ import kotlinx.coroutines.launch
 
             rightPaneState?.let {
               it.value = View(id)
-            } ?: navController?.viewNote(id)
+            }
           }
         ) {
           Text(

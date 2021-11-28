@@ -29,9 +29,6 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.models.Prefs
 import com.farmerbb.notepad.ui.widgets.AppBarText
@@ -42,13 +39,11 @@ import de.schnettler.datastore.compose.model.Preference.PreferenceItem.SwitchPre
 import de.schnettler.datastore.compose.ui.PreferenceScreen
 import de.schnettler.datastore.manager.DataStoreManager
 
-@Composable fun AppSettings(
-  navController: NavController? = null
-) {
+@Composable fun AppSettings() {
   Scaffold(
     topBar = {
       TopAppBar(
-        navigationIcon = { BackButton(navController) },
+        navigationIcon = { BackButton() },
         title = { AppBarText(stringResource(id = R.string.action_settings)) },
         backgroundColor = colorResource(id = R.color.primary)
       )
@@ -160,15 +155,6 @@ import de.schnettler.datastore.manager.DataStoreManager
 
   return map.toMutableMap()
 }
-
-@Suppress("FunctionName")
-fun NavGraphBuilder.AppSettingsRoute(
-  navController: NavController
-) = composable(route = "AppSettings") {
-  AppSettings(navController)
-}
-
-fun NavController.appSettings() = navigate("AppSettings")
 
 @Preview @Composable fun AppSettingsPreview() = MaterialTheme {
   AppSettings()

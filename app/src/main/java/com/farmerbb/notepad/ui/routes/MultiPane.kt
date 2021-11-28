@@ -33,10 +33,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
@@ -55,22 +51,22 @@ sealed interface RightPaneState {
 }
 
 @Composable fun MultiPane(
-  navController: NavController,
-  vm: NotepadViewModel = hiltViewModel()
+  vm: NotepadViewModel,
+  isMultiPane: Boolean
 ) {
   val state = noteListState(vm)
 
   MultiPane(
     notes = state.value,
-    navController = navController,
-    vm = vm
+    vm = vm,
+    isMultiPane = isMultiPane
   )
 }
 
 @Composable fun MultiPane(
   notes: List<NoteMetadata>,
-  navController: NavController? = null,
-  vm: NotepadViewModel? = null
+  vm: NotepadViewModel? = null,
+  isMultiPane: Boolean = true
 ) {
   val rightPaneState = remember { mutableStateOf<RightPaneState>(Empty) }
 
@@ -89,13 +85,18 @@ sealed interface RightPaneState {
       title = stringResource(id = R.string.app_name)
       actions = {
         NoteListMenu(
-          navController = navController,
           vm = vm,
           showAboutDialog = showAboutDialog,
           showSettingsDialog = showSettingsDialog,
         )
       }
-      content = { EmptyDetails() }
+      content = {
+        if(isMultiPane) {
+          EmptyDetails()
+        } else {
+          NoteListContent(notes, rightPaneState)
+        }
+      }
     }
 
     is View -> {
@@ -103,13 +104,14 @@ sealed interface RightPaneState {
 
       title = viewState.value.metadata.title
       actions = {
-        EditButton(state.id, navController, rightPaneState)
-        DeleteButton(state.id, navController, vm, rightPaneState)
+        EditButton(state.id, rightPaneState)
+        DeleteButton(state.id, vm, rightPaneState)
         NoteViewEditMenu(viewState.value.contents.text, vm)
       }
       content = {
         ViewNote(
           id = state.id,
+          vm = vm,
           isMultiPane = true,
           state = viewState
         )
@@ -123,13 +125,14 @@ sealed interface RightPaneState {
 
       title = editState.value.metadata.title
       actions = {
-        SaveButton(id, textState.value.text, navController, vm, rightPaneState)
-        DeleteButton(id, navController, vm, rightPaneState)
+        SaveButton(id, textState.value.text, vm, rightPaneState)
+        DeleteButton(id, vm, rightPaneState)
         NoteViewEditMenu(textState.value.text, vm)
       }
       content = {
         EditNote(
           id = id,
+          vm = vm,
           isMultiPane = true,
           state = editState,
           textState = textState
@@ -162,21 +165,25 @@ sealed interface RightPaneState {
       }
     },
     content = {
-      Row {
-        Box(modifier = Modifier.weight(1f)) {
-          NoteListContent(notes, rightPaneState, navController)
+      if(isMultiPane) {
+        Row {
+          Box(modifier = Modifier.weight(1f)) {
+            NoteListContent(notes, rightPaneState)
+          }
+
+          Divider(
+            modifier = Modifier
+              .fillMaxHeight()
+              .width(1.dp)
+          )
+
+          Box(
+            modifier = Modifier.weight(2f),
+            content = content
+          )
         }
-
-        Divider(
-          modifier = Modifier
-            .fillMaxHeight()
-            .width(1.dp)
-        )
-
-        Box(
-          modifier = Modifier.weight(2f),
-          content = content
-        )
+      } else {
+        Box(content = content)
       }
     }
   )
@@ -199,15 +206,6 @@ sealed interface RightPaneState {
         .alpha(0.5f)
     )
   }
-}
-
-@Suppress("FunctionName")
-fun NavGraphBuilder.MultiPaneRoute(
-  navController: NavController
-) = composable(route = "MultiPane") {
-  MultiPane(
-    navController = navController
-  )
 }
 
 @Preview(device = Devices.PIXEL_C)

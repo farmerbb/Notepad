@@ -20,7 +20,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
 import com.farmerbb.notepad.data.DataMigrator
-import com.farmerbb.notepad.ui.NotepadComposeApp
+import com.farmerbb.notepad.ui.routes.NotepadComposeApp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject

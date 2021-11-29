@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
-import com.farmerbb.notepad.ui.routes.ViewNotePreview
+import com.farmerbb.notepad.ui.previews.ViewNotePreview
 import kotlinx.coroutines.launch
 
 @Composable fun viewState(

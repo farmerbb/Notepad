@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.ui.routes
+package com.farmerbb.notepad.ui.previews
 
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -29,7 +29,7 @@ import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
 import com.farmerbb.notepad.ui.widgets.*
 
-// TODO move preview to MultiPane
+@Deprecated("For preview purposes only")
 @Composable fun EditNote(
   note: Note,
   textState: MutableState<TextFieldValue>,
@@ -56,6 +56,7 @@ import com.farmerbb.notepad.ui.widgets.*
   )
 }
 
+@Suppress("deprecation")
 @Preview @Composable fun EditNotePreview() = MaterialTheme {
   EditNote(
     note = Note(

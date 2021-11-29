@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.models.NoteMetadata
-import com.farmerbb.notepad.ui.routes.NoteListPreview
+import com.farmerbb.notepad.ui.previews.NoteListPreview
 import com.farmerbb.notepad.models.RightPaneState
 import com.farmerbb.notepad.models.RightPaneState.View
 

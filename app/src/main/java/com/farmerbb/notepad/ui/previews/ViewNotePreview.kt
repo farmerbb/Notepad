@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.ui.routes
+package com.farmerbb.notepad.ui.previews
 
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -28,7 +28,7 @@ import com.farmerbb.notepad.ui.content.ViewNoteContent
 import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
 import com.farmerbb.notepad.ui.widgets.*
 
-// TODO move preview to MultiPane
+@Deprecated("For preview purposes only")
 @Composable fun ViewNote(
   note: Note,
   vm: NotepadViewModel? = null
@@ -54,6 +54,7 @@ import com.farmerbb.notepad.ui.widgets.*
   )
 }
 
+@Suppress("deprecation")
 @Preview @Composable fun ViewNotePreview() = MaterialTheme {
   ViewNote(
     note = Note(

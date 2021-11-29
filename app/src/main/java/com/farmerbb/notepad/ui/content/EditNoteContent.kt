@@ -36,7 +36,7 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteMetadata
-import com.farmerbb.notepad.ui.routes.EditNotePreview
+import com.farmerbb.notepad.ui.previews.EditNotePreview
 import com.farmerbb.notepad.utils.UnitDisposableEffect
 import kotlinx.coroutines.launch
 

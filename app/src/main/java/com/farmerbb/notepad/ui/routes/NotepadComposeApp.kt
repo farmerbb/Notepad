@@ -27,12 +27,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
@@ -46,21 +46,30 @@ import com.farmerbb.notepad.models.RightPaneState.Edit
 import com.farmerbb.notepad.models.RightPaneState.Empty
 import com.farmerbb.notepad.models.RightPaneState.View
 import com.farmerbb.notepad.ui.widgets.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-@Composable fun MultiPane(
-  vm: NotepadViewModel,
-  isMultiPane: Boolean
-) {
-  val state = vm.noteMetadata.collectAsState(emptyList())
+@Composable fun NotepadComposeApp() {
+  val vm = viewModel<NotepadViewModel>()
+  val systemUiController = rememberSystemUiController()
+  val configuration = LocalConfiguration.current
+  val notes = vm.noteMetadata.collectAsState(emptyList())
 
-  MultiPane(
-    notes = state.value,
-    vm = vm,
-    isMultiPane = isMultiPane
-  )
+  MaterialTheme {
+    NotepadComposeApp(
+      notes = notes.value,
+      vm = vm,
+      isMultiPane = configuration.screenWidthDp >= 600
+    )
+  }
+
+  SideEffect {
+    systemUiController.setNavigationBarColor(
+      color = Color.White
+    )
+  }
 }
 
-@Composable fun MultiPane(
+@Composable fun NotepadComposeApp(
   notes: List<NoteMetadata> = emptyList(),
   vm: NotepadViewModel? = null,
   isMultiPane: Boolean = false,
@@ -213,33 +222,4 @@ import com.farmerbb.notepad.ui.widgets.*
         .alpha(0.5f)
     )
   }
-}
-
-@Preview(device = Devices.PIXEL_C)
-@Composable fun MultiPanePreview() = MaterialTheme {
-  MultiPane(
-    notes = listOf(
-      NoteMetadata(title = "Test Note 1"),
-      NoteMetadata(title = "Test Note 2")
-    ),
-    isMultiPane = true
-  )
-}
-
-@Preview(device = Devices.PIXEL_C)
-@Composable fun MultiPaneEmptyPreview() = MaterialTheme {
-  MultiPane(isMultiPane = true)
-}
-
-@Preview @Composable fun NoteListPreview() = MaterialTheme {
-  MultiPane(
-    notes = listOf(
-      NoteMetadata(title = "Test Note 1"),
-      NoteMetadata(title = "Test Note 2")
-    )
-  )
-}
-
-@Preview @Composable fun NoteListEmptyPreview() = MaterialTheme {
-  MultiPane()
 }

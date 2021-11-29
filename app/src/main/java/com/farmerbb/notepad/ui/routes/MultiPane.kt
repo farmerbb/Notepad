@@ -21,6 +21,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,8 +36,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
-import com.farmerbb.notepad.models.Note
-import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.*
 import com.farmerbb.notepad.ui.menus.NoteListMenu
@@ -56,7 +55,7 @@ sealed interface RightPaneState {
   vm: NotepadViewModel,
   isMultiPane: Boolean
 ) {
-  val state = noteListState(vm)
+  val state = vm.noteMetadata.collectAsState(emptyList())
 
   MultiPane(
     notes = state.value,

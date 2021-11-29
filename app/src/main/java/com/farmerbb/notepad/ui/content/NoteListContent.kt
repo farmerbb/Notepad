@@ -21,7 +21,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -32,20 +31,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.routes.NoteListPreview
 import com.farmerbb.notepad.ui.routes.RightPaneState
 import com.farmerbb.notepad.ui.routes.RightPaneState.View
-import kotlinx.coroutines.launch
-
-@Composable fun noteListState(
-  vm: NotepadViewModel
-) = produceState(listOf<NoteMetadata>()) {
-  launch {
-    value = vm.getNoteMetadata()
-  }
-}
 
 @Composable fun NoteListContent(
   notes: List<NoteMetadata>,

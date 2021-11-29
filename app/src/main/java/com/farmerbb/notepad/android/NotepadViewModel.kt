@@ -39,7 +39,7 @@ import javax.inject.Inject
   private val context: Application,
   private val repo: NotepadRepository
 ): AndroidViewModel(context) {
-  suspend fun getNoteMetadata() = repo.getNoteMetadata()
+  val noteMetadata get() = repo.noteMetadataFlow()
   suspend fun getNote(id: Long) = repo.getNote(id)
 
   fun saveNote(

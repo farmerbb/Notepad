@@ -20,6 +20,7 @@ import com.farmerbb.notepad.models.CrossRef
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
+import kotlinx.coroutines.flow.Flow
 
 @Dao interface NotepadDAO {
 
@@ -37,10 +38,10 @@ import com.farmerbb.notepad.models.NoteMetadata
   // Read
 
   @Query("SELECT * FROM NoteMetadata ORDER BY title")
-  suspend fun getNoteMetadataSortedByTitle(): List<NoteMetadata>
+  fun getNoteMetadataSortedByTitle(): Flow<List<NoteMetadata>>
 
   @Query("SELECT * FROM NoteMetadata ORDER BY date")
-  suspend fun getNoteMetadataSortedByDate(): List<NoteMetadata>
+  fun getNoteMetadataSortedByDate(): Flow<List<NoteMetadata>>
 
   @Query("SELECT * FROM CrossRef WHERE metadataId = :id")
   suspend fun getCrossRef(id: Long): CrossRef?

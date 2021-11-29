@@ -23,7 +23,7 @@ import javax.inject.Inject
 class NotepadRepository @Inject constructor(
   private val dao: NotepadDAO
 ) {
-  suspend fun getNoteMetadata() = dao.getNoteMetadataSortedByTitle()
+  fun noteMetadataFlow() = dao.getNoteMetadataSortedByTitle()
   suspend fun getNote(id: Long) = dao.getNote(id)
 
   suspend fun saveNote(id: Long, text: String, onSuccess: (Long) -> Unit) = try {

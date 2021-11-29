@@ -70,7 +70,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 }
 
 @Composable fun NotepadComposeApp(
-  notes: List<NoteMetadata> = emptyList(),
+  notes: List<NoteMetadata>,
   vm: NotepadViewModel? = null,
   isMultiPane: Boolean = false,
   initState: RightPaneState = Empty

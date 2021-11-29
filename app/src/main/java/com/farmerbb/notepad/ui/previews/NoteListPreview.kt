@@ -36,7 +36,10 @@ fun MultiPanePreview() = MaterialTheme {
 
 @Preview(device = Devices.PIXEL_C)
 @Composable fun MultiPaneEmptyPreview() = MaterialTheme {
-    NotepadComposeApp(isMultiPane = true)
+  NotepadComposeApp(
+    notes = emptyList(),
+    isMultiPane = true
+  )
 }
 
 @Preview @Composable fun NoteListPreview() = MaterialTheme {
@@ -49,5 +52,5 @@ fun MultiPanePreview() = MaterialTheme {
 }
 
 @Preview @Composable fun NoteListEmptyPreview() = MaterialTheme {
-  NotepadComposeApp()
+  NotepadComposeApp(notes = emptyList())
 }

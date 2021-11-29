@@ -27,28 +27,9 @@ import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
-import com.farmerbb.notepad.ui.content.editState
-import com.farmerbb.notepad.ui.content.textState
 import com.farmerbb.notepad.ui.widgets.*
 
-@Composable fun EditNote(
-  id: Long?,
-  vm: NotepadViewModel?,
-  isMultiPane: Boolean = false,
-  state: State<Note> = editState(id, vm),
-  textState: MutableState<TextFieldValue> = textState(state.value.contents.text)
-) {
-  if(isMultiPane) {
-    EditNoteContent(textState)
-  } else {
-    EditNote(
-      note = state.value,
-      textState = textState,
-      vm = vm
-    )
-  }
-}
-
+// TODO move preview to MultiPane
 @Composable fun EditNote(
   note: Note,
   textState: MutableState<TextFieldValue>,

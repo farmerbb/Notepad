@@ -17,7 +17,6 @@ package com.farmerbb.notepad.ui.routes
 
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.farmerbb.notepad.R
@@ -27,25 +26,9 @@ import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.ViewNoteContent
 import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
-import com.farmerbb.notepad.ui.content.viewState
 import com.farmerbb.notepad.ui.widgets.*
 
-@Composable fun ViewNote(
-  id: Long,
-  vm: NotepadViewModel?,
-  isMultiPane: Boolean = false,
-  state: State<Note> = viewState(id, vm)
-) {
-  if(isMultiPane) {
-    ViewNoteContent(state.value)
-  } else {
-    ViewNote(
-      note = state.value,
-      vm = vm
-    )
-  }
-}
-
+// TODO move preview to MultiPane
 @Composable fun ViewNote(
   note: Note,
   vm: NotepadViewModel? = null

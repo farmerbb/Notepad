@@ -35,6 +35,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
+import com.farmerbb.notepad.models.Note
+import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.*
 import com.farmerbb.notepad.ui.menus.NoteListMenu
@@ -64,11 +66,12 @@ sealed interface RightPaneState {
 }
 
 @Composable fun MultiPane(
-  notes: List<NoteMetadata>,
+  notes: List<NoteMetadata> = emptyList(),
   vm: NotepadViewModel? = null,
-  isMultiPane: Boolean = true
+  isMultiPane: Boolean = false,
+  initState: RightPaneState = Empty
 ) {
-  val rightPaneState = remember { mutableStateOf<RightPaneState>(Empty) }
+  val rightPaneState = remember { mutableStateOf(initState) }
 
   val showAboutDialog = remember { mutableStateOf(false) }
   AboutDialog(showAboutDialog, vm)
@@ -108,14 +111,7 @@ sealed interface RightPaneState {
         DeleteButton(state.id, vm, rightPaneState)
         NoteViewEditMenu(viewState.value.contents.text, vm)
       }
-      content = {
-        ViewNote(
-          id = state.id,
-          vm = vm,
-          isMultiPane = true,
-          state = viewState
-        )
-      }
+      content = { ViewNoteContent(viewState.value) }
     }
 
     is Edit -> {
@@ -129,15 +125,7 @@ sealed interface RightPaneState {
         DeleteButton(id, vm, rightPaneState)
         NoteViewEditMenu(textState.value.text, vm)
       }
-      content = {
-        EditNote(
-          id = id,
-          vm = vm,
-          isMultiPane = true,
-          state = editState,
-          textState = textState
-        )
-      }
+      content = { EditNoteContent(textState) }
     }
   }
 
@@ -214,13 +202,25 @@ sealed interface RightPaneState {
     notes = listOf(
       NoteMetadata(title = "Test Note 1"),
       NoteMetadata(title = "Test Note 2")
-    )
+    ),
+    isMultiPane = true
   )
 }
 
 @Preview(device = Devices.PIXEL_C)
 @Composable fun MultiPaneEmptyPreview() = MaterialTheme {
+  MultiPane(isMultiPane = true)
+}
+
+@Preview @Composable fun NoteListPreview() = MaterialTheme {
   MultiPane(
-    notes = emptyList()
+    notes = listOf(
+      NoteMetadata(title = "Test Note 1"),
+      NoteMetadata(title = "Test Note 2")
+    )
   )
+}
+
+@Preview @Composable fun NoteListEmptyPreview() = MaterialTheme {
+  MultiPane()
 }

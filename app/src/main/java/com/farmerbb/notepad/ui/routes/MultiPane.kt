@@ -20,10 +20,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -40,16 +39,13 @@ import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.*
 import com.farmerbb.notepad.ui.menus.NoteListMenu
 import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
-import com.farmerbb.notepad.ui.routes.RightPaneState.Edit
-import com.farmerbb.notepad.ui.routes.RightPaneState.Empty
-import com.farmerbb.notepad.ui.routes.RightPaneState.View
+import com.farmerbb.notepad.models.RightPaneState
+import com.farmerbb.notepad.models.RightPaneState.Companion.EDIT
+import com.farmerbb.notepad.models.RightPaneState.Companion.VIEW
+import com.farmerbb.notepad.models.RightPaneState.Edit
+import com.farmerbb.notepad.models.RightPaneState.Empty
+import com.farmerbb.notepad.models.RightPaneState.View
 import com.farmerbb.notepad.ui.widgets.*
-
-sealed interface RightPaneState {
-  object Empty: RightPaneState
-  data class View(val id: Long): RightPaneState
-  data class Edit(val id: Long? = null): RightPaneState
-}
 
 @Composable fun MultiPane(
   vm: NotepadViewModel,
@@ -70,7 +66,26 @@ sealed interface RightPaneState {
   isMultiPane: Boolean = false,
   initState: RightPaneState = Empty
 ) {
-  val rightPaneState = remember { mutableStateOf(initState) }
+  val rightPaneState = rememberSaveable(
+    saver = Saver(
+      save = {
+        when(val state = it.value) {
+          is View -> VIEW to state.id
+          is Edit -> EDIT to state.id
+          else -> "" to null
+        }
+      },
+      restore = {
+        mutableStateOf(
+          when(it.first) {
+            VIEW -> View(it.second ?: 0)
+            EDIT -> Edit(it.second)
+            else -> Empty
+          }
+        )
+      }
+    )
+  ) { mutableStateOf(initState) }
 
   val showAboutDialog = remember { mutableStateOf(false) }
   AboutDialog(showAboutDialog, vm)
@@ -79,12 +94,14 @@ sealed interface RightPaneState {
   SettingsDialog(showSettingsDialog)
 
   val title: String
+  val backButton: @Composable (() -> Unit)?
   val actions: @Composable RowScope.() -> Unit
   val content: @Composable BoxScope.() -> Unit
 
   when(val state = rightPaneState.value) {
     Empty -> {
       title = stringResource(id = R.string.app_name)
+      backButton = null
       actions = {
         NoteListMenu(
           vm = vm,
@@ -105,6 +122,7 @@ sealed interface RightPaneState {
       val viewState = viewState(state.id, vm)
 
       title = viewState.value.metadata.title
+      backButton = { BackButton(rightPaneState) }
       actions = {
         EditButton(state.id, rightPaneState)
         DeleteButton(state.id, vm, rightPaneState)
@@ -125,12 +143,14 @@ sealed interface RightPaneState {
         NoteViewEditMenu(textState.value.text, vm)
       }
       content = { EditNoteContent(textState) }
+      backButton = { BackButton(rightPaneState) }
     }
   }
 
   Scaffold(
     topBar = {
       TopAppBar(
+        navigationIcon = backButton,
         title = { AppBarText(title) },
         backgroundColor = colorResource(id = R.color.primary),
         actions = actions

@@ -33,8 +33,8 @@ import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.routes.NoteListPreview
-import com.farmerbb.notepad.ui.routes.RightPaneState
-import com.farmerbb.notepad.ui.routes.RightPaneState.View
+import com.farmerbb.notepad.models.RightPaneState
+import com.farmerbb.notepad.models.RightPaneState.View
 
 @Composable fun NoteListContent(
   notes: List<NoteMetadata>,

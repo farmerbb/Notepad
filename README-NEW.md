@@ -32,13 +32,14 @@ This table will track the features of the app as they are reimplemented in the n
 | Settings screen                       | ✔                      |
 | About screen                          | ✔                      |
 | Overflow menus                        | ✔                      |
-| Delete notes (from list)              |                        |
+| Dual-pane view for tablets            | ✔                      |
 | Print notes                           |                        |
 | Import text files                     |                        |
 | Export to filesystem                  |                        |
 | Double-tap to edit                    |                        |
 | Multi-select notes list (long-press)  |                        |
 | Multi-select notes list (button)      |                        |
+| Delete notes (from list)              |                        |
 | Light/dark themes                     |                        |
 | Sans serif / serif / monospace fonts  |                        |
 | Font sizes                            |                        |
@@ -48,7 +49,6 @@ This table will track the features of the app as they are reimplemented in the n
 | Show date/time in notes list          |                        |
 | Edit notes directly                   |                        |
 | Markdown / HTML support               |                        |
-| Dual-pane view for tablets            |                        |
 | Save / load drafts                    |                        |
 | Keyboard shortcuts                    |                        |
 | Share text to Notepad from other apps |                        |

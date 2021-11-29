@@ -19,6 +19,17 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import de.schnettler.datastore.manager.PreferenceRequest
 
+sealed interface RightPaneState {
+  object Empty: RightPaneState
+  data class View(val id: Long): RightPaneState
+  data class Edit(val id: Long? = null): RightPaneState
+
+  companion object {
+    const val VIEW = "View"
+    const val EDIT = "Edit"
+  }
+}
+
 object Prefs {
   object Theme: PreferenceRequest<String>(
     key = stringPreferencesKey("theme"),

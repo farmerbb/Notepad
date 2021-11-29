@@ -27,14 +27,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
-import com.farmerbb.notepad.ui.routes.RightPaneState
-import com.farmerbb.notepad.ui.routes.RightPaneState.Edit
-import com.farmerbb.notepad.ui.routes.RightPaneState.Empty
-import com.farmerbb.notepad.ui.routes.RightPaneState.View
+import com.farmerbb.notepad.models.RightPaneState
+import com.farmerbb.notepad.models.RightPaneState.Edit
+import com.farmerbb.notepad.models.RightPaneState.Empty
+import com.farmerbb.notepad.models.RightPaneState.View
 
-@Composable fun BackButton() {
+@Composable fun BackButton(
+  rightPaneState: MutableState<RightPaneState>? = null
+) {
   IconButton(
-    onClick = { /* TODO navigate to previous screen */ }
+    onClick = { rightPaneState?.value = Empty }
   ) {
     Icon(
       imageVector = Icons.Filled.ArrowBack,
@@ -71,9 +73,9 @@ import com.farmerbb.notepad.ui.routes.RightPaneState.View
 ) {
   IconButton(
     onClick = {
-      vm?.saveNote(id, text) {
+      vm?.saveNote(id, text) { newId ->
         rightPaneState?.let {
-          it.value = View(id)
+          it.value = View(newId)
         }
       }
     }

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright 2014 Braden Farmer
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+
+-->
+
+<resources>
+
+    <string name="action_cancel">取り消す</string>
+    <string name="action_close">閉じる</string>
+    <string name="action_delete">削除</string>
+    <string name="action_discard">保存しない</string>
+    <string name="action_edit">編集</string>
+    <string name="action_export">アプリ外に保存</string>
+    <string name="action_font_size">文字の大きさ</string>
+    <string name="action_new">新規メモ</string>
+    <string name="action_save">保存</string>
+    <string name="action_settings">設定</string>
+    <string name="action_share">シェアする</string>
+    <string name="action_sort_by">並べ替え</string>
+    <string name="action_export_filename">アプリ外保存時のファイル名</string>
+    <string name="app_name">メモ帳</string>
+    <string name="app_name_debug">メモ帳 (デバッグ)</string>
+    <string name="cab_note_selected">つを選択中</string>
+    <string name="cab_notes_selected">つを選択中</string>
+    <string name="changes_discarded">放棄された変更</string>
+    <string name="dialog_about_message">メモ帳: シンプルなメモ帳アプリ\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
+    <string name="dialog_about_title">このアプリについて</string>
+    <string name="dialog_are_you_sure">良いですか?</string>
+    <string name="dialog_delete_button_title">メモを削除</string>
+    <string name="dialog_delete_button_title_plural">メモを削除</string>
+    <string name="dialog_save_button_title">変更を保存</string>
+    <string name="dialog_save_changes">変更を保存しますか?</string>
+    <string name="draft_restored">下書きを再編集</string>
+    <string name="draft_saved">下書きを保存</string>
+    <string name="double_tap">テキストをダブルタップで編集します</string>
+    <string name="edit_note">メモを開く</string>
+    <string name="edit_text">入力すると本文に追加します</string>
+    <string name="empty_note">空欄です。何か入力して下さい</string>
+    <string name="error_exporting_notes">出力時にエラー発生</string>
+    <string name="error_importing_notes">取り込み時にエラー発生</string>
+    <string name="error_loading_list">メモの一覧の読み込み時にエラー発生</string>
+    <string name="error_loading_note">メモの読み込み時にエラー発生</string>
+    <string name="failed_to_save">エラー発生。保存できませんでした</string>
+    <string name="first_run">始めまして!\n\nメモを作成するには、プラスマークをクリックして下さい</string>
+    <string name="first_view">既存メモの再編集には、本文をダブルタップするか、鉛筆アイコンをクリックして下さい</string>
+    <string name="import_notes">アプリ外のファイルを読み込む</string>
+    <string name="loading_external_file">外部ファイルの読み込みには対応していません</string>
+    <string name="no_notes_found">メモがありません</string>
+    <string name="note_deleted">削除しました</string>
+    <string name="note_exported_to">出力に成功</string>
+    <string name="note_saved">保存しました</string>
+    <string name="notes_deleted">削除しました</string>
+    <string name="notes_exported_to">出力に成功</string>
+    <string name="note_imported_successfully">読み込みました</string>
+    <string name="notes_imported_successfully">読み込みました</string>
+    <string name="pref_title_show_dialogs">保存時に確認する</string>
+    <string name="send_to">メモをシェア&#8230;</string>
+    <string name="view_note">メモを見る</string>
+    <string name="action_install">インストール</string>
+    <string name="action_no_thanks">いいえ</string>
+    <string name="pref_title_show_date">日時を表示</string>
+    <string name="action_theme">テーマ</string>
+    <string name="pref_title_direct_edit">直接メモを編集</string>
+    <string name="pref_title_markdown">Markdown/HTMLに対応</string>
+    <string name="action_print">印刷</string>
+    <string name="action_start_selection">メモを選択</string>
+    <string name="action_select_all">すべてを選択</string>
+    <string name="no_notes_to_select">選択の対象がありません</string>
+    <string name="document">%1$s 文書</string>
+    <string name="no_notes_to_export">選択されていません</string>
+    <string name="no_notes_to_delete">選択されていません</string>
+    <string name="check_for_updates">アプデを確認</string>
+    <string name="preview_app_title">メモ帳アプリのプレビュー</string>
+    <string name="preview_app_message">テスト版に切り替えますか? 元に戻すには再インストールが必要です</string>
+    <string name="blue_pill">安定版に安住</string>
+    <string name="red_pill">危険を承知で試す</string>
+
+    <string-array name="sort_by_list">
+        <item>日付順 (最新が先頭)</item>
+        <item>日付順 (最新が最後)</item>
+        <item>名前順 (A - Z)</item>
+        <item>名前順 (Z - A)</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>明テーマ / サンセリフ</item>
+        <item>明テーマ / セリフ</item>
+        <item>明テーマ / 固定幅</item>
+        <item>暗テーマ / サンセリフ</item>
+        <item>暗テーマ / セリフ</item>
+        <item>暗テーマ / 固定幅</item>
+    </string-array>
+    <string-array name="font_size_list">
+        <item>極小</item>
+        <item>小</item>
+        <item>普通</item>
+        <item>大</item>
+        <item>極大</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>本文の第1行</item>
+        <item>第1行+日付</item>
+        <item>日付+第1行</item>
+    </string-array>
+
+</resources>

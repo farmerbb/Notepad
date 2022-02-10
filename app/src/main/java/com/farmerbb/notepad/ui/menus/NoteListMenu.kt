@@ -28,80 +28,85 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.ui.widgets.MoreButton
 
-@Composable fun NoteListMenu(
-  vm: NotepadViewModel?,
-  showAboutDialog: MutableState<Boolean>,
-  showSettingsDialog: MutableState<Boolean>? = null,
+@Composable
+fun NoteListMenu(
+    vm: NotepadViewModel?,
+    showAboutDialog: MutableState<Boolean>,
+    showSettingsDialog: MutableState<Boolean>? = null,
 ) {
-  val showMenu = remember { mutableStateOf(false) }
+    val showMenu = remember { mutableStateOf(false) }
 
-  Box {
-    MoreButton(showMenu)
-    DropdownMenu(
-      expanded = showMenu.value,
-      onDismissRequest = { showMenu.value = false }
+    Box {
+        MoreButton(showMenu)
+        DropdownMenu(
+            expanded = showMenu.value,
+            onDismissRequest = { showMenu.value = false }
+        ) {
+            showSettingsDialog?.let {
+                SettingsDialogMenuItem(showMenu, showSettingsDialog)
+            } ?: SettingsMenuItem(showMenu)
+
+            ImportMenuItem(showMenu, vm)
+            AboutMenuItem(showMenu, showAboutDialog)
+        }
+    }
+}
+
+@Composable
+fun SettingsMenuItem(
+    showMenu: MutableState<Boolean>
+) {
+    DropdownMenuItem(
+        onClick = {
+            showMenu.value = false
+            // TODO navigate to app settings
+        }
     ) {
-      showSettingsDialog?.let {
-        SettingsDialogMenuItem(showMenu, showSettingsDialog)
-      } ?: SettingsMenuItem(showMenu)
-
-      ImportMenuItem(showMenu, vm)
-      AboutMenuItem(showMenu, showAboutDialog)
+        Text(text = stringResource(R.string.action_settings))
     }
-  }
 }
 
-@Composable fun SettingsMenuItem(
-  showMenu: MutableState<Boolean>
+@Composable
+fun SettingsDialogMenuItem(
+    showMenu: MutableState<Boolean>,
+    showSettingsDialog: MutableState<Boolean>?
 ) {
-  DropdownMenuItem(
-    onClick = {
-      showMenu.value = false
-      // TODO navigate to app settings
+    DropdownMenuItem(
+        onClick = {
+            showMenu.value = false
+            showSettingsDialog?.value = true
+        }
+    ) {
+        Text(text = stringResource(R.string.action_settings))
     }
-  ) {
-    Text(text = stringResource(R.string.action_settings))
-  }
 }
 
-@Composable fun SettingsDialogMenuItem(
-  showMenu: MutableState<Boolean>,
-  showSettingsDialog: MutableState<Boolean>?
+@Composable
+fun ImportMenuItem(
+    showMenu: MutableState<Boolean>,
+    vm: NotepadViewModel?
 ) {
-  DropdownMenuItem(
-    onClick = {
-      showMenu.value = false
-      showSettingsDialog?.value = true
+    DropdownMenuItem(
+        onClick = {
+            showMenu.value = false
+            vm?.importNotes()
+        }
+    ) {
+        Text(text = stringResource(R.string.import_notes))
     }
-  ) {
-    Text(text = stringResource(R.string.action_settings))
-  }
 }
 
-@Composable fun ImportMenuItem(
-  showMenu: MutableState<Boolean>,
-  vm: NotepadViewModel?
+@Composable
+fun AboutMenuItem(
+    showMenu: MutableState<Boolean>,
+    showAboutDialog: MutableState<Boolean>
 ) {
-  DropdownMenuItem(
-    onClick = {
-      showMenu.value = false
-      vm?.importNotes()
+    DropdownMenuItem(
+        onClick = {
+            showMenu.value = false
+            showAboutDialog.value = true
+        }
+    ) {
+        Text(text = stringResource(R.string.dialog_about_title))
     }
-  ) {
-    Text(text = stringResource(R.string.import_notes))
-  }
-}
-
-@Composable fun AboutMenuItem(
-  showMenu: MutableState<Boolean>,
-  showAboutDialog: MutableState<Boolean>
-) {
-  DropdownMenuItem(
-    onClick = {
-      showMenu.value = false
-      showAboutDialog.value = true
-    }
-  ) {
-    Text(text = stringResource(R.string.dialog_about_title))
-  }
 }

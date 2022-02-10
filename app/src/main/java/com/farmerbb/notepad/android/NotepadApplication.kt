@@ -18,4 +18,5 @@ package com.farmerbb.notepad.android
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
-@HiltAndroidApp class NotepadApplication: Application()
+@HiltAndroidApp
+class NotepadApplication: Application()

@@ -36,53 +36,56 @@ import com.farmerbb.notepad.ui.previews.NoteListPreview
 import com.farmerbb.notepad.models.RightPaneState
 import com.farmerbb.notepad.models.RightPaneState.View
 
-@Composable fun NoteListContent(
-  notes: List<NoteMetadata>,
-  rightPaneState: MutableState<RightPaneState>? = null
+@Composable
+fun NoteListContent(
+    notes: List<NoteMetadata>,
+    rightPaneState: MutableState<RightPaneState>? = null
 ) {
-  when(notes.size) {
-    0 -> Column(
-      modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight(),
-      verticalArrangement = Arrangement.Center,
-      horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-      Text(
-        text = stringResource(id = R.string.no_notes_found),
-        color = colorResource(id = R.color.primary),
-        fontWeight = FontWeight.Thin,
-        fontSize = 30.sp
-      )
-    }
-
-    else -> LazyColumn {
-      items(notes.size) {
-        Column(modifier = Modifier
-          .clickable {
-            val id = notes[it].metadataId
-
-            rightPaneState?.let {
-              it.value = View(id)
-            }
-          }
-        ) {
-          Text(
-            text = notes[it].title,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+    when(notes.size) {
+        0 -> Column(
             modifier = Modifier
-              .padding(
-                horizontal = 16.dp,
-                vertical = 12.dp
-              )
-          )
-
-          Divider()
+                .fillMaxWidth()
+                .fillMaxHeight(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = stringResource(id = R.string.no_notes_found),
+                color = colorResource(id = R.color.primary),
+                fontWeight = FontWeight.Thin,
+                fontSize = 30.sp
+            )
         }
-      }
+
+        else -> LazyColumn {
+            items(notes.size) {
+                Column(modifier = Modifier
+                    .clickable {
+                        val id = notes[it].metadataId
+
+                        rightPaneState?.let {
+                            it.value = View(id)
+                        }
+                    }
+                ) {
+                    Text(
+                        text = notes[it].title,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .padding(
+                                horizontal = 16.dp,
+                                vertical = 12.dp
+                            )
+                    )
+
+                    Divider()
+                }
+            }
+        }
     }
-  }
 }
 
-@Preview @Composable fun NoteListContentPreview() = NoteListPreview()
+@Preview
+@Composable
+fun NoteListContentPreview() = NoteListPreview()

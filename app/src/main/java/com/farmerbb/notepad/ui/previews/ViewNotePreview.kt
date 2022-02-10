@@ -29,41 +29,44 @@ import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
 import com.farmerbb.notepad.ui.widgets.*
 
 @Deprecated("For preview purposes only")
-@Composable fun ViewNote(
-  note: Note,
-  vm: NotepadViewModel? = null
+@Composable
+fun ViewNote(
+    note: Note,
+    vm: NotepadViewModel? = null
 ) {
-  val id = note.metadata.metadataId
+    val id = note.metadata.metadataId
 
-  Scaffold(
-    topBar = {
-      TopAppBar(
-        navigationIcon = { BackButton() },
-        title = { AppBarText(note.metadata.title) },
-        backgroundColor = colorResource(id = R.color.primary),
-        actions = {
-          EditButton(id)
-          DeleteButton(id, vm)
-          NoteViewEditMenu(note.contents.text, vm)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navigationIcon = { BackButton() },
+                title = { AppBarText(note.metadata.title) },
+                backgroundColor = colorResource(id = R.color.primary),
+                actions = {
+                    EditButton(id)
+                    DeleteButton(id, vm)
+                    NoteViewEditMenu(note.contents.text, vm)
+                }
+            )
+        },
+        content = {
+            ViewNoteContent(note)
         }
-      )
-    },
-    content = {
-      ViewNoteContent(note)
-    }
-  )
+    )
 }
 
 @Suppress("deprecation")
-@Preview @Composable fun ViewNotePreview() = MaterialTheme {
-  ViewNote(
-    note = Note(
-      metadata = NoteMetadata(
-        title = "Title"
-      ),
-      contents = NoteContents(
-        text = "This is some text"
-      )
+@Preview
+@Composable
+fun ViewNotePreview() = MaterialTheme {
+    ViewNote(
+        note = Note(
+            metadata = NoteMetadata(
+                title = "Title"
+            ),
+            contents = NoteContents(
+                text = "This is some text"
+            )
+        )
     )
-  )
 }

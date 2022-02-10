@@ -20,11 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 
-@Composable fun AppBarText(text: String) {
-  Text(
-    text = text,
-    color = Color.White,
-    maxLines = 1,
-    overflow = TextOverflow.Ellipsis
-  )
+@Composable
+fun AppBarText(text: String) {
+    Text(
+        text = text,
+        color = Color.White,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
+    )
 }

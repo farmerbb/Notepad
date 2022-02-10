@@ -22,42 +22,43 @@ import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import kotlinx.coroutines.flow.Flow
 
-@Dao interface NotepadDAO {
+@Dao
+interface NotepadDAO {
 
-  // Create or Update
+    // Create or Update
 
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun insertNoteContents(NoteContents: NoteContents): Long
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNoteContents(NoteContents: NoteContents): Long
 
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun insertNoteMetadata(NoteMetadata: NoteMetadata): Long
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertNoteMetadata(NoteMetadata: NoteMetadata): Long
 
-  @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun insertCrossRef(crossRef: CrossRef): Long
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCrossRef(crossRef: CrossRef): Long
 
-  // Read
+    // Read
 
-  @Query("SELECT * FROM NoteMetadata ORDER BY title")
-  fun getNoteMetadataSortedByTitle(): Flow<List<NoteMetadata>>
+    @Query("SELECT * FROM NoteMetadata ORDER BY title")
+    fun getNoteMetadataSortedByTitle(): Flow<List<NoteMetadata>>
 
-  @Query("SELECT * FROM NoteMetadata ORDER BY date")
-  fun getNoteMetadataSortedByDate(): Flow<List<NoteMetadata>>
+    @Query("SELECT * FROM NoteMetadata ORDER BY date")
+    fun getNoteMetadataSortedByDate(): Flow<List<NoteMetadata>>
 
-  @Query("SELECT * FROM CrossRef WHERE metadataId = :id")
-  suspend fun getCrossRef(id: Long): CrossRef?
+    @Query("SELECT * FROM CrossRef WHERE metadataId = :id")
+    suspend fun getCrossRef(id: Long): CrossRef?
 
-  @Transaction
-  @Query("SELECT * FROM NoteMetadata WHERE metadataId = :id")
-  suspend fun getNote(id: Long): Note
+    @Transaction
+    @Query("SELECT * FROM NoteMetadata WHERE metadataId = :id")
+    suspend fun getNote(id: Long): Note
 
-  // Delete
+    // Delete
 
-  @Query("DELETE FROM NoteContents WHERE contentsId = :id")
-  suspend fun deleteNoteContents(id: Long)
+    @Query("DELETE FROM NoteContents WHERE contentsId = :id")
+    suspend fun deleteNoteContents(id: Long)
 
-  @Query("DELETE FROM NoteMetadata WHERE metadataId = :id")
-  suspend fun deleteNoteMetadata(id: Long)
+    @Query("DELETE FROM NoteMetadata WHERE metadataId = :id")
+    suspend fun deleteNoteMetadata(id: Long)
 
-  @Query("DELETE FROM CrossRef WHERE metadataId = :id")
-  suspend fun deleteCrossRef(id: Long)
+    @Query("DELETE FROM CrossRef WHERE metadataId = :id")
+    suspend fun deleteCrossRef(id: Long)
 }

@@ -40,72 +40,77 @@ import com.farmerbb.notepad.ui.previews.EditNotePreview
 import com.farmerbb.notepad.utils.UnitDisposableEffect
 import kotlinx.coroutines.launch
 
-@Composable fun editState(
-  id: Long?,
-  vm: NotepadViewModel?
+@Composable
+fun editState(
+    id: Long?,
+    vm: NotepadViewModel?
 ) = produceState(
-  Note(
-    metadata = NoteMetadata(
-      title = stringResource(id = R.string.action_new)
-    )
-  )
-) {
-  id?.let {
-    launch {
-      vm?.getNote(it)?.let { value = it }
-    }
-  }
-}
-
-@Composable fun textState(
-  text: String
-) = remember {
-  mutableStateOf(TextFieldValue())
-}.apply {
-  value = TextFieldValue(
-    text = text,
-    selection = TextRange(text.length)
-  )
-}
-
-@Composable fun EditNoteContent(
-  textState: MutableState<TextFieldValue>?
-) {
-  val focusRequester = remember { FocusRequester() }
-  BasicTextField(
-    value = textState?.value ?: TextFieldValue(),
-    onValueChange = { textState?.value = it },
-    textStyle = TextStyle(
-      fontSize = 16.sp
-    ),
-    modifier = Modifier
-      .padding(
-        horizontal = 16.dp,
-        vertical = 12.dp
-      )
-      .fillMaxWidth()
-      .fillMaxHeight()
-      .focusRequester(focusRequester)
-  )
-
-  if(textState?.value?.text.isNullOrEmpty()) {
-    BasicText(
-      text = stringResource(id = R.string.edit_text),
-      style = TextStyle(
-        fontSize = 16.sp,
-        color = Color.LightGray
-      ),
-      modifier = Modifier
-        .padding(
-          horizontal = 16.dp,
-          vertical = 12.dp
+    Note(
+        metadata = NoteMetadata(
+            title = stringResource(id = R.string.action_new)
         )
     )
-  }
-
-  UnitDisposableEffect {
-    focusRequester.requestFocus()
-  }
+) {
+    id?.let {
+        launch {
+            vm?.getNote(it)?.let { value = it }
+        }
+    }
 }
 
-@Preview @Composable fun EditNoteContentPreview() = EditNotePreview()
+@Composable
+fun textState(
+    text: String
+) = remember {
+    mutableStateOf(TextFieldValue())
+}.apply {
+    value = TextFieldValue(
+        text = text,
+        selection = TextRange(text.length)
+    )
+}
+
+@Composable
+fun EditNoteContent(
+    textState: MutableState<TextFieldValue>?
+) {
+    val focusRequester = remember { FocusRequester() }
+    BasicTextField(
+        value = textState?.value ?: TextFieldValue(),
+        onValueChange = { textState?.value = it },
+        textStyle = TextStyle(
+            fontSize = 16.sp
+        ),
+        modifier = Modifier
+            .padding(
+                horizontal = 16.dp,
+                vertical = 12.dp
+            )
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .focusRequester(focusRequester)
+    )
+
+    if(textState?.value?.text.isNullOrEmpty()) {
+        BasicText(
+            text = stringResource(id = R.string.edit_text),
+            style = TextStyle(
+                fontSize = 16.sp,
+                color = Color.LightGray
+            ),
+            modifier = Modifier
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 12.dp
+                )
+        )
+    }
+
+    UnitDisposableEffect {
+        focusRequester.requestFocus()
+    }
+}
+
+@Preview
+@Composable
+fun EditNoteContentPreview() = EditNotePreview()

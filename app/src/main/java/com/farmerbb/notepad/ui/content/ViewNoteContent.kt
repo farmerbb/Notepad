@@ -35,37 +35,41 @@ import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.ui.previews.ViewNotePreview
 import kotlinx.coroutines.launch
 
-@Composable fun viewState(
-  id: Long,
-  vm: NotepadViewModel?
+@Composable
+fun viewState(
+    id: Long,
+    vm: NotepadViewModel?
 ) = produceState(Note()) {
-  launch {
-    vm?.getNote(id)?.let { value = it }
-  }
-}
-
-@Composable fun ViewNoteContent(note: Note) {
-  Box(
-    modifier = Modifier.verticalScroll(
-      state = ScrollState(initial = 0)
-    )
-  ) {
-    SelectionContainer {
-      BasicText(
-        text = note.contents.text,
-        style = TextStyle(
-          fontSize = 16.sp
-        ),
-        modifier = Modifier
-          .padding(
-            horizontal = 16.dp,
-            vertical = 12.dp
-          )
-          .fillMaxWidth()
-          .fillMaxHeight()
-      )
+    launch {
+        vm?.getNote(id)?.let { value = it }
     }
-  }
 }
 
-@Preview @Composable fun ViewNoteContentPreview() = ViewNotePreview()
+@Composable
+fun ViewNoteContent(note: Note) {
+    Box(
+        modifier = Modifier.verticalScroll(
+            state = ScrollState(initial = 0)
+        )
+    ) {
+        SelectionContainer {
+            BasicText(
+                text = note.contents.text,
+                style = TextStyle(
+                    fontSize = 16.sp
+                ),
+                modifier = Modifier
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 12.dp
+                    )
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ViewNoteContentPreview() = ViewNotePreview()

@@ -25,17 +25,18 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@AndroidEntryPoint class NotepadActivity: ComponentActivity() {
-  @Inject lateinit var migrator: DataMigrator
+@AndroidEntryPoint
+class NotepadActivity: ComponentActivity() {
+    @Inject lateinit var migrator: DataMigrator
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    lifecycleScope.launch {
-      migrator.migrate()
-      setContent {
-        NotepadComposeApp()
-      }
+        lifecycleScope.launch {
+            migrator.migrate()
+            setContent {
+                NotepadComposeApp()
+            }
+        }
     }
-  }
 }

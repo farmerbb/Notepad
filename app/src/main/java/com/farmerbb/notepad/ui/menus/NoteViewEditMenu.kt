@@ -28,66 +28,70 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.ui.widgets.MoreButton
 
-@Composable fun NoteViewEditMenu(
-  text: String,
-  vm: NotepadViewModel?
+@Composable
+fun NoteViewEditMenu(
+    text: String,
+    vm: NotepadViewModel?
 ) {
-  val showMenu = remember { mutableStateOf(false) }
+    val showMenu = remember { mutableStateOf(false) }
 
-  Box {
-    MoreButton(showMenu)
-    DropdownMenu(
-      expanded = showMenu.value,
-      onDismissRequest = { showMenu.value = false }
+    Box {
+        MoreButton(showMenu)
+        DropdownMenu(
+            expanded = showMenu.value,
+            onDismissRequest = { showMenu.value = false }
+        ) {
+            ShareMenuItem(text, showMenu, vm)
+            ExportMenuItem(text, showMenu, vm)
+            PrintMenuItem(text, showMenu, vm)
+        }
+    }
+}
+
+@Composable
+fun ShareMenuItem(
+    text: String,
+    showMenu: MutableState<Boolean>,
+    vm: NotepadViewModel?
+) {
+    DropdownMenuItem(
+        onClick = {
+            showMenu.value = false
+            vm?.shareNote(text)
+        }
     ) {
-      ShareMenuItem(text, showMenu, vm)
-      ExportMenuItem(text, showMenu, vm)
-      PrintMenuItem(text, showMenu, vm)
+        Text(text = stringResource(R.string.action_share))
     }
-  }
 }
 
-@Composable fun ShareMenuItem(
-  text: String,
-  showMenu: MutableState<Boolean>,
-  vm: NotepadViewModel?
+@Composable
+fun ExportMenuItem(
+    text: String,
+    showMenu: MutableState<Boolean>,
+    vm: NotepadViewModel?
 ) {
-  DropdownMenuItem(
-    onClick = {
-      showMenu.value = false
-      vm?.shareNote(text)
+    DropdownMenuItem(
+        onClick = {
+            showMenu.value = false
+            vm?.exportNote(text)
+        }
+    ) {
+        Text(text = stringResource(R.string.action_export))
     }
-  ) {
-    Text(text = stringResource(R.string.action_share))
-  }
 }
 
-@Composable fun ExportMenuItem(
-  text: String,
-  showMenu: MutableState<Boolean>,
-  vm: NotepadViewModel?
+@Composable
+fun PrintMenuItem(
+    text: String,
+    showMenu: MutableState<Boolean>,
+    vm: NotepadViewModel?
 ) {
-  DropdownMenuItem(
-    onClick = {
-      showMenu.value = false
-      vm?.exportNote(text)
+    DropdownMenuItem(
+        onClick = {
+            showMenu.value = false
+            vm?.printNote(text)
+        }
+    ) {
+        Text(text = stringResource(R.string.action_print))
     }
-  ) {
-    Text(text = stringResource(R.string.action_export))
-  }
-}
-
-@Composable fun PrintMenuItem(
-  text: String,
-  showMenu: MutableState<Boolean>,
-  vm: NotepadViewModel?
-) {
-  DropdownMenuItem(
-    onClick = {
-      showMenu.value = false
-      vm?.printNote(text)
-    }
-  ) {
-    Text(text = stringResource(R.string.action_print))
-  }
 }

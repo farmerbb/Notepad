@@ -25,32 +25,37 @@ import com.farmerbb.notepad.ui.routes.NotepadComposeApp
 @Preview(device = Devices.PIXEL_C)
 @Composable
 fun MultiPanePreview() = MaterialTheme {
-  NotepadComposeApp(
-    notes = listOf(
-      NoteMetadata(title = "Test Note 1"),
-      NoteMetadata(title = "Test Note 2")
-    ),
-    isMultiPane = true
-  )
+    NotepadComposeApp(
+        notes = listOf(
+            NoteMetadata(title = "Test Note 1"),
+            NoteMetadata(title = "Test Note 2")
+        ),
+        isMultiPane = true
+    )
 }
 
 @Preview(device = Devices.PIXEL_C)
-@Composable fun MultiPaneEmptyPreview() = MaterialTheme {
-  NotepadComposeApp(
-    notes = emptyList(),
-    isMultiPane = true
-  )
-}
-
-@Preview @Composable fun NoteListPreview() = MaterialTheme {
-  NotepadComposeApp(
-    notes = listOf(
-      NoteMetadata(title = "Test Note 1"),
-      NoteMetadata(title = "Test Note 2")
+@Composable
+fun MultiPaneEmptyPreview() = MaterialTheme {
+    NotepadComposeApp(
+        notes = emptyList(),
+        isMultiPane = true
     )
-  )
 }
 
-@Preview @Composable fun NoteListEmptyPreview() = MaterialTheme {
-  NotepadComposeApp(notes = emptyList())
+@Preview
+@Composable
+fun NoteListPreview() = MaterialTheme {
+    NotepadComposeApp(
+        notes = listOf(
+            NoteMetadata(title = "Test Note 1"),
+            NoteMetadata(title = "Test Note 2")
+        )
+    )
+}
+
+@Preview
+@Composable
+fun NoteListEmptyPreview() = MaterialTheme {
+    NotepadComposeApp(notes = emptyList())
 }

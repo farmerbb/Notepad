@@ -25,9 +25,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 @InstallIn(SingletonComponent::class)
-@Module class NotepadModule {
-  @Provides fun provideDatabase(@ApplicationContext context: Context)
+@Module
+class NotepadModule {
+    @Provides
+    fun provideDatabase(@ApplicationContext context: Context)
           = Room.databaseBuilder(context, NotepadDatabase::class.java, "notepad").build()
 
-  @Provides fun provideDAO(db: NotepadDatabase) = db.getDAO()
+    @Provides
+    fun provideDAO(db: NotepadDatabase) = db.getDAO()
 }

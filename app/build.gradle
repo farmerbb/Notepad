@@ -5,120 +5,120 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
 repositories {
-  google()
-  mavenCentral()
-  gradlePluginPortal()
-  maven { url "https://jitpack.io" }
+    google()
+    mavenCentral()
+    gradlePluginPortal()
+    maven { url "https://jitpack.io" }
 }
 
 android {
-  compileSdkVersion 31
+    compileSdkVersion 31
 
-  defaultConfig {
-    applicationId "com.farmerbb.notepad"
-    minSdkVersion 21
-    targetSdkVersion 31
+    defaultConfig {
+        applicationId "com.farmerbb.notepad"
+        minSdkVersion 21
+        targetSdkVersion 31
 
-    versionCode 112
-    versionName "2.3.7"
+        versionCode 112
+        versionName "2.3.7"
 
-    resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it", "de", "ru", "cs", "pt-rBR", "no", "zh-rTW", "ar", "tr", "el", "bn", "sw", "es", "ja"
-    vectorDrawables.useSupportLibrary = true
+        resConfigs "en", "fr", "ko", "nl", "pl", "zh-rCN", "it", "de", "ru", "cs", "pt-rBR", "no", "zh-rTW", "ar", "tr", "el", "bn", "sw", "es", "ja"
+        vectorDrawables.useSupportLibrary = true
 
-    buildConfigField "long", "TIMESTAMP", "${System.currentTimeMillis()}L"
+        buildConfigField "long", "TIMESTAMP", "${System.currentTimeMillis()}L"
 
-    javaCompileOptions {
-      annotationProcessorOptions {
-        arguments += ["room.incremental": "true"]
-      }
-    }
-  }
-
-  buildFeatures {
-    compose true
-  }
-
-  compileOptions {
-    sourceCompatibility JavaVersion.VERSION_1_8
-    targetCompatibility JavaVersion.VERSION_1_8
-  }
-
-  kotlinOptions {
-    freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
-  }
-
-  composeOptions {
-    kotlinCompilerExtensionVersion "$compose_version"
-  }
-
-  signingConfigs {
-    release {
-      if(System.getenv("KSTOREFILE") != null)
-        storeFile file(System.getenv("KSTOREFILE"))
-
-      storePassword System.getenv("KSTOREPWD")
-      keyAlias System.getenv("KEYALIAS")
-      keyPassword System.getenv("KEYPWD")
-    }
-  }
-
-  buildTypes {
-    debug {
-      applicationIdSuffix ".debug"
-      manifestPlaceholders = [appName: "@string/app_name_debug"]
-    }
-
-    release {
-      minifyEnabled true
-      shrinkResources true
-      proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-      signingConfig signingConfigs.release
-      manifestPlaceholders = [appName: "@string/app_name"]
-
-      applicationVariants.all { variant ->
-        variant.outputs.all {
-          outputFileName = "${project.parent.name}-${defaultConfig.versionName}.apk"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += ["room.incremental": "true"]
+            }
         }
-      }
     }
-  }
-  
-  lintOptions {
-    abortOnError false
-  }
+
+    buildFeatures {
+        compose true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion "$compose_version"
+    }
+
+    signingConfigs {
+        release {
+            if(System.getenv("KSTOREFILE") != null)
+                storeFile file(System.getenv("KSTOREFILE"))
+
+            storePassword System.getenv("KSTOREPWD")
+            keyAlias System.getenv("KEYALIAS")
+            keyPassword System.getenv("KEYPWD")
+        }
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            manifestPlaceholders = [appName: "@string/app_name_debug"]
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
+            manifestPlaceholders = [appName: "@string/app_name"]
+
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "${project.parent.name}-${defaultConfig.versionName}.apk"
+                }
+            }
+        }
+    }
+    
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-  implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-  implementation 'androidx.appcompat:appcompat:1.4.0'
-  implementation 'androidx.preference:preference-ktx:1.1.1'
-  implementation 'com.google.android.material:material:1.4.0'
-  implementation 'org.apache.commons:commons-lang3:3.12.0'
-  implementation 'us.feras.mdv:markdownview:1.1.0'
-  implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.preference:preference-ktx:1.1.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'us.feras.mdv:markdownview:1.1.0'
+    implementation 'androidx.core:core-ktx:1.7.0'
 
-  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
-  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
-  implementation "androidx.room:room-runtime:$room_version"
-  implementation "androidx.room:room-rxjava2:$room_version"
-  implementation "androidx.room:room-ktx:$room_version"
-  kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
 
-  implementation "com.google.dagger:hilt-android:$hilt_version"
-  kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
-  implementation "androidx.compose.ui:ui:$compose_version"
-  implementation "androidx.compose.ui:ui-tooling:$compose_version"
-  implementation "androidx.compose.foundation:foundation:$compose_version"
-  implementation "androidx.compose.material:material:$compose_version"
-  implementation "androidx.compose.material:material-icons-core:$compose_version"
-  implementation "androidx.compose.material:material-icons-extended:$compose_version"
-  implementation 'androidx.activity:activity-compose:1.4.0'
-  implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling:$compose_version"
+    implementation "androidx.compose.foundation:foundation:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
+    implementation "androidx.compose.material:material-icons-core:$compose_version"
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+    implementation 'androidx.activity:activity-compose:1.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
 
-  implementation 'androidx.datastore:datastore-preferences:1.0.0'
-  implementation 'com.github.rk779.ComposePreferences:compose-preferences:1.1.0'
+    implementation 'androidx.datastore:datastore-preferences:1.0.0'
+    implementation 'com.github.rk779.ComposePreferences:compose-preferences:1.1.0'
 
-  implementation 'com.google.accompanist:accompanist-systemuicontroller:0.20.0'
+    implementation 'com.google.accompanist:accompanist-systemuicontroller:0.20.0'
 }

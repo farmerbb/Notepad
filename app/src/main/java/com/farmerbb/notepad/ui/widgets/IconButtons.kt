@@ -32,104 +32,109 @@ import com.farmerbb.notepad.models.RightPaneState.Edit
 import com.farmerbb.notepad.models.RightPaneState.Empty
 import com.farmerbb.notepad.models.RightPaneState.View
 
-@Composable fun BackButton(
-  rightPaneState: MutableState<RightPaneState>? = null
+@Composable
+fun BackButton(
+    rightPaneState: MutableState<RightPaneState>? = null
 ) {
-  IconButton(
-    onClick = { rightPaneState?.value = Empty }
-  ) {
-    Icon(
-      imageVector = Icons.Filled.ArrowBack,
-      contentDescription = null,
-      tint = Color.White
-    )
-  }
-}
-
-@Composable fun EditButton(
-  id: Long,
-  rightPaneState: MutableState<RightPaneState>? = null
-) {
-  IconButton(
-    onClick = {
-      rightPaneState?.let {
-        it.value = Edit(id)
-      }
+    IconButton(
+        onClick = { rightPaneState?.value = Empty }
+    ) {
+        Icon(
+            imageVector = Icons.Filled.ArrowBack,
+            contentDescription = null,
+            tint = Color.White
+        )
     }
-  ) {
-    Icon(
-      imageVector = Icons.Filled.Edit,
-      contentDescription = stringResource(R.string.action_edit),
-      tint = Color.White
-    )
-  }
 }
 
-@Composable fun SaveButton(
-  id: Long,
-  text: String,
-  vm: NotepadViewModel?,
-  rightPaneState: MutableState<RightPaneState>? = null
+@Composable
+fun EditButton(
+    id: Long,
+    rightPaneState: MutableState<RightPaneState>? = null
 ) {
-  IconButton(
-    onClick = {
-      vm?.saveNote(id, text) { newId ->
-        rightPaneState?.let {
-          it.value = View(newId)
+    IconButton(
+        onClick = {
+            rightPaneState?.let {
+                it.value = Edit(id)
+            }
         }
-      }
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Edit,
+            contentDescription = stringResource(R.string.action_edit),
+            tint = Color.White
+        )
     }
-  ) {
-    Icon(
-      imageVector = Icons.Filled.Save,
-      contentDescription = stringResource(R.string.action_save),
-      tint = Color.White
-    )
-  }
 }
 
-@Composable fun DeleteButton(
-  id: Long,
-  vm: NotepadViewModel?,
-  rightPaneState: MutableState<RightPaneState>? = null
+@Composable
+fun SaveButton(
+    id: Long,
+    text: String,
+    vm: NotepadViewModel?,
+    rightPaneState: MutableState<RightPaneState>? = null
 ) {
-  val dialogIsOpen = remember { mutableStateOf(false) }
-
-  IconButton(onClick = { dialogIsOpen.value = true }) {
-    Icon(
-      imageVector = Icons.Filled.Delete,
-      contentDescription = stringResource(R.string.action_delete),
-      tint = Color.White
-    )
-  }
-
-  if(dialogIsOpen.value) {
-    DeleteAlertDialog(
-      onConfirm = {
-        dialogIsOpen.value = false
-        vm?.deleteNote(id) {
-          rightPaneState?.let {
-            it.value = Empty
-          }
+    IconButton(
+        onClick = {
+            vm?.saveNote(id, text) { newId ->
+                rightPaneState?.let {
+                    it.value = View(newId)
+                }
+            }
         }
-      },
-      onDismiss = {
-        dialogIsOpen.value = false
-      }
-    )
-  }
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Save,
+            contentDescription = stringResource(R.string.action_save),
+            tint = Color.White
+        )
+    }
 }
 
-@Composable fun MoreButton(
-  showMenu: MutableState<Boolean>
+@Composable
+fun DeleteButton(
+    id: Long,
+    vm: NotepadViewModel?,
+    rightPaneState: MutableState<RightPaneState>? = null
 ) {
-  IconButton(
-    onClick = { showMenu.value = true }
-  ) {
-    Icon(
-      imageVector = Icons.Filled.MoreVert,
-      contentDescription = null,
-      tint = Color.White
-    )
-  }
+    val dialogIsOpen = remember { mutableStateOf(false) }
+
+    IconButton(onClick = { dialogIsOpen.value = true }) {
+        Icon(
+            imageVector = Icons.Filled.Delete,
+            contentDescription = stringResource(R.string.action_delete),
+            tint = Color.White
+        )
+    }
+
+    if(dialogIsOpen.value) {
+        DeleteAlertDialog(
+            onConfirm = {
+                dialogIsOpen.value = false
+                vm?.deleteNote(id) {
+                    rightPaneState?.let {
+                        it.value = Empty
+                    }
+                }
+            },
+            onDismiss = {
+                dialogIsOpen.value = false
+            }
+        )
+    }
+}
+
+@Composable
+fun MoreButton(
+    showMenu: MutableState<Boolean>
+) {
+    IconButton(
+        onClick = { showMenu.value = true }
+    ) {
+        Icon(
+            imageVector = Icons.Filled.MoreVert,
+            contentDescription = null,
+            tint = Color.White
+        )
+    }
 }

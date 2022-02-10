@@ -30,43 +30,46 @@ import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
 import com.farmerbb.notepad.ui.widgets.*
 
 @Deprecated("For preview purposes only")
-@Composable fun EditNote(
-  note: Note,
-  textState: MutableState<TextFieldValue>,
-  vm: NotepadViewModel? = null
+@Composable
+fun EditNote(
+    note: Note,
+    textState: MutableState<TextFieldValue>,
+    vm: NotepadViewModel? = null
 ) {
-  val id = note.metadata.metadataId
+    val id = note.metadata.metadataId
 
-  Scaffold(
-    topBar = {
-      TopAppBar(
-        navigationIcon = { BackButton() },
-        title = { AppBarText(note.metadata.title) },
-        backgroundColor = colorResource(id = R.color.primary),
-        actions = {
-          SaveButton(id, textState.value.text, vm)
-          DeleteButton(id, vm)
-          NoteViewEditMenu(textState.value.text, vm)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navigationIcon = { BackButton() },
+                title = { AppBarText(note.metadata.title) },
+                backgroundColor = colorResource(id = R.color.primary),
+                actions = {
+                    SaveButton(id, textState.value.text, vm)
+                    DeleteButton(id, vm)
+                    NoteViewEditMenu(textState.value.text, vm)
+                }
+            )
+        },
+        content = {
+            EditNoteContent(textState)
         }
-      )
-    },
-    content = {
-      EditNoteContent(textState)
-    }
-  )
+    )
 }
 
 @Suppress("deprecation")
-@Preview @Composable fun EditNotePreview() = MaterialTheme {
-  EditNote(
-    note = Note(
-      metadata = NoteMetadata(
-        title = "Title"
-      ),
-      contents = NoteContents(
-        text = "This is some text"
-      )
-    ),
-    textState = remember { mutableStateOf(TextFieldValue()) }
-  )
+@Preview
+@Composable
+fun EditNotePreview() = MaterialTheme {
+    EditNote(
+        note = Note(
+            metadata = NoteMetadata(
+                title = "Title"
+            ),
+            contents = NoteContents(
+                text = "This is some text"
+            )
+        ),
+        textState = remember { mutableStateOf(TextFieldValue()) }
+    )
 }

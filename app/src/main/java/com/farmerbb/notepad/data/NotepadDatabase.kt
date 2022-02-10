@@ -25,18 +25,18 @@ import com.farmerbb.notepad.models.NoteMetadata
 import java.util.*
 
 @Database(
-  entities = [NoteContents::class, NoteMetadata::class, CrossRef::class],
-  version = 1,
-  exportSchema = false
+    entities = [NoteContents::class, NoteMetadata::class, CrossRef::class],
+    version = 1,
+    exportSchema = false
 )
 @TypeConverters(DateConverter::class)
 abstract class NotepadDatabase: RoomDatabase() {
-  abstract fun getDAO(): NotepadDAO
+    abstract fun getDAO(): NotepadDAO
 }
 
 class DateConverter {
-  companion object {
-    @TypeConverter @JvmStatic fun fromDate(src: Date) = src.time
-    @TypeConverter @JvmStatic fun toDate(src: Long) = Date(src)
-  }
+    companion object {
+        @TypeConverter @JvmStatic fun fromDate(src: Date) = src.time
+        @TypeConverter @JvmStatic fun toDate(src: Long) = Date(src)
+    }
 }

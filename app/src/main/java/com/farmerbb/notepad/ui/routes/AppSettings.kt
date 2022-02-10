@@ -39,123 +39,128 @@ import de.schnettler.datastore.compose.model.Preference.PreferenceItem.SwitchPre
 import de.schnettler.datastore.compose.ui.PreferenceScreen
 import de.schnettler.datastore.manager.DataStoreManager
 
-@Composable fun AppSettings() {
-  Scaffold(
-    topBar = {
-      TopAppBar(
-        navigationIcon = { BackButton() },
-        title = { AppBarText(stringResource(id = R.string.action_settings)) },
-        backgroundColor = colorResource(id = R.color.primary)
-      )
-    },
-    content = { NotepadPreferenceScreen() }
-  )
+@Composable
+fun AppSettings() {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                navigationIcon = { BackButton() },
+                title = { AppBarText(stringResource(id = R.string.action_settings)) },
+                backgroundColor = colorResource(id = R.color.primary)
+            )
+        },
+        content = { NotepadPreferenceScreen() }
+    )
 }
 
-@Composable fun NotepadPreferenceScreen() {
-  val dataStore = LocalContext.current.dataStore
-  val dataStoreManager = remember { DataStoreManager(dataStore) }
+@Composable
+fun NotepadPreferenceScreen() {
+    val dataStore = LocalContext.current.dataStore
+    val dataStoreManager = remember { DataStoreManager(dataStore) }
 
-  PreferenceScreen(
-    items = listOf(
-      ListPreference(
-        request = Prefs.Theme,
-        title = stringResource(id = R.string.action_theme),
-        summary = "",
-        singleLineTitle = true,
-        icon = {},
-        entries = listPrefEntries(
-          keyRes = R.array.theme_list_values,
-          valueRes = R.array.theme_list
+    PreferenceScreen(
+        items = listOf(
+            ListPreference(
+                request = Prefs.Theme,
+                title = stringResource(id = R.string.action_theme),
+                summary = "",
+                singleLineTitle = true,
+                icon = {},
+                entries = listPrefEntries(
+                    keyRes = R.array.theme_list_values,
+                    valueRes = R.array.theme_list
+                ),
+            ),
+            ListPreference(
+                request = Prefs.FontSize,
+                title = stringResource(id = R.string.action_font_size),
+                summary = "",
+                singleLineTitle = true,
+                icon = {},
+                entries = listPrefEntries(
+                    keyRes = R.array.font_size_list_values,
+                    valueRes = R.array.font_size_list
+                ),
+            ),
+            ListPreference(
+                request = Prefs.SortBy,
+                title = stringResource(id = R.string.action_sort_by),
+                summary = "",
+                singleLineTitle = true,
+                icon = {},
+                entries = listPrefEntries(
+                    keyRes = R.array.sort_by_list_values,
+                    valueRes = R.array.sort_by_list
+                ),
+            ),
+            ListPreference(
+                request = Prefs.ExportFilename,
+                title = stringResource(id = R.string.action_export_filename),
+                summary = "",
+                singleLineTitle = true,
+                icon = {},
+                entries = listPrefEntries(
+                    keyRes = R.array.exported_filename_list_values,
+                    valueRes = R.array.exported_filename_list
+                ),
+            ),
+            SwitchPreference(
+                request = Prefs.ShowDialogs,
+                title = stringResource(id = R.string.pref_title_show_dialogs),
+                summary = "",
+                singleLineTitle = true,
+                icon = {}
+            ),
+            SwitchPreference(
+                request = Prefs.ShowDate,
+                title = stringResource(id = R.string.pref_title_show_date),
+                summary = "",
+                singleLineTitle = true,
+                icon = {}
+            ),
+            SwitchPreference(
+                request = Prefs.DirectEdit,
+                title = stringResource(id = R.string.pref_title_direct_edit),
+                summary = "",
+                singleLineTitle = true,
+                icon = {}
+            ),
+            SwitchPreference(
+                request = Prefs.Markdown,
+                title = stringResource(id = R.string.pref_title_markdown),
+                summary = "",
+                singleLineTitle = true,
+                icon = {}
+            )
         ),
-      ),
-      ListPreference(
-        request = Prefs.FontSize,
-        title = stringResource(id = R.string.action_font_size),
-        summary = "",
-        singleLineTitle = true,
-        icon = {},
-        entries = listPrefEntries(
-          keyRes = R.array.font_size_list_values,
-          valueRes = R.array.font_size_list
-        ),
-      ),
-      ListPreference(
-        request = Prefs.SortBy,
-        title = stringResource(id = R.string.action_sort_by),
-        summary = "",
-        singleLineTitle = true,
-        icon = {},
-        entries = listPrefEntries(
-          keyRes = R.array.sort_by_list_values,
-          valueRes = R.array.sort_by_list
-        ),
-      ),
-      ListPreference(
-        request = Prefs.ExportFilename,
-        title = stringResource(id = R.string.action_export_filename),
-        summary = "",
-        singleLineTitle = true,
-        icon = {},
-        entries = listPrefEntries(
-          keyRes = R.array.exported_filename_list_values,
-          valueRes = R.array.exported_filename_list
-        ),
-      ),
-      SwitchPreference(
-        request = Prefs.ShowDialogs,
-        title = stringResource(id = R.string.pref_title_show_dialogs),
-        summary = "",
-        singleLineTitle = true,
-        icon = {}
-      ),
-      SwitchPreference(
-        request = Prefs.ShowDate,
-        title = stringResource(id = R.string.pref_title_show_date),
-        summary = "",
-        singleLineTitle = true,
-        icon = {}
-      ),
-      SwitchPreference(
-        request = Prefs.DirectEdit,
-        title = stringResource(id = R.string.pref_title_direct_edit),
-        summary = "",
-        singleLineTitle = true,
-        icon = {}
-      ),
-      SwitchPreference(
-        request = Prefs.Markdown,
-        title = stringResource(id = R.string.pref_title_markdown),
-        summary = "",
-        singleLineTitle = true,
-        icon = {}
-      )
-    ),
-    contentPadding = PaddingValues(0.dp),
-    dataStoreManager = dataStoreManager
-  )
+        contentPadding = PaddingValues(0.dp),
+        dataStoreManager = dataStoreManager
+    )
 }
 
 @ReadOnlyComposable
-@Composable fun listPrefEntries(
-  @ArrayRes keyRes: Int,
-  @ArrayRes valueRes: Int
+@Composable
+fun listPrefEntries(
+    @ArrayRes keyRes: Int,
+    @ArrayRes valueRes: Int
 ): Map<String, String> {
-  val keys = stringArrayResource(id = keyRes)
-  val values = stringArrayResource(id = valueRes)
+    val keys = stringArrayResource(id = keyRes)
+    val values = stringArrayResource(id = valueRes)
 
-  if(keys.size != values.size) {
-    throw RuntimeException("Keys and values are not the same size")
-  }
+    if(keys.size != values.size) {
+        throw RuntimeException("Keys and values are not the same size")
+    }
 
-  val map = mutableMapOf<String, String>()
-  for(i in keys.indices) {
-    map[keys[i]] = values[i]
-  }
+    val map = mutableMapOf<String, String>()
+    for(i in keys.indices) {
+        map[keys[i]] = values[i]
+    }
 
-  return map.toMutableMap()
+    return map.toMutableMap()
 }
 
-@Preview @Composable fun AppSettingsPreview() = MaterialTheme {
-  AppSettings()
+@Preview
+@Composable
+fun AppSettingsPreview() = MaterialTheme {
+    AppSettings()
 }

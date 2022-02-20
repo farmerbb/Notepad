@@ -44,6 +44,8 @@ import com.farmerbb.notepad.models.NavState.Companion.VIEW
 import com.farmerbb.notepad.models.NavState.Edit
 import com.farmerbb.notepad.models.NavState.Empty
 import com.farmerbb.notepad.models.NavState.View
+import com.farmerbb.notepad.models.noteState
+import com.farmerbb.notepad.models.textFieldState
 import com.farmerbb.notepad.ui.widgets.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.compose.getViewModel
@@ -196,7 +198,7 @@ fun NotepadComposeApp(
         }
 
         is View -> {
-            val note by viewState(state.id)
+            val note by noteState(state.id)
 
             title = note.metadata.title
             backButton = { 
@@ -218,8 +220,8 @@ fun NotepadComposeApp(
         }
 
         is Edit -> {
-            val note by editState(state.id)
-            var value by textState(note.contents.text)
+            val note by noteState(state.id)
+            var value by textFieldState(note.contents.text)
             val id = note.metadata.metadataId
 
             title = note.metadata.title.ifEmpty {

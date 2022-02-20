@@ -15,9 +15,15 @@
 
 package com.farmerbb.notepad.models
 
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
-import de.schnettler.datastore.manager.PreferenceRequest
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
+import com.farmerbb.notepad.android.NotepadViewModel
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
 
 sealed interface NavState {
     object Empty: NavState
@@ -30,44 +36,24 @@ sealed interface NavState {
     }
 }
 
-object Prefs {
-    object Theme: PreferenceRequest<String>(
-        key = stringPreferencesKey("theme"),
-        defaultValue = "light-sans"
-    )
+@Composable
+fun noteState(
+    id: Long?,
+    vm: NotepadViewModel = getViewModel()
+) = produceState(Note()) {
+    id?.let {
+        launch {
+            value = vm.getNote(it)
+        }
+    }
+}
 
-    object FontSize: PreferenceRequest<String>(
-        key = stringPreferencesKey("font_size"),
-        defaultValue = "normal"
-    )
-
-    object SortBy: PreferenceRequest<String>(
-        key = stringPreferencesKey("sort_by"),
-        defaultValue = "date"
-    )
-
-    object ExportFilename: PreferenceRequest<String>(
-        key = stringPreferencesKey("export_filename"),
-        defaultValue = "text-only"
-    )
-
-    object ShowDialogs: PreferenceRequest<Boolean>(
-        key = booleanPreferencesKey("show_dialogs"),
-        defaultValue = false
-    )
-
-    object ShowDate: PreferenceRequest<Boolean>(
-        key = booleanPreferencesKey("show_date"),
-        defaultValue = false
-    )
-
-    object DirectEdit: PreferenceRequest<Boolean>(
-        key = booleanPreferencesKey("direct_edit"),
-        defaultValue = false
-    )
-
-    object Markdown: PreferenceRequest<Boolean>(
-        key = booleanPreferencesKey("markdown"),
-        defaultValue = false
+@Composable
+fun textFieldState(text: String) = remember {
+    mutableStateOf(TextFieldValue())
+}.apply {
+    value = TextFieldValue(
+        text = text,
+        selection = TextRange(text.length)
     )
 }

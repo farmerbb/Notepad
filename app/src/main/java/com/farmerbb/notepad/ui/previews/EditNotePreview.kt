@@ -18,6 +18,7 @@ package com.farmerbb.notepad.ui.previews
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.models.Note
@@ -43,7 +44,9 @@ private fun EditNote(note: Note) {
                 }
             )
         },
-        content = { EditNoteContent() }
+        content = {
+            EditNoteContent(TextFieldValue(note.contents.text))
+        }
     )
 }
 

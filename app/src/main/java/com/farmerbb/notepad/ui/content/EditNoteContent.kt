@@ -53,17 +53,17 @@ fun editState(
 
 @Composable
 fun textState(text: String) = remember {
-    mutableStateOf(
-        TextFieldValue(
-            text = text,
-            selection = TextRange(text.length)
-        )
+    mutableStateOf(TextFieldValue())
+}.apply {
+    value = TextFieldValue(
+        text = text,
+        selection = TextRange(text.length)
     )
 }
 
 @Composable
 fun EditNoteContent(
-    value: TextFieldValue = TextFieldValue(),
+    value: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit = {}
 ) {
     val focusRequester = remember { FocusRequester() }

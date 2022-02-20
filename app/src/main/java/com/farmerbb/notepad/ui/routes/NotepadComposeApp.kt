@@ -47,10 +47,11 @@ import com.farmerbb.notepad.models.RightPaneState.Empty
 import com.farmerbb.notepad.models.RightPaneState.View
 import com.farmerbb.notepad.ui.widgets.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun NotepadComposeApp() {
-    val vm = viewModel<NotepadViewModel>()
+    val vm: NotepadViewModel = getViewModel()
     val systemUiController = rememberSystemUiController()
     val configuration = LocalConfiguration.current
     val notes = vm.noteMetadata.collectAsState(emptyList())

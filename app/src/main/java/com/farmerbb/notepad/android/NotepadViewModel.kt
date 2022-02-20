@@ -19,7 +19,7 @@ import android.app.Application
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farmerbb.notepad.BuildConfig
 import com.farmerbb.notepad.data.NotepadRepository
@@ -31,15 +31,12 @@ import com.farmerbb.notepad.utils.ReleaseType.FDroid
 import com.farmerbb.notepad.utils.ReleaseType.Unknown
 import com.farmerbb.notepad.utils.isPlayStoreInstalled
 import com.farmerbb.notepad.utils.releaseType
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class NotepadViewModel @Inject constructor(
+class NotepadViewModel(
     private val context: Application,
     private val repo: NotepadRepository
-): AndroidViewModel(context) {
+): ViewModel() {
     val noteMetadata get() = repo.noteMetadataFlow()
     suspend fun getNote(id: Long) = repo.getNote(id)
 

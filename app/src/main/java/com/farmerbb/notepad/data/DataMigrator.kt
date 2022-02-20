@@ -22,7 +22,6 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.farmerbb.notepad.models.CrossRef
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import org.apache.commons.lang3.math.NumberUtils
@@ -31,10 +30,9 @@ import java.io.File
 import java.io.InputStreamReader
 import java.lang.StringBuilder
 import java.util.*
-import javax.inject.Inject
 
-class DataMigrator @Inject constructor(
-    @ApplicationContext val context: Context,
+class DataMigrator(
+    private val context: Context,
     private val dao: NotepadDAO
 ) {
     private val job = Job()

@@ -1,6 +1,6 @@
 ![notepad readme](https://user-images.githubusercontent.com/36028424/39695245-83b15cfc-521c-11e8-935c-c4a9cdcfbe90.png)
 
-Notepad is currently being rewritten from the ground up!  The app's 7-year old codebase is being replaced with one that is fully modernized and aims to follow Android development's best practices for 2021.
+Notepad is currently being rewritten from the ground up!  The app's 8-year old codebase is being replaced with one that is fully modernized and aims to follow Android development's best practices for 2022.
 
 This README is meant to track the progress of the rewrite, and also give a general overview of the architecture of the app in comparison to the old one.
 
@@ -13,7 +13,7 @@ This README is meant to track the progress of the rewrite, and also give a gener
 | **UI Framework**         | Standard Android views, activities, fragments                                                                                                                                                    | [Jetpack Compose](https://developer.android.com/jetpack/compose)                                                   |
 | **Data Persistence**     | Raw plaintext on the filesystem. Seriously.                                                                                                                                                      | [Room](https://developer.android.com/training/data-storage/room)                                                   |
 | **Preferences**          | SharedPreferences                                                                                                                                                                                | [DataStore](https://developer.android.com/topic/libraries/architecture/datastore)                                  |
-| **Dependency Injection** | What is that?                                                                                                                                                                                    | [Dagger Hilt](https://developer.android.com/training/dependency-injection/hilt-android)                            |                                                                                                                 |
+| **Dependency Injection** | What is that?                                                                                                                                                                                    | [Koin](https://insert-koin.io/)                                                                                    |                                                                                                                 |
 
 ## Features
 

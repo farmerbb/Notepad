@@ -17,20 +17,24 @@ package com.farmerbb.notepad.di
 
 import android.content.Context
 import androidx.room.Room
+import com.farmerbb.notepad.android.NotepadViewModel
+import com.farmerbb.notepad.data.DataMigrator
 import com.farmerbb.notepad.data.NotepadDatabase
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
+import com.farmerbb.notepad.data.NotepadRepository
+import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
-@InstallIn(SingletonComponent::class)
-@Module
-class NotepadModule {
-    @Provides
-    fun provideDatabase(@ApplicationContext context: Context)
-          = Room.databaseBuilder(context, NotepadDatabase::class.java, "notepad").build()
-
-    @Provides
-    fun provideDAO(db: NotepadDatabase) = db.getDAO()
+val notepadModule = module {
+    viewModel { NotepadViewModel(androidApplication(), get()) }
+    single { provideDatabase(androidApplication()) }
+    single { provideDAO(get()) }
+    single { NotepadRepository(get()) }
+    single { DataMigrator(androidContext(), get()) }
 }
+
+private fun provideDatabase(context: Context) =
+    Room.databaseBuilder(context, NotepadDatabase::class.java, "notepad").build()
+
+private fun provideDAO(db: NotepadDatabase) = db.getDAO()

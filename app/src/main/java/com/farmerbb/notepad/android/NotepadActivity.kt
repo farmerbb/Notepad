@@ -21,13 +21,11 @@ import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
 import com.farmerbb.notepad.data.DataMigrator
 import com.farmerbb.notepad.ui.routes.NotepadComposeApp
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.koin.android.ext.android.get
 
-@AndroidEntryPoint
 class NotepadActivity: ComponentActivity() {
-    @Inject lateinit var migrator: DataMigrator
+    private val migrator: DataMigrator = get()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

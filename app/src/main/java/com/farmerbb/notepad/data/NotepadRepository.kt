@@ -18,9 +18,8 @@ package com.farmerbb.notepad.data
 import com.farmerbb.notepad.models.CrossRef
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
-import javax.inject.Inject
 
-class NotepadRepository @Inject constructor(
+class NotepadRepository(
     private val dao: NotepadDAO
 ) {
     fun noteMetadataFlow() = dao.getNoteMetadataSortedByTitle()

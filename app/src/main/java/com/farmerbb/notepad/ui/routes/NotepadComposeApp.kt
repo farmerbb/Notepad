@@ -196,9 +196,9 @@ fun NotepadComposeApp(
         }
 
         is View -> {
-            val viewState by viewState(state.id)
+            val note by viewState(state.id)
 
-            title = viewState.metadata.title
+            title = note.metadata.title
             backButton = { 
                 BackButton { navState = Empty }
             }
@@ -209,20 +209,20 @@ fun NotepadComposeApp(
                     showMenu = showMenu,
                     onDismiss = onDismiss,
                     onMoreClick = onMoreClick,
-                    onShareClick = { onShareClick(viewState.contents.text) },
-                    onExportClick = { onExportClick(viewState.contents.text) },
-                    onPrintClick = { onPrintClick(viewState.contents.text) }
+                    onShareClick = { onShareClick(note.contents.text) },
+                    onExportClick = { onExportClick(note.contents.text) },
+                    onPrintClick = { onPrintClick(note.contents.text) }
                 )
             }
-            content = { ViewNoteContent(viewState) }
+            content = { ViewNoteContent(note.contents.text) }
         }
 
         is Edit -> {
-            val editState by editState(state.id)
-            var textState by textState(editState.contents.text)
-            val id = editState.metadata.metadataId
+            val note by editState(state.id)
+            var value by textState(note.contents.text)
+            val id = note.metadata.metadataId
 
-            title = editState.metadata.title.ifEmpty {
+            title = note.metadata.title.ifEmpty {
                 stringResource(id = R.string.action_new)
             }
             backButton = {
@@ -230,22 +230,22 @@ fun NotepadComposeApp(
             }
             actions = {
                 SaveButton {
-                    vm.saveNote(id, textState.text) { newId ->
+                    vm.saveNote(id, value.text) { newId ->
                         navState = View(newId)
                     }
                 }
-                DeleteButton { onDeleteClick(state.id) }
+                DeleteButton { onDeleteClick(id) }
                 NoteViewEditMenu(
                     showMenu = showMenu,
                     onDismiss = onDismiss,
                     onMoreClick = onMoreClick,
-                    onShareClick = { onShareClick(textState.text) },
-                    onExportClick = { onExportClick(textState.text) },
-                    onPrintClick = { onPrintClick(textState.text) }
+                    onShareClick = { onShareClick(value.text) },
+                    onExportClick = { onExportClick(value.text) },
+                    onPrintClick = { onPrintClick(value.text) }
                 )
             }
             content = {
-                EditNoteContent(textState) { textState = it }
+                EditNoteContent(value) { value = it }
             }
         }
     }

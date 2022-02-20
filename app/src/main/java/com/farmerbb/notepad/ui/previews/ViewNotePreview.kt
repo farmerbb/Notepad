@@ -43,7 +43,7 @@ private fun ViewNote(note: Note) {
                 }
             )
         },
-        content = { ViewNoteContent(note) }
+        content = { ViewNoteContent(note.contents.text) }
     )
 }
 

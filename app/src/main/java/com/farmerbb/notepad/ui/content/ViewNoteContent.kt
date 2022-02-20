@@ -47,7 +47,7 @@ fun viewState(
 }
 
 @Composable
-fun ViewNoteContent(note: Note) {
+fun ViewNoteContent(text: String) {
     Box(
         modifier = Modifier.verticalScroll(
             state = rememberScrollState()
@@ -55,7 +55,7 @@ fun ViewNoteContent(note: Note) {
     ) {
         SelectionContainer {
             BasicText(
-                text = note.contents.text,
+                text = text,
                 style = TextStyle(
                     fontSize = 16.sp
                 ),

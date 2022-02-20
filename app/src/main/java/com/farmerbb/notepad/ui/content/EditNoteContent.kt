@@ -63,12 +63,12 @@ fun textState(text: String) = remember {
 
 @Composable
 fun EditNoteContent(
-    textState: TextFieldValue = TextFieldValue(),
+    value: TextFieldValue = TextFieldValue(),
     onValueChange: (TextFieldValue) -> Unit = {}
 ) {
     val focusRequester = remember { FocusRequester() }
     BasicTextField(
-        value = textState,
+        value = value,
         onValueChange = onValueChange,
         textStyle = TextStyle(
             fontSize = 16.sp
@@ -83,7 +83,7 @@ fun EditNoteContent(
             .focusRequester(focusRequester)
     )
 
-    if(textState.text.isEmpty()) {
+    if(value.text.isEmpty()) {
         BasicText(
             text = stringResource(id = R.string.edit_text),
             style = TextStyle(

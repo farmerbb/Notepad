@@ -21,8 +21,6 @@ import android.content.pm.Signature
 import android.util.Base64
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.datastore.preferences.preferencesDataStore
 import com.farmerbb.notepad.BuildConfig
 import java.lang.Exception
@@ -65,11 +63,3 @@ val Context.releaseType: ReleaseType
 
         return ReleaseType.Unknown
     }
-
-@Composable
-fun UnitDisposableEffect(
-    effect: () -> Unit
-) = DisposableEffect(Unit) {
-    effect()
-    onDispose {}
-}

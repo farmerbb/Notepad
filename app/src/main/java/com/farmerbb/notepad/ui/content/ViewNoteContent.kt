@@ -15,11 +15,11 @@
 
 package com.farmerbb.notepad.ui.content
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
@@ -34,14 +34,15 @@ import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.ui.previews.ViewNotePreview
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun viewState(
     id: Long,
-    vm: NotepadViewModel?
+    vm: NotepadViewModel = getViewModel()
 ) = produceState(Note()) {
     launch {
-        vm?.getNote(id)?.let { value = it }
+        value = vm.getNote(id)
     }
 }
 
@@ -49,7 +50,7 @@ fun viewState(
 fun ViewNoteContent(note: Note) {
     Box(
         modifier = Modifier.verticalScroll(
-            state = ScrollState(initial = 0)
+            state = rememberScrollState()
         )
     ) {
         SelectionContainer {

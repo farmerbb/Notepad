@@ -35,53 +35,41 @@ import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
-import com.farmerbb.notepad.models.NoteContents
-import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.previews.EditNotePreview
-import com.farmerbb.notepad.utils.UnitDisposableEffect
 import kotlinx.coroutines.launch
-import java.util.Date
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun editState(
     id: Long?,
-    vm: NotepadViewModel?
-) = produceState(
-    Note(
-        metadata = NoteMetadata(
-            metadataId = -1,
-            title = stringResource(id = R.string.action_new),
-            date = Date()
-        )
-    )
-) {
+    vm: NotepadViewModel = getViewModel()
+) = produceState(Note()) {
     id?.let {
         launch {
-            vm?.getNote(it)?.let { value = it }
+            value = vm.getNote(it)
         }
     }
 }
 
 @Composable
-fun textState(
-    text: String
-) = remember {
-    mutableStateOf(TextFieldValue())
-}.apply {
-    value = TextFieldValue(
-        text = text,
-        selection = TextRange(text.length)
+fun textState(text: String) = remember {
+    mutableStateOf(
+        TextFieldValue(
+            text = text,
+            selection = TextRange(text.length)
+        )
     )
 }
 
 @Composable
 fun EditNoteContent(
-    textState: MutableState<TextFieldValue>?
+    textState: TextFieldValue = TextFieldValue(),
+    onValueChange: (TextFieldValue) -> Unit = {}
 ) {
     val focusRequester = remember { FocusRequester() }
     BasicTextField(
-        value = textState?.value ?: TextFieldValue(),
-        onValueChange = { textState?.value = it },
+        value = textState,
+        onValueChange = onValueChange,
         textStyle = TextStyle(
             fontSize = 16.sp
         ),
@@ -95,7 +83,7 @@ fun EditNoteContent(
             .focusRequester(focusRequester)
     )
 
-    if(textState?.value?.text.isNullOrEmpty()) {
+    if(textState.text.isEmpty()) {
         BasicText(
             text = stringResource(id = R.string.edit_text),
             style = TextStyle(
@@ -110,7 +98,7 @@ fun EditNoteContent(
         )
     }
 
-    UnitDisposableEffect {
+    LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
 }

@@ -18,27 +18,18 @@ package com.farmerbb.notepad.ui.previews
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.EditNoteContent
-import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
+import com.farmerbb.notepad.ui.widgets.NoteViewEditMenu
 import com.farmerbb.notepad.ui.widgets.*
 import java.util.Date
 
-@Deprecated("For preview purposes only")
 @Composable
-fun EditNote(
-    note: Note,
-    textState: MutableState<TextFieldValue>,
-    vm: NotepadViewModel? = null
-) {
-    val id = note.metadata.metadataId
-
+private fun EditNote(note: Note) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -46,19 +37,16 @@ fun EditNote(
                 title = { AppBarText(note.metadata.title) },
                 backgroundColor = colorResource(id = R.color.primary),
                 actions = {
-                    SaveButton(id, textState.value.text, vm)
-                    DeleteButton(id, vm)
-                    NoteViewEditMenu(textState.value.text, vm)
+                    SaveButton()
+                    DeleteButton()
+                    NoteViewEditMenu()
                 }
             )
         },
-        content = {
-            EditNoteContent(textState)
-        }
+        content = { EditNoteContent() }
     )
 }
 
-@Suppress("deprecation")
 @Preview
 @Composable
 fun EditNotePreview() = MaterialTheme {
@@ -74,7 +62,6 @@ fun EditNotePreview() = MaterialTheme {
                 text = "This is some text",
                 isDraft = false
             )
-        ),
-        textState = remember { mutableStateOf(TextFieldValue()) }
+        )
     )
 }

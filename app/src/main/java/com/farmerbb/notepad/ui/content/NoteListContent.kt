@@ -33,13 +33,11 @@ import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.previews.NoteListPreview
-import com.farmerbb.notepad.models.RightPaneState
-import com.farmerbb.notepad.models.RightPaneState.View
 
 @Composable
 fun NoteListContent(
     notes: List<NoteMetadata>,
-    rightPaneState: MutableState<RightPaneState>? = null
+    onNoteClick: (Long) -> Unit
 ) {
     when(notes.size) {
         0 -> Column(
@@ -61,11 +59,7 @@ fun NoteListContent(
             items(notes.size) {
                 Column(modifier = Modifier
                     .clickable {
-                        val id = notes[it].metadataId
-
-                        rightPaneState?.let {
-                            it.value = View(id)
-                        }
+                        onNoteClick(notes[it].metadataId)
                     }
                 ) {
                     Text(

@@ -20,23 +20,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.ViewNoteContent
-import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
+import com.farmerbb.notepad.ui.widgets.NoteViewEditMenu
 import com.farmerbb.notepad.ui.widgets.*
 import java.util.Date
 
-@Deprecated("For preview purposes only")
 @Composable
-fun ViewNote(
-    note: Note,
-    vm: NotepadViewModel? = null
-) {
-    val id = note.metadata.metadataId
-
+private fun ViewNote(note: Note) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -44,19 +37,16 @@ fun ViewNote(
                 title = { AppBarText(note.metadata.title) },
                 backgroundColor = colorResource(id = R.color.primary),
                 actions = {
-                    EditButton(id)
-                    DeleteButton(id, vm)
-                    NoteViewEditMenu(note.contents.text, vm)
+                    EditButton()
+                    DeleteButton()
+                    NoteViewEditMenu()
                 }
             )
         },
-        content = {
-            ViewNoteContent(note)
-        }
+        content = { ViewNoteContent(note) }
     )
 }
 
-@Suppress("deprecation")
 @Preview
 @Composable
 fun ViewNotePreview() = MaterialTheme {

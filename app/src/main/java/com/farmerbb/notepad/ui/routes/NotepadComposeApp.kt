@@ -32,19 +32,18 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.*
-import com.farmerbb.notepad.ui.menus.NoteListMenu
-import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
-import com.farmerbb.notepad.models.RightPaneState
-import com.farmerbb.notepad.models.RightPaneState.Companion.EDIT
-import com.farmerbb.notepad.models.RightPaneState.Companion.VIEW
-import com.farmerbb.notepad.models.RightPaneState.Edit
-import com.farmerbb.notepad.models.RightPaneState.Empty
-import com.farmerbb.notepad.models.RightPaneState.View
+import com.farmerbb.notepad.ui.widgets.NoteListMenu
+import com.farmerbb.notepad.ui.widgets.NoteViewEditMenu
+import com.farmerbb.notepad.models.NavState
+import com.farmerbb.notepad.models.NavState.Companion.EDIT
+import com.farmerbb.notepad.models.NavState.Companion.VIEW
+import com.farmerbb.notepad.models.NavState.Edit
+import com.farmerbb.notepad.models.NavState.Empty
+import com.farmerbb.notepad.models.NavState.View
 import com.farmerbb.notepad.ui.widgets.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.compose.getViewModel
@@ -74,11 +73,11 @@ fun NotepadComposeApp() {
 @Composable
 fun NotepadComposeApp(
     notes: List<NoteMetadata>,
-    vm: NotepadViewModel? = null,
+    vm: NotepadViewModel = getViewModel(),
     isMultiPane: Boolean = false,
-    initState: RightPaneState = Empty
+    initState: NavState = Empty
 ) {
-    val rightPaneState = rememberSaveable(
+    var navState by rememberSaveable(
         saver = Saver(
             save = {
                 when(val state = it.value) {
@@ -99,63 +98,155 @@ fun NotepadComposeApp(
         )
     ) { mutableStateOf(initState) }
 
-    val showAboutDialog = remember { mutableStateOf(false) }
-    AboutDialog(showAboutDialog, vm)
+    var showAboutDialog by remember { mutableStateOf(false) }
+    if(showAboutDialog) {
+        AboutDialog(
+            onDismiss = {
+                showAboutDialog = false
+            },
+            checkForUpdates = {
+                showAboutDialog = false
+                vm.checkForUpdates()
+            }
+        )
+    }
 
-    val showSettingsDialog = remember { mutableStateOf(false) }
-    SettingsDialog(showSettingsDialog)
+    var showSettingsDialog by remember { mutableStateOf(false) }
+    if(showSettingsDialog) {
+        SettingsDialog(
+            onDismiss = {
+                showSettingsDialog = false
+            }
+        )
+    }
+
+    var showDeleteDialog by remember { mutableStateOf(false) }
+    var noteToDelete: Long? by remember { mutableStateOf(null) }
+    if(showDeleteDialog) {
+        DeleteAlertDialog(
+            onConfirm = {
+                showDeleteDialog = false
+                vm.deleteNote(id = noteToDelete ?: -1L) {
+                    navState = Empty
+                }
+            },
+            onDismiss = {
+                showDeleteDialog = false
+            }
+        )
+    }
 
     val title: String
     val backButton: @Composable (() -> Unit)?
     val actions: @Composable RowScope.() -> Unit
     val content: @Composable BoxScope.() -> Unit
 
-    when(val state = rightPaneState.value) {
+    var showMenu by remember { mutableStateOf(false) }
+    val onDismiss = { showMenu = false }
+    val onMoreClick = { showMenu = true }
+    val onDeleteClick: (Long?) -> Unit = {
+        noteToDelete = it
+        showDeleteDialog = true
+    }
+    val onShareClick: (String) -> Unit = {
+        onDismiss()
+        vm.shareNote(it)
+    }
+    val onExportClick: (String) -> Unit = {
+        onDismiss()
+        vm.exportNote(it)
+    }
+    val onPrintClick: (String) -> Unit = {
+        onDismiss()
+        vm.printNote(it)
+    }
+
+    when(val state = navState) {
         Empty -> {
             title = stringResource(id = R.string.app_name)
             backButton = null
             actions = {
                 NoteListMenu(
-                    vm = vm,
-                    showAboutDialog = showAboutDialog,
-                    showSettingsDialog = showSettingsDialog,
+                    showMenu = showMenu,
+                    onDismiss = onDismiss,
+                    onMoreClick = onMoreClick,
+                    onSettingsClick = {
+                        onDismiss()
+                        showSettingsDialog = true
+                    },
+                    onImportClick = {
+                        onDismiss()
+                        vm.importNotes()
+                    },
+                    onAboutClick = {
+                        onDismiss()
+                        showAboutDialog = true
+                    }
                 )
             }
             content = {
                 if(isMultiPane) {
                     EmptyDetails()
                 } else {
-                    NoteListContent(notes, rightPaneState)
+                    NoteListContent(notes) { id ->
+                        navState = View(id)
+                    }
                 }
             }
         }
 
         is View -> {
-            val viewState = viewState(state.id, vm)
+            val viewState by viewState(state.id)
 
-            title = viewState.value.metadata.title
-            backButton = { BackButton(rightPaneState) }
-            actions = {
-                EditButton(state.id, rightPaneState)
-                DeleteButton(state.id, vm, rightPaneState)
-                NoteViewEditMenu(viewState.value.contents.text, vm)
+            title = viewState.metadata.title
+            backButton = { 
+                BackButton { navState = Empty }
             }
-            content = { ViewNoteContent(viewState.value) }
+            actions = {
+                EditButton { navState = Edit(state.id) }
+                DeleteButton { onDeleteClick(state.id) }
+                NoteViewEditMenu(
+                    showMenu = showMenu,
+                    onDismiss = onDismiss,
+                    onMoreClick = onMoreClick,
+                    onShareClick = { onShareClick(viewState.contents.text) },
+                    onExportClick = { onExportClick(viewState.contents.text) },
+                    onPrintClick = { onPrintClick(viewState.contents.text) }
+                )
+            }
+            content = { ViewNoteContent(viewState) }
         }
 
         is Edit -> {
-            val editState = editState(state.id, vm)
-            val textState = textState(editState.value.contents.text)
-            val id = editState.value.metadata.metadataId
+            val editState by editState(state.id)
+            var textState by textState(editState.contents.text)
+            val id = editState.metadata.metadataId
 
-            title = editState.value.metadata.title
-            actions = {
-                SaveButton(id, textState.value.text, vm, rightPaneState)
-                DeleteButton(id, vm, rightPaneState)
-                NoteViewEditMenu(textState.value.text, vm)
+            title = editState.metadata.title.ifEmpty {
+                stringResource(id = R.string.action_new)
             }
-            content = { EditNoteContent(textState) }
-            backButton = { BackButton(rightPaneState) }
+            backButton = {
+                BackButton { navState = Empty }
+            }
+            actions = {
+                SaveButton {
+                    vm.saveNote(id, textState.text) { newId ->
+                        navState = View(newId)
+                    }
+                }
+                DeleteButton { onDeleteClick(state.id) }
+                NoteViewEditMenu(
+                    showMenu = showMenu,
+                    onDismiss = onDismiss,
+                    onMoreClick = onMoreClick,
+                    onShareClick = { onShareClick(textState.text) },
+                    onExportClick = { onExportClick(textState.text) },
+                    onPrintClick = { onPrintClick(textState.text) }
+                )
+            }
+            content = {
+                EditNoteContent(textState) { textState = it }
+            }
         }
     }
 
@@ -169,9 +260,9 @@ fun NotepadComposeApp(
             )
         },
         floatingActionButton = {
-            if(rightPaneState.value == Empty) {
+            if(navState == Empty) {
                 FloatingActionButton(
-                    onClick = { rightPaneState.value = Edit() },
+                    onClick = { navState = Edit() },
                     backgroundColor = colorResource(id = R.color.primary),
                     content = {
                         Icon(
@@ -187,7 +278,9 @@ fun NotepadComposeApp(
             if(isMultiPane) {
                 Row {
                     Box(modifier = Modifier.weight(1f)) {
-                        NoteListContent(notes, rightPaneState)
+                        NoteListContent(notes) { id ->
+                            navState = View(id)
+                        }
                     }
 
                     Divider(

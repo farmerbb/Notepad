@@ -17,11 +17,9 @@ package com.farmerbb.notepad.ui.widgets
 
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.ui.routes.NotepadPreferenceScreen
 import com.farmerbb.notepad.utils.buildYear
 
@@ -48,20 +46,7 @@ fun DeleteAlertDialog(
 }
 
 @Composable
-fun SettingsDialog(
-    showSettingsDialog: MutableState<Boolean>
-) {
-    if(showSettingsDialog.value) {
-        SettingsDialogImpl(
-            onDismiss = {
-                showSettingsDialog.value = false
-            }
-        )
-    }
-}
-
-@Composable
-fun SettingsDialogImpl(onDismiss: () -> Unit) {
+fun SettingsDialog(onDismiss: () -> Unit) {
     Dialog(onDismissRequest = onDismiss) {
         Surface(shape = MaterialTheme.shapes.medium) {
             NotepadPreferenceScreen()
@@ -71,24 +56,6 @@ fun SettingsDialogImpl(onDismiss: () -> Unit) {
 
 @Composable
 fun AboutDialog(
-    showAboutDialog: MutableState<Boolean>,
-    vm: NotepadViewModel?
-) {
-    if(showAboutDialog.value) {
-        AboutDialogImpl(
-            onDismiss = {
-                showAboutDialog.value = false
-            },
-            checkForUpdates = {
-                showAboutDialog.value = false
-                vm?.checkForUpdates()
-            }
-        )
-    }
-}
-
-@Composable
-fun AboutDialogImpl(
     onDismiss: () -> Unit,
     checkForUpdates: () -> Unit
 ) {

@@ -19,10 +19,10 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import de.schnettler.datastore.manager.PreferenceRequest
 
-sealed interface RightPaneState {
-    object Empty: RightPaneState
-    data class View(val id: Long): RightPaneState
-    data class Edit(val id: Long? = null): RightPaneState
+sealed interface NavState {
+    object Empty: NavState
+    data class View(val id: Long): NavState
+    data class Edit(val id: Long? = null): NavState
 
     companion object {
         const val VIEW = "View"

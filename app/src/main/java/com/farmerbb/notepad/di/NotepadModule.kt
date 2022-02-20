@@ -16,11 +16,13 @@
 package com.farmerbb.notepad.di
 
 import android.content.Context
-import androidx.room.Room
+import com.farmerbb.notepad.Database
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.data.DataMigrator
-import com.farmerbb.notepad.data.NotepadDatabase
+import com.farmerbb.notepad.data.DateAdapter
 import com.farmerbb.notepad.data.NotepadRepository
+import com.farmerbb.notepad.models.NoteMetadata
+import com.squareup.sqldelight.android.AndroidSqliteDriver
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -28,13 +30,12 @@ import org.koin.dsl.module
 
 val notepadModule = module {
     viewModel { NotepadViewModel(androidApplication(), get()) }
-    single { provideDatabase(androidApplication()) }
-    single { provideDAO(get()) }
+    single { provideDatabase(androidContext()) }
     single { NotepadRepository(get()) }
     single { DataMigrator(androidContext(), get()) }
 }
 
-private fun provideDatabase(context: Context) =
-    Room.databaseBuilder(context, NotepadDatabase::class.java, "notepad").build()
-
-private fun provideDAO(db: NotepadDatabase) = db.getDAO()
+private fun provideDatabase(context: Context) = Database(
+    driver = AndroidSqliteDriver(Database.Schema, context, "notepad.db"),
+    NoteMetadataAdapter = NoteMetadata.Adapter(dateAdapter = DateAdapter)
+)

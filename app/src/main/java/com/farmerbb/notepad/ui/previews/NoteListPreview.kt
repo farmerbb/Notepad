@@ -21,14 +21,23 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.routes.NotepadComposeApp
+import java.util.Date
 
 @Preview(device = Devices.PIXEL_C)
 @Composable
 fun MultiPanePreview() = MaterialTheme {
     NotepadComposeApp(
         notes = listOf(
-            NoteMetadata(title = "Test Note 1"),
-            NoteMetadata(title = "Test Note 2")
+            NoteMetadata(
+                metadataId = -1,
+                title = "Test Note 1",
+                date = Date()
+            ),
+            NoteMetadata(
+                metadataId = -1,
+                title = "Test Note 2",
+                date = Date()
+            )
         ),
         isMultiPane = true
     )
@@ -48,8 +57,16 @@ fun MultiPaneEmptyPreview() = MaterialTheme {
 fun NoteListPreview() = MaterialTheme {
     NotepadComposeApp(
         notes = listOf(
-            NoteMetadata(title = "Test Note 1"),
-            NoteMetadata(title = "Test Note 2")
+            NoteMetadata(
+                metadataId = -1,
+                title = "Test Note 1",
+                date = Date()
+            ),
+            NoteMetadata(
+                metadataId = -1,
+                title = "Test Note 2",
+                date = Date()
+            )
         )
     )
 }

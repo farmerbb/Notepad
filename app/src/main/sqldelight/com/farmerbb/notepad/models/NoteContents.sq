@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS NoteContents(
+    contentsId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    text TEXT NOT NULL,
+    isDraft INTEGER AS Boolean NOT NULL
+);
+
+update:
+INSERT OR REPLACE INTO NoteContents(contentsId, text, isDraft) VALUES ?;
+
+insert:
+INSERT OR REPLACE INTO NoteContents(text, isDraft) VALUES ?;
+
+delete:
+DELETE FROM NoteContents WHERE contentsId = :id;
+
+get:
+SELECT * FROM NoteContents WHERE contentsId = :id;
+
+getIndex:
+SELECT last_insert_rowid();

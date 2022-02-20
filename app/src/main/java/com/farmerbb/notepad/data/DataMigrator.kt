@@ -19,6 +19,7 @@ import android.content.Context
 import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
+import com.farmerbb.notepad.Database
 import com.farmerbb.notepad.models.CrossRef
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
@@ -29,11 +30,11 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 import java.lang.StringBuilder
-import java.util.*
+import java.util.Date
 
 class DataMigrator(
     private val context: Context,
-    private val dao: NotepadDAO
+    private val database: Database
 ) {
     private val job = Job()
 
@@ -53,20 +54,24 @@ class DataMigrator(
             if(!NumberUtils.isCreatable(filename)) continue
 
             val metadata = NoteMetadata(
+                metadataId = -1,
                 title = loadNoteTitle(filename),
                 date = Date(filename.toLong())
             )
 
             val contents = NoteContents(
+                contentsId = -1,
                 text = loadNote(filename),
                 isDraft = false
             )
 
-            with(dao) {
-                insertCrossRef(
+            with(database) {
+                noteMetadataQueries.insert(metadata)
+                noteContentsQueries.insert(contents)
+                crossRefQueries.insert(
                     CrossRef(
-                        metadataId = insertNoteMetadata(metadata),
-                        contentsId = insertNoteContents(contents)
+                        metadataId = noteMetadataQueries.getIndex().executeAsOne(),
+                        contentsId = noteContentsQueries.getIndex().executeAsOne()
                     )
                 )
             }
@@ -77,11 +82,12 @@ class DataMigrator(
         val draft = File(context.filesDir, "draft")
         if(draft.exists()) {
             val contents = NoteContents(
+                contentsId = -1,
                 text = loadNote("draft"),
                 isDraft = true
             )
 
-            dao.insertNoteContents(contents)
+            database.noteContentsQueries.insert(contents)
             draft.delete()
         }
 

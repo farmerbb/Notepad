@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS CrossRef(
+    metadataId INTEGER NOT NULL,
+    contentsId INTEGER NOT NULL,
+    PRIMARY KEY(metadataId, contentsId)
+);
+
+CREATE INDEX IF NOT EXISTS index_CrossRef_contentsId ON CrossRef(contentsId);
+
+insert:
+INSERT OR REPLACE INTO CrossRef(metadataId, contentsId) VALUES ?;
+
+delete:
+DELETE FROM CrossRef WHERE metadataId = :id;
+
+get:
+SELECT * FROM CrossRef WHERE metadataId = :id;

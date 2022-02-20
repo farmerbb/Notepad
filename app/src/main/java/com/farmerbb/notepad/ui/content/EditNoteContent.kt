@@ -35,10 +35,12 @@ import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.Note
+import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.previews.EditNotePreview
 import com.farmerbb.notepad.utils.UnitDisposableEffect
 import kotlinx.coroutines.launch
+import java.util.Date
 
 @Composable
 fun editState(
@@ -47,7 +49,9 @@ fun editState(
 ) = produceState(
     Note(
         metadata = NoteMetadata(
-            title = stringResource(id = R.string.action_new)
+            metadataId = -1,
+            title = stringResource(id = R.string.action_new),
+            date = Date()
         )
     )
 ) {

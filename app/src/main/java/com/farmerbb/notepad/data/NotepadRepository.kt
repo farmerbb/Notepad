@@ -15,55 +15,75 @@
 
 package com.farmerbb.notepad.data
 
+import com.farmerbb.notepad.Database
 import com.farmerbb.notepad.models.CrossRef
+import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
+import java.util.Date
 
 class NotepadRepository(
-    private val dao: NotepadDAO
+    private val database: Database
 ) {
-    fun noteMetadataFlow() = dao.getNoteMetadataSortedByTitle()
-    suspend fun getNote(id: Long) = dao.getNote(id)
+    fun noteMetadataFlow() = database.noteMetadataQueries.getSortedByTitle().asFlow().mapToList()
+    fun getNote(id: Long): Note = with(database) {
+        transactionWithResult {
+            val metadata = noteMetadataQueries.get(id).executeAsOne()
+            val crossRef = crossRefQueries.get(metadata.metadataId).executeAsOne()
+            val contents = noteContentsQueries.get(crossRef.contentsId).executeAsOne()
 
-    suspend fun saveNote(id: Long, text: String, onSuccess: (Long) -> Unit) = try {
-        val crossRef = dao.getCrossRef(id) ?: CrossRef()
+            Note(
+                metadata = metadata,
+                contents = contents
+            )
+        }
+    }
+
+    fun saveNote(id: Long, text: String, onSuccess: (Long) -> Unit) = try {
+        val crossRef = database.crossRefQueries.get(id).executeAsOneOrNull()
 
         val metadata = NoteMetadata(
-            metadataId = crossRef.metadataId,
-            title = text.substringBefore("\n")
+            metadataId = crossRef?.metadataId ?: -1,
+            title = text.substringBefore("\n"),
+            date = Date()
         )
 
         val contents = NoteContents(
-            contentsId = crossRef.contentsId,
-            text = text
+            contentsId = crossRef?.contentsId ?: -1,
+            text = text,
+            isDraft = false
         )
 
-        with(dao) {
-            val metadataId = insertNoteMetadata(metadata)
-            val contentsId = insertNoteContents(contents)
+        with(database) {
+            crossRef?.let {
+                noteMetadataQueries.update(metadata)
+                noteContentsQueries.update(contents)
+                onSuccess(id)
+            } ?: run {
+                noteMetadataQueries.insert(metadata)
+                noteContentsQueries.insert(contents)
 
-            if(id == 0L) {
-                insertCrossRef(
-                    CrossRef(
-                        metadataId = metadataId,
-                        contentsId = contentsId
-                    )
+                val newCrossRef = CrossRef(
+                    metadataId = noteMetadataQueries.getIndex().executeAsOne(),
+                    contentsId = noteContentsQueries.getIndex().executeAsOne()
                 )
 
-                onSuccess(metadataId)
-            } else
-                onSuccess(id)
+                crossRefQueries.insert(newCrossRef)
+                onSuccess(newCrossRef.metadataId)
+            }
         }
     } catch (e: Exception) {
         e.printStackTrace()
     }
 
-    suspend fun deleteNote(id: Long, onSuccess: () -> Unit) = try {
-        with(dao) {
-            getCrossRef(id)?.let {
-                deleteNoteMetadata(it.metadataId)
-                deleteNoteContents(it.contentsId)
-                deleteCrossRef(id)
+    fun deleteNote(id: Long, onSuccess: () -> Unit) = try {
+        with(database) {
+            crossRefQueries.get(id).executeAsOneOrNull()?.let {
+                noteMetadataQueries.delete(it.metadataId)
+                noteContentsQueries.delete(it.contentsId)
+                crossRefQueries.delete(id)
             }
         }
 

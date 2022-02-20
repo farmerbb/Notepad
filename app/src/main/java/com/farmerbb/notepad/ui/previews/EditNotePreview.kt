@@ -28,6 +28,7 @@ import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.menus.NoteViewEditMenu
 import com.farmerbb.notepad.ui.widgets.*
+import java.util.Date
 
 @Deprecated("For preview purposes only")
 @Composable
@@ -64,10 +65,14 @@ fun EditNotePreview() = MaterialTheme {
     EditNote(
         note = Note(
             metadata = NoteMetadata(
-                title = "Title"
+                metadataId = -1,
+                title = "Title",
+                date = Date()
             ),
             contents = NoteContents(
-                text = "This is some text"
+                contentsId = -1,
+                text = "This is some text",
+                isDraft = false
             )
         ),
         textState = remember { mutableStateOf(TextFieldValue()) }

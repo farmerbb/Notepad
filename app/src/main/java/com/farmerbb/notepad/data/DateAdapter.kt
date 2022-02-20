@@ -1,4 +1,4 @@
-/* Copyright 2021 Braden Farmer
+/* Copyright 2022 Braden Farmer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,12 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.models
+package com.farmerbb.notepad.data
 
+import com.squareup.sqldelight.ColumnAdapter
 import java.util.Date
 
-data class Note(
-    val metadata: NoteMetadata = NoteMetadata(
-        metadataId = -1,
-        title = "",
-        date = Date()
-    ),
-    val contents: NoteContents = NoteContents(
-        contentsId = -1,
-        text = "",
-        isDraft = false
-    )
-)
+object DateAdapter: ColumnAdapter<Date, Long> {
+    override fun decode(databaseValue: Long) = Date(databaseValue)
+    override fun encode(value: Date) = value.time
+}

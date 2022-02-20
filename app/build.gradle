@@ -1,7 +1,7 @@
 apply from: '../dependencies.gradle'
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+apply plugin: 'com.squareup.sqldelight'
 
 repositories {
     google()
@@ -25,12 +25,6 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         buildConfigField "long", "TIMESTAMP", "${System.currentTimeMillis()}L"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += ["room.incremental": "true"]
-            }
-        }
     }
 
     buildFeatures {
@@ -99,10 +93,8 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
-    implementation "androidx.room:room-runtime:$room_version"
-    implementation "androidx.room:room-rxjava2:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    implementation "com.squareup.sqldelight:android-driver:$sqldelight_version"
+    implementation "com.squareup.sqldelight:coroutines-extensions:$sqldelight_version"
 
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-androidx-compose:$koin_version"

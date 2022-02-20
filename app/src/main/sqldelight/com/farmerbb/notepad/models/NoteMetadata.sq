@@ -1,0 +1,28 @@
+import java.util.Date;
+
+CREATE TABLE IF NOT EXISTS NoteMetadata(
+    metadataId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+    title TEXT NOT NULL,
+    date INTEGER AS Date NOT NULL
+);
+
+update:
+INSERT OR REPLACE INTO NoteMetadata(metadataId, title, date) VALUES ?;
+
+insert:
+INSERT OR REPLACE INTO NoteMetadata(title, date) VALUES ?;
+
+delete:
+DELETE FROM NoteMetadata WHERE metadataId = :id;
+
+getSortedByTitle:
+SELECT * FROM NoteMetadata ORDER BY title;
+
+getSortedByDate:
+SELECT * FROM NoteMetadata ORDER BY date;
+
+get:
+SELECT * FROM NoteMetadata WHERE metadataId = :id;
+
+getIndex:
+SELECT last_insert_rowid();

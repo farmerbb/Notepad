@@ -20,17 +20,17 @@ androidx-lifecycle = "2.4.1"
 androidx-preference = "1.2.0"
 
 # Other dependencies
-accompanist = "0.20.0"
+accompanist = "0.23.0"
 commonsLang = "3.12.0"
 compose = "1.1.0"
 composePreferences = "1.1.0"
-coroutines = "1.5.2"
+coroutines = "1.6.0"
 koin = "3.2.0-beta-1"
 kotlin = "1.6.10"
 markdownView = "1.1.0"
 material = "1.5.0"
 sqldelight = "1.5.3"
-versionsPlugin = "0.41.0"
+versionsPlugin = "0.42.0"
 
 ##################################################################################################################################
 

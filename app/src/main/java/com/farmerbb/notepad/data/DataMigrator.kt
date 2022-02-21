@@ -50,6 +50,8 @@ class DataMigrator(
     )
 
     suspend fun migrate() {
+        if(job.isCompleted) return
+
         for(filename in context.filesDir.list().orEmpty()) {
             if(!NumberUtils.isCreatable(filename)) continue
 

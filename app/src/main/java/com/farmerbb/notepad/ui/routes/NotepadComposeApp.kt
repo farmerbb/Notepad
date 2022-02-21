@@ -15,6 +15,7 @@
 
 package com.farmerbb.notepad.ui.routes
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -162,6 +163,12 @@ fun NotepadComposeApp(
         onDismiss()
         vm.printNote(it)
     }
+    val onBack = { navState = Empty }
+
+    BackHandler(
+        enabled = navState != Empty,
+        onBack = onBack
+    )
 
     when(val state = navState) {
         Empty -> {
@@ -201,9 +208,7 @@ fun NotepadComposeApp(
             val note by noteState(state.id)
 
             title = note.metadata.title
-            backButton = { 
-                BackButton { navState = Empty }
-            }
+            backButton = { BackButton(onBack) }
             actions = {
                 EditButton { navState = Edit(state.id) }
                 DeleteButton { onDeleteClick(state.id) }
@@ -227,9 +232,7 @@ fun NotepadComposeApp(
             title = note.metadata.title.ifEmpty {
                 stringResource(id = R.string.action_new)
             }
-            backButton = {
-                BackButton { navState = Empty }
-            }
+            backButton = { BackButton(onBack) }
             actions = {
                 SaveButton {
                     vm.saveNote(id, value.text) { newId ->

@@ -208,7 +208,7 @@ fun NotepadComposeApp(
         }
 
         is View -> {
-            LaunchedEffect(Unit) {
+            LaunchedEffect(state.id) {
                 vm.getNote(state.id)
             }
 
@@ -230,7 +230,7 @@ fun NotepadComposeApp(
         }
 
         is Edit -> {
-            LaunchedEffect(Unit) {
+            LaunchedEffect(state.id) {
                 vm.getNote(state.id)
             }
 

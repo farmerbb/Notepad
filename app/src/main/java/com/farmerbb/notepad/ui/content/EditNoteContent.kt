@@ -26,6 +26,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,13 +37,25 @@ import com.farmerbb.notepad.ui.previews.EditNotePreview
 
 @Composable
 fun EditNoteContent(
-    value: TextFieldValue,
-    onValueChange: (TextFieldValue) -> Unit = {}
+    text: String,
+    onTextChanged: (String) -> Unit = {}
 ) {
     val focusRequester = remember { FocusRequester() }
+    var value by remember {
+        mutableStateOf(
+            TextFieldValue(
+                text = text,
+                selection = TextRange(text.length)
+            )
+        )
+    }
+
     BasicTextField(
         value = value,
-        onValueChange = onValueChange,
+        onValueChange = {
+            value = it
+            onTextChanged(it.text)
+        },
         textStyle = TextStyle(
             fontSize = 16.sp
         ),

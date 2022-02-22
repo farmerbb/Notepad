@@ -45,8 +45,6 @@ import com.farmerbb.notepad.models.NavState.Companion.VIEW
 import com.farmerbb.notepad.models.NavState.Edit
 import com.farmerbb.notepad.models.NavState.Empty
 import com.farmerbb.notepad.models.NavState.View
-import com.farmerbb.notepad.models.noteState
-import com.farmerbb.notepad.models.textFieldState
 import com.farmerbb.notepad.ui.widgets.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.compose.getViewModel
@@ -80,6 +78,7 @@ fun NotepadComposeApp(
     isMultiPane: Boolean = false,
     initState: NavState = Empty
 ) {
+    val note by vm.noteState.collectAsState()
     var navState by rememberSaveable(
         saver = Saver(
             save = {
@@ -172,6 +171,10 @@ fun NotepadComposeApp(
 
     when(val state = navState) {
         Empty -> {
+            LaunchedEffect(Unit) {
+                vm.clearNote()
+            }
+
             title = stringResource(id = R.string.app_name)
             backButton = null
             actions = {
@@ -205,7 +208,9 @@ fun NotepadComposeApp(
         }
 
         is View -> {
-            val note by noteState(state.id)
+            LaunchedEffect(Unit) {
+                vm.getNote(state.id)
+            }
 
             title = note.metadata.title
             backButton = { BackButton(onBack) }
@@ -225,8 +230,11 @@ fun NotepadComposeApp(
         }
 
         is Edit -> {
-            val note by noteState(state.id)
-            var value by textFieldState(note.contents.text)
+            LaunchedEffect(Unit) {
+                vm.getNote(state.id)
+            }
+
+            var text by remember { mutableStateOf(note.contents.text) }
             val id = note.metadata.metadataId
 
             title = note.metadata.title.ifEmpty {
@@ -235,7 +243,7 @@ fun NotepadComposeApp(
             backButton = { BackButton(onBack) }
             actions = {
                 SaveButton {
-                    vm.saveNote(id, value.text) { newId ->
+                    vm.saveNote(id, text) { newId ->
                         navState = View(newId)
                     }
                 }
@@ -244,13 +252,13 @@ fun NotepadComposeApp(
                     showMenu = showMenu,
                     onDismiss = onDismiss,
                     onMoreClick = onMoreClick,
-                    onShareClick = { onShareClick(value.text) },
-                    onExportClick = { onExportClick(value.text) },
-                    onPrintClick = { onPrintClick(value.text) }
+                    onShareClick = { onShareClick(text) },
+                    onExportClick = { onExportClick(text) },
+                    onPrintClick = { onPrintClick(text) }
                 )
             }
             content = {
-                EditNoteContent(value) { value = it }
+                EditNoteContent(text) { text = it }
             }
         }
     }

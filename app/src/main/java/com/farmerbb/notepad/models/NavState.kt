@@ -15,16 +15,6 @@
 
 package com.farmerbb.notepad.models
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
-import androidx.compose.runtime.remember
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
-import com.farmerbb.notepad.android.NotepadViewModel
-import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
-
 sealed interface NavState {
     object Empty: NavState
     data class View(val id: Long): NavState
@@ -34,26 +24,4 @@ sealed interface NavState {
         const val VIEW = "View"
         const val EDIT = "Edit"
     }
-}
-
-@Composable
-fun noteState(
-    id: Long?,
-    vm: NotepadViewModel = getViewModel()
-) = produceState(Note()) {
-    id?.let {
-        launch {
-            value = vm.getNote(it)
-        }
-    }
-}
-
-@Composable
-fun textFieldState(text: String) = remember {
-    mutableStateOf(TextFieldValue())
-}.apply {
-    value = TextFieldValue(
-        text = text,
-        selection = TextRange(text.length)
-    )
 }

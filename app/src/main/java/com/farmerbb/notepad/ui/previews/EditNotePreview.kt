@@ -45,7 +45,7 @@ private fun EditNote(note: Note) {
             )
         },
         content = {
-            EditNoteContent(TextFieldValue(note.contents.text))
+            EditNoteContent(note.contents.text)
         }
     )
 }

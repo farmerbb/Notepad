@@ -25,20 +25,34 @@ import com.farmerbb.notepad.BuildConfig
 import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.utils.showToast
 import com.farmerbb.notepad.R
+import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.utils.ReleaseType.PlayStore
 import com.farmerbb.notepad.utils.ReleaseType.Amazon
 import com.farmerbb.notepad.utils.ReleaseType.FDroid
 import com.farmerbb.notepad.utils.ReleaseType.Unknown
 import com.farmerbb.notepad.utils.isPlayStoreInstalled
 import com.farmerbb.notepad.utils.releaseType
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class NotepadViewModel(
     private val context: Application,
     private val repo: NotepadRepository
 ): ViewModel() {
+    private val _noteState = MutableStateFlow(Note())
+    val noteState: StateFlow<Note> = _noteState
     val noteMetadata get() = repo.noteMetadataFlow()
-    suspend fun getNote(id: Long) = repo.getNote(id)
+
+    fun getNote(id: Long?) = id?.let {
+        _noteState.value = repo.getNote(it)
+    } ?: run {
+        clearNote()
+    }
+
+    fun clearNote() {
+        _noteState.value = Note()
+    }
 
     fun saveNote(
         id: Long,

@@ -109,4 +109,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.sqldelight)
     implementation(libs.systemuicontroller)
+
+    debugImplementation(libs.compose.ui.tooling)
 }

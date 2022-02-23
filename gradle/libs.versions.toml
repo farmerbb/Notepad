@@ -57,6 +57,7 @@ compose-material = { module = "androidx.compose.material:material", version.ref 
 compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
 
 # Coroutines
@@ -96,7 +97,7 @@ compose = [
     "compose-material",
     "compose-material-icons",
     "compose-ui",
-    "compose-ui-tooling",
+    "compose-ui-tooling-preview",
     "compose-viewmodel"
 ]
 

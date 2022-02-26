@@ -234,7 +234,7 @@ fun NotepadComposeApp(
                 vm.getNote(state.id)
             }
 
-            var text by remember { mutableStateOf(note.contents.text) }
+            var text by rememberSaveable { mutableStateOf(note.contents.text) }
             val id = note.metadata.metadataId
 
             title = note.metadata.title.ifEmpty {

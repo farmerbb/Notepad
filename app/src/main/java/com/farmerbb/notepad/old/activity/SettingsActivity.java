@@ -29,7 +29,11 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.farmerbb.notepad.BuildConfig;
 import com.farmerbb.notepad.R;
@@ -63,16 +67,23 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
             findPreference("markdown").setEnabled(!pref.getBoolean("direct_edit", false));
         }
 
-        boolean userIsNeo = BuildConfig.DEBUG;
+        boolean userIsNeo;
+        if(BuildConfig.DEBUG)
+            userIsNeo = true;
+        else
+            userIsNeo = BuildConfig.VERSION_NAME.startsWith("3");
+
         if(!userIsNeo) {
             getPreferenceScreen().removePreference(findPreference("morpheus"));
             return;
         }
 
         findPreference("morpheus").setOnPreferenceClickListener(preference -> {
+            Spanned message = Html.fromHtml(getString(R.string.preview_app_message, BuildConfig.VERSION_CODE));
+
             AlertDialog.Builder builder = new AlertDialog.Builder(SettingsActivity.this);
             builder.setTitle(R.string.preview_app_title)
-                    .setMessage(R.string.preview_app_message)
+                    .setMessage(message)
                     .setNegativeButton(R.string.blue_pill, null)
                     .setPositiveButton(R.string.red_pill, (dialog, which) -> enterTheMatrix());
 
@@ -81,6 +92,9 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
 
             Button redPill = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
             redPill.setTextColor(Color.RED);
+
+            TextView textView = dialog.findViewById(android.R.id.message);
+            textView.setMovementMethod(LinkMovementMethod.getInstance());
 
             return true;
         });

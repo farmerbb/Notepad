@@ -332,7 +332,7 @@ NoteViewFragment.Listener {
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.noteViewEdit, fragment, tag)
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
             }
         }

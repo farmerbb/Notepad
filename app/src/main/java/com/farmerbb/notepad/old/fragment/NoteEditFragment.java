@@ -89,7 +89,7 @@ public class NoteEditFragment extends Fragment {
                     getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         .commit();
                 }
             }
@@ -716,7 +716,7 @@ public class NoteEditFragment extends Fragment {
             getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 .commit();
         } else {
             Bundle bundle = new Bundle();
@@ -739,7 +739,7 @@ public class NoteEditFragment extends Fragment {
             getFragmentManager()
                     .beginTransaction()
                     .replace(R.id.noteViewEdit, fragment, tag)
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
         }
     }

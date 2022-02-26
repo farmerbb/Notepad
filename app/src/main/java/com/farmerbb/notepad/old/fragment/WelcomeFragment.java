@@ -96,7 +96,7 @@ public class WelcomeFragment extends Fragment {
             getFragmentManager()
                     .beginTransaction()
                     .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
         } else {
             // Change window title
@@ -129,7 +129,7 @@ public class WelcomeFragment extends Fragment {
                 getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
                 });
 
@@ -186,7 +186,7 @@ public class WelcomeFragment extends Fragment {
                 getFragmentManager()
                     .beginTransaction()
                     .replace(R.id.noteViewEdit, fragment, "NoteEditFragment")
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit();
                 break;
         }

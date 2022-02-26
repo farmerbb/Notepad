@@ -83,7 +83,7 @@ public class NoteViewFragment extends Fragment {
                     getFragmentManager()
                         .beginTransaction()
                         .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                         .commit();
                 }
             }
@@ -200,7 +200,7 @@ public class NoteViewFragment extends Fragment {
             getFragmentManager()
                     .beginTransaction()
                     .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     .commit();
         }
 
@@ -431,7 +431,7 @@ public class NoteViewFragment extends Fragment {
         getFragmentManager()
             .beginTransaction()
             .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
             .commit();
     }
 
@@ -486,7 +486,7 @@ public class NoteViewFragment extends Fragment {
             getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.noteViewEdit, fragment, "NoteListFragment")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                 .commit();
         }
 

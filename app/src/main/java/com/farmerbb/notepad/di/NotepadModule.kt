@@ -20,9 +20,12 @@ import com.farmerbb.notepad.Database
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.data.DataMigrator
 import com.farmerbb.notepad.data.NotepadRepository
+import com.farmerbb.notepad.data.ThemeManager
 import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.utils.dataStore
 import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.android.AndroidSqliteDriver
+import de.schnettler.datastore.manager.DataStoreManager
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -34,6 +37,8 @@ val notepadModule = module {
     single { provideDatabase(androidContext()) }
     single { NotepadRepository(get()) }
     single { DataMigrator(androidContext(), get()) }
+    single { DataStoreManager(androidContext().dataStore) }
+    single { ThemeManager(get()) }
 }
 
 private fun provideDatabase(context: Context) = Database(

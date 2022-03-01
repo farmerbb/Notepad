@@ -23,7 +23,7 @@ androidx-preference = "1.2.0"
 accompanist = "0.23.0"
 commonsLang = "3.12.0"
 compose = "1.1.0"
-composePreferences = "1.1.0"
+composePreferences = "0.1.4"
 coroutines = "1.6.0"
 koin = "3.2.0-beta-1"
 kotlin = "1.6.10"
@@ -71,7 +71,7 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 
 # Other dependencies
 commonsLang = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang" }
-composePreferences = { module = "com.github.rk779.ComposePreferences:compose-preferences", version.ref = "composePreferences" }
+composePreferences = { module = "com.github.Sh4dowSoul.ComposePreferences:preferences-material", version.ref = "composePreferences" }
 markdownView = { module = "us.feras.mdv:markdownview", version.ref = "markdownView" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 sqldelight = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }

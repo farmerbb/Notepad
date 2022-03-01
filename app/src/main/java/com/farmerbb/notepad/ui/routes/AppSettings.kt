@@ -13,7 +13,10 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalMaterialApi::class)
+@file:OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class
+)
 
 package com.farmerbb.notepad.ui.routes
 
@@ -23,6 +26,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringArrayResource
@@ -34,13 +38,13 @@ import com.farmerbb.notepad.models.Prefs
 import com.farmerbb.notepad.ui.widgets.AppBarText
 import com.farmerbb.notepad.ui.widgets.BackButton
 import com.farmerbb.notepad.utils.dataStore
-import de.schnettler.datastore.compose.model.Preference.PreferenceItem.ListPreference
-import de.schnettler.datastore.compose.model.Preference.PreferenceItem.SwitchPreference
-import de.schnettler.datastore.compose.ui.PreferenceScreen
+import de.schnettler.datastore.compose.material.PreferenceScreen
+import de.schnettler.datastore.compose.material.model.Preference.PreferenceItem.ListPreference
+import de.schnettler.datastore.compose.material.model.Preference.PreferenceItem.SwitchPreference
 import de.schnettler.datastore.manager.DataStoreManager
 
 @Composable
-fun AppSettings() {
+private fun AppSettings() {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -64,7 +68,7 @@ fun NotepadPreferenceScreen() {
                 request = Prefs.Theme,
                 title = stringResource(id = R.string.action_theme),
                 summary = "",
-                singleLineTitle = true,
+                singleLineTitle = false,
                 icon = {},
                 entries = listPrefEntries(
                     keyRes = R.array.theme_list_values,
@@ -75,7 +79,7 @@ fun NotepadPreferenceScreen() {
                 request = Prefs.FontSize,
                 title = stringResource(id = R.string.action_font_size),
                 summary = "",
-                singleLineTitle = true,
+                singleLineTitle = false,
                 icon = {},
                 entries = listPrefEntries(
                     keyRes = R.array.font_size_list_values,
@@ -86,7 +90,7 @@ fun NotepadPreferenceScreen() {
                 request = Prefs.SortBy,
                 title = stringResource(id = R.string.action_sort_by),
                 summary = "",
-                singleLineTitle = true,
+                singleLineTitle = false,
                 icon = {},
                 entries = listPrefEntries(
                     keyRes = R.array.sort_by_list_values,
@@ -97,7 +101,7 @@ fun NotepadPreferenceScreen() {
                 request = Prefs.ExportFilename,
                 title = stringResource(id = R.string.action_export_filename),
                 summary = "",
-                singleLineTitle = true,
+                singleLineTitle = false,
                 icon = {},
                 entries = listPrefEntries(
                     keyRes = R.array.exported_filename_list_values,
@@ -108,28 +112,28 @@ fun NotepadPreferenceScreen() {
                 request = Prefs.ShowDialogs,
                 title = stringResource(id = R.string.pref_title_show_dialogs),
                 summary = "",
-                singleLineTitle = true,
+                singleLineTitle = false,
                 icon = {}
             ),
             SwitchPreference(
                 request = Prefs.ShowDate,
                 title = stringResource(id = R.string.pref_title_show_date),
                 summary = "",
-                singleLineTitle = true,
+                singleLineTitle = false,
                 icon = {}
             ),
             SwitchPreference(
                 request = Prefs.DirectEdit,
                 title = stringResource(id = R.string.pref_title_direct_edit),
                 summary = "",
-                singleLineTitle = true,
+                singleLineTitle = false,
                 icon = {}
             ),
             SwitchPreference(
                 request = Prefs.Markdown,
                 title = stringResource(id = R.string.pref_title_markdown),
                 summary = "",
-                singleLineTitle = true,
+                singleLineTitle = false,
                 icon = {}
             )
         ),

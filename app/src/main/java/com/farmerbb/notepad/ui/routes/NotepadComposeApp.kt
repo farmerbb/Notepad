@@ -33,9 +33,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
@@ -172,10 +170,10 @@ fun NotepadComposeApp(
         onBack = onBack
     )
 
-    val bgColorRes by vm.backgroundColorRes.collectAsState(initial = R.color.window_background)
-    val primaryColorRes by vm.primaryColorRes.collectAsState(initial = R.color.text_color_primary)
-    val fontSize by vm.textFontSize.collectAsState(initial = 16.sp)
-    val fontFamily by vm.textTypeface.collectAsState(initial = FontFamily.Default)
+    val bgColorRes by vm.backgroundColorRes.collectAsState()
+    val primaryColorRes by vm.primaryColorRes.collectAsState()
+    val fontSize by vm.textFontSize.collectAsState()
+    val fontFamily by vm.textTypeface.collectAsState()
 
     val textStyle = TextStyle(
         color = colorResource(id = primaryColorRes),

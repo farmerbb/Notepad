@@ -19,7 +19,6 @@ import android.app.Application
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.ui.unit.TextUnit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farmerbb.notepad.BuildConfig
@@ -34,20 +33,24 @@ import com.farmerbb.notepad.utils.ReleaseType.FDroid
 import com.farmerbb.notepad.utils.ReleaseType.Unknown
 import com.farmerbb.notepad.utils.isPlayStoreInstalled
 import com.farmerbb.notepad.utils.releaseType
+import de.schnettler.datastore.manager.DataStoreManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class NotepadViewModel(
     private val context: Application,
     private val repo: NotepadRepository,
-    themeManager: ThemeManager
+    dataStoreManager: DataStoreManager
 ): ViewModel() {
     private val _noteState = MutableStateFlow(Note())
     val noteState: StateFlow<Note> = _noteState
     val noteMetadata get() = repo.noteMetadataFlow()
+
+    private val themeManager = ThemeManager(
+        dataStoreManager = dataStoreManager,
+        scope = viewModelScope
+    )
 
     val textFontSize = themeManager.textFontSize
     val textTypeface = themeManager.textTypeface

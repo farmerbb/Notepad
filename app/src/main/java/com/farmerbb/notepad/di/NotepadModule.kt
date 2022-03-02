@@ -20,7 +20,6 @@ import com.farmerbb.notepad.Database
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.data.DataMigrator
 import com.farmerbb.notepad.data.NotepadRepository
-import com.farmerbb.notepad.data.ThemeManager
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.utils.dataStore
 import com.squareup.sqldelight.ColumnAdapter
@@ -38,7 +37,6 @@ val notepadModule = module {
     single { NotepadRepository(get()) }
     single { DataMigrator(androidContext(), get()) }
     single { DataStoreManager(androidContext().dataStore) }
-    single { ThemeManager(get()) }
 }
 
 private fun provideDatabase(context: Context) = Database(

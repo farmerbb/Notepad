@@ -32,7 +32,10 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.models.NoteMetadata
@@ -169,6 +172,17 @@ fun NotepadComposeApp(
         onBack = onBack
     )
 
+    val bgColorRes by vm.backgroundColorRes.collectAsState(initial = R.color.window_background)
+    val primaryColorRes by vm.primaryColorRes.collectAsState(initial = R.color.text_color_primary)
+    val fontSize by vm.textFontSize.collectAsState(initial = 16.sp)
+    val fontFamily by vm.textTypeface.collectAsState(initial = FontFamily.Default)
+
+    val textStyle = TextStyle(
+        color = colorResource(id = primaryColorRes),
+        fontSize = fontSize,
+        fontFamily = fontFamily
+    )
+
     when(val state = navState) {
         Empty -> {
             LaunchedEffect(Unit) {
@@ -200,7 +214,10 @@ fun NotepadComposeApp(
                 if(isMultiPane) {
                     EmptyDetails()
                 } else {
-                    NoteListContent(notes) { id ->
+                    NoteListContent(
+                        notes = notes,
+                        textStyle = textStyle
+                    ) { id ->
                         navState = View(id)
                     }
                 }
@@ -226,7 +243,12 @@ fun NotepadComposeApp(
                     onPrintClick = { onPrintClick(note.contents.text) }
                 )
             }
-            content = { ViewNoteContent(note.contents.text) }
+            content = {
+                ViewNoteContent(
+                    text = note.contents.text,
+                    textStyle = textStyle
+                )
+            }
         }
 
         is Edit -> {
@@ -258,12 +280,16 @@ fun NotepadComposeApp(
                 )
             }
             content = {
-                EditNoteContent(text) { text = it }
+                EditNoteContent(
+                    text = text,
+                    textStyle = textStyle
+                ) { text = it }
             }
         }
     }
 
     Scaffold(
+        backgroundColor = colorResource(id = bgColorRes),
         topBar = {
             TopAppBar(
                 navigationIcon = backButton,
@@ -291,7 +317,10 @@ fun NotepadComposeApp(
             if(isMultiPane) {
                 Row {
                     Box(modifier = Modifier.weight(1f)) {
-                        NoteListContent(notes) { id ->
+                        NoteListContent(
+                            notes = notes,
+                            textStyle = textStyle
+                        ) { id ->
                             navState = View(id)
                         }
                     }

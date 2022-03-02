@@ -33,7 +33,7 @@ import org.koin.dsl.module
 import java.util.Date
 
 val notepadModule = module {
-    viewModel { NotepadViewModel(androidApplication(), get()) }
+    viewModel { NotepadViewModel(androidApplication(), get(), get()) }
     single { provideDatabase(androidContext()) }
     single { NotepadRepository(get()) }
     single { DataMigrator(androidContext(), get()) }

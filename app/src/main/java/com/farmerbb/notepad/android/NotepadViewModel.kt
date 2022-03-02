@@ -19,12 +19,14 @@ import android.app.Application
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.ui.unit.TextUnit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farmerbb.notepad.BuildConfig
 import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.utils.showToast
 import com.farmerbb.notepad.R
+import com.farmerbb.notepad.data.ThemeManager
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.utils.ReleaseType.PlayStore
 import com.farmerbb.notepad.utils.ReleaseType.Amazon
@@ -34,15 +36,23 @@ import com.farmerbb.notepad.utils.isPlayStoreInstalled
 import com.farmerbb.notepad.utils.releaseType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NotepadViewModel(
     private val context: Application,
-    private val repo: NotepadRepository
+    private val repo: NotepadRepository,
+    themeManager: ThemeManager
 ): ViewModel() {
     private val _noteState = MutableStateFlow(Note())
     val noteState: StateFlow<Note> = _noteState
     val noteMetadata get() = repo.noteMetadataFlow()
+
+    val textFontSize = themeManager.textFontSize
+    val textTypeface = themeManager.textTypeface
+    val backgroundColorRes = themeManager.backgroundColorRes
+    val primaryColorRes = themeManager.primaryColorRes
 
     fun getNote(id: Long?) = id?.let {
         _noteState.value = repo.getNote(it)

@@ -28,11 +28,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.ui.previews.ViewNotePreview
 
 @Composable
-fun ViewNoteContent(text: String) {
+fun ViewNoteContent(
+    text: String,
+    textStyle: TextStyle = TextStyle()
+) {
     Box(
         modifier = Modifier.verticalScroll(
             state = rememberScrollState()
@@ -41,9 +43,7 @@ fun ViewNoteContent(text: String) {
         SelectionContainer {
             BasicText(
                 text = text,
-                style = TextStyle(
-                    fontSize = 16.sp
-                ),
+                style = textStyle,
                 modifier = Modifier
                     .padding(
                         horizontal = 16.dp,

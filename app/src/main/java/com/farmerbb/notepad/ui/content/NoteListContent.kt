@@ -18,13 +18,14 @@ package com.farmerbb.notepad.ui.content
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +38,7 @@ import com.farmerbb.notepad.ui.previews.NoteListPreview
 @Composable
 fun NoteListContent(
     notes: List<NoteMetadata>,
+    textStyle: TextStyle = TextStyle(),
     onNoteClick: (Long) -> Unit
 ) {
     when(notes.size) {
@@ -62,8 +64,9 @@ fun NoteListContent(
                         onNoteClick(notes[it].metadataId)
                     }
                 ) {
-                    Text(
+                    BasicText(
                         text = notes[it].title,
+                        style = textStyle,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier

@@ -38,6 +38,7 @@ import com.farmerbb.notepad.ui.previews.EditNotePreview
 @Composable
 fun EditNoteContent(
     text: String,
+    textStyle: TextStyle = TextStyle(),
     onTextChanged: (String) -> Unit = {}
 ) {
     val focusRequester = remember { FocusRequester() }
@@ -56,9 +57,7 @@ fun EditNoteContent(
             value = it
             onTextChanged(it.text)
         },
-        textStyle = TextStyle(
-            fontSize = 16.sp
-        ),
+        textStyle = textStyle,
         modifier = Modifier
             .padding(
                 horizontal = 16.dp,

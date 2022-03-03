@@ -22,7 +22,7 @@
         android:shortcutShortLabel="@string/action_new">
         <intent
             android:action="android.intent.action.MAIN"
-            android:targetPackage="com.farmerbb.notepad.old"
+            android:targetPackage="com.farmerbb.notepad"
             android:targetClass="com.farmerbb.notepad.old.activity.NoteEditActivity" />
     </shortcut>
 </shortcuts>

@@ -39,7 +39,7 @@ import com.farmerbb.notepad.ui.previews.NoteListPreview
 fun NoteListContent(
     notes: List<NoteMetadata>,
     textStyle: TextStyle = TextStyle(),
-    onNoteClick: (Long) -> Unit
+    onNoteClick: (Long) -> Unit = {}
 ) {
     when(notes.size) {
         0 -> Column(

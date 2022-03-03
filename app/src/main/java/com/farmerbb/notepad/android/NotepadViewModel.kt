@@ -13,6 +13,8 @@
  * limitations under the License.
  */
 
+@file:OptIn(FlowPreview::class)
+
 package com.farmerbb.notepad.android
 
 import android.app.Application
@@ -25,7 +27,7 @@ import com.farmerbb.notepad.BuildConfig
 import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.utils.showToast
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.data.ThemeManager
+import com.farmerbb.notepad.data.PreferenceManager.Companion.prefs
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.utils.ReleaseType.PlayStore
 import com.farmerbb.notepad.utils.ReleaseType.Amazon
@@ -34,8 +36,8 @@ import com.farmerbb.notepad.utils.ReleaseType.Unknown
 import com.farmerbb.notepad.utils.isPlayStoreInstalled
 import com.farmerbb.notepad.utils.releaseType
 import de.schnettler.datastore.manager.DataStoreManager
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class NotepadViewModel(
@@ -45,17 +47,8 @@ class NotepadViewModel(
 ): ViewModel() {
     private val _noteState = MutableStateFlow(Note())
     val noteState: StateFlow<Note> = _noteState
-    val noteMetadata get() = repo.noteMetadataFlow()
-
-    private val themeManager = ThemeManager(
-        dataStoreManager = dataStoreManager,
-        scope = viewModelScope
-    )
-
-    val textFontSize = themeManager.textFontSize
-    val textTypeface = themeManager.textTypeface
-    val backgroundColorRes = themeManager.backgroundColorRes
-    val primaryColorRes = themeManager.primaryColorRes
+    val noteMetadata get() = prefs.sortOrder.flatMapConcat(repo::noteMetadataFlow)
+    val prefs = dataStoreManager.prefs(viewModelScope)
 
     fun getNote(id: Long?) = id?.let {
         _noteState.value = repo.getNote(it)

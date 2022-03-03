@@ -15,11 +15,17 @@ INSERT OR REPLACE INTO NoteMetadata(title, date) VALUES ?;
 delete:
 DELETE FROM NoteMetadata WHERE metadataId = :id;
 
-getSortedByTitle:
-SELECT * FROM NoteMetadata ORDER BY title;
+getSortedByTitleDescending:
+SELECT * FROM NoteMetadata ORDER BY title DESC;
 
-getSortedByDate:
-SELECT * FROM NoteMetadata ORDER BY date;
+getSortedByTitleAscending:
+SELECT * FROM NoteMetadata ORDER BY title ASC;
+
+getSortedByDateDescending:
+SELECT * FROM NoteMetadata ORDER BY date DESC;
+
+getSortedByDateAscending:
+SELECT * FROM NoteMetadata ORDER BY date ASC;
 
 get:
 SELECT * FROM NoteMetadata WHERE metadataId = :id;

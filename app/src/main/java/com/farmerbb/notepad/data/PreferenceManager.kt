@@ -3,7 +3,9 @@ package com.farmerbb.notepad.data
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
+import com.farmerbb.notepad.models.FilenameFormat
 import com.farmerbb.notepad.models.Prefs
+import com.farmerbb.notepad.models.SortOrder
 import de.schnettler.datastore.manager.DataStoreManager
 import de.schnettler.datastore.manager.PreferenceRequest
 import kotlinx.coroutines.CoroutineScope
@@ -11,10 +13,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-class ThemeManager(
+class PreferenceManager private constructor(
     private val dataStoreManager: DataStoreManager,
     private val scope: CoroutineScope
 ) {
+    val isLightTheme get() = Prefs.Theme.mapToFlow { theme -> theme.contains("light") }
+
     val backgroundColorRes get() = Prefs.Theme.mapToFlow { theme ->
         when {
             theme.contains("light") -> R.color.window_background
@@ -72,10 +76,28 @@ class ThemeManager(
         }
     }
 
+    val sortOrder get() = Prefs.SortBy.mapToFlow(::toSortOrder)
+    val filenameFormat get() = Prefs.ExportFilename.mapToFlow(::toFilenameFormat)
+
     private fun <T, R> PreferenceRequest<T>.mapToFlow(transform: (value: T) -> R) =
         dataStoreManager.getPreferenceFlow(this).map(transform).stateIn(
             scope = scope,
             started = SharingStarted.Lazily,
             initialValue = transform(defaultValue)
         )
+
+    private fun toSortOrder(value: String) = SortOrder.values().first {
+        it.stringValue == value
+    }
+
+    private fun toFilenameFormat(value: String) = FilenameFormat.values().first {
+        it.stringValue == value
+    }
+
+    companion object {
+        fun DataStoreManager.prefs(scope: CoroutineScope) = PreferenceManager(
+            dataStoreManager = this,
+            scope = scope
+        )
+    }
 }

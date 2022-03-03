@@ -20,6 +20,11 @@ import com.farmerbb.notepad.models.CrossRef
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.models.SortOrder
+import com.farmerbb.notepad.models.SortOrder.DateAscending
+import com.farmerbb.notepad.models.SortOrder.DateDescending
+import com.farmerbb.notepad.models.SortOrder.TitleAscending
+import com.farmerbb.notepad.models.SortOrder.TitleDescending
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import java.util.Date
@@ -27,7 +32,15 @@ import java.util.Date
 class NotepadRepository(
     private val database: Database
 ) {
-    fun noteMetadataFlow() = database.noteMetadataQueries.getSortedByTitle().asFlow().mapToList()
+    fun noteMetadataFlow(order: SortOrder) = with(database.noteMetadataQueries) {
+        when(order) {
+            DateDescending -> getSortedByDateDescending()
+            DateAscending -> getSortedByDateAscending()
+            TitleDescending -> getSortedByTitleDescending()
+            TitleAscending -> getSortedByTitleAscending()
+        }
+    }.asFlow().mapToList()
+
     fun getNote(id: Long): Note = with(database) {
         transactionWithResult {
             val metadata = noteMetadataQueries.get(id).executeAsOne()

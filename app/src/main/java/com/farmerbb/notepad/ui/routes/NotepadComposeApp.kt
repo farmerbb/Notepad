@@ -55,30 +55,29 @@ fun NotepadComposeApp() {
     val vm: NotepadViewModel = getViewModel()
     val systemUiController = rememberSystemUiController()
     val configuration = LocalConfiguration.current
-    val notes = vm.noteMetadata.collectAsState(emptyList())
+    val isLightTheme by vm.prefs.isLightTheme.collectAsState()
 
     MaterialTheme {
         NotepadComposeApp(
-            notes = notes.value,
             vm = vm,
             isMultiPane = configuration.screenWidthDp >= 600
         )
     }
 
-    SideEffect {
+    LaunchedEffect(isLightTheme) {
         systemUiController.setNavigationBarColor(
-            color = Color.White
+            color = if (isLightTheme) Color.White else Color.Black
         )
     }
 }
 
 @Composable
 fun NotepadComposeApp(
-    notes: List<NoteMetadata>,
     vm: NotepadViewModel = getViewModel(),
     isMultiPane: Boolean = false,
     initState: NavState = Empty
 ) {
+    val notes by vm.noteMetadata.collectAsState(emptyList())
     val note by vm.noteState.collectAsState()
     var navState by rememberSaveable(
         saver = Saver(
@@ -170,10 +169,10 @@ fun NotepadComposeApp(
         onBack = onBack
     )
 
-    val bgColorRes by vm.backgroundColorRes.collectAsState()
-    val primaryColorRes by vm.primaryColorRes.collectAsState()
-    val fontSize by vm.textFontSize.collectAsState()
-    val fontFamily by vm.textTypeface.collectAsState()
+    val bgColorRes by vm.prefs.backgroundColorRes.collectAsState()
+    val primaryColorRes by vm.prefs.primaryColorRes.collectAsState()
+    val fontSize by vm.prefs.textFontSize.collectAsState()
+    val fontFamily by vm.prefs.textTypeface.collectAsState()
 
     val textStyle = TextStyle(
         color = colorResource(id = primaryColorRes),

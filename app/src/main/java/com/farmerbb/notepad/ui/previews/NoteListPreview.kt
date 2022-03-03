@@ -16,46 +16,41 @@
 package com.farmerbb.notepad.ui.previews
 
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.farmerbb.notepad.R
 import com.farmerbb.notepad.models.NoteMetadata
-import com.farmerbb.notepad.ui.routes.NotepadComposeApp
+import com.farmerbb.notepad.ui.content.NoteListContent
+import com.farmerbb.notepad.ui.widgets.AppBarText
+import com.farmerbb.notepad.ui.widgets.MoreButton
 import java.util.Date
 
-@Preview(device = Devices.PIXEL_C)
 @Composable
-fun MultiPanePreview() = MaterialTheme {
-    NotepadComposeApp(
-        notes = listOf(
-            NoteMetadata(
-                metadataId = -1,
-                title = "Test Note 1",
-                date = Date()
-            ),
-            NoteMetadata(
-                metadataId = -1,
-                title = "Test Note 2",
-                date = Date()
+private fun NoteList(notes: List<NoteMetadata>) {
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { AppBarText(stringResource(id = R.string.app_name)) },
+                backgroundColor = colorResource(id = R.color.primary),
+                actions = {
+                    MoreButton()
+                }
             )
-        ),
-        isMultiPane = true
-    )
-}
-
-@Preview(device = Devices.PIXEL_C)
-@Composable
-fun MultiPaneEmptyPreview() = MaterialTheme {
-    NotepadComposeApp(
-        notes = emptyList(),
-        isMultiPane = true
+        },
+        content = {
+            NoteListContent(notes)
+        }
     )
 }
 
 @Preview
 @Composable
 fun NoteListPreview() = MaterialTheme {
-    NotepadComposeApp(
+    NoteList(
         notes = listOf(
             NoteMetadata(
                 metadataId = -1,
@@ -74,5 +69,5 @@ fun NoteListPreview() = MaterialTheme {
 @Preview
 @Composable
 fun NoteListEmptyPreview() = MaterialTheme {
-    NotepadComposeApp(notes = emptyList())
+    NoteList(notes = emptyList())
 }

@@ -60,3 +60,16 @@ object Prefs {
         defaultValue = false
     )
 }
+
+enum class SortOrder(val stringValue: String) {
+    DateDescending("date"),
+    DateAscending("date-reversed"),
+    TitleDescending("name-reversed"),
+    TitleAscending("name"),
+}
+
+enum class FilenameFormat(val stringValue: String) {
+    TitleOnly("text-only"),
+    TitleAndTimestamp("text-timestamp"),
+    TimestampAndTitle("timestamp-text"),
+}

@@ -33,6 +33,10 @@ This table will track the features of the app as they are reimplemented in the n
 | About screen                          | ✔                      |
 | Overflow menus                        | ✔                      |
 | Dual-pane view for tablets            | ✔                      |
+| Light/dark themes                     | ✔                      |
+| Sans serif / serif / monospace fonts  | ✔                      |
+| Font sizes                            | ✔                      |
+| Sort notes by date or name            | ✔                      |
 | Print notes                           |                        |
 | Import text files                     |                        |
 | Export to filesystem                  |                        |
@@ -40,10 +44,6 @@ This table will track the features of the app as they are reimplemented in the n
 | Multi-select notes list (long-press)  |                        |
 | Multi-select notes list (button)      |                        |
 | Delete notes (from list)              |                        |
-| Light/dark themes                     |                        |
-| Sans serif / serif / monospace fonts  |                        |
-| Font sizes                            |                        |
-| Sort notes by date or name            |                        |
 | Options for exported filename         |                        |
 | Ask before saving                     |                        |
 | Show date/time in notes list          |                        |

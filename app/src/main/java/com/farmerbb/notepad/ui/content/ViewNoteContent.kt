@@ -22,9 +22,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ProvideTextStyle
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -55,11 +57,31 @@ fun ViewNoteContent(
 
         SelectionContainer {
             if(markdown) {
-                RichTextThemeIntegration {
-                    ProvideTextStyle(value = textStyle) {
-                        RichText(modifier = modifier) {
-                            Markdown(text)
-                        }
+                val localTextStyle = compositionLocalOf {
+                    textStyle.copy(color = Color.Unspecified)
+                }
+                val localContentColor = compositionLocalOf {
+                    textStyle.color
+                }
+
+                RichTextThemeIntegration(
+                    textStyle = { localTextStyle.current },
+                    contentColor = { localContentColor.current },
+                    ProvideTextStyle = { textStyle, content ->
+                        CompositionLocalProvider(
+                            localTextStyle provides textStyle,
+                            content = content
+                        )
+                    },
+                    ProvideContentColor = { color, content ->
+                        CompositionLocalProvider(
+                            localContentColor provides color,
+                            content = content
+                        )
+                    }
+                ) {
+                    RichText(modifier = modifier) {
+                        Markdown(text)
                     }
                 }
             } else {

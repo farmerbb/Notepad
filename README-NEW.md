@@ -38,10 +38,10 @@ This table will track the features of the app as they are reimplemented in the n
 | Font sizes                            | ✔                      |
 | Sort notes by date or name            | ✔                      |
 | Show date/time in notes list          | ✔                      |
+| Markdown / HTML support               | ✔                      |
 | Options for exported filename         |                        |
 | Ask before saving                     |                        |
 | Edit notes directly                   |                        |
-| Markdown / HTML support               |                        |
 | Save / load drafts                    |                        |
 | Print notes                           |                        |
 | Import text files                     |                        |

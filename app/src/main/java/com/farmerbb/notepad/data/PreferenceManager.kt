@@ -1,3 +1,18 @@
+/* Copyright 2022 Braden Farmer
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.farmerbb.notepad.data
 
 import androidx.compose.ui.text.font.FontFamily
@@ -60,7 +75,7 @@ class PreferenceManager private constructor(
         }
     }
 
-    val textTypeface get() = Prefs.Theme.mapToFlow { theme ->
+    val fontFamily get() = Prefs.Theme.mapToFlow { theme ->
         when {
             theme.contains("sans") -> FontFamily.SansSerif
             theme.contains("serif") -> FontFamily.Serif
@@ -68,7 +83,7 @@ class PreferenceManager private constructor(
         }
     }
 
-    val markdownTypeface get() = Prefs.Theme.mapToFlow { theme ->
+    val markdownFont get() = Prefs.Theme.mapToFlow { theme ->
         when {
             theme.contains("sans") -> "sans"
             theme.contains("serif") -> "serif"
@@ -78,6 +93,10 @@ class PreferenceManager private constructor(
 
     val sortOrder get() = Prefs.SortBy.mapToFlow(::toSortOrder)
     val filenameFormat get() = Prefs.ExportFilename.mapToFlow(::toFilenameFormat)
+    val showDialogs get() = Prefs.ShowDialogs.asFlow
+    val showDate get() = Prefs.ShowDate.asFlow
+    val directEdit get() = Prefs.DirectEdit.asFlow
+    val markdown get() = Prefs.Markdown.asFlow
 
     private fun <T, R> PreferenceRequest<T>.mapToFlow(transform: (value: T) -> R) =
         dataStoreManager.getPreferenceFlow(this).map(transform).stateIn(
@@ -85,6 +104,8 @@ class PreferenceManager private constructor(
             started = SharingStarted.Lazily,
             initialValue = transform(defaultValue)
         )
+
+    private val <T> PreferenceRequest<T>.asFlow get() = mapToFlow { it }
 
     private fun toSortOrder(value: String) = SortOrder.values().first {
         it.stringValue == value

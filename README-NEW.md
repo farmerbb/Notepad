@@ -37,6 +37,12 @@ This table will track the features of the app as they are reimplemented in the n
 | Sans serif / serif / monospace fonts  | ✔                      |
 | Font sizes                            | ✔                      |
 | Sort notes by date or name            | ✔                      |
+| Show date/time in notes list          | ✔                      |
+| Options for exported filename         |                        |
+| Ask before saving                     |                        |
+| Edit notes directly                   |                        |
+| Markdown / HTML support               |                        |
+| Save / load drafts                    |                        |
 | Print notes                           |                        |
 | Import text files                     |                        |
 | Export to filesystem                  |                        |
@@ -44,15 +50,10 @@ This table will track the features of the app as they are reimplemented in the n
 | Multi-select notes list (long-press)  |                        |
 | Multi-select notes list (button)      |                        |
 | Delete notes (from list)              |                        |
-| Options for exported filename         |                        |
-| Ask before saving                     |                        |
-| Show date/time in notes list          |                        |
-| Edit notes directly                   |                        |
-| Markdown / HTML support               |                        |
-| Save / load drafts                    |                        |
 | Keyboard shortcuts                    |                        |
 | Share text to Notepad from other apps |                        |
 | Google Assistant "Note to self"       |                        |
+| New Note launcher shortcut            |                        |
 | Probably some other things I forgot   |                        |
 
 ## How do I try out the new app?

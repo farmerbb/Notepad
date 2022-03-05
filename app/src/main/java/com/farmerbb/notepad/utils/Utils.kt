@@ -24,8 +24,8 @@ import androidx.annotation.StringRes
 import androidx.datastore.preferences.preferencesDataStore
 import com.farmerbb.notepad.BuildConfig
 import java.lang.Exception
-import java.util.Calendar
-import java.util.TimeZone
+import java.text.DateFormat
+import java.util.*
 
 fun Context.showToast(
     @StringRes text: Int
@@ -63,3 +63,7 @@ val Context.releaseType: ReleaseType
 
         return ReleaseType.Unknown
     }
+
+val Date.noteListFormat: String get() = DateFormat
+    .getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+    .format(this)

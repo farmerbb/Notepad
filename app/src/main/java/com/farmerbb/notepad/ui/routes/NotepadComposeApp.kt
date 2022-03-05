@@ -169,16 +169,34 @@ fun NotepadComposeApp(
         onBack = onBack
     )
 
-    val bgColorRes by vm.prefs.backgroundColorRes.collectAsState()
+    val backgroundColorRes by vm.prefs.backgroundColorRes.collectAsState()
     val primaryColorRes by vm.prefs.primaryColorRes.collectAsState()
-    val fontSize by vm.prefs.textFontSize.collectAsState()
-    val fontFamily by vm.prefs.textTypeface.collectAsState()
+    val secondaryColorRes by vm.prefs.secondaryColorRes.collectAsState()
+    val textFontSize by vm.prefs.textFontSize.collectAsState()
+    val dateFontSize by vm.prefs.dateFontSize.collectAsState()
+    val fontFamily by vm.prefs.fontFamily.collectAsState()
+    val showDate by vm.prefs.showDate.collectAsState()
 
     val textStyle = TextStyle(
         color = colorResource(id = primaryColorRes),
-        fontSize = fontSize,
+        fontSize = textFontSize,
         fontFamily = fontFamily
     )
+    val dateStyle = TextStyle(
+        color = colorResource(id = secondaryColorRes),
+        fontSize = dateFontSize,
+        fontFamily = fontFamily
+    )
+
+    @Composable
+    fun NoteListContentShared() = NoteListContent(
+        notes = notes,
+        textStyle = textStyle,
+        dateStyle = dateStyle,
+        showDate = showDate
+    ) { id ->
+        navState = View(id)
+    }
 
     when(val state = navState) {
         Empty -> {
@@ -211,12 +229,7 @@ fun NotepadComposeApp(
                 if(isMultiPane) {
                     EmptyDetails()
                 } else {
-                    NoteListContent(
-                        notes = notes,
-                        textStyle = textStyle
-                    ) { id ->
-                        navState = View(id)
-                    }
+                    NoteListContentShared()
                 }
             }
         }
@@ -286,7 +299,7 @@ fun NotepadComposeApp(
     }
 
     Scaffold(
-        backgroundColor = colorResource(id = bgColorRes),
+        backgroundColor = colorResource(id = backgroundColorRes),
         topBar = {
             TopAppBar(
                 navigationIcon = backButton,
@@ -314,12 +327,7 @@ fun NotepadComposeApp(
             if(isMultiPane) {
                 Row {
                     Box(modifier = Modifier.weight(1f)) {
-                        NoteListContent(
-                            notes = notes,
-                            textStyle = textStyle
-                        ) { id ->
-                            navState = View(id)
-                        }
+                        NoteListContentShared()
                     }
 
                     Divider(

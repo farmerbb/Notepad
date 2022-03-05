@@ -34,11 +34,14 @@ import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.previews.NoteListPreview
+import com.farmerbb.notepad.utils.noteListFormat
 
 @Composable
 fun NoteListContent(
     notes: List<NoteMetadata>,
     textStyle: TextStyle = TextStyle(),
+    dateStyle: TextStyle = TextStyle(),
+    showDate: Boolean = false,
     onNoteClick: (Long) -> Unit = {}
 ) {
     when(notes.size) {
@@ -71,10 +74,28 @@ fun NoteListContent(
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier
                             .padding(
-                                horizontal = 16.dp,
-                                vertical = 12.dp
+                                start = 16.dp,
+                                end = 16.dp,
+                                top = if(showDate) 8.dp else 12.dp,
+                                bottom = if(showDate) 0.dp else 12.dp
                             )
                     )
+
+                    if(showDate) {
+                        BasicText(
+                            text = notes[it].date.noteListFormat,
+                            style = dateStyle,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier
+                                .align(Alignment.End)
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    bottom = 8.dp
+                                )
+                        )
+                    }
 
                     Divider()
                 }

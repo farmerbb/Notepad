@@ -36,7 +36,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
-import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.content.*
 import com.farmerbb.notepad.ui.widgets.NoteListMenu
 import com.farmerbb.notepad.ui.widgets.NoteViewEditMenu
@@ -176,6 +175,7 @@ fun NotepadComposeApp(
     val dateFontSize by vm.prefs.dateFontSize.collectAsState()
     val fontFamily by vm.prefs.fontFamily.collectAsState()
     val showDate by vm.prefs.showDate.collectAsState()
+    val markdown by vm.prefs.markdown.collectAsState()
 
     val textStyle = TextStyle(
         color = colorResource(id = primaryColorRes),
@@ -256,7 +256,8 @@ fun NotepadComposeApp(
             content = {
                 ViewNoteContent(
                     text = note.contents.text,
-                    textStyle = textStyle
+                    textStyle = textStyle,
+                    markdown = markdown
                 )
             }
         }

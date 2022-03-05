@@ -27,8 +27,10 @@ composePreferences = "0.1.4"
 coroutines = "1.6.0"
 koin = "3.2.0-beta-1"
 kotlin = "1.6.10"
+linkifyText = "0a45dbcf9b"
 markdownView = "1.1.0"
 material = "1.5.0"
+richtext = "0.11.0"
 sqldelight = "1.5.3"
 versionsPlugin = "0.42.0"
 
@@ -69,9 +71,14 @@ coroutines-sqldelight = { module = "com.squareup.sqldelight:coroutines-extension
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 
+# RichText
+richtext-commonmark = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
+richtext-printing = { module = "com.halilibo.compose-richtext:printing", version.ref = "richtext" }
+
 # Other dependencies
 commonsLang = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang" }
 composePreferences = { module = "com.github.Sh4dowSoul.ComposePreferences:preferences-material", version.ref = "composePreferences" }
+linkifyText = { module = "com.github.firefinchdev:linkify-text", version.ref = "linkifyText" }
 markdownView = { module = "us.feras.mdv:markdownview", version.ref = "markdownView" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 sqldelight = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
@@ -110,4 +117,9 @@ coroutines = [
 koin = [
     "koin-android",
     "koin-core"
+]
+
+richtext = [
+    "richtext-commonmark",
+    "richtext-printing"
 ]

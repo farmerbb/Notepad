@@ -102,13 +102,14 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.coroutines)
     implementation(libs.bundles.koin)
+    implementation(libs.bundles.richtext)
 
     implementation(libs.commonsLang)
     implementation(libs.composePreferences)
+    implementation(libs.linkifyText)
     implementation(libs.markdownView)
     implementation(libs.material)
     implementation(libs.sqldelight)
     implementation(libs.systemuicontroller)
-
     debugImplementation(libs.compose.ui.tooling)
 }

@@ -16,6 +16,7 @@
 package com.farmerbb.notepad.data
 
 import android.content.Context
+import androidx.core.text.isDigitsOnly
 import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
@@ -25,7 +26,6 @@ import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import org.apache.commons.lang3.math.NumberUtils
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -53,7 +53,7 @@ class DataMigrator(
         if(job.isCompleted) return
 
         for(filename in context.filesDir.list().orEmpty()) {
-            if(!NumberUtils.isCreatable(filename)) continue
+            if(!filename.isDigitsOnly()) continue
 
             val metadata = NoteMetadata(
                 metadataId = -1,

@@ -12,27 +12,29 @@ android-targetSdk = "31"
 
 # AndroidX / Jetpack
 androidx-activity = "1.4.0"
-androidx-appcompat = "1.4.1"
 androidx-core = "1.7.0"
 androidx-datastore = "1.0.0"
-androidx-supportv4 = "1.0.0"
 androidx-lifecycle = "2.4.1"
 androidx-preference = "1.2.0"
 
-# Other dependencies
+# Other dependencies (red-pill app)
 accompanist = "0.23.0"
-commonsLang = "3.12.0"
 compose = "1.1.0"
 composePreferences = "0.1.4"
 coroutines = "1.6.0"
 koin = "3.2.0-beta-1"
 kotlin = "1.6.10"
 linkifyText = "0a45dbcf9b"
-markdownView = "1.1.0"
-material = "1.5.0"
 richtext = "0.11.0"
 sqldelight = "1.5.3"
 versionsPlugin = "0.42.0"
+
+# Other dependencies (blue-pill app)
+appcompat = "1.4.1"
+commonsLang = "3.12.0"
+markdownView = "1.1.0"
+material = "1.5.0"
+supportv4 = "1.0.0"
 
 ##################################################################################################################################
 
@@ -45,11 +47,9 @@ gradle-sqldelight = { module = "com.squareup.sqldelight:gradle-plugin", version.
 
 # AndroidX / Jetpack
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
 androidx-preference = { module = "androidx.preference:preference-ktx", version.ref = "androidx-preference" }
-androidx-supportv4 = { module = "androidx.legacy:legacy-support-v4", version.ref = "androidx-supportv4" }
 
 # Compose
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
@@ -75,14 +75,18 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 richtext-commonmark = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
 richtext-printing = { module = "com.halilibo.compose-richtext:printing", version.ref = "richtext" }
 
-# Other dependencies
-commonsLang = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang" }
+# Other dependencies (red-pill app)
 composePreferences = { module = "com.github.Sh4dowSoul.ComposePreferences:preferences-material", version.ref = "composePreferences" }
 linkifyText = { module = "com.github.firefinchdev:linkify-text", version.ref = "linkifyText" }
-markdownView = { module = "us.feras.mdv:markdownview", version.ref = "markdownView" }
-material = { module = "com.google.android.material:material", version.ref = "material" }
 sqldelight = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+
+# Other dependencies (blue-pill app)
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+commonsLang = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang" }
+markdownView = { module = "us.feras.mdv:markdownview", version.ref = "markdownView" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+supportv4 = { module = "androidx.legacy:legacy-support-v4", version.ref = "supportv4" }
 
 ##################################################################################################################################
 
@@ -90,11 +94,9 @@ systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicont
 
 androidx = [
     "androidx-activity",
-    "androidx-appcompat",
     "androidx-core",
     "androidx-datastore",
-    "androidx-preference",
-    "androidx-supportv4"
+    "androidx-preference"
 ]
 
 compose = [

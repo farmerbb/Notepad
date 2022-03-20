@@ -172,7 +172,5 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         restartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(restartIntent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-        System.exit(0);
     }
 }

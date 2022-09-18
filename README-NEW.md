@@ -39,12 +39,12 @@ This table will track the features of the app as they are reimplemented in the n
 | Sort notes by date or name            | ✔                      |
 | Show date/time in notes list          | ✔                      |
 | Markdown / HTML support               | ✔                      |
+| Import text files                     | ✔                      |
 | Options for exported filename         |                        |
 | Ask before saving                     |                        |
 | Edit notes directly                   |                        |
 | Save / load drafts                    |                        |
 | Print notes                           |                        |
-| Import text files                     |                        |
 | Export to filesystem                  |                        |
 | Double-tap to edit                    |                        |
 | Multi-select notes list (long-press)  |                        |

@@ -54,7 +54,11 @@ class NotepadRepository(
         }
     }
 
-    fun saveNote(id: Long, text: String, onSuccess: (Long) -> Unit) = try {
+    fun saveNote(
+        id: Long = -1,
+        text: String,
+        onSuccess: (Long) -> Unit = {}
+    ) = try {
         val crossRef = database.crossRefQueries.get(id).executeAsOneOrNull()
 
         val metadata = NoteMetadata(

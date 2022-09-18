@@ -22,6 +22,8 @@ import com.farmerbb.notepad.data.DataMigrator
 import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.utils.dataStore
+import com.github.k1rakishou.fsaf.FileChooser
+import com.github.k1rakishou.fsaf.FileManager
 import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import de.schnettler.datastore.manager.DataStoreManager
@@ -32,11 +34,13 @@ import org.koin.dsl.module
 import java.util.Date
 
 val notepadModule = module {
-    viewModel { NotepadViewModel(androidApplication(), get(), get()) }
+    viewModel { NotepadViewModel(androidApplication(), get(), get(), get(), get()) }
     single { provideDatabase(androidContext()) }
     single { NotepadRepository(get()) }
     single { DataMigrator(androidContext(), get()) }
     single { DataStoreManager(androidContext().dataStore) }
+    single { FileManager(androidContext()) }
+    single { FileChooser(androidContext()) }
 }
 
 private fun provideDatabase(context: Context) = Database(

@@ -24,32 +24,46 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farmerbb.notepad.BuildConfig
-import com.farmerbb.notepad.data.NotepadRepository
-import com.farmerbb.notepad.utils.showToast
 import com.farmerbb.notepad.R
+import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.data.PreferenceManager.Companion.prefs
 import com.farmerbb.notepad.models.Note
-import com.farmerbb.notepad.utils.ReleaseType.PlayStore
 import com.farmerbb.notepad.utils.ReleaseType.Amazon
 import com.farmerbb.notepad.utils.ReleaseType.FDroid
+import com.farmerbb.notepad.utils.ReleaseType.PlayStore
 import com.farmerbb.notepad.utils.ReleaseType.Unknown
 import com.farmerbb.notepad.utils.isPlayStoreInstalled
 import com.farmerbb.notepad.utils.releaseType
+import com.farmerbb.notepad.utils.showToast
+import com.github.k1rakishou.fsaf.FileChooser
+import com.github.k1rakishou.fsaf.FileManager
+import com.github.k1rakishou.fsaf.callback.FileMultiSelectChooserCallback
 import de.schnettler.datastore.manager.DataStoreManager
+import java.io.InputStream
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
+import okio.buffer
+import okio.source
 
 class NotepadViewModel(
     private val context: Application,
     private val repo: NotepadRepository,
-    dataStoreManager: DataStoreManager
+    dataStoreManager: DataStoreManager,
+    private val fileChooser: FileChooser,
+    private val fileManager: FileManager
 ): ViewModel() {
     private val _noteState = MutableStateFlow(Note())
     val noteState: StateFlow<Note> = _noteState
     val noteMetadata get() = prefs.sortOrder.flatMapConcat(repo::noteMetadataFlow)
     val prefs = dataStoreManager.prefs(viewModelScope)
 
+    private val repoScope = viewModelScope + Dispatchers.IO
+    
     fun getNote(id: Long?) = id?.let {
         _noteState.value = repo.getNote(it)
     } ?: run {
@@ -64,16 +78,25 @@ class NotepadViewModel(
         id: Long,
         text: String,
         onSuccess: (Long) -> Unit
-    ) = viewModelScope.launch {
+    ) = repoScope.launch {
         text.checkLength {
             repo.saveNote(id, text, onSuccess)
+        }
+    }
+
+    private fun saveImportedNote(
+        input: InputStream
+    ) = repoScope.launch {
+        val text = input.source().buffer().readUtf8()
+        if (text.isNotEmpty()) {
+            repo.saveNote(text = text)
         }
     }
 
     fun deleteNote(
         id: Long,
         onSuccess: () -> Unit
-    ) = viewModelScope.launch {
+    ) = repoScope.launch {
         repo.deleteNote(id, onSuccess)
     }
 
@@ -130,8 +153,26 @@ class NotepadViewModel(
         else -> onSuccess()
     }
 
+    fun importNotes() = fileChooser.openChooseMultiSelectFileDialog(importCallback)
+
+    private val importCallback = object: FileMultiSelectChooserCallback() {
+        override fun onResult(uris: List<Uri>) = with(fileManager) {
+            for (uri in uris) {
+                fromUri(uri)?.let(::getInputStream)?.let(::saveImportedNote)
+            }
+
+            val toastId = when (uris.size) {
+                1 -> R.string.note_imported_successfully
+                else -> R.string.notes_imported_successfully
+            }
+
+            context.showToast(toastId)
+        }
+
+        override fun onCancel(reason: String) = Unit // no-op
+    }
+
     // TODO implement the following functions:
-    fun importNotes() {}
     fun exportNote(text: String) {}
     fun printNote(text: String) {}
 }

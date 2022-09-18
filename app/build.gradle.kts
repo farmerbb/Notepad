@@ -54,7 +54,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.get()
+        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
 
     signingConfigs {
@@ -106,7 +106,9 @@ dependencies {
     implementation(libs.bundles.richtext)
 
     implementation(libs.composePreferences)
+    implementation(libs.fsaf)
     implementation(libs.linkifyText)
+    implementation(libs.okio)
     implementation(libs.sqldelight)
     implementation(libs.systemuicontroller)
     debugImplementation(libs.compose.ui.tooling)

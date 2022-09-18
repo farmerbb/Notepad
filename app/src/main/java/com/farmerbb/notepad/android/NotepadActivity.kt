@@ -13,22 +13,29 @@
  * limitations under the License.
  */
 
+@file:Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
+
 package com.farmerbb.notepad.android
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
 import com.farmerbb.notepad.data.DataMigrator
 import com.farmerbb.notepad.ui.routes.NotepadComposeApp
+import com.github.k1rakishou.fsaf.FileChooser
+import com.github.k1rakishou.fsaf.callback.FSAFActivityCallbacks
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
 
-class NotepadActivity: ComponentActivity() {
+class NotepadActivity: ComponentActivity(), FSAFActivityCallbacks {
     private val migrator: DataMigrator = get()
+    private val fileChooser: FileChooser = get()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        fileChooser.setCallbacks(this)
 
         lifecycleScope.launch {
             migrator.migrate()
@@ -36,5 +43,19 @@ class NotepadActivity: ComponentActivity() {
                 NotepadComposeApp()
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        fileChooser.removeCallbacks()
+    }
+
+    override fun fsafStartActivityForResult(intent: Intent, requestCode: Int) {
+        startActivityForResult(intent, requestCode)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        fileChooser.onActivityResult(requestCode, resultCode, data)
     }
 }

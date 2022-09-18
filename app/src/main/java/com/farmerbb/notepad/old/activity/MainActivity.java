@@ -19,8 +19,6 @@ package com.farmerbb.notepad.old.activity;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.ClipData;
-import android.content.ComponentName;
-import android.content.pm.PackageManager;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintManager;
@@ -98,9 +96,8 @@ NoteViewFragment.Listener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(getPackageManager().getComponentEnabledSetting(
-                new ComponentName(this, NotepadActivity.class)
-        ) == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
+        File migrationComplete = new File(getFilesDir(), "migration_complete");
+        if (migrationComplete.exists()) {
             Intent intent = new Intent(this, NotepadActivity.class);
             startActivity(intent);
             finish();

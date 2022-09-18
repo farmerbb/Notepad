@@ -107,15 +107,16 @@ class NotepadViewModel(
     }
 
     fun checkForUpdates() = with(context) {
+        val id = BuildConfig.APPLICATION_ID
         val url = when(releaseType) {
             PlayStore -> {
                 if(isPlayStoreInstalled)
-                    "https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}"
+                    "https://play.google.com/store/apps/details?id=$id"
                 else
                     "https://github.com/farmerbb/Notepad/releases"
             }
-            Amazon -> "https://www.amazon.com/gp/mas/dl/android?p=${BuildConfig.APPLICATION_ID}"
-            FDroid -> "https://f-droid.org/repository/browse/?fdid=${BuildConfig.APPLICATION_ID}"
+            Amazon -> "https://www.amazon.com/gp/mas/dl/android?p=$id"
+            FDroid -> "https://f-droid.org/repository/browse/?fdid=$id"
             Unknown -> ""
         }
 

@@ -16,12 +16,10 @@
 package com.farmerbb.notepad.old.activity;
 
 import android.app.AlertDialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -162,13 +160,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     }
 
     public void enterTheMatrix() {
-        ComponentName component = new ComponentName(this, NotepadActivity.class);
-        getPackageManager().setComponentEnabledSetting(component,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP
-        );
-
-        Intent restartIntent = new Intent(this, MainActivity.class);
+        Intent restartIntent = new Intent(this, NotepadActivity.class);
         restartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(restartIntent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

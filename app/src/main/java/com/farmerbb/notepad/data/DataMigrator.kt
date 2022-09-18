@@ -24,13 +24,14 @@ import com.farmerbb.notepad.Database
 import com.farmerbb.notepad.models.CrossRef
 import com.farmerbb.notepad.models.NoteContents
 import com.farmerbb.notepad.models.NoteMetadata
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
-import java.lang.StringBuilder
 import java.util.Date
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.withContext
 
 class DataMigrator(
     private val context: Context,
@@ -50,7 +51,8 @@ class DataMigrator(
     )
 
     suspend fun migrate() {
-        if(job.isCompleted) return
+        val migrationComplete = File(context.filesDir, "migration_complete")
+        if (migrationComplete.exists() || job.isCompleted) return
 
         for(filename in context.filesDir.list().orEmpty()) {
             if(!filename.isDigitsOnly()) continue
@@ -98,6 +100,10 @@ class DataMigrator(
         }
 
         job.complete()
+
+        withContext(Dispatchers.IO) {
+            migrationComplete.createNewFile()
+        }
     }
 
     private fun loadNoteTitle(filename: String): String {

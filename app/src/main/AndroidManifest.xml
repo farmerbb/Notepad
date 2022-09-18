@@ -90,7 +90,6 @@
         <activity
             android:name="com.farmerbb.notepad.android.NotepadActivity"
             android:exported="true"
-            android:enabled="false"
             android:label="${appName}"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize"/>

@@ -37,9 +37,11 @@ import com.farmerbb.notepad.utils.releaseType
 import com.farmerbb.notepad.utils.showToast
 import com.github.k1rakishou.fsaf.FileChooser
 import com.github.k1rakishou.fsaf.FileManager
+import com.github.k1rakishou.fsaf.callback.FileCreateCallback
 import com.github.k1rakishou.fsaf.callback.FileMultiSelectChooserCallback
 import de.schnettler.datastore.manager.DataStoreManager
 import java.io.InputStream
+import java.io.OutputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,7 +49,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
+import kotlinx.coroutines.withContext
 import okio.buffer
+import okio.sink
 import okio.source
 
 class NotepadViewModel(
@@ -62,7 +66,7 @@ class NotepadViewModel(
     val noteMetadata get() = prefs.sortOrder.flatMapConcat(repo::noteMetadataFlow)
     val prefs = dataStoreManager.prefs(viewModelScope)
 
-    private val repoScope = viewModelScope + Dispatchers.IO
+    private val ioScope = viewModelScope + Dispatchers.IO
     
     fun getNote(id: Long?) = id?.let {
         _noteState.value = repo.getNote(it)
@@ -78,7 +82,7 @@ class NotepadViewModel(
         id: Long,
         text: String,
         onSuccess: (Long) -> Unit
-    ) = repoScope.launch {
+    ) = ioScope.launch {
         text.checkLength {
             repo.saveNote(id, text, onSuccess)
         }
@@ -86,17 +90,30 @@ class NotepadViewModel(
 
     private fun saveImportedNote(
         input: InputStream
-    ) = repoScope.launch {
-        val text = input.source().buffer().readUtf8()
-        if (text.isNotEmpty()) {
-            repo.saveNote(text = text)
+    ) = ioScope.launch {
+        input.source().buffer().apply {
+            val text = readUtf8()
+            if (text.isNotEmpty()) {
+                repo.saveNote(text = text)
+            }
+
+            close()
+        }
+    }
+
+    private fun saveExportedNote(
+        output: OutputStream,
+        text: String
+    ) = ioScope.launch {
+        withContext(Dispatchers.IO) {
+            output.sink().buffer().writeUtf8(text).close()
         }
     }
 
     fun deleteNote(
         id: Long,
         onSuccess: () -> Unit
-    ) = repoScope.launch {
+    ) = ioScope.launch {
         repo.deleteNote(id, onSuccess)
     }
 
@@ -155,6 +172,10 @@ class NotepadViewModel(
     }
 
     fun importNotes() = fileChooser.openChooseMultiSelectFileDialog(importCallback)
+    fun exportNote(title: String, text: String) = fileChooser.openCreateFileDialog(
+        fileName = "$title.txt",
+        fileCreateCallback = exportFileCallback(text)
+    )
 
     private val importCallback = object: FileMultiSelectChooserCallback() {
         override fun onResult(uris: List<Uri>) = with(fileManager) {
@@ -173,7 +194,18 @@ class NotepadViewModel(
         override fun onCancel(reason: String) = Unit // no-op
     }
 
+    private fun exportFileCallback(text: String) = object: FileCreateCallback() {
+        override fun onResult(uri: Uri) = with(fileManager) {
+            fromUri(uri)?.let(::getOutputStream)?.let { output ->
+                saveExportedNote(output, text)
+            }
+
+            context.showToast(R.string.note_exported_to)
+        }
+
+        override fun onCancel(reason: String) = Unit // no-op
+    }
+
     // TODO implement the following functions:
-    fun exportNote(text: String) {}
     fun printNote(text: String) {}
 }

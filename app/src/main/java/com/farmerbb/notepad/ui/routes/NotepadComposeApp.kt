@@ -153,9 +153,9 @@ fun NotepadComposeApp(
         onDismiss()
         vm.shareNote(it)
     }
-    val onExportClick: (String) -> Unit = {
+    val onExportClick: (String, String) -> Unit = { noteTitle, text ->
         onDismiss()
-        vm.exportNote(it)
+        vm.exportNote(noteTitle, text)
     }
     val onPrintClick: (String) -> Unit = {
         onDismiss()
@@ -249,7 +249,7 @@ fun NotepadComposeApp(
                     onDismiss = onDismiss,
                     onMoreClick = onMoreClick,
                     onShareClick = { onShareClick(note.contents.text) },
-                    onExportClick = { onExportClick(note.contents.text) },
+                    onExportClick = { onExportClick(title, note.contents.text) },
                     onPrintClick = { onPrintClick(note.contents.text) }
                 )
             }
@@ -286,7 +286,7 @@ fun NotepadComposeApp(
                     onDismiss = onDismiss,
                     onMoreClick = onMoreClick,
                     onShareClick = { onShareClick(text) },
-                    onExportClick = { onExportClick(text) },
+                    onExportClick = { onExportClick(title, text) },
                     onPrintClick = { onPrintClick(text) }
                 )
             }

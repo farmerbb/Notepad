@@ -51,6 +51,9 @@ class NotepadActivity: ComponentActivity(), FSAFActivityCallbacks {
     }
 
     override fun fsafStartActivityForResult(intent: Intent, requestCode: Int) {
+        // Override type to plaintext only
+        intent.type = "text/plain"
+
         startActivityForResult(intent, requestCode)
     }
 

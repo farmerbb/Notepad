@@ -41,11 +41,11 @@ This table will track the features of the app as they are reimplemented in the n
 | Markdown / HTML support               | ✔                      |
 | Import text files                     | ✔                      |
 | Export to filesystem                  | ✔                      |
+| Print notes                           | ✔                      |
 | Options for exported filename         |                        |
 | Ask before saving                     |                        |
 | Edit notes directly                   |                        |
 | Save / load drafts                    |                        |
-| Print notes                           |                        |
 | Double-tap to edit                    |                        |
 | Multi-select notes list (long-press)  |                        |
 | Multi-select notes list (button)      |                        |

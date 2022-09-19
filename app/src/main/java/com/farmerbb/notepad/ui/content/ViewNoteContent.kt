@@ -39,11 +39,16 @@ import com.linkifytext.LinkifyText
 @Composable
 fun ViewNoteContent(
     text: String,
-    textStyle: TextStyle = TextStyle(),
-    markdown: Boolean = false
+    baseTextStyle: TextStyle = TextStyle(),
+    markdown: Boolean = false,
+    isPrinting: Boolean = false
 ) {
+    val textStyle = if (isPrinting) {
+        baseTextStyle.copy(color = Color.Black)
+    } else baseTextStyle
+
     Box(
-        modifier = Modifier.verticalScroll(
+        modifier = if (isPrinting) Modifier else Modifier.verticalScroll(
             state = rememberScrollState()
         )
     ) {

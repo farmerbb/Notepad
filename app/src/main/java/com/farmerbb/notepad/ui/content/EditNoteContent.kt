@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
@@ -38,9 +39,14 @@ import com.farmerbb.notepad.ui.previews.EditNotePreview
 @Composable
 fun EditNoteContent(
     text: String,
-    textStyle: TextStyle = TextStyle(),
+    baseTextStyle: TextStyle = TextStyle(),
+    isPrinting: Boolean = false,
     onTextChanged: (String) -> Unit = {}
 ) {
+    val textStyle = if (isPrinting) {
+        baseTextStyle.copy(color = Color.Black)
+    } else baseTextStyle
+
     val focusRequester = remember { FocusRequester() }
     var value by remember {
         mutableStateOf(
@@ -51,6 +57,8 @@ fun EditNoteContent(
         )
     }
 
+    val brush = SolidColor(if (isPrinting) Color.Transparent else Color.Black)
+
     BasicTextField(
         value = value,
         onValueChange = {
@@ -58,6 +66,7 @@ fun EditNoteContent(
             onTextChanged(it.text)
         },
         textStyle = textStyle,
+        cursorBrush = brush,
         modifier = Modifier
             .padding(
                 horizontal = 16.dp,

@@ -205,7 +205,4 @@ class NotepadViewModel(
 
         override fun onCancel(reason: String) = Unit // no-op
     }
-
-    // TODO implement the following functions:
-    fun printNote(text: String) {}
 }

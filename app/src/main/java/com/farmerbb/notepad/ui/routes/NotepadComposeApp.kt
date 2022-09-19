@@ -29,11 +29,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.ui.content.*
@@ -47,6 +50,8 @@ import com.farmerbb.notepad.models.NavState.Empty
 import com.farmerbb.notepad.models.NavState.View
 import com.farmerbb.notepad.ui.widgets.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.zachklipp.richtext.ui.printing.Printable
+import com.zachklipp.richtext.ui.printing.rememberPrintableController
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -76,6 +81,16 @@ fun NotepadComposeApp(
     isMultiPane: Boolean = false,
     initState: NavState = Empty
 ) {
+    val printController = rememberPrintableController()
+    var isPrinting by remember { mutableStateOf(false) }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(Unit) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            isPrinting = false
+        }
+    }
+
     val notes by vm.noteMetadata.collectAsState(emptyList())
     val note by vm.noteState.collectAsState()
     var navState by rememberSaveable(
@@ -157,10 +172,13 @@ fun NotepadComposeApp(
         onDismiss()
         vm.exportNote(noteTitle, text)
     }
-    val onPrintClick: (String) -> Unit = {
+    val onPrintClick: (String) -> Unit = { noteTitle ->
         onDismiss()
-        vm.printNote(it)
+
+        isPrinting = true
+        printController.print(noteTitle)
     }
+
     val onBack = { navState = Empty }
 
     BackHandler(
@@ -250,15 +268,18 @@ fun NotepadComposeApp(
                     onMoreClick = onMoreClick,
                     onShareClick = { onShareClick(note.contents.text) },
                     onExportClick = { onExportClick(title, note.contents.text) },
-                    onPrintClick = { onPrintClick(note.contents.text) }
+                    onPrintClick = { onPrintClick(title) }
                 )
             }
             content = {
-                ViewNoteContent(
-                    text = note.contents.text,
-                    textStyle = textStyle,
-                    markdown = markdown
-                )
+                Printable(printController) {
+                    ViewNoteContent(
+                        text = note.contents.text,
+                        baseTextStyle = textStyle,
+                        markdown = markdown,
+                        isPrinting = isPrinting
+                    )
+                }
             }
         }
 
@@ -287,14 +308,17 @@ fun NotepadComposeApp(
                     onMoreClick = onMoreClick,
                     onShareClick = { onShareClick(text) },
                     onExportClick = { onExportClick(title, text) },
-                    onPrintClick = { onPrintClick(text) }
+                    onPrintClick = { onPrintClick(title) }
                 )
             }
             content = {
-                EditNoteContent(
-                    text = text,
-                    textStyle = textStyle
-                ) { text = it }
+                Printable(printController) {
+                    EditNoteContent(
+                        text = text,
+                        baseTextStyle = textStyle,
+                        isPrinting = isPrinting
+                    ) { text = it }
+                }
             }
         }
     }

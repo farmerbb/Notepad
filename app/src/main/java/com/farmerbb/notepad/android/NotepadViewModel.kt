@@ -91,13 +91,11 @@ class NotepadViewModel(
         input: InputStream
     ) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
-            input.source().buffer().apply {
-                val text = readUtf8()
+            input.source().buffer().use {
+                val text = it.readUtf8()
                 if (text.isNotEmpty()) {
                     repo.saveNote(text = text)
                 }
-
-                close()
             }
         }
     }
@@ -107,7 +105,9 @@ class NotepadViewModel(
         text: String
     ) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
-            output.sink().buffer().writeUtf8(text).close()
+            output.sink().buffer().use {
+                it.writeUtf8(text)
+            }
         }
     }
 

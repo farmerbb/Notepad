@@ -48,7 +48,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 import kotlinx.coroutines.withContext
 import okio.buffer
 import okio.sink
@@ -65,8 +64,6 @@ class NotepadViewModel(
     val noteState: StateFlow<Note> = _noteState
     val noteMetadata get() = prefs.sortOrder.flatMapConcat(repo::noteMetadataFlow)
     val prefs = dataStoreManager.prefs(viewModelScope)
-
-    private val ioScope = viewModelScope + Dispatchers.IO
     
     fun getNote(id: Long?) = id?.let {
         _noteState.value = repo.getNote(it)
@@ -82,29 +79,33 @@ class NotepadViewModel(
         id: Long,
         text: String,
         onSuccess: (Long) -> Unit
-    ) = ioScope.launch {
+    ) = viewModelScope.launch {
         text.checkLength {
-            repo.saveNote(id, text, onSuccess)
+            withContext(Dispatchers.IO) {
+                repo.saveNote(id, text, onSuccess)
+            }
         }
     }
 
     private fun saveImportedNote(
         input: InputStream
-    ) = ioScope.launch {
-        input.source().buffer().apply {
-            val text = readUtf8()
-            if (text.isNotEmpty()) {
-                repo.saveNote(text = text)
-            }
+    ) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            input.source().buffer().apply {
+                val text = readUtf8()
+                if (text.isNotEmpty()) {
+                    repo.saveNote(text = text)
+                }
 
-            close()
+                close()
+            }
         }
     }
 
     private fun saveExportedNote(
         output: OutputStream,
         text: String
-    ) = ioScope.launch {
+    ) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
             output.sink().buffer().writeUtf8(text).close()
         }
@@ -113,8 +114,10 @@ class NotepadViewModel(
     fun deleteNote(
         id: Long,
         onSuccess: () -> Unit
-    ) = ioScope.launch {
-        repo.deleteNote(id, onSuccess)
+    ) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            repo.deleteNote(id, onSuccess)
+        }
     }
 
     fun shareNote(text: String) = viewModelScope.launch {

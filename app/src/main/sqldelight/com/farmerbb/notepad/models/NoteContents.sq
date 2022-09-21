@@ -19,5 +19,8 @@ DELETE FROM NoteContents WHERE contentsId IN ?;
 get:
 SELECT * FROM NoteContents WHERE contentsId = :id;
 
+getMultiple:
+SELECT * FROM NoteContents WHERE contentsId IN ?;
+
 getIndex:
 SELECT last_insert_rowid();

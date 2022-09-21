@@ -27,6 +27,7 @@ import com.farmerbb.notepad.BuildConfig
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.data.PreferenceManager.Companion.prefs
+import com.farmerbb.notepad.models.ExportedNotesDirectory
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.utils.ReleaseType.Amazon
@@ -40,6 +41,8 @@ import com.github.k1rakishou.fsaf.FileChooser
 import com.github.k1rakishou.fsaf.FileManager
 import com.github.k1rakishou.fsaf.callback.FileCreateCallback
 import com.github.k1rakishou.fsaf.callback.FileMultiSelectChooserCallback
+import com.github.k1rakishou.fsaf.callback.directory.DirectoryChooserCallback
+import com.github.k1rakishou.fsaf.file.FileSegment
 import de.schnettler.datastore.manager.DataStoreManager
 import java.io.InputStream
 import java.io.OutputStream
@@ -77,10 +80,12 @@ class NotepadViewModel(
     val noteMetadata get() = prefs.sortOrder.flatMapConcat(repo::noteMetadataFlow)
     val prefs = dataStoreManager.prefs(viewModelScope)
 
-    fun getNote(id: Long?) = id?.let {
-        _noteState.value = repo.getNote(it)
-    } ?: run {
-        clearNote()
+    suspend fun getNote(id: Long?) = withContext(Dispatchers.IO) {
+        id?.let {
+            _noteState.value = repo.getNote(it)
+        } ?: run {
+            clearNote()
+        }
     }
 
     fun clearNote() {
@@ -115,9 +120,9 @@ class NotepadViewModel(
         }
     }
 
-    fun exportSelectedNotes(notes: List<NoteMetadata>) {
-        // TODO
-    }
+    fun exportSelectedNotes(notes: List<NoteMetadata>) = fileChooser.openChooseDirectoryDialog(
+        directoryChooserCallback = exportFolderCallback(notes)
+    )
 
     fun saveNote(
         id: Long,
@@ -248,6 +253,33 @@ class NotepadViewModel(
             }
 
             context.showToast(R.string.note_exported_to)
+        }
+
+        override fun onCancel(reason: String) = Unit // no-op
+    }
+
+    private fun exportFolderCallback(notes: List<NoteMetadata>) = object: DirectoryChooserCallback() {
+        override fun onResult(uri: Uri) {
+            viewModelScope.launch(Dispatchers.IO) {
+                val hydratedNotes = repo.getNotes(
+                    notes.filter {
+                        selectedNotes.getOrDefault(it.metadataId, false)
+                    }
+                )
+
+                with(fileManager) {
+                    registerBaseDir<ExportedNotesDirectory>(ExportedNotesDirectory(uri))
+                    newBaseDirectoryFile<ExportedNotesDirectory>()?.let { baseDir ->
+                        for (note in hydratedNotes) {
+                            create(baseDir, FileSegment("${note.metadata.title}.txt"))
+                                ?.let(::getOutputStream)
+                                ?.let { output ->
+                                    saveExportedNote(output, note.contents.text)
+                                }
+                        }
+                    }
+                }
+            }
         }
 
         override fun onCancel(reason: String) = Unit // no-op

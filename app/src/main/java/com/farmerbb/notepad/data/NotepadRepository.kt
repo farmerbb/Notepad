@@ -58,17 +58,14 @@ class NotepadRepository(
         transactionWithResult {
             val crossRefList = crossRefQueries.getMultiple(metadataList.map { it.metadataId }).executeAsList()
             val contentsList = noteContentsQueries.getMultiple(crossRefList.map { it.contentsId }).executeAsList()
-            val defaults = Note()
 
-            crossRefList.map { crossRef ->
-                Note(
-                    metadata = metadataList.find {
-                        it.metadataId == crossRef.metadataId
-                    } ?: defaults.metadata,
-                    contents = contentsList.find {
-                        it.contentsId == crossRef.contentsId
-                    } ?: defaults.contents
-                )
+            buildList {
+                metadataList.sortedBy { it.metadataId }.forEachIndexed { index, metadata ->
+                    Note(
+                        metadata = metadata,
+                        contents = contentsList[index]
+                    ).also(::add)
+                }
             }
         }
     }

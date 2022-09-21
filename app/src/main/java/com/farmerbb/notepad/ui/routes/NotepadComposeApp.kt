@@ -262,9 +262,7 @@ fun NotepadComposeApp(
                 }
 
                 actions = {
-                    SelectAllButton {
-                        vm.selectAllNotes(notes)
-                    }
+                    SelectAllButton { vm.selectAllNotes(notes) }
                     ExportButton {
                         vm.exportSelectedNotes(notes)
                         multiSelectEnabled = false

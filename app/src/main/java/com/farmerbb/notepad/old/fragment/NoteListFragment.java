@@ -486,7 +486,7 @@ public class NoteListFragment extends Fragment {
                 }
 
                 // Update the title in CAB
-                mode.setTitle(cab.size() + " " + listener.getCabString(cab.size()));
+                mode.setTitle(listener.getCabString(cab.size()));
             }
 
             @Override

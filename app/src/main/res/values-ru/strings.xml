@@ -69,8 +69,8 @@ Russian translation by Vladimir Kosolapov"</string>
 <string name="check_for_updates">Check for Updates</string>
 
     <string name="action_export_filename">Exported filename</string>
-    <string name="cab_note_selected">note selected</string>
-    <string name="cab_notes_selected">notes selected</string>
+    <string name="cab_note_selected">%d note selected</string>
+    <string name="cab_notes_selected">%d notes selected</string>
     <string name="document">%1$s Document</string>
     <string name="preview_app_title">Notepad app preview</string>
     <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>

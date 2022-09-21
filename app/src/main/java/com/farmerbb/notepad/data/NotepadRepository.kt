@@ -108,4 +108,18 @@ class NotepadRepository(
     } catch (e: Exception) {
         e.printStackTrace()
     }
+
+    fun deleteNotes(ids: List<Long>, onSuccess: () -> Unit) = try {
+        with(database) {
+            crossRefQueries.getMultiple(ids).executeAsList().let { refs ->
+                noteMetadataQueries.deleteMultiple(refs.map { it.metadataId })
+                noteContentsQueries.deleteMultiple(refs.map { it.contentsId })
+                crossRefQueries.deleteMultiple(ids)
+            }
+        }
+
+        onSuccess()
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }

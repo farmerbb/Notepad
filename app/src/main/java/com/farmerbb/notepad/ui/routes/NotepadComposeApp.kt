@@ -93,6 +93,9 @@ fun NotepadComposeApp(
 
     val notes by vm.noteMetadata.collectAsState(emptyList())
     val note by vm.noteState.collectAsState()
+    val selectedNotes by vm.selectedNotesFlow.collectAsState(emptyMap())
+    var multiSelectEnabled by remember { mutableStateOf(false) }
+
     var navState by rememberSaveable(
         saver = Saver(
             save = {
@@ -152,6 +155,21 @@ fun NotepadComposeApp(
         )
     }
 
+    var showMultiDeleteDialog by remember { mutableStateOf(false) }
+    if(showMultiDeleteDialog) {
+        DeleteAlertDialog(
+            isMultiple = selectedNotes.size > 1,
+            onConfirm = {
+                showMultiDeleteDialog = false
+                multiSelectEnabled = false
+                vm.deleteSelectedNotes()
+            },
+            onDismiss = {
+                showMultiDeleteDialog = false
+            }
+        )
+    }
+
     val title: String
     val backButton: @Composable (() -> Unit)?
     val actions: @Composable RowScope.() -> Unit
@@ -178,7 +196,7 @@ fun NotepadComposeApp(
         isPrinting = true
         printController.print(noteTitle)
     }
-
+    val onMultiDeleteClick = { showMultiDeleteDialog = true }
     val onBack = { navState = Empty }
 
     BackHandler(
@@ -209,40 +227,75 @@ fun NotepadComposeApp(
     @Composable
     fun NoteListContentShared() = NoteListContent(
         notes = notes,
+        selectedNotes = selectedNotes,
         textStyle = textStyle,
         dateStyle = dateStyle,
-        showDate = showDate
+        showDate = showDate,
     ) { id ->
-        navState = View(id)
+        if (multiSelectEnabled) {
+            vm.toggleSelectedNote(id)
+        } else {
+            navState = View(id)
+        }
     }
-
     when(val state = navState) {
         Empty -> {
             LaunchedEffect(Unit) {
                 vm.clearNote()
             }
 
-            title = stringResource(id = R.string.app_name)
-            backButton = null
-            actions = {
-                NoteListMenu(
-                    showMenu = showMenu,
-                    onDismiss = onDismiss,
-                    onMoreClick = onMoreClick,
-                    onSettingsClick = {
-                        onDismiss()
-                        showSettingsDialog = true
+            if (multiSelectEnabled) {
+                title = stringResource(
+                    id = if (selectedNotes.size == 1) {
+                        R.string.cab_note_selected
+                    } else {
+                        R.string.cab_notes_selected
                     },
-                    onImportClick = {
-                        onDismiss()
-                        vm.importNotes()
-                    },
-                    onAboutClick = {
-                        onDismiss()
-                        showAboutDialog = true
-                    }
+                    selectedNotes.size
                 )
+
+                backButton = {
+                    BackButton {
+                        vm.clearSelectedNotes()
+                        multiSelectEnabled = false
+                    }
+                }
+
+                actions = {
+                    SelectAllButton {
+                        vm.selectAllNotes(notes)
+                    }
+                    ExportButton {
+                        vm.exportSelectedNotes(notes)
+                        multiSelectEnabled = false
+                    }
+                    DeleteButton(onMultiDeleteClick)
+                }
+            } else {
+                title = stringResource(id = R.string.app_name)
+                backButton = null
+                actions = {
+                    MultiSelectButton { multiSelectEnabled = true }
+                    NoteListMenu(
+                        showMenu = showMenu,
+                        onDismiss = onDismiss,
+                        onMoreClick = onMoreClick,
+                        onSettingsClick = {
+                            onDismiss()
+                            showSettingsDialog = true
+                        },
+                        onImportClick = {
+                            onDismiss()
+                            vm.importNotes()
+                        },
+                        onAboutClick = {
+                            onDismiss()
+                            showAboutDialog = true
+                        }
+                    )
+                }
             }
+
             content = {
                 if(isMultiPane) {
                     EmptyDetails()

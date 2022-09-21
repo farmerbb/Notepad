@@ -33,8 +33,8 @@
     <string name="action_export_filename">Exported filename</string>
     <string name="app_name">Notatblokk</string>
     <string name="app_name_debug">Notatblokk (Debug)</string>
-    <string name="cab_note_selected">notat markert</string>
-    <string name="cab_notes_selected">notater markert</string>
+    <string name="cab_note_selected">%d notat markert</string>
+    <string name="cab_notes_selected">%d notater markert</string>
     <string name="changes_discarded">Endringer forkastet</string>
     <string name="dialog_about_message">Notatblokk: en enkel app som lar deg ta notater\n\n&#169; %d Braden Farmer\nApp logo av Tobaloidee</string>
     <string name="dialog_about_title">Om Notatblokk</string>

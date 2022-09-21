@@ -21,8 +21,8 @@
 <string name="action_theme">Tema</string>
 <string name="app_name">Not Defteri</string>
 <string name="app_name_debug">Not Defteri (Hata Ayıklama)</string>
-<string name="cab_note_selected">Not seçildi</string>
-<string name="cab_notes_selected">Notlar seçildi</string>
+<string name="cab_note_selected">%d Not seçildi</string>
+<string name="cab_notes_selected">%d Notlar seçildi</string>
 <string name="changes_discarded">Değişiklikler silindi</string>
 <string name="check_for_updates">Güncellemeleri kontrol et</string>
 <string name="dialog_about_message">"Not Defteri, basit bir not alma uygulamasıdır.

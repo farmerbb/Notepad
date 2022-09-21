@@ -28,6 +28,7 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.data.PreferenceManager.Companion.prefs
 import com.farmerbb.notepad.models.Note
+import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.utils.ReleaseType.Amazon
 import com.farmerbb.notepad.utils.ReleaseType.FDroid
 import com.farmerbb.notepad.utils.ReleaseType.PlayStore
@@ -44,7 +45,10 @@ import java.io.InputStream
 import java.io.OutputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.launch
@@ -62,9 +66,17 @@ class NotepadViewModel(
 ): ViewModel() {
     private val _noteState = MutableStateFlow(Note())
     val noteState: StateFlow<Note> = _noteState
+
+    private val selectedNotes = mutableMapOf<Long, Boolean>()
+    private val _selectedNotesFlow = MutableSharedFlow<Map<Long, Boolean>>(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+    val selectedNotesFlow: SharedFlow<Map<Long, Boolean>> = _selectedNotesFlow
+
     val noteMetadata get() = prefs.sortOrder.flatMapConcat(repo::noteMetadataFlow)
     val prefs = dataStoreManager.prefs(viewModelScope)
-    
+
     fun getNote(id: Long?) = id?.let {
         _noteState.value = repo.getNote(it)
     } ?: run {
@@ -73,6 +85,38 @@ class NotepadViewModel(
 
     fun clearNote() {
         _noteState.value = Note()
+    }
+
+    fun toggleSelectedNote(id: Long) {
+        selectedNotes[id] = !selectedNotes.getOrDefault(id, false)
+        _selectedNotesFlow.tryEmit(selectedNotes.filterValues { it })
+    }
+
+    fun clearSelectedNotes() {
+        selectedNotes.clear()
+        _selectedNotesFlow.tryEmit(emptyMap())
+    }
+
+    fun selectAllNotes(notes: List<NoteMetadata>) {
+        notes.forEach {
+            selectedNotes[it.metadataId] = true
+        }
+
+        _selectedNotesFlow.tryEmit(selectedNotes.filterValues { it })
+    }
+
+    fun deleteSelectedNotes() = viewModelScope.launch {
+        selectedNotes.filterValues { it }.keys.let { ids ->
+            withContext(Dispatchers.IO) {
+                repo.deleteNotes(ids.toList()) {
+                    clearSelectedNotes()
+                }
+            }
+        }
+    }
+
+    fun exportSelectedNotes(notes: List<NoteMetadata>) {
+        // TODO
     }
 
     fun saveNote(

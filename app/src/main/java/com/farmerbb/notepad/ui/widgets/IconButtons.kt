@@ -78,3 +78,36 @@ fun MoreButton(onClick: () -> Unit = {}) {
         )
     }
 }
+
+@Composable
+fun MultiSelectButton(onClick: () -> Unit = {}) {
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = Icons.Filled.PlaylistAddCheck,
+            contentDescription = stringResource(R.string.action_start_selection),
+            tint = Color.White
+        )
+    }
+}
+
+@Composable
+fun SelectAllButton(onClick: () -> Unit = {}) {
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = Icons.Filled.SelectAll,
+            contentDescription = stringResource(R.string.action_select_all),
+            tint = Color.White
+        )
+    }
+}
+
+@Composable
+fun ExportButton(onClick: () -> Unit = {}) {
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = Icons.Filled.SdCard,
+            contentDescription = stringResource(R.string.action_export),
+            tint = Color.White
+        )
+    }
+}

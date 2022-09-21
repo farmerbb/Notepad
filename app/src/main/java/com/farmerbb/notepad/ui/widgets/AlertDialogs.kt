@@ -25,12 +25,19 @@ import com.farmerbb.notepad.utils.buildYear
 
 @Composable
 fun DeleteAlertDialog(
+    isMultiple: Boolean = false,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
+    val title = if (isMultiple) {
+        R.string.dialog_delete_button_title_plural
+    } else {
+        R.string.dialog_delete_button_title
+    }
+
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = stringResource(id = R.string.dialog_delete_button_title)) },
+        title = { Text(text = stringResource(id = title)) },
         text = { Text(text = stringResource(id = R.string.dialog_are_you_sure)) },
         confirmButton = {
             TextButton(onClick = onConfirm) {

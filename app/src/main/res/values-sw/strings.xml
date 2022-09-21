@@ -33,8 +33,8 @@
     <string name="action_export_filename">Anwani ya faili lililohamishwa</string>
     <string name="app_name">Kichukua Matini</string>
     <string name="app_name_debug">Kichukua Matini (Tatuzi)</string>
-    <string name="cab_note_selected">Kidokezo kilichochaguliwa</string>
-    <string name="cab_notes_selected">Vidokezo Vilivyochaguliwa</string>
+    <string name="cab_note_selected">%d Kidokezo kilichochaguliwa</string>
+    <string name="cab_notes_selected">%d Vidokezo Vilivyochaguliwa</string>
     <string name="changes_discarded">Mabadiliko Hayajahifadhiwa</string>
     <string name="dialog_about_message">Kichukua Matini: programu nyepesi ya kuchukulia matini\n\n&#169; %d Braden Farmer\nNembo ya programu iliundwa na Tobaloidee</string>
     <string name="dialog_about_title">Kuhusu Kichukua Matini</string>

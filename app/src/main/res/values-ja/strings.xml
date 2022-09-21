@@ -33,8 +33,8 @@
     <string name="action_export_filename">アプリ外保存時のファイル名</string>
     <string name="app_name">メモ帳</string>
     <string name="app_name_debug">メモ帳 (デバッグ)</string>
-    <string name="cab_note_selected">つを選択中</string>
-    <string name="cab_notes_selected">つを選択中</string>
+    <string name="cab_note_selected">%d つを選択中</string>
+    <string name="cab_notes_selected">%d つを選択中</string>
     <string name="changes_discarded">放棄された変更</string>
     <string name="dialog_about_message">メモ帳: シンプルなメモ帳アプリ\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">このアプリについて</string>

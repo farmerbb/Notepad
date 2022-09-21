@@ -15,8 +15,8 @@
     <string name="action_sort_by">فرز الملاحظات من خلال</string>
     <string name="action_export_filename">اسم الملف الذي تمّ تصديره</string>
     <string name="app_name_debug">الدَّفتر (Debug)</string>
-    <string name="cab_note_selected">" ملاحظةٌ محدّدة"</string>
-    <string name="cab_notes_selected">ملاحظات محدّدة</string>
+    <string name="cab_note_selected">%d " ملاحظةٌ محدّدة"</string>
+    <string name="cab_notes_selected">%d ملاحظات محدّدة</string>
     <string name="changes_discarded">تم إتلاف التعديلات</string>
     <string name="dialog_about_message">الدفتر: برنامجٌ بسيطٌ لتسجيل الملاحظات\n\n&#169; %d Braden Farmer\nصمّم الشعار: Tobaloidee\nنقله إلى العربيّة: وسيم الكردي</string>
     <string name="dialog_about_title">نبذة عن برنامج (الدّفتر)</string>

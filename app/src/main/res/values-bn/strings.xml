@@ -33,8 +33,8 @@
     <string name="action_export_filename">এক্সপোর্টকৃত ফাইল নাম</string>
     <string name="app_name">নোটপ্যাড</string>
     <string name="app_name_debug">নোটপ্যাড (ডিবাগ)</string>
-    <string name="cab_note_selected">নোট নির্বাচিত হয়েছে</string>
-    <string name="cab_notes_selected">নোটগুলো নির্বাচিত হয়েছে</string>
+    <string name="cab_note_selected">%d নোট নির্বাচিত হয়েছে</string>
+    <string name="cab_notes_selected">%d নোটগুলো নির্বাচিত হয়েছে</string>
     <string name="changes_discarded">পরিবর্তন অগ্রাহ্য করা হয়েছে</string>
     <string name="dialog_about_message">নোটপ্যাড: একটা সিম্পল নোট নেয়ার অ্যাপলিকেশন\n\n&#169; %d ব্র্যাডেন ফার্মার\nঅ্যাপ লোগো বানিয়েছে টোবলোইডি</string>
     <string name="dialog_about_title">নোটপ্যাড সম্পর্কে</string>

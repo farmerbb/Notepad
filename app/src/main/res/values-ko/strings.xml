@@ -34,8 +34,8 @@
     <string name="action_sort_by">정렬 순서</string>
     <string name="app_name">노트패드</string>
     <string name="app_name_debug">@string/app_name</string>
-    <string name="cab_note_selected">선택됨</string>
-    <string name="cab_notes_selected">선택됨</string>
+    <string name="cab_note_selected">%d 선택됨</string>
+    <string name="cab_notes_selected">%d 선택됨</string>
     <string name="changes_discarded">변경 취소됨</string>
     <string name="dialog_about_message">Notepad: a simple note-taking app\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">노트패드 정보</string>

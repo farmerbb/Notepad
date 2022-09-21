@@ -12,5 +12,11 @@ INSERT OR REPLACE INTO CrossRef(metadataId, contentsId) VALUES ?;
 delete:
 DELETE FROM CrossRef WHERE metadataId = :id;
 
+deleteMultiple:
+DELETE FROM CrossRef WHERE metadataId IN ?;
+
 get:
 SELECT * FROM CrossRef WHERE metadataId = :id;
+
+getMultiple:
+SELECT * FROM CrossRef WHERE metadataId IN ?;

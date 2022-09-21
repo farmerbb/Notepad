@@ -13,6 +13,9 @@ INSERT OR REPLACE INTO NoteContents(text, isDraft) VALUES ?;
 delete:
 DELETE FROM NoteContents WHERE contentsId = :id;
 
+deleteMultiple:
+DELETE FROM NoteContents WHERE contentsId IN ?;
+
 get:
 SELECT * FROM NoteContents WHERE contentsId = :id;
 

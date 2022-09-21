@@ -15,14 +15,17 @@
 
 package com.farmerbb.notepad.ui.content
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -39,6 +42,7 @@ import com.farmerbb.notepad.utils.noteListFormat
 @Composable
 fun NoteListContent(
     notes: List<NoteMetadata>,
+    selectedNotes: Map<Long, Boolean> = emptyMap(),
     textStyle: TextStyle = TextStyle(),
     dateStyle: TextStyle = TextStyle(),
     showDate: Boolean = false,
@@ -61,14 +65,20 @@ fun NoteListContent(
         }
 
         else -> LazyColumn {
-            items(notes.size) {
+            itemsIndexed(notes) { _, note ->
+                val isSelected = selectedNotes.getOrDefault(note.metadataId, false)
                 Column(modifier = Modifier
+                    .then(
+                        if (isSelected) {
+                            Modifier.background(color = colorResource(id = R.color.primary))
+                        } else Modifier
+                    )
                     .clickable {
-                        onNoteClick(notes[it].metadataId)
+                        onNoteClick(note.metadataId)
                     }
                 ) {
                     BasicText(
-                        text = notes[it].title,
+                        text = note.title,
                         style = textStyle,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
@@ -83,7 +93,7 @@ fun NoteListContent(
 
                     if(showDate) {
                         BasicText(
-                            text = notes[it].date.noteListFormat,
+                            text = note.date.noteListFormat,
                             style = dateStyle,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,

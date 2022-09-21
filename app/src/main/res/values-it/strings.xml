@@ -33,8 +33,8 @@
     <string name="action_export_filename">Exported filename</string>
     <string name="app_name">Notepad</string>
     <string name="app_name_debug">Notepad (Debug)</string>
-    <string name="cab_note_selected">nota selezionata</string>
-    <string name="cab_notes_selected">note selezionate</string>
+    <string name="cab_note_selected">%d nota selezionata</string>
+    <string name="cab_notes_selected">%d note selezionate</string>
     <string name="changes_discarded">Modifiche annullate</string>
     <string name="dialog_about_message">Notepad: una semplice app per appunti\n\n&#169; %d Braden Farmer\nApp logo by Tobaloidee</string>
     <string name="dialog_about_title">Riguardo a Notepad</string>

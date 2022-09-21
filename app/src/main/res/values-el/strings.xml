@@ -31,8 +31,8 @@
     <string name="action_export_filename">Όνομα εξαγμένου αρχείου</string>
     <string name="app_name">Σημειώσεις</string>
     <string name="app_name_debug">Notepad (Debug)</string>
-    <string name="cab_note_selected">σημείωση επιλέχθηκε</string>
-    <string name="cab_notes_selected">σημειώσεις επιλέχθηκαν</string>
+    <string name="cab_note_selected">%d σημείωση επιλέχθηκε</string>
+    <string name="cab_notes_selected">%d σημειώσεις επιλέχθηκαν</string>
     <string name="changes_discarded">Οι αλλαγές απορρίφθηκαν</string>
     <string name="dialog_about_message">Σημειώσεις: μια απλή εφαρμογή σημειώσεων\n\n&#169; %d Braden Farmer\nΛογότυπο εφαρμογής από Tobaloidee</string>
     <string name="dialog_about_title">Σχετικά με το Σημειώσεις</string>

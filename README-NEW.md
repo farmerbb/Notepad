@@ -42,14 +42,14 @@ This table will track the features of the app as they are reimplemented in the n
 | Import text files                     | ✔                      |
 | Export to filesystem                  | ✔                      |
 | Print notes                           | ✔                      |
+| Multi-select notes list (button)      | ✔                      |
+| Delete notes (from list)              | ✔                      |
 | Options for exported filename         |                        |
 | Ask before saving                     |                        |
 | Edit notes directly                   |                        |
 | Save / load drafts                    |                        |
 | Double-tap to edit                    |                        |
 | Multi-select notes list (long-press)  |                        |
-| Multi-select notes list (button)      |                        |
-| Delete notes (from list)              |                        |
 | Export notes (from list)              |                        |
 | Keyboard shortcuts                    |                        |
 | Share text to Notepad from other apps |                        |

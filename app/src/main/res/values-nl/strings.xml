@@ -33,8 +33,8 @@
     <string name="action_export_filename">Exported filename</string>
     <string name="app_name">Notitieblok</string>
     <string name="app_name_debug">Notitieblok (foutopsporing)</string>
-    <string name="cab_note_selected">notitie geselecteerd</string>
-    <string name="cab_notes_selected">notities geselecteerd</string>
+    <string name="cab_note_selected">%d notitie geselecteerd</string>
+    <string name="cab_notes_selected">%d notities geselecteerd</string>
     <string name="changes_discarded">Wijzigingen verworpen</string>
     <string name="dialog_about_message">Notitieblok: een eenvoudige notitie-app\n\n&#169; %d Braden Farmer\nApp-logo door Tobaloidee</string>
     <string name="dialog_about_title">Over Notitieblok</string>

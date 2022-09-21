@@ -80,6 +80,8 @@ class NotepadViewModel(
     val noteMetadata get() = prefs.sortOrder.flatMapConcat(repo::noteMetadataFlow)
     val prefs = dataStoreManager.prefs(viewModelScope)
 
+    private val registeredBaseDirs = mutableListOf<Uri>()
+
     suspend fun getNote(id: Long?) = withContext(Dispatchers.IO) {
         id?.let {
             _noteState.value = repo.getNote(it)
@@ -265,10 +267,16 @@ class NotepadViewModel(
                     notes.filter {
                         selectedNotes.getOrDefault(it.metadataId, false)
                     }
-                )
+                ).also {
+                    clearSelectedNotes()
+                }
 
                 with(fileManager) {
-                    registerBaseDir<ExportedNotesDirectory>(ExportedNotesDirectory(uri))
+                    if (!registeredBaseDirs.contains(uri)) {
+                        registerBaseDir<ExportedNotesDirectory>(ExportedNotesDirectory(uri))
+                        registeredBaseDirs.add(uri)
+                    }
+
                     newBaseDirectoryFile<ExportedNotesDirectory>()?.let { baseDir ->
                         for (note in hydratedNotes) {
                             create(baseDir, FileSegment("${note.metadata.title}.txt"))
@@ -282,6 +290,6 @@ class NotepadViewModel(
             }
         }
 
-        override fun onCancel(reason: String) = Unit // no-op
+        override fun onCancel(reason: String) = clearSelectedNotes()
     }
 }

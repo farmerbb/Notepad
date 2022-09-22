@@ -45,7 +45,7 @@ This table will track the features of the app as they are reimplemented in the n
 | Multi-select notes list (button)      | ✔                      |
 | Delete notes (from list)              | ✔                      |
 | Export notes (from list)              | ✔                      |
-| Options for exported filename         |                        |
+| Options for exported filename         | ✔                      |
 | Ask before saving                     |                        |
 | Edit notes directly                   |                        |
 | Save / load drafts                    |                        |

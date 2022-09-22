@@ -28,6 +28,10 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.data.PreferenceManager.Companion.prefs
 import com.farmerbb.notepad.models.ExportedNotesDirectory
+import com.farmerbb.notepad.models.FilenameFormat
+import com.farmerbb.notepad.models.FilenameFormat.TimestampAndTitle
+import com.farmerbb.notepad.models.FilenameFormat.TitleAndTimestamp
+import com.farmerbb.notepad.models.FilenameFormat.TitleOnly
 import com.farmerbb.notepad.models.Note
 import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.utils.ReleaseType.Amazon
@@ -46,6 +50,8 @@ import com.github.k1rakishou.fsaf.file.FileSegment
 import de.schnettler.datastore.manager.DataStoreManager
 import java.io.InputStream
 import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.channels.BufferOverflow
@@ -122,8 +128,11 @@ class NotepadViewModel(
         }
     }
 
-    fun exportSelectedNotes(notes: List<NoteMetadata>) = fileChooser.openChooseDirectoryDialog(
-        directoryChooserCallback = exportFolderCallback(notes)
+    fun exportSelectedNotes(
+        notes: List<NoteMetadata>,
+        filenameFormat: FilenameFormat
+    ) = fileChooser.openChooseDirectoryDialog(
+        directoryChooserCallback = exportFolderCallback(notes, filenameFormat)
     )
 
     fun saveNote(
@@ -226,8 +235,12 @@ class NotepadViewModel(
     }
 
     fun importNotes() = fileChooser.openChooseMultiSelectFileDialog(importCallback)
-    fun exportNote(title: String, text: String) = fileChooser.openCreateFileDialog(
-        fileName = "$title.txt",
+    fun exportNote(
+        metadata: NoteMetadata,
+        text: String,
+        filenameFormat: FilenameFormat
+    ) = fileChooser.openCreateFileDialog(
+        fileName = generateFilename(metadata, filenameFormat),
         fileCreateCallback = exportFileCallback(text)
     )
 
@@ -260,7 +273,10 @@ class NotepadViewModel(
         override fun onCancel(reason: String) = Unit // no-op
     }
 
-    private fun exportFolderCallback(notes: List<NoteMetadata>) = object: DirectoryChooserCallback() {
+    private fun exportFolderCallback(
+        notes: List<NoteMetadata>,
+        filenameFormat: FilenameFormat
+    ) = object: DirectoryChooserCallback() {
         override fun onResult(uri: Uri) {
             viewModelScope.launch(Dispatchers.IO) {
                 val hydratedNotes = repo.getNotes(
@@ -279,7 +295,8 @@ class NotepadViewModel(
 
                     newBaseDirectoryFile<ExportedNotesDirectory>()?.let { baseDir ->
                         for (note in hydratedNotes) {
-                            create(baseDir, FileSegment("${note.metadata.title}.txt"))
+                            val filename = generateFilename(note.metadata, filenameFormat)
+                            create(baseDir, FileSegment(filename))
                                 ?.let(::getOutputStream)
                                 ?.let { output ->
                                     saveExportedNote(output, note.contents.text)
@@ -291,5 +308,20 @@ class NotepadViewModel(
         }
 
         override fun onCancel(reason: String) = clearSelectedNotes()
+    }
+
+    private fun generateFilename(
+        metadata: NoteMetadata,
+        filenameFormat: FilenameFormat
+    ): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.getDefault())
+        val timestamp = dateFormat.format(metadata.date)
+        val filename = when(filenameFormat) {
+            TitleOnly -> metadata.title
+            TimestampAndTitle -> "${timestamp}_${metadata.title}"
+            TitleAndTimestamp -> "${metadata.title}_$timestamp"
+        }
+
+        return "$filename.txt"
     }
 }

@@ -541,7 +541,7 @@ NoteViewFragment.Listener {
         toast.show();
     }
 
-    // Loads note from /data/data/com.farmerbb.notepad.old/files
+    // Loads note from /data/data/com.farmerbb.notepad/files
     public String loadNote(String filename) throws IOException {
 
         // Initialize StringBuilder which will contain note

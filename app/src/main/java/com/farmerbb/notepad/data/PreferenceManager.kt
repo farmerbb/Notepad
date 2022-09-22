@@ -83,14 +83,6 @@ class PreferenceManager private constructor(
         }
     }
 
-    val markdownFont get() = Prefs.Theme.mapToFlow { theme ->
-        when {
-            theme.contains("sans") -> "sans"
-            theme.contains("serif") -> "serif"
-            else -> "monospace"
-        }
-    }
-
     val sortOrder get() = Prefs.SortBy.mapToFlow(::toSortOrder)
     val filenameFormat get() = Prefs.ExportFilename.mapToFlow(::toFilenameFormat)
     val showDialogs get() = Prefs.ShowDialogs.asFlow

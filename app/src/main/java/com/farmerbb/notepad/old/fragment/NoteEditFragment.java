@@ -476,7 +476,7 @@ public class NoteEditFragment extends Fragment {
         fileToDelete.delete();
     }
 
-    // Saves notes to /data/data/com.farmerbb.notepad.old/files
+    // Saves notes to /data/data/com.farmerbb.notepad/files
     private void saveNote() throws IOException {
         // Set current note contents to a String
         noteContents = getActivity().findViewById(R.id.editText1);

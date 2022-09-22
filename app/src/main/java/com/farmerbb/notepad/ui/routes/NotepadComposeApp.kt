@@ -48,6 +48,7 @@ import com.farmerbb.notepad.models.NavState.Companion.VIEW
 import com.farmerbb.notepad.models.NavState.Edit
 import com.farmerbb.notepad.models.NavState.Empty
 import com.farmerbb.notepad.models.NavState.View
+import com.farmerbb.notepad.models.NoteMetadata
 import com.farmerbb.notepad.ui.widgets.*
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.zachklipp.richtext.ui.printing.Printable
@@ -95,6 +96,8 @@ fun NotepadComposeApp(
     val note by vm.noteState.collectAsState()
     val selectedNotes by vm.selectedNotesFlow.collectAsState(emptyMap())
     var multiSelectEnabled by remember { mutableStateOf(false) }
+
+    val filenameFormat by vm.prefs.filenameFormat.collectAsState()
 
     var navState by rememberSaveable(
         saver = Saver(
@@ -186,9 +189,9 @@ fun NotepadComposeApp(
         onDismiss()
         vm.shareNote(it)
     }
-    val onExportClick: (String, String) -> Unit = { noteTitle, text ->
+    val onExportClick: (NoteMetadata, String) -> Unit = { metadata, text ->
         onDismiss()
-        vm.exportNote(noteTitle, text)
+        vm.exportNote(metadata, text, filenameFormat)
     }
     val onPrintClick: (String) -> Unit = { noteTitle ->
         onDismiss()
@@ -264,7 +267,7 @@ fun NotepadComposeApp(
                 actions = {
                     SelectAllButton { vm.selectAllNotes(notes) }
                     ExportButton {
-                        vm.exportSelectedNotes(notes)
+                        vm.exportSelectedNotes(notes, filenameFormat)
                         multiSelectEnabled = false
                     }
                     DeleteButton(onMultiDeleteClick)
@@ -318,7 +321,7 @@ fun NotepadComposeApp(
                     onDismiss = onDismiss,
                     onMoreClick = onMoreClick,
                     onShareClick = { onShareClick(note.contents.text) },
-                    onExportClick = { onExportClick(title, note.contents.text) },
+                    onExportClick = { onExportClick(note.metadata, note.contents.text) },
                     onPrintClick = { onPrintClick(title) }
                 )
             }
@@ -358,7 +361,7 @@ fun NotepadComposeApp(
                     onDismiss = onDismiss,
                     onMoreClick = onMoreClick,
                     onShareClick = { onShareClick(text) },
-                    onExportClick = { onExportClick(title, text) },
+                    onExportClick = { onExportClick(note.metadata.copy(title = title), text) },
                     onPrintClick = { onPrintClick(title) }
                 )
             }

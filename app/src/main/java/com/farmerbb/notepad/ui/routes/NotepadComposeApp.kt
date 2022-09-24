@@ -97,6 +97,12 @@ fun NotepadComposeApp(
     val selectedNotes by vm.selectedNotesFlow.collectAsState(emptyMap())
     var multiSelectEnabled by remember { mutableStateOf(false) }
 
+    LaunchedEffect(selectedNotes) {
+        if (selectedNotes.filterValues { it }.isEmpty()) {
+            multiSelectEnabled = false
+        }
+    }
+
     val filenameFormat by vm.prefs.filenameFormat.collectAsState()
 
     var navState by rememberSaveable(
@@ -164,7 +170,6 @@ fun NotepadComposeApp(
             isMultiple = selectedNotes.size > 1,
             onConfirm = {
                 showMultiDeleteDialog = false
-                multiSelectEnabled = false
                 vm.deleteSelectedNotes()
             },
             onDismiss = {
@@ -203,7 +208,6 @@ fun NotepadComposeApp(
     val onBack = {
         if (multiSelectEnabled) {
             vm.clearSelectedNotes()
-            multiSelectEnabled = false
         } else {
             navState = Empty
         }
@@ -268,10 +272,7 @@ fun NotepadComposeApp(
 
                 actions = {
                     SelectAllButton { vm.selectAllNotes(notes) }
-                    ExportButton {
-                        vm.exportSelectedNotes(notes, filenameFormat)
-                        multiSelectEnabled = false
-                    }
+                    ExportButton { vm.exportSelectedNotes(notes, filenameFormat) }
                     DeleteButton(onMultiDeleteClick)
                 }
             } else {

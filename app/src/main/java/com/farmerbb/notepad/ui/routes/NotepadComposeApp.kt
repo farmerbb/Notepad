@@ -200,10 +200,17 @@ fun NotepadComposeApp(
         printController.print(noteTitle)
     }
     val onMultiDeleteClick = { showMultiDeleteDialog = true }
-    val onBack = { navState = Empty }
+    val onBack = {
+        if (multiSelectEnabled) {
+            vm.clearSelectedNotes()
+            multiSelectEnabled = false
+        } else {
+            navState = Empty
+        }
+    }
 
     BackHandler(
-        enabled = navState != Empty,
+        enabled = multiSelectEnabled || navState != Empty,
         onBack = onBack
     )
 
@@ -257,12 +264,7 @@ fun NotepadComposeApp(
                     selectedNotes.size
                 )
 
-                backButton = {
-                    BackButton {
-                        vm.clearSelectedNotes()
-                        multiSelectEnabled = false
-                    }
-                }
+                backButton = { BackButton(onBack) }
 
                 actions = {
                     SelectAllButton { vm.selectAllNotes(notes) }

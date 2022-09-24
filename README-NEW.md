@@ -43,6 +43,7 @@ This table will track the features of the app as they are reimplemented in the n
 | Export to filesystem                  | ✔                      |
 | Print notes                           | ✔                      |
 | Multi-select notes list (button)      | ✔                      |
+| Multi-select notes list (long-press)  | ✔                      |
 | Delete notes (from list)              | ✔                      |
 | Export notes (from list)              | ✔                      |
 | Options for exported filename         | ✔                      |
@@ -50,7 +51,6 @@ This table will track the features of the app as they are reimplemented in the n
 | Edit notes directly                   |                        |
 | Save / load drafts                    |                        |
 | Double-tap to edit                    |                        |
-| Multi-select notes list (long-press)  |                        |
 | Keyboard shortcuts                    |                        |
 | Share text to Notepad from other apps |                        |
 | Google Assistant "Note to self"       |                        |

@@ -17,13 +17,33 @@ package com.farmerbb.notepad.ui.routes
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.Divider
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -39,9 +59,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
-import com.farmerbb.notepad.ui.content.*
-import com.farmerbb.notepad.ui.widgets.NoteListMenu
-import com.farmerbb.notepad.ui.widgets.NoteViewEditMenu
 import com.farmerbb.notepad.models.NavState
 import com.farmerbb.notepad.models.NavState.Companion.EDIT
 import com.farmerbb.notepad.models.NavState.Companion.VIEW
@@ -49,7 +66,22 @@ import com.farmerbb.notepad.models.NavState.Edit
 import com.farmerbb.notepad.models.NavState.Empty
 import com.farmerbb.notepad.models.NavState.View
 import com.farmerbb.notepad.models.NoteMetadata
-import com.farmerbb.notepad.ui.widgets.*
+import com.farmerbb.notepad.ui.content.EditNoteContent
+import com.farmerbb.notepad.ui.content.NoteListContent
+import com.farmerbb.notepad.ui.content.ViewNoteContent
+import com.farmerbb.notepad.ui.widgets.AboutDialog
+import com.farmerbb.notepad.ui.widgets.AppBarText
+import com.farmerbb.notepad.ui.widgets.BackButton
+import com.farmerbb.notepad.ui.widgets.DeleteAlertDialog
+import com.farmerbb.notepad.ui.widgets.DeleteButton
+import com.farmerbb.notepad.ui.widgets.EditButton
+import com.farmerbb.notepad.ui.widgets.ExportButton
+import com.farmerbb.notepad.ui.widgets.MultiSelectButton
+import com.farmerbb.notepad.ui.widgets.NoteListMenu
+import com.farmerbb.notepad.ui.widgets.NoteViewEditMenu
+import com.farmerbb.notepad.ui.widgets.SaveButton
+import com.farmerbb.notepad.ui.widgets.SelectAllButton
+import com.farmerbb.notepad.ui.widgets.SettingsDialog
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.zachklipp.richtext.ui.printing.Printable
 import com.zachklipp.richtext.ui.printing.rememberPrintableController
@@ -245,6 +277,10 @@ fun NotepadComposeApp(
         textStyle = textStyle,
         dateStyle = dateStyle,
         showDate = showDate,
+        onNoteLongClick = { id ->
+            multiSelectEnabled = true
+            vm.toggleSelectedNote(id)
+        }
     ) { id ->
         if (multiSelectEnabled) {
             vm.toggleSelectedNote(id)

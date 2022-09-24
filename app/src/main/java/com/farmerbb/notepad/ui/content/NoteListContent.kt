@@ -13,19 +13,26 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.farmerbb.notepad.ui.content
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.BasicText
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -46,6 +53,7 @@ fun NoteListContent(
     textStyle: TextStyle = TextStyle(),
     dateStyle: TextStyle = TextStyle(),
     showDate: Boolean = false,
+    onNoteLongClick: (Long) -> Unit = {},
     onNoteClick: (Long) -> Unit = {}
 ) {
     when(notes.size) {
@@ -73,9 +81,10 @@ fun NoteListContent(
                             Modifier.background(color = colorResource(id = R.color.primary))
                         } else Modifier
                     )
-                    .clickable {
-                        onNoteClick(note.metadataId)
-                    }
+                    .combinedClickable(
+                        onClick = { onNoteClick(note.metadataId) },
+                        onLongClick = { onNoteLongClick(note.metadataId) }
+                    )
                 ) {
                     BasicText(
                         text = note.title,

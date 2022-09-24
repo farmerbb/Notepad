@@ -158,6 +158,11 @@ fun NotepadComposeApp(
         )
     ) { mutableStateOf(initState) }
 
+    LaunchedEffect(navState) {
+        multiSelectEnabled = false
+        vm.clearSelectedNotes()
+    }
+
     var showAboutDialog by remember { mutableStateOf(false) }
     if(showAboutDialog) {
         AboutDialog(
@@ -239,6 +244,7 @@ fun NotepadComposeApp(
     val onMultiDeleteClick = { showMultiDeleteDialog = true }
     val onBack = {
         if (multiSelectEnabled) {
+            multiSelectEnabled = false
             vm.clearSelectedNotes()
         } else {
             navState = Empty

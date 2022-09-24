@@ -264,6 +264,7 @@ fun NotepadComposeApp(
     val fontFamily by vm.prefs.fontFamily.collectAsState()
     val showDate by vm.prefs.showDate.collectAsState()
     val markdown by vm.prefs.markdown.collectAsState()
+    val directEdit by vm.prefs.directEdit.collectAsState()
 
     val textStyle = TextStyle(
         color = colorResource(id = primaryColorRes),
@@ -288,12 +289,13 @@ fun NotepadComposeApp(
             vm.toggleSelectedNote(id)
         }
     ) { id ->
-        if (multiSelectEnabled) {
-            vm.toggleSelectedNote(id)
-        } else {
-            navState = View(id)
+        when {
+            multiSelectEnabled -> vm.toggleSelectedNote(id)
+            directEdit -> navState = Edit(id)
+            else -> navState = View(id)
         }
     }
+
     when(val state = navState) {
         Empty -> {
             LaunchedEffect(Unit) {
@@ -397,7 +399,7 @@ fun NotepadComposeApp(
             actions = {
                 SaveButton {
                     vm.saveNote(id, text) { newId ->
-                        navState = View(newId)
+                        navState = if (directEdit) Empty else View(newId)
                     }
                 }
                 DeleteButton { onDeleteClick(id) }

@@ -36,6 +36,11 @@ import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.ui.previews.EditNotePreview
 
+private fun String.toTextFieldValue() = TextFieldValue(
+    text = this,
+    selection = TextRange(length)
+)
+
 @Composable
 fun EditNoteContent(
     text: String,
@@ -48,13 +53,10 @@ fun EditNoteContent(
     } else baseTextStyle
 
     val focusRequester = remember { FocusRequester() }
-    var value by remember {
-        mutableStateOf(
-            TextFieldValue(
-                text = text,
-                selection = TextRange(text.length)
-            )
-        )
+    var value by remember { mutableStateOf(text.toTextFieldValue()) }
+
+    LaunchedEffect(text) {
+        value = text.toTextFieldValue()
     }
 
     val brush = SolidColor(if (isPrinting) Color.Transparent else Color.Black)

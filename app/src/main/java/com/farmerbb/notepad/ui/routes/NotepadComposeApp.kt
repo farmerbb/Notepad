@@ -72,14 +72,15 @@ import com.farmerbb.notepad.ui.content.ViewNoteContent
 import com.farmerbb.notepad.ui.widgets.AboutDialog
 import com.farmerbb.notepad.ui.widgets.AppBarText
 import com.farmerbb.notepad.ui.widgets.BackButton
-import com.farmerbb.notepad.ui.widgets.DeleteAlertDialog
 import com.farmerbb.notepad.ui.widgets.DeleteButton
+import com.farmerbb.notepad.ui.widgets.DeleteDialog
 import com.farmerbb.notepad.ui.widgets.EditButton
 import com.farmerbb.notepad.ui.widgets.ExportButton
 import com.farmerbb.notepad.ui.widgets.MultiSelectButton
 import com.farmerbb.notepad.ui.widgets.NoteListMenu
 import com.farmerbb.notepad.ui.widgets.NoteViewEditMenu
 import com.farmerbb.notepad.ui.widgets.SaveButton
+import com.farmerbb.notepad.ui.widgets.SaveDialog
 import com.farmerbb.notepad.ui.widgets.SelectAllButton
 import com.farmerbb.notepad.ui.widgets.SettingsDialog
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -127,7 +128,7 @@ fun NotepadComposeApp(
     val notes by vm.noteMetadata.collectAsState(emptyList())
     val note by vm.noteState.collectAsState()
     val selectedNotes by vm.selectedNotesFlow.collectAsState(emptyMap())
-    var multiSelectEnabled by remember { mutableStateOf(false) }
+    var multiSelectEnabled by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(selectedNotes) {
         if (selectedNotes.filterValues { it }.isEmpty()) {
@@ -135,7 +136,17 @@ fun NotepadComposeApp(
         }
     }
 
+    val backgroundColorRes by vm.prefs.backgroundColorRes.collectAsState()
+    val primaryColorRes by vm.prefs.primaryColorRes.collectAsState()
+    val secondaryColorRes by vm.prefs.secondaryColorRes.collectAsState()
+    val textFontSize by vm.prefs.textFontSize.collectAsState()
+    val dateFontSize by vm.prefs.dateFontSize.collectAsState()
+    val fontFamily by vm.prefs.fontFamily.collectAsState()
+    val showDate by vm.prefs.showDate.collectAsState()
+    val markdown by vm.prefs.markdown.collectAsState()
+    val directEdit by vm.prefs.directEdit.collectAsState()
     val filenameFormat by vm.prefs.filenameFormat.collectAsState()
+    val showDialogs by vm.prefs.showDialogs.collectAsState()
 
     var navState by rememberSaveable(
         saver = Saver(
@@ -158,12 +169,7 @@ fun NotepadComposeApp(
         )
     ) { mutableStateOf(initState) }
 
-    LaunchedEffect(navState) {
-        multiSelectEnabled = false
-        vm.clearSelectedNotes()
-    }
-
-    var showAboutDialog by remember { mutableStateOf(false) }
+    var showAboutDialog by rememberSaveable { mutableStateOf(false) }
     if(showAboutDialog) {
         AboutDialog(
             onDismiss = {
@@ -176,7 +182,7 @@ fun NotepadComposeApp(
         )
     }
 
-    var showSettingsDialog by remember { mutableStateOf(false) }
+    var showSettingsDialog by rememberSaveable { mutableStateOf(false) }
     if(showSettingsDialog) {
         SettingsDialog(
             onDismiss = {
@@ -185,13 +191,13 @@ fun NotepadComposeApp(
         )
     }
 
-    var showDeleteDialog by remember { mutableStateOf(false) }
-    var noteToDelete: Long? by remember { mutableStateOf(null) }
+    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+    var noteToDelete: Long by rememberSaveable { mutableStateOf(-1L) }
     if(showDeleteDialog) {
-        DeleteAlertDialog(
+        DeleteDialog(
             onConfirm = {
                 showDeleteDialog = false
-                vm.deleteNote(id = noteToDelete ?: -1L) {
+                vm.deleteNote(id = noteToDelete) {
                     navState = Empty
                 }
             },
@@ -201,9 +207,9 @@ fun NotepadComposeApp(
         )
     }
 
-    var showMultiDeleteDialog by remember { mutableStateOf(false) }
+    var showMultiDeleteDialog by rememberSaveable { mutableStateOf(false) }
     if(showMultiDeleteDialog) {
-        DeleteAlertDialog(
+        DeleteDialog(
             isMultiple = selectedNotes.size > 1,
             onConfirm = {
                 showMultiDeleteDialog = false
@@ -215,15 +221,40 @@ fun NotepadComposeApp(
         )
     }
 
+    var showSaveDialog by rememberSaveable { mutableStateOf(false) }
+    var idToSave: Long by rememberSaveable { mutableStateOf(-1L ) }
+    var textToSave: String by rememberSaveable { mutableStateOf("") }
+    val onSave: (Long, String) -> Unit = { id, text ->
+        vm.saveNote(id, text) { newId ->
+            navState = if (directEdit) Empty else View(newId)
+        }
+    }
+
+    if(showSaveDialog) {
+        SaveDialog(
+            onConfirm = {
+                showSaveDialog = false
+                onSave(idToSave, textToSave)
+            },
+            onDiscard = {
+                showSaveDialog = false
+                navState = if (directEdit) Empty else View(idToSave)
+            },
+            onDismiss = {
+                showSaveDialog = false
+            }
+        )
+    }
+
     val title: String
     val backButton: @Composable (() -> Unit)?
     val actions: @Composable RowScope.() -> Unit
     val content: @Composable BoxScope.() -> Unit
 
-    var showMenu by remember { mutableStateOf(false) }
+    var showMenu by rememberSaveable { mutableStateOf(false) }
     val onDismiss = { showMenu = false }
     val onMoreClick = { showMenu = true }
-    val onDeleteClick: (Long?) -> Unit = {
+    val onDeleteClick: (Long) -> Unit = {
         noteToDelete = it
         showDeleteDialog = true
     }
@@ -255,16 +286,6 @@ fun NotepadComposeApp(
         enabled = multiSelectEnabled || navState != Empty,
         onBack = onBack
     )
-
-    val backgroundColorRes by vm.prefs.backgroundColorRes.collectAsState()
-    val primaryColorRes by vm.prefs.primaryColorRes.collectAsState()
-    val secondaryColorRes by vm.prefs.secondaryColorRes.collectAsState()
-    val textFontSize by vm.prefs.textFontSize.collectAsState()
-    val dateFontSize by vm.prefs.dateFontSize.collectAsState()
-    val fontFamily by vm.prefs.fontFamily.collectAsState()
-    val showDate by vm.prefs.showDate.collectAsState()
-    val markdown by vm.prefs.markdown.collectAsState()
-    val directEdit by vm.prefs.directEdit.collectAsState()
 
     val textStyle = TextStyle(
         color = colorResource(id = primaryColorRes),
@@ -390,6 +411,10 @@ fun NotepadComposeApp(
             }
 
             var text by rememberSaveable { mutableStateOf(note.contents.text) }
+            LaunchedEffect(note) {
+                text = note.contents.text
+            }
+
             val id = note.metadata.metadataId
 
             title = note.metadata.title.ifEmpty {
@@ -398,11 +423,17 @@ fun NotepadComposeApp(
             backButton = { BackButton(onBack) }
             actions = {
                 SaveButton {
-                    vm.saveNote(id, text) { newId ->
-                        navState = if (directEdit) Empty else View(newId)
+                    if (showDialogs) {
+                        idToSave = id
+                        textToSave = text
+                        showSaveDialog = true
+                    } else {
+                        onSave(id, text)
                     }
                 }
+
                 DeleteButton { onDeleteClick(id) }
+
                 NoteViewEditMenu(
                     showMenu = showMenu,
                     onDismiss = onDismiss,
@@ -415,7 +446,7 @@ fun NotepadComposeApp(
             content = {
                 Printable(printController) {
                     EditNoteContent(
-                        text = text,
+                        text = note.contents.text,
                         baseTextStyle = textStyle,
                         isPrinting = isPrinting
                     ) { text = it }
@@ -435,7 +466,7 @@ fun NotepadComposeApp(
             )
         },
         floatingActionButton = {
-            if(navState == Empty) {
+            if(navState == Empty && !multiSelectEnabled) {
                 FloatingActionButton(
                     onClick = { navState = Edit() },
                     backgroundColor = colorResource(id = R.color.primary),

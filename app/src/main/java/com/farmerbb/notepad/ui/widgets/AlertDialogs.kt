@@ -24,7 +24,7 @@ import com.farmerbb.notepad.ui.routes.NotepadPreferenceScreen
 import com.farmerbb.notepad.utils.buildYear
 
 @Composable
-fun DeleteAlertDialog(
+fun DeleteDialog(
     isMultiple: Boolean = false,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
@@ -78,6 +78,29 @@ fun AboutDialog(
         dismissButton = {
             TextButton(onClick = checkForUpdates) {
                 Text(text = stringResource(id = R.string.check_for_updates).uppercase())
+            }
+        }
+    )
+}
+
+@Composable
+fun SaveDialog(
+    onConfirm: () -> Unit,
+    onDiscard: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(text = stringResource(id = R.string.dialog_save_button_title)) },
+        text = { Text(text = stringResource(id = R.string.dialog_save_changes)) },
+        confirmButton = {
+            TextButton(onClick = onConfirm) {
+                Text(text = stringResource(id = R.string.action_save).uppercase())
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDiscard) {
+                Text(text = stringResource(id = R.string.action_discard).uppercase())
             }
         }
     )

@@ -48,12 +48,12 @@ This table will track the features of the app as they are reimplemented in the n
 | Export notes (from list)              | ✔                      |
 | Options for exported filename         | ✔                      |
 | Edit notes directly                   | ✔                      |
-| Ask before saving                     |                        |
+| Ask before saving                     | ✔                      |
 | Save / load drafts                    |                        |
-| Keyboard shortcuts                    |                        |
+| New Note launcher shortcut            |                        |
 | Share text to Notepad from other apps |                        |
 | Google Assistant "Note to self"       |                        |
-| New Note launcher shortcut            |                        |
+| Keyboard shortcuts                    |                        |
 | Double-tap to edit                    |                        |
 | Probably some other things I forgot   |                        |
 

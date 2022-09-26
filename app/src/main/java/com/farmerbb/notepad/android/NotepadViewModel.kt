@@ -129,6 +129,15 @@ class NotepadViewModel(
             withContext(Dispatchers.IO) {
                 repo.deleteNotes(ids.toList()) {
                     clearSelectedNotes()
+
+                    val toastId = when (ids.size) {
+                        1 -> R.string.note_deleted
+                        else -> R.string.notes_deleted
+                    }
+
+                    viewModelScope.launch {
+                        context.showToast(toastId)
+                    }
                 }
             }
         }
@@ -148,7 +157,10 @@ class NotepadViewModel(
     ) = viewModelScope.launch {
         text.checkLength {
             withContext(Dispatchers.IO) {
-                repo.saveNote(id, text, onSuccess = onSuccess)
+                repo.saveNote(id, text) {
+                    context.showToast(R.string.note_saved)
+                    onSuccess(it)
+                }
             }
         }
     }
@@ -163,13 +175,12 @@ class NotepadViewModel(
                     text = noteState.value.text,
                     draftText = draftText
                 ) {
-                    withContext(Dispatchers.Main) {
-                        context.showToast(R.string.draft_saved)
-                    }
+                    context.showToast(R.string.draft_saved)
                 }
             }
         }
     }
+
     fun deleteDraft() {
         if (draftText.isEmpty()) return
 
@@ -212,7 +223,10 @@ class NotepadViewModel(
         onSuccess: () -> Unit
     ) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
-            repo.deleteNote(id, onSuccess)
+            repo.deleteNote(id) {
+                context.showToast(R.string.note_deleted)
+                onSuccess()
+            }
         }
     }
 
@@ -281,31 +295,38 @@ class NotepadViewModel(
     )
 
     private val importCallback = object: FileMultiSelectChooserCallback() {
-        override fun onResult(uris: List<Uri>) = with(fileManager) {
-            for (uri in uris) {
-                fromUri(uri)?.let(::getInputStream)?.let(::saveImportedNote)
-            }
+        override fun onResult(uris: List<Uri>) {
+            with(fileManager) {
+                for (uri in uris) {
+                    fromUri(uri)?.let(::getInputStream)?.let(::saveImportedNote)
+                }
 
-            val toastId = when (uris.size) {
-                1 -> R.string.note_imported_successfully
-                else -> R.string.notes_imported_successfully
-            }
+                val toastId = when (uris.size) {
+                    1 -> R.string.note_imported_successfully
+                    else -> R.string.notes_imported_successfully
+                }
 
-            context.showToast(toastId)
+                viewModelScope.launch {
+                    context.showToast(toastId)
+                }
+            }
         }
 
         override fun onCancel(reason: String) = Unit // no-op
     }
 
     private fun exportFileCallback(text: String) = object: FileCreateCallback() {
-        override fun onResult(uri: Uri) = with(fileManager) {
-            fromUri(uri)?.let(::getOutputStream)?.let { output ->
-                saveExportedNote(output, text)
+        override fun onResult(uri: Uri) {
+            with(fileManager) {
+                fromUri(uri)?.let(::getOutputStream)?.let { output ->
+                    saveExportedNote(output, text)
+                }
+
+                viewModelScope.launch {
+                    context.showToast(R.string.note_exported_to)
+                }
             }
-
-            context.showToast(R.string.note_exported_to)
         }
-
         override fun onCancel(reason: String) = Unit // no-op
     }
 

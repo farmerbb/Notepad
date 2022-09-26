@@ -112,7 +112,7 @@ class NotepadRepository(
         e.printStackTrace()
     }
 
-    fun deleteNote(id: Long, onSuccess: () -> Unit) = try {
+    suspend fun deleteNote(id: Long, onSuccess: suspend () -> Unit) = try {
         with(database) {
             crossRefQueries.get(id).executeAsOneOrNull()?.let {
                 noteMetadataQueries.delete(it.metadataId)

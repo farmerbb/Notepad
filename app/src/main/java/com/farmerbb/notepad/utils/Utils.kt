@@ -26,10 +26,14 @@ import com.farmerbb.notepad.BuildConfig
 import java.lang.Exception
 import java.text.DateFormat
 import java.util.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-fun Context.showToast(
+suspend fun Context.showToast(
     @StringRes text: Int
-) = Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+) = withContext(Dispatchers.Main) {
+    Toast.makeText(this@showToast, text, Toast.LENGTH_SHORT).show()
+}
 
 val Context.dataStore by preferencesDataStore("settings")
 

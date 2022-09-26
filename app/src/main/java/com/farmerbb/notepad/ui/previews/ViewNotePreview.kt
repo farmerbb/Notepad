@@ -20,9 +20,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.models.Note
-import com.farmerbb.notepad.models.NoteContents
-import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.model.Note
+import com.farmerbb.notepad.model.NoteContents
+import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.ui.content.ViewNoteContent
 import com.farmerbb.notepad.ui.widgets.NoteViewEditMenu
 import com.farmerbb.notepad.ui.widgets.*
@@ -43,7 +43,7 @@ private fun ViewNote(note: Note) {
                 }
             )
         },
-        content = { ViewNoteContent(note.contents.text) }
+        content = { ViewNoteContent(note.text) }
     )
 }
 
@@ -60,7 +60,7 @@ fun ViewNotePreview() = MaterialTheme {
             contents = NoteContents(
                 contentsId = -1,
                 text = "This is some text",
-                isDraft = false
+                draftText = null
             )
         ),
     )

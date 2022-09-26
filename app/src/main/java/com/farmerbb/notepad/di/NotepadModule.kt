@@ -20,7 +20,7 @@ import com.farmerbb.notepad.Database
 import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.data.DataMigrator
 import com.farmerbb.notepad.data.NotepadRepository
-import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.utils.dataStore
 import com.github.k1rakishou.fsaf.FileChooser
 import com.github.k1rakishou.fsaf.FileManager

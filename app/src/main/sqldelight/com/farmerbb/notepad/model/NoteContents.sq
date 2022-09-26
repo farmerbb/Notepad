@@ -1,14 +1,14 @@
 CREATE TABLE IF NOT EXISTS NoteContents(
     contentsId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    text TEXT NOT NULL,
-    isDraft INTEGER AS Boolean NOT NULL
+    text TEXT,
+    draftText TEXT
 );
 
 update:
-INSERT OR REPLACE INTO NoteContents(contentsId, text, isDraft) VALUES ?;
+INSERT OR REPLACE INTO NoteContents(contentsId, text, draftText) VALUES ?;
 
 insert:
-INSERT OR REPLACE INTO NoteContents(text, isDraft) VALUES ?;
+INSERT OR REPLACE INTO NoteContents(text, draftText) VALUES ?;
 
 delete:
 DELETE FROM NoteContents WHERE contentsId = :id;
@@ -21,6 +21,9 @@ SELECT * FROM NoteContents WHERE contentsId = :id;
 
 getMultiple:
 SELECT * FROM NoteContents WHERE contentsId IN ?;
+
+getDraft:
+SELECT * FROM NoteContents WHERE draftText NOT NULL;
 
 getIndex:
 SELECT last_insert_rowid();

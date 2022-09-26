@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.models
+package com.farmerbb.notepad.model
 
 sealed interface NavState {
     object Empty: NavState

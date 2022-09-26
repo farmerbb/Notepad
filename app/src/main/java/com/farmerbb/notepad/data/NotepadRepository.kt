@@ -16,15 +16,15 @@
 package com.farmerbb.notepad.data
 
 import com.farmerbb.notepad.Database
-import com.farmerbb.notepad.models.CrossRef
-import com.farmerbb.notepad.models.Note
-import com.farmerbb.notepad.models.NoteContents
-import com.farmerbb.notepad.models.NoteMetadata
-import com.farmerbb.notepad.models.SortOrder
-import com.farmerbb.notepad.models.SortOrder.DateAscending
-import com.farmerbb.notepad.models.SortOrder.DateDescending
-import com.farmerbb.notepad.models.SortOrder.TitleAscending
-import com.farmerbb.notepad.models.SortOrder.TitleDescending
+import com.farmerbb.notepad.model.CrossRef
+import com.farmerbb.notepad.model.Note
+import com.farmerbb.notepad.model.NoteContents
+import com.farmerbb.notepad.model.NoteMetadata
+import com.farmerbb.notepad.model.SortOrder
+import com.farmerbb.notepad.model.SortOrder.DateAscending
+import com.farmerbb.notepad.model.SortOrder.DateDescending
+import com.farmerbb.notepad.model.SortOrder.TitleAscending
+import com.farmerbb.notepad.model.SortOrder.TitleDescending
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import java.util.Date
@@ -70,10 +70,11 @@ class NotepadRepository(
         }
     }
 
-    fun saveNote(
+    suspend fun saveNote(
         id: Long = -1,
         text: String,
-        onSuccess: (Long) -> Unit = {}
+        draftText: String? = null,
+        onSuccess: suspend (Long) -> Unit = {}
     ) = try {
         val crossRef = database.crossRefQueries.get(id).executeAsOneOrNull()
 
@@ -86,7 +87,7 @@ class NotepadRepository(
         val contents = NoteContents(
             contentsId = crossRef?.contentsId ?: -1,
             text = text,
-            isDraft = false
+            draftText = draftText
         )
 
         with(database) {

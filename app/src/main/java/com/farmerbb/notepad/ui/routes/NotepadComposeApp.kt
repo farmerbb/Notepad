@@ -59,13 +59,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.android.NotepadViewModel
-import com.farmerbb.notepad.models.NavState
-import com.farmerbb.notepad.models.NavState.Companion.EDIT
-import com.farmerbb.notepad.models.NavState.Companion.VIEW
-import com.farmerbb.notepad.models.NavState.Edit
-import com.farmerbb.notepad.models.NavState.Empty
-import com.farmerbb.notepad.models.NavState.View
-import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.model.NavState
+import com.farmerbb.notepad.model.NavState.Companion.EDIT
+import com.farmerbb.notepad.model.NavState.Companion.VIEW
+import com.farmerbb.notepad.model.NavState.Edit
+import com.farmerbb.notepad.model.NavState.Empty
+import com.farmerbb.notepad.model.NavState.View
+import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.content.NoteListContent
 import com.farmerbb.notepad.ui.content.ViewNoteContent
@@ -388,15 +388,15 @@ fun NotepadComposeApp(
                     showMenu = showMenu,
                     onDismiss = onDismiss,
                     onMoreClick = onMoreClick,
-                    onShareClick = { onShareClick(note.contents.text) },
-                    onExportClick = { onExportClick(note.metadata, note.contents.text) },
+                    onShareClick = { onShareClick(note.text) },
+                    onExportClick = { onExportClick(note.metadata, note.text) },
                     onPrintClick = { onPrintClick(title) }
                 )
             }
             content = {
                 Printable(printController) {
                     ViewNoteContent(
-                        text = note.contents.text,
+                        text = note.text,
                         baseTextStyle = textStyle,
                         markdown = markdown,
                         isPrinting = isPrinting
@@ -410,9 +410,13 @@ fun NotepadComposeApp(
                 vm.getNote(state.id)
             }
 
-            var text by rememberSaveable { mutableStateOf(note.contents.text) }
+            var text by rememberSaveable { mutableStateOf(note.text) }
             LaunchedEffect(note) {
-                text = note.contents.text
+                text = note.text
+            }
+
+            LaunchedEffect(text) {
+                vm.setDraftText(text)
             }
 
             val id = note.metadata.metadataId
@@ -446,7 +450,7 @@ fun NotepadComposeApp(
             content = {
                 Printable(printController) {
                     EditNoteContent(
-                        text = note.contents.text,
+                        text = note.text,
                         baseTextStyle = textStyle,
                         isPrinting = isPrinting
                     ) { text = it }

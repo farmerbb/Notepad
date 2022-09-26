@@ -18,9 +18,9 @@ package com.farmerbb.notepad.data
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.models.FilenameFormat
-import com.farmerbb.notepad.models.Prefs
-import com.farmerbb.notepad.models.SortOrder
+import com.farmerbb.notepad.model.FilenameFormat
+import com.farmerbb.notepad.model.Prefs
+import com.farmerbb.notepad.model.SortOrder
 import de.schnettler.datastore.manager.DataStoreManager
 import de.schnettler.datastore.manager.PreferenceRequest
 import kotlinx.coroutines.CoroutineScope

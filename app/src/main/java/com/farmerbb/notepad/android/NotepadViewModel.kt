@@ -27,13 +27,13 @@ import com.farmerbb.notepad.BuildConfig
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.data.PreferenceManager.Companion.prefs
-import com.farmerbb.notepad.models.ExportedNotesDirectory
-import com.farmerbb.notepad.models.FilenameFormat
-import com.farmerbb.notepad.models.FilenameFormat.TimestampAndTitle
-import com.farmerbb.notepad.models.FilenameFormat.TitleAndTimestamp
-import com.farmerbb.notepad.models.FilenameFormat.TitleOnly
-import com.farmerbb.notepad.models.Note
-import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.model.ExportedNotesDirectory
+import com.farmerbb.notepad.model.FilenameFormat
+import com.farmerbb.notepad.model.FilenameFormat.TimestampAndTitle
+import com.farmerbb.notepad.model.FilenameFormat.TitleAndTimestamp
+import com.farmerbb.notepad.model.FilenameFormat.TitleOnly
+import com.farmerbb.notepad.model.Note
+import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.utils.ReleaseType.Amazon
 import com.farmerbb.notepad.utils.ReleaseType.FDroid
 import com.farmerbb.notepad.utils.ReleaseType.PlayStore
@@ -87,6 +87,11 @@ class NotepadViewModel(
     val prefs = dataStoreManager.prefs(viewModelScope)
 
     private val registeredBaseDirs = mutableListOf<Uri>()
+    private var draftText: String = ""
+
+    fun setDraftText(text: String) {
+        draftText = text
+    }
 
     suspend fun getNote(id: Long?) = withContext(Dispatchers.IO) {
         id?.let {
@@ -98,6 +103,7 @@ class NotepadViewModel(
 
     fun clearNote() {
         _noteState.value = Note()
+        draftText = ""
     }
 
     fun toggleSelectedNote(id: Long) {
@@ -142,7 +148,37 @@ class NotepadViewModel(
     ) = viewModelScope.launch {
         text.checkLength {
             withContext(Dispatchers.IO) {
-                repo.saveNote(id, text, onSuccess)
+                repo.saveNote(id, text, onSuccess = onSuccess)
+            }
+        }
+    }
+
+    fun saveDraft() {
+        if (draftText.isEmpty()) return
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repo.saveNote(
+                    id = noteState.value.metadata.metadataId,
+                    text = noteState.value.text,
+                    draftText = draftText
+                ) {
+                    withContext(Dispatchers.Main) {
+                        context.showToast(R.string.draft_saved)
+                    }
+                }
+            }
+        }
+    }
+    fun deleteDraft() {
+        if (draftText.isEmpty()) return
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                repo.saveNote(
+                    id = noteState.value.metadata.metadataId,
+                    text = noteState.value.text
+                )
             }
         }
     }
@@ -299,7 +335,7 @@ class NotepadViewModel(
                             create(baseDir, FileSegment(filename))
                                 ?.let(::getOutputStream)
                                 ?.let { output ->
-                                    saveExportedNote(output, note.contents.text)
+                                    saveExportedNote(output, note.text)
                                 }
                         }
                     }

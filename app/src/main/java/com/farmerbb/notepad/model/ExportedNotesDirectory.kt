@@ -1,4 +1,4 @@
-/* Copyright 2021 Braden Farmer
+/* Copyright 2022 Braden Farmer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,15 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.models
+package com.farmerbb.notepad.model
 
-import java.util.Date
+import android.net.Uri
+import com.github.k1rakishou.fsaf.manager.base_directory.BaseDirectory
 
-data class Note(
-    val metadata: NoteMetadata = NoteMetadata(
-        metadataId = -1,
-        title = "",
-        date = Date()
-    ),
-    val contents: NoteContents = NoteContents(
-        contentsId = -1,
-        text = "",
-        isDraft = false
-    )
-)
+class ExportedNotesDirectory(
+    private val uri: Uri?,
+) : BaseDirectory() {
+    override fun getDirUri() = uri
+    override fun getDirFile() = null
+    override fun currentActiveBaseDirType() = ActiveBaseDirType.SafBaseDir
+}

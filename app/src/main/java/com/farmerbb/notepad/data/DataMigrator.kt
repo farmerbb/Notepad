@@ -16,14 +16,15 @@
 package com.farmerbb.notepad.data
 
 import android.content.Context
+import androidx.core.content.edit
 import androidx.core.text.isDigitsOnly
 import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.farmerbb.notepad.Database
-import com.farmerbb.notepad.models.CrossRef
-import com.farmerbb.notepad.models.NoteContents
-import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.model.CrossRef
+import com.farmerbb.notepad.model.NoteContents
+import com.farmerbb.notepad.model.NoteMetadata
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -54,6 +55,10 @@ class DataMigrator(
         val migrationComplete = File(context.filesDir, "migration_complete")
         if (migrationComplete.exists() || job.isCompleted) return
 
+        // Draft (from versions 2.x)
+        val (draftFilename, draftText) = loadDraft()
+
+        // Saved notes
         for(filename in context.filesDir.list().orEmpty()) {
             if(!filename.isDigitsOnly()) continue
 
@@ -66,7 +71,7 @@ class DataMigrator(
             val contents = NoteContents(
                 contentsId = -1,
                 text = loadNote(filename),
-                isDraft = false
+                draftText = if (filename == draftFilename) draftText else null
             )
 
             with(database) {
@@ -83,18 +88,20 @@ class DataMigrator(
             File(context.filesDir, filename).delete()
         }
 
+        // Draft (from versions 1.x)
         val draft = File(context.filesDir, "draft")
         if(draft.exists()) {
             val contents = NoteContents(
                 contentsId = -1,
                 text = loadNote("draft"),
-                isDraft = true
+                draftText = null // intentionally saving as a regular note
             )
 
             database.noteContentsQueries.insert(contents)
             draft.delete()
         }
 
+        // Preferences
         context.dataStore.edit {
             // no-op to force SharedPreferences migration to trigger
         }
@@ -134,5 +141,20 @@ class DataMigrator(
         reader.close()
 
         return note.toString()
+    }
+
+    private fun loadDraft(): Pair<String?, String?> {
+        val prefs = context.getSharedPreferences("MainActivity", Context.MODE_PRIVATE)
+        val text = prefs.getString("draft-contents", null) ?: return null to null
+        val isSavedNote = prefs.getBoolean("is-saved-note", false)
+        val filename = if (isSavedNote) prefs.getLong("draft-name", -1L) else -1L
+
+        prefs.edit {
+            remove("is-saved-note")
+            remove("draft-name")
+            remove("draft-contents")
+        }
+
+        return "$filename" to text
     }
 }

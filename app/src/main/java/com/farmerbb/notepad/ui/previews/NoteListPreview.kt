@@ -23,7 +23,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.ui.content.NoteListContent
 import com.farmerbb.notepad.ui.widgets.AppBarText
 import com.farmerbb.notepad.ui.widgets.MoreButton

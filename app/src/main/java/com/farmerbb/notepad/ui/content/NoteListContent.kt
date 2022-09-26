@@ -42,7 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.models.NoteMetadata
+import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.ui.previews.NoteListPreview
 import com.farmerbb.notepad.utils.noteListFormat
 

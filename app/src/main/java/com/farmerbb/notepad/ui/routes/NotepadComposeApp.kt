@@ -48,7 +48,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -298,6 +300,8 @@ fun NotepadComposeApp(
         fontFamily = fontFamily
     )
 
+    val haptics = LocalHapticFeedback.current
+
     @Composable
     fun NoteListContentShared() = NoteListContent(
         notes = notes,
@@ -306,6 +310,7 @@ fun NotepadComposeApp(
         dateStyle = dateStyle,
         showDate = showDate,
         onNoteLongClick = { id ->
+            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
             multiSelectEnabled = true
             vm.toggleSelectedNote(id)
         }

@@ -55,12 +55,14 @@ fun NoteListPreview() = MaterialTheme {
             NoteMetadata(
                 metadataId = -1,
                 title = "Test Note 1",
-                date = Date()
+                date = Date(),
+                hasDraft = false
             ),
             NoteMetadata(
                 metadataId = -1,
                 title = "Test Note 2",
-                date = Date()
+                date = Date(),
+                hasDraft = false
             )
         )
     )

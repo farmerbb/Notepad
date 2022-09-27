@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-@file:OptIn(FlowPreview::class)
+@file:OptIn(kotlinx.coroutines.FlowPreview::class)
 
 package com.farmerbb.notepad.android
 
@@ -53,7 +53,7 @@ import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -91,6 +91,24 @@ class NotepadViewModel(
     private var draftText: String = ""
     private var draftId: Long = -1L
 
+    private val _savedDraftId = MutableStateFlow<Long?>(null)
+    val savedDraftId: StateFlow<Long?> = _savedDraftId
+    private var savedDraftIdJob: Job? = null
+
+    fun getSavedDraftId() {
+        savedDraftIdJob = viewModelScope.launch(Dispatchers.IO) {
+            repo.savedDraftId.collect { id ->
+                _savedDraftId.value = id
+
+                if (id != -1L) {
+                    context.showToast(R.string.draft_restored)
+                }
+
+                savedDraftIdJob?.cancel()
+            }
+        }
+    }
+
     fun setDraftText(text: String) {
         draftText = text
     }
@@ -127,21 +145,17 @@ class NotepadViewModel(
         _selectedNotesFlow.tryEmit(selectedNotes.filterValues { it })
     }
 
-    fun deleteSelectedNotes() = viewModelScope.launch {
+    fun deleteSelectedNotes() = viewModelScope.launch(Dispatchers.IO) {
         selectedNotes.filterValues { it }.keys.let { ids ->
-            withContext(Dispatchers.IO) {
-                repo.deleteNotes(ids.toList()) {
-                    clearSelectedNotes()
+            repo.deleteNotes(ids.toList()) {
+                clearSelectedNotes()
 
-                    val toastId = when (ids.size) {
-                        1 -> R.string.note_deleted
-                        else -> R.string.notes_deleted
-                    }
-
-                    viewModelScope.launch {
-                        context.showToast(toastId)
-                    }
+                val toastId = when (ids.size) {
+                    1 -> R.string.note_deleted
+                    else -> R.string.notes_deleted
                 }
+
+                context.showToast(toastId)
             }
         }
     }
@@ -157,13 +171,11 @@ class NotepadViewModel(
         id: Long,
         text: String,
         onSuccess: (Long) -> Unit
-    ) = viewModelScope.launch {
+    ) = viewModelScope.launch(Dispatchers.IO) {
         text.checkLength {
-            withContext(Dispatchers.IO) {
-                repo.saveNote(id, text) {
-                    context.showToast(R.string.note_saved)
-                    onSuccess(it)
-                }
+            repo.saveNote(id, text) {
+                context.showToast(R.string.note_saved)
+                onSuccess(it)
             }
         }
     }
@@ -171,16 +183,14 @@ class NotepadViewModel(
     fun saveDraft() {
         if (draftText.isEmpty()) return
 
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                repo.saveNote(
-                    id = noteState.value.metadata.metadataId,
-                    text = noteState.value.text,
-                    draftText = draftText
-                ) {
-                    draftId = it
-                    context.showToast(R.string.draft_saved)
-                }
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.saveNote(
+                id = noteState.value.metadata.metadataId,
+                text = noteState.value.text,
+                draftText = draftText
+            ) {
+                draftId = it
+                context.showToast(R.string.draft_saved)
             }
         }
     }
@@ -188,30 +198,26 @@ class NotepadViewModel(
     fun deleteDraft() {
         if (draftText.isEmpty()) return
 
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val savedId = noteState.value.metadata.metadataId
-                if (draftId == savedId) {
-                    repo.saveNote(
-                        id = noteState.value.metadata.metadataId,
-                        text = noteState.value.text
-                    )
-                } else {
-                    repo.deleteNote(draftId)
-                }
+        viewModelScope.launch(Dispatchers.IO) {
+            val savedId = noteState.value.metadata.metadataId
+            if (draftId == savedId) {
+                repo.saveNote(
+                    id = noteState.value.metadata.metadataId,
+                    text = noteState.value.text
+                )
+            } else {
+                repo.deleteNote(draftId)
             }
         }
     }
 
     private fun saveImportedNote(
         input: InputStream
-    ) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            input.source().buffer().use {
-                val text = it.readUtf8()
-                if (text.isNotEmpty()) {
-                    repo.saveNote(text = text)
-                }
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        input.source().buffer().use {
+            val text = it.readUtf8()
+            if (text.isNotEmpty()) {
+                repo.saveNote(text = text)
             }
         }
     }
@@ -219,23 +225,19 @@ class NotepadViewModel(
     private fun saveExportedNote(
         output: OutputStream,
         text: String
-    ) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            output.sink().buffer().use {
-                it.writeUtf8(text)
-            }
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        output.sink().buffer().use {
+            it.writeUtf8(text)
         }
     }
 
     fun deleteNote(
         id: Long,
         onSuccess: () -> Unit
-    ) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            repo.deleteNote(id) {
-                context.showToast(R.string.note_deleted)
-                onSuccess()
-            }
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        repo.deleteNote(id) {
+            context.showToast(R.string.note_deleted)
+            onSuccess()
         }
     }
 

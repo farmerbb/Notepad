@@ -95,12 +95,24 @@ fun NotepadComposeApp() {
     val vm: NotepadViewModel = getViewModel()
     val systemUiController = rememberSystemUiController()
     val configuration = LocalConfiguration.current
+
     val isLightTheme by vm.prefs.isLightTheme.collectAsState()
+    val draftId by vm.savedDraftId.collectAsState()
+
+    LaunchedEffect(Unit) {
+        vm.getSavedDraftId()
+    }
+
+    if (draftId == null) return
 
     MaterialTheme {
         NotepadComposeApp(
             vm = vm,
-            isMultiPane = configuration.screenWidthDp >= 600
+            isMultiPane = configuration.screenWidthDp >= 600,
+            initState = when (draftId) {
+                -1L -> Empty
+                else -> Edit(draftId)
+            }
         )
     }
 
@@ -455,7 +467,7 @@ fun NotepadComposeApp(
             content = {
                 Printable(printController) {
                     EditNoteContent(
-                        text = note.text,
+                        text = note.draftText.ifEmpty { note.text },
                         baseTextStyle = textStyle,
                         isPrinting = isPrinting
                     ) { text = it }

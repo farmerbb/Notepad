@@ -27,11 +27,14 @@ import com.farmerbb.notepad.model.SortOrder.TitleAscending
 import com.farmerbb.notepad.model.SortOrder.TitleDescending
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import com.squareup.sqldelight.runtime.coroutines.mapToOneOrDefault
 import java.util.Date
 
 class NotepadRepository(
     private val database: Database
 ) {
+    val savedDraftId get() = database.noteMetadataQueries.getDraftId().asFlow().mapToOneOrDefault(-1L)
+
     fun noteMetadataFlow(order: SortOrder) = with(database.noteMetadataQueries) {
         when(order) {
             DateDescending -> getSortedByDateDescending()
@@ -81,7 +84,8 @@ class NotepadRepository(
         val metadata = NoteMetadata(
             metadataId = crossRef?.metadataId ?: -1,
             title = text.substringBefore("\n"),
-            date = Date()
+            date = Date(),
+            hasDraft = draftText != null
         )
 
         val contents = NoteContents(
@@ -126,7 +130,7 @@ class NotepadRepository(
         e.printStackTrace()
     }
 
-    fun deleteNotes(ids: List<Long>, onSuccess: () -> Unit) = try {
+    suspend fun deleteNotes(ids: List<Long>, onSuccess: suspend () -> Unit) = try {
         with(database) {
             crossRefQueries.getMultiple(ids).executeAsList().let { refs ->
                 noteMetadataQueries.deleteMultiple(refs.map { it.metadataId })

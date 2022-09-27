@@ -55,17 +55,16 @@ class DataMigrator(
         val migrationComplete = File(context.filesDir, "migration_complete")
         if (migrationComplete.exists() || job.isCompleted) return
 
-        // Draft (from versions 2.x)
         val (draftFilename, draftText) = loadDraft()
 
-        // Saved notes
         for(filename in context.filesDir.list().orEmpty()) {
-            if(!filename.isDigitsOnly()) continue
+            if(!filename.isDigitsOnly() && filename != "draft") continue
 
             val metadata = NoteMetadata(
                 metadataId = -1,
                 title = loadNoteTitle(filename),
-                date = Date(filename.toLong())
+                date = Date(filename.toLong()),
+                hasDraft = false
             )
 
             val contents = NoteContents(
@@ -88,20 +87,6 @@ class DataMigrator(
             File(context.filesDir, filename).delete()
         }
 
-        // Draft (from versions 1.x)
-        val draft = File(context.filesDir, "draft")
-        if(draft.exists()) {
-            val contents = NoteContents(
-                contentsId = -1,
-                text = loadNote("draft"),
-                draftText = null // intentionally saving as a regular note
-            )
-
-            database.noteContentsQueries.insert(contents)
-            draft.delete()
-        }
-
-        // Preferences
         context.dataStore.edit {
             // no-op to force SharedPreferences migration to trigger
         }

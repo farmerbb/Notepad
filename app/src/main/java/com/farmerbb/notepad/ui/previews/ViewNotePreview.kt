@@ -55,7 +55,8 @@ fun ViewNotePreview() = MaterialTheme {
             metadata = NoteMetadata(
                 metadataId = -1,
                 title = "Title",
-                date = Date()
+                date = Date(),
+                hasDraft = false
             ),
             contents = NoteContents(
                 contentsId = -1,

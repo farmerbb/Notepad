@@ -3,14 +3,15 @@ import java.util.Date;
 CREATE TABLE IF NOT EXISTS NoteMetadata(
     metadataId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     title TEXT NOT NULL,
-    date INTEGER AS Date NOT NULL
+    date INTEGER AS Date NOT NULL,
+    hasDraft INTEGER AS Boolean NOT NULL
 );
 
 update:
-INSERT OR REPLACE INTO NoteMetadata(metadataId, title, date) VALUES ?;
+INSERT OR REPLACE INTO NoteMetadata(metadataId, title, date, hasDraft) VALUES ?;
 
 insert:
-INSERT OR REPLACE INTO NoteMetadata(title, date) VALUES ?;
+INSERT OR REPLACE INTO NoteMetadata(title, date, hasDraft) VALUES ?;
 
 delete:
 DELETE FROM NoteMetadata WHERE metadataId = :id;
@@ -32,6 +33,9 @@ SELECT * FROM NoteMetadata ORDER BY date ASC;
 
 get:
 SELECT * FROM NoteMetadata WHERE metadataId = :id;
+
+getDraftId:
+SELECT metadataId FROM NoteMetadata WHERE hasDraft = 1;
 
 getIndex:
 SELECT last_insert_rowid();

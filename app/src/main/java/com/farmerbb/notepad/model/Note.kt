@@ -21,7 +21,8 @@ data class Note(
     val metadata: NoteMetadata = NoteMetadata(
         metadataId = -1,
         title = "",
-        date = Date()
+        date = Date(),
+        hasDraft = false
     ),
     private val contents: NoteContents = NoteContents(
         contentsId = -1,
@@ -30,4 +31,5 @@ data class Note(
     )
 ) {
     val text: String get() = contents.text ?: ""
+    val draftText: String get() = contents.draftText ?: ""
 }

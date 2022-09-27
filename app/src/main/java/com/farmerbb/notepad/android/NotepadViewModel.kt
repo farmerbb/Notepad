@@ -87,7 +87,9 @@ class NotepadViewModel(
     val prefs = dataStoreManager.prefs(viewModelScope)
 
     private val registeredBaseDirs = mutableListOf<Uri>()
+
     private var draftText: String = ""
+    private var draftId: Long = -1L
 
     fun setDraftText(text: String) {
         draftText = text
@@ -104,6 +106,7 @@ class NotepadViewModel(
     fun clearNote() {
         _noteState.value = Note()
         draftText = ""
+        draftId = -1L
     }
 
     fun toggleSelectedNote(id: Long) {
@@ -175,6 +178,7 @@ class NotepadViewModel(
                     text = noteState.value.text,
                     draftText = draftText
                 ) {
+                    draftId = it
                     context.showToast(R.string.draft_saved)
                 }
             }
@@ -186,10 +190,15 @@ class NotepadViewModel(
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                repo.saveNote(
-                    id = noteState.value.metadata.metadataId,
-                    text = noteState.value.text
-                )
+                val savedId = noteState.value.metadata.metadataId
+                if (draftId == savedId) {
+                    repo.saveNote(
+                        id = noteState.value.metadata.metadataId,
+                        text = noteState.value.text
+                    )
+                } else {
+                    repo.deleteNote(draftId)
+                }
             }
         }
     }

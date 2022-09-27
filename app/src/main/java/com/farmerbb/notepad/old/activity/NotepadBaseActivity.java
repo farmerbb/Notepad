@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.Window;
 
 import com.farmerbb.notepad.R;
-import com.farmerbb.notepad.android.NotepadActivity;
 
+import androidx.activity.ComponentActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -47,10 +47,10 @@ public abstract class NotepadBaseActivity extends AppCompatActivity {
         }
     }
 
-    protected boolean thereIsNoSpoon() {
+    protected boolean thereIsNoSpoon(Class<? extends ComponentActivity> redPillActivity) {
         File migrationComplete = new File(getFilesDir(), "migration_complete");
         if (migrationComplete.exists()) {
-            Intent intent = new Intent(this, NotepadActivity.class);
+            Intent intent = new Intent(this, redPillActivity);
             intent.putExtras(getIntent());
             startActivity(intent);
             finish();

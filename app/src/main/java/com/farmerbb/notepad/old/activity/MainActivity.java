@@ -36,6 +36,7 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.farmerbb.notepad.R;
+import com.farmerbb.notepad.android.NotepadActivity;
 import com.farmerbb.notepad.old.fragment.NoteEditFragment;
 import com.farmerbb.notepad.old.fragment.NoteListFragment;
 import com.farmerbb.notepad.old.fragment.NoteViewFragment;
@@ -94,7 +95,7 @@ NoteViewFragment.Listener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(thereIsNoSpoon()) return;
+        if(thereIsNoSpoon(NotepadActivity.class)) return;
 
         setContentView(R.layout.activity_main);
 

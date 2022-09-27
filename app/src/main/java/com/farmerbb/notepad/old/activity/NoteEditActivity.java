@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.farmerbb.notepad.R;
+import com.farmerbb.notepad.android.StandaloneEditorActivity;
 import com.farmerbb.notepad.old.fragment.NoteEditFragment;
 import com.farmerbb.notepad.old.fragment.dialog.BackButtonDialogFragment;
 import com.farmerbb.notepad.old.fragment.dialog.DeleteDialogFragment;
@@ -57,7 +58,7 @@ String external;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(thereIsNoSpoon()) return;
+        if(thereIsNoSpoon(StandaloneEditorActivity.class)) return;
 
         setContentView(R.layout.activity_note_edit);
 

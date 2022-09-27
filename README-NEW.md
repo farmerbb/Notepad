@@ -49,7 +49,7 @@ This table will track the features of the app as they are reimplemented in the n
 | Options for exported filename         | ✔                      |
 | Edit notes directly                   | ✔                      |
 | Ask before saving                     | ✔                      |
-| Save / load drafts                    |                        |
+| Save / load drafts                    | ✔                      |
 | New Note launcher shortcut            |                        |
 | Share text to Notepad from other apps |                        |
 | Google Assistant "Note to self"       |                        |

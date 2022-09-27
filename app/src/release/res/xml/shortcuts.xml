@@ -23,6 +23,6 @@
         <intent
             android:action="android.intent.action.MAIN"
             android:targetPackage="com.farmerbb.notepad"
-            android:targetClass="com.farmerbb.notepad.old.activity.NoteEditActivity" />
+            android:targetClass="com.farmerbb.notepad.activity.NoteEditActivity" />
     </shortcut>
 </shortcuts>

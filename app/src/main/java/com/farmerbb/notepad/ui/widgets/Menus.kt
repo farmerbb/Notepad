@@ -69,6 +69,24 @@ fun NoteViewEditMenu(
 }
 
 @Composable
+fun StandaloneEditorMenu(
+    showMenu: Boolean = false,
+    onDismiss: () -> Unit,
+    onMoreClick: () -> Unit = {},
+    onShareClick: () -> Unit = {}
+) {
+    Box {
+        MoreButton(onMoreClick)
+        DropdownMenu(
+            expanded = showMenu,
+            onDismissRequest = onDismiss
+        ) {
+            MenuItem(R.string.action_share, onShareClick)
+        }
+    }
+}
+
+@Composable
 fun MenuItem(
     @StringRes stringRes: Int,
     onClick: () -> Unit

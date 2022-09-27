@@ -268,6 +268,17 @@ fun NotepadComposeApp(
     var showMenu by rememberSaveable { mutableStateOf(false) }
     val onDismiss = { showMenu = false }
     val onMoreClick = { showMenu = true }
+
+    val onSaveClick: (Long, String) -> Unit = { id, text ->
+        if (showDialogs) {
+            idToSave = id
+            textToSave = text
+            showSaveDialog = true
+        } else {
+            onSave(id, text)
+        }
+    }
+
     val onDeleteClick: (Long) -> Unit = {
         noteToDelete = it
         showDeleteDialog = true
@@ -291,8 +302,9 @@ fun NotepadComposeApp(
         if (multiSelectEnabled) {
             multiSelectEnabled = false
             vm.clearSelectedNotes()
-        } else {
-            navState = Empty
+        } else when(navState) {
+            is Edit -> Unit // TODO onSaveClick(id, text)
+            else -> navState = Empty
         }
     }
 
@@ -443,18 +455,8 @@ fun NotepadComposeApp(
             }
             backButton = { BackButton(onBack) }
             actions = {
-                SaveButton {
-                    if (showDialogs) {
-                        idToSave = id
-                        textToSave = text
-                        showSaveDialog = true
-                    } else {
-                        onSave(id, text)
-                    }
-                }
-
+                SaveButton { onSaveClick(id, text) }
                 DeleteButton { onDeleteClick(id) }
-
                 NoteViewEditMenu(
                     showMenu = showMenu,
                     onDismiss = onDismiss,

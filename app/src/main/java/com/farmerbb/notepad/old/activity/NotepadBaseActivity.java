@@ -1,14 +1,18 @@
 package com.farmerbb.notepad.old.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.View;
 import android.view.Window;
 
 import com.farmerbb.notepad.R;
+import com.farmerbb.notepad.android.NotepadActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import java.io.File;
 
 public abstract class NotepadBaseActivity extends AppCompatActivity {
     @Override
@@ -41,5 +45,18 @@ public abstract class NotepadBaseActivity extends AppCompatActivity {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
                 getWindow().setNavigationBarDividerColor(ContextCompat.getColor(this, navbarDividerColorId));
         }
+    }
+
+    protected boolean thereIsNoSpoon() {
+        File migrationComplete = new File(getFilesDir(), "migration_complete");
+        if (migrationComplete.exists()) {
+            Intent intent = new Intent(this, NotepadActivity.class);
+            intent.putExtras(getIntent());
+            startActivity(intent);
+            finish();
+            return true;
+        }
+
+        return false;
     }
 }

@@ -38,7 +38,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -58,6 +57,8 @@ String external;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(thereIsNoSpoon()) return;
+
         setContentView(R.layout.activity_note_edit);
 
         // Apply theme

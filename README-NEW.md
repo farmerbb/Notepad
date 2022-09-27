@@ -19,43 +19,44 @@ This README is meant to track the progress of the rewrite, and also give a gener
 
 This table will track the features of the app as they are reimplemented in the new codebase.
 
-|                                       | Implemented In New App |
-|---------------------------------------|------------------------|
-| Migrate old notes and preferences     | ✔                      |
-| List all notes                        | ✔                      |
-| Notes list empty state                | ✔                      |
-| Create new note                       | ✔                      |
-| View saved notes                      | ✔                      |
-| Edit saved notes                      | ✔                      |
-| Share notes                           | ✔                      |
-| Delete note (while viewing/editing)   | ✔                      |
-| Settings screen                       | ✔                      |
-| About screen                          | ✔                      |
-| Overflow menus                        | ✔                      |
-| Dual-pane view for tablets            | ✔                      |
-| Light/dark themes                     | ✔                      |
-| Sans serif / serif / monospace fonts  | ✔                      |
-| Font sizes                            | ✔                      |
-| Sort notes by date or name            | ✔                      |
-| Show date/time in notes list          | ✔                      |
-| Markdown / HTML support               | ✔                      |
-| Import text files                     | ✔                      |
-| Export to filesystem                  | ✔                      |
-| Print notes                           | ✔                      |
-| Multi-select notes list (button)      | ✔                      |
-| Multi-select notes list (long-press)  | ✔                      |
-| Delete notes (from list)              | ✔                      |
-| Export notes (from list)              | ✔                      |
-| Options for exported filename         | ✔                      |
-| Edit notes directly                   | ✔                      |
-| Ask before saving                     | ✔                      |
-| Save / load drafts                    | ✔                      |
-| New Note launcher shortcut            |                        |
-| Share text to Notepad from other apps |                        |
-| Google Assistant "Note to self"       |                        |
-| Keyboard shortcuts                    |                        |
-| Double-tap to edit                    |                        |
-| Probably some other things I forgot   |                        |
+|                                               | Implemented In New App |
+|-----------------------------------------------|------------------------|
+| Migrate old notes and preferences             | ✔                      |
+| List all notes                                | ✔                      |
+| Notes list empty state                        | ✔                      |
+| Create new note                               | ✔                      |
+| View saved notes                              | ✔                      |
+| Edit saved notes                              | ✔                      |
+| Share notes                                   | ✔                      |
+| Delete note (while viewing/editing)           | ✔                      |
+| Settings screen                               | ✔                      |
+| About screen                                  | ✔                      |
+| Overflow menus                                | ✔                      |
+| Dual-pane view for tablets                    | ✔                      |
+| Light/dark themes                             | ✔                      |
+| Sans serif / serif / monospace fonts          | ✔                      |
+| Font sizes                                    | ✔                      |
+| Sort notes by date or name                    | ✔                      |
+| Show date/time in notes list                  | ✔                      |
+| Markdown / HTML support                       | ✔                      |
+| Import text files                             | ✔                      |
+| Export to filesystem                          | ✔                      |
+| Print notes                                   | ✔                      |
+| Multi-select notes list (button)              | ✔                      |
+| Multi-select notes list (long-press)          | ✔                      |
+| Delete notes (from list)                      | ✔                      |
+| Export notes (from list)                      | ✔                      |
+| Options for exported filename                 | ✔                      |
+| Edit notes directly                           | ✔                      |
+| Ask before saving                             | ✔                      |
+| Save / load drafts                            | ✔                      |
+| New Note launcher shortcut                    |                        |
+| Share text to Notepad from other apps         |                        |
+| Open text files in Notepad from file managers |                        |
+| Google Assistant "Note to self"               |                        |
+| Keyboard shortcuts                            |                        |
+| Double-tap to edit                            |                        |
+| Probably some other things I forgot           |                        |
 
 ## How do I try out the new app?
 

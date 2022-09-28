@@ -87,6 +87,7 @@
     <string name="preview_app_message">テスト版に切り替えますか? 元に戻すには再インストールが必要です</string>
     <string name="blue_pill">安定版に安住</string>
     <string name="red_pill">危険を承知で試す</string>
+    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>日付順 (最新が先頭)</item>

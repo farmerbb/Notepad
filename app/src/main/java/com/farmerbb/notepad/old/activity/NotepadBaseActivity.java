@@ -1,5 +1,6 @@
 package com.farmerbb.notepad.old.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.view.View;
@@ -49,8 +50,15 @@ public abstract class NotepadBaseActivity extends AppCompatActivity {
     protected boolean thereIsNoSpoon(Class<? extends ComponentActivity> redPillActivity) {
         File migrationComplete = new File(getFilesDir(), "migration_complete");
         if (migrationComplete.exists()) {
-            startActivity(getIntent().setClass(this, redPillActivity));
+            Intent intent = new Intent(this, redPillActivity);
+            intent.putExtras(getIntent());
+            intent.setAction(getIntent().getAction());
+            intent.setType(getIntent().getType());
+
+            startActivity(intent);
             finish();
+            overridePendingTransition(0, 0);
+
             return true;
         }
 

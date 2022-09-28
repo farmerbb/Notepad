@@ -163,6 +163,6 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         Intent restartIntent = new Intent(this, NotepadActivity.class);
         restartIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(restartIntent);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        overridePendingTransition(0, 0);
     }
 }

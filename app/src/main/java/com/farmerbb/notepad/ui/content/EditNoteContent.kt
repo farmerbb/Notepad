@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -29,12 +30,14 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.ui.previews.EditNotePreview
+import kotlinx.coroutines.delay
 
 private fun String.toTextFieldValue() = TextFieldValue(
     text = this,
@@ -46,6 +49,7 @@ fun EditNoteContent(
     text: String,
     baseTextStyle: TextStyle = TextStyle(),
     isPrinting: Boolean = false,
+    waitForAnimation: Boolean = false,
     onTextChanged: (String) -> Unit = {}
 ) {
     val textStyle = if (isPrinting) {
@@ -69,6 +73,9 @@ fun EditNoteContent(
         },
         textStyle = textStyle,
         cursorBrush = brush,
+        keyboardOptions = KeyboardOptions(
+            capitalization = KeyboardCapitalization.Sentences
+        ),
         modifier = Modifier
             .padding(
                 horizontal = 16.dp,
@@ -95,6 +102,10 @@ fun EditNoteContent(
     }
 
     LaunchedEffect(Unit) {
+        if (waitForAnimation) {
+            delay(200)
+        }
+
         focusRequester.requestFocus()
     }
 }

@@ -87,7 +87,7 @@
     <string name="preview_app_message">尝试 Notepad 从零写起的未完成的预览版本！&lt;br&gt;&lt;br&gt;切换版本前，请查看 &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; 了解预览版中还缺少哪些功能的详细信息。&lt;br&gt;&lt;br&gt;\"在这之后，就没有回头路了\" (没有应用卸载和重新安装)</string>
     <string name="blue_pill">停留在稳定版</string>
     <string name="red_pill">尝试预览版</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
+    <string name="migration_success">欢迎来到 Notepad 应用预览版！</string>
 
     <string-array name="sort_by_list">
         <item>由新至旧</item>

@@ -475,7 +475,8 @@ private fun NotepadComposeApp(
                     EditNoteContent(
                         text = note.draftText.ifEmpty { note.text },
                         baseTextStyle = textStyle,
-                        isPrinting = isPrinting
+                        isPrinting = isPrinting,
+                        waitForAnimation = note.id == -1L || directEdit
                     ) { text = it }
                 }
             }

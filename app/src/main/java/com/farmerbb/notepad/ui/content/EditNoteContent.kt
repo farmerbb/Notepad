@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.ui.previews.EditNotePreview
+import kotlinx.coroutines.delay
 
 private fun String.toTextFieldValue() = TextFieldValue(
     text = this,
@@ -46,6 +47,7 @@ fun EditNoteContent(
     text: String,
     baseTextStyle: TextStyle = TextStyle(),
     isPrinting: Boolean = false,
+    waitForAnimation: Boolean = false,
     onTextChanged: (String) -> Unit = {}
 ) {
     val textStyle = if (isPrinting) {
@@ -95,6 +97,10 @@ fun EditNoteContent(
     }
 
     LaunchedEffect(Unit) {
+        if (waitForAnimation) {
+            delay(200)
+        }
+
         focusRequester.requestFocus()
     }
 }

@@ -13,9 +13,15 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalAnimationApi::class)
+
 package com.farmerbb.notepad.ui.routes
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -487,7 +493,11 @@ private fun NotepadComposeApp(
             )
         },
         floatingActionButton = {
-            if(navState == Empty && !multiSelectEnabled) {
+            AnimatedVisibility(
+                visible = navState == Empty && !multiSelectEnabled,
+                enter = scaleIn(),
+                exit = scaleOut()
+            ) {
                 FloatingActionButton(
                     onClick = { navState = Edit() },
                     backgroundColor = colorResource(id = R.color.primary),

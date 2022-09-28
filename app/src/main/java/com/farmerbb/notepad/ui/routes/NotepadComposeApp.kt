@@ -281,9 +281,9 @@ private fun NotepadComposeApp(
         isSaveButton = it
 
         when {
-            text == note.text -> updateNavState(note.id)
-            showDialogs ->  showSaveDialog = true
-            else ->  onSave()
+            text.isNotEmpty() && text == note.text -> updateNavState(note.id)
+            showDialogs -> showSaveDialog = true
+            else -> onSave()
         }
     }
 

@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-@file:OptIn(kotlinx.coroutines.FlowPreview::class)
+@file:OptIn(FlowPreview::class)
 
 package com.farmerbb.notepad.android
 
@@ -53,6 +53,7 @@ import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -220,6 +221,22 @@ class NotepadViewModel(
                 repo.saveNote(text = text)
             }
         }
+    }
+
+    fun loadFileFromIntent(
+        intent: Intent,
+        onLoad: (String?) -> Unit
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        intent.data?.let { uri ->
+            val input = context.contentResolver.openInputStream(uri) ?: run {
+                onLoad(null)
+                return@launch
+            }
+
+            input.source().buffer().use {
+                onLoad(it.readUtf8())
+            }
+        } ?: onLoad(null)
     }
 
     private fun saveExportedNote(

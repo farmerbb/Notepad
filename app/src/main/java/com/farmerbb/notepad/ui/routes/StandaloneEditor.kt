@@ -1,14 +1,17 @@
 package com.farmerbb.notepad.ui.routes
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -22,10 +25,35 @@ import com.farmerbb.notepad.ui.widgets.DeleteDialog
 import com.farmerbb.notepad.ui.widgets.SaveButton
 import com.farmerbb.notepad.ui.widgets.SaveDialog
 import com.farmerbb.notepad.ui.widgets.StandaloneEditorMenu
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun StandaloneEditor(
+fun StandaloneEditorRoute(
+    initialText: String,
+    onExit: () -> Unit
+) {
+    val vm: NotepadViewModel = getViewModel()
+    val systemUiController = rememberSystemUiController()
+    val isLightTheme by vm.prefs.isLightTheme.collectAsState()
+
+    MaterialTheme {
+        StandaloneEditor(
+            vm = vm,
+            initialText = initialText,
+            onExit = onExit
+        )
+    }
+
+    LaunchedEffect(isLightTheme) {
+        systemUiController.setNavigationBarColor(
+            color = if (isLightTheme) Color.White else Color.Black
+        )
+    }
+}
+
+@Composable
+private fun StandaloneEditor(
     vm: NotepadViewModel = getViewModel(),
     initialText: String,
     onExit: () -> Unit

@@ -91,7 +91,7 @@ import com.zachklipp.richtext.ui.printing.rememberPrintableController
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun NotepadComposeApp() {
+fun NotepadComposeAppRoute() {
     val vm: NotepadViewModel = getViewModel()
     val systemUiController = rememberSystemUiController()
     val configuration = LocalConfiguration.current
@@ -124,7 +124,7 @@ fun NotepadComposeApp() {
 }
 
 @Composable
-fun NotepadComposeApp(
+private fun NotepadComposeApp(
     vm: NotepadViewModel = getViewModel(),
     isMultiPane: Boolean = false,
     initState: NavState = Empty
@@ -529,7 +529,7 @@ fun NotepadComposeApp(
 }
 
 @Composable
-fun EmptyDetails() {
+private fun EmptyDetails() {
     Column(
         modifier = Modifier
             .fillMaxWidth()

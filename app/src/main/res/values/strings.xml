@@ -57,7 +57,7 @@
     <string name="first_run">Welcome to Notepad!\n\nTo create a note, click the New Note button (plus sign).</string>
     <string name="first_view">To edit a saved note, double-tap the text or click the Edit button (pencil).</string>
     <string name="import_notes">Import notes</string>
-    <string name="loading_external_file">Loading external files is not supported</string>
+    <string name="loading_external_file">Failed loading external content (or content type not supported)</string>
     <string name="no_notes_found">No notes found</string>
     <string name="note_deleted">Note deleted</string>
     <string name="note_exported_to">Note exported successfully</string>

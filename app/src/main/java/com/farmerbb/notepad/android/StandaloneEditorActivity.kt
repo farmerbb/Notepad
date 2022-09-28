@@ -20,12 +20,8 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.StringRes
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.ui.routes.StandaloneEditor
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.Reader
+import com.farmerbb.notepad.ui.routes.StandaloneEditorRoute
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StandaloneEditorActivity: ComponentActivity() {
@@ -33,96 +29,30 @@ class StandaloneEditorActivity: ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        handleIntent()
-    }
-
-    private fun handleIntent() {
-        // Handle intents
-
-        val isPlainText = intent.type == "text/plain"
-        var initialText: String? = null
 
         when(intent.action) {
-            // Intent sent through an external application
-            Intent.ACTION_SEND -> {
-                if (isPlainText) {
-                    initialText = getExternalContent()
-                    if (initialText != null) {
-                        newNote()
-                    } else {
-                        showToast(R.string.loading_external_file)
-                        finish()
-                    }
-                } else {
-                    showToast(R.string.loading_external_file)
-                    finish()
-                }
+            null -> openEditor()
 
-                // Intent sent through Google Now "note to self"
+            Intent.ACTION_SEND -> checkPlainText {
+                getExternalContent()?.let(::openEditor) ?: externalContentFailed()
             }
-            "com.google.android.gm.action.AUTO_SEND" -> {
-                if (isPlainText) {
-                    initialText = getExternalContent()
-                    if (initialText != null) {
-                        try {
-                            // Write note to disk
-                            val output =
-                                openFileOutput(System.currentTimeMillis().toString(), MODE_PRIVATE)
-                            output.write(initialText.toByteArray())
-                            output.close()
 
-                            // Show toast notification and finish
-                            showToast(R.string.note_saved)
-                            finish()
-                        } catch (e: IOException) {
-                            // Show error message as toast if file fails to save
-                            showToast(R.string.failed_to_save)
-                            finish()
-                        }
-                    }
+            Intent.ACTION_EDIT -> checkPlainText {
+                intent.getStringExtra(Intent.EXTRA_TEXT)?.let(::openEditor) ?: externalContentFailed()
+            }
+
+            Intent.ACTION_VIEW -> checkPlainText {
+                vm.loadFileFromIntent(intent) { file ->
+                    file?.let(::openEditor) ?: externalContentFailed()
                 }
             }
-            Intent.ACTION_EDIT -> {
-                if (isPlainText) {
-                    initialText = intent.getStringExtra(Intent.EXTRA_TEXT)
-                    if (initialText != null) {
-                        newNote()
-                        return
-                    }
-                    finish()
-                } else newNote()
-            }
-            Intent.ACTION_VIEW -> {
-                if (isPlainText) {
-                    try {
-                        val `in` = contentResolver.openInputStream(intent.data!!)
-                        val rd: Reader = InputStreamReader(`in`, "UTF-8")
-                        val buffer = CharArray(4096)
-                        var len: Int
-                        val sb = StringBuilder()
-                        while (rd.read(buffer).also { len = it } != -1) {
-                            sb.append(buffer, 0, len)
-                        }
-                        rd.close()
-                        `in`!!.close()
-                        initialText = sb.toString()
-                    } catch (e: Exception) {
-                        // show msg error loading data?
-                    }
-                    if (initialText != null) {
-                        newNote()
-                        return
-                    }
-                    finish()
-                } else newNote()
-            }
-            else -> newNote()
+
+            else -> externalContentFailed()
         }
     }
 
-    private fun showToast(
-        @StringRes text: Int
-    ) = Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    private fun checkPlainText(onSuccess: () -> Unit) =
+        if (intent.type == "text/plain") onSuccess() else externalContentFailed()
 
     private fun getExternalContent(): String? {
         val text = intent.getStringExtra(Intent.EXTRA_TEXT) ?: return null
@@ -130,9 +60,14 @@ class StandaloneEditorActivity: ComponentActivity() {
         return "$subject\n\n$text"
     }
 
-    private fun newNote(initialText: String = "") {
+    private fun externalContentFailed() = run {
+        Toast.makeText(this, R.string.loading_external_file, Toast.LENGTH_LONG).show()
+        finish()
+    }
+
+    private fun openEditor(initialText: String = "") {
         setContent {
-            StandaloneEditor(
+            StandaloneEditorRoute(
                 initialText = initialText
             ) { finish() }
         }

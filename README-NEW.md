@@ -50,13 +50,18 @@ This table will track the features of the app as they are reimplemented in the n
 | Edit notes directly                           | ✔                      |
 | Ask before saving                             | ✔                      |
 | Save / load drafts                            | ✔                      |
-| New Note launcher shortcut                    |                        |
-| Share text to Notepad from other apps         |                        |
-| Open text files in Notepad from file managers |                        |
-| Google Assistant "Note to self"               |                        |
+| New Note launcher shortcut                    | ✔                      |
+| Share text to Notepad from other apps         | ✔                      |
+| Open text files in Notepad from file managers | ✔                      |
 | Keyboard shortcuts                            |                        |
-| Double-tap to edit                            |                        |
 | Probably some other things I forgot           |                        |
+
+### ❌ Features that will not be reimplemented (for now)
+
+|                                 | Reason                                                                                        |
+|---------------------------------|-----------------------------------------------------------------------------------------------|
+| Double-tap to edit              | Limitations with Compose. Double-tap detection does not seem to work with `Text` composables. |
+| Google Assistant "Note to self" | Third-party note apps are no longer supported by the Google Assistant                         |
 
 ## How do I try out the new app?
 

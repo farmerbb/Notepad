@@ -22,9 +22,11 @@ import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.farmerbb.notepad.Database
+import com.farmerbb.notepad.R
 import com.farmerbb.notepad.model.CrossRef
 import com.farmerbb.notepad.model.NoteContents
 import com.farmerbb.notepad.model.NoteMetadata
+import com.farmerbb.notepad.utils.showToast
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -55,46 +57,46 @@ class DataMigrator(
         val migrationComplete = File(context.filesDir, "migration_complete")
         if (migrationComplete.exists() || job.isCompleted) return
 
-        val (draftFilename, draftText) = loadDraft()
+        withContext(Dispatchers.IO) {
+            val (draftFilename, draftText) = loadDraft()
 
-        for(filename in context.filesDir.list().orEmpty()) {
-            if(!filename.isDigitsOnly() && filename != "draft") continue
+            for (filename in context.filesDir.list().orEmpty()) {
+                if (!filename.isDigitsOnly() && filename != "draft") continue
 
-            val metadata = NoteMetadata(
-                metadataId = -1,
-                title = loadNoteTitle(filename),
-                date = Date(filename.toLong()),
-                hasDraft = false
-            )
-
-            val contents = NoteContents(
-                contentsId = -1,
-                text = loadNote(filename),
-                draftText = if (filename == draftFilename) draftText else null
-            )
-
-            with(database) {
-                noteMetadataQueries.insert(metadata)
-                noteContentsQueries.insert(contents)
-                crossRefQueries.insert(
-                    CrossRef(
-                        metadataId = noteMetadataQueries.getIndex().executeAsOne(),
-                        contentsId = noteContentsQueries.getIndex().executeAsOne()
-                    )
+                val metadata = NoteMetadata(
+                    metadataId = -1,
+                    title = loadNoteTitle(filename),
+                    date = Date(filename.toLong()),
+                    hasDraft = false
                 )
+
+                val contents = NoteContents(
+                    contentsId = -1,
+                    text = loadNote(filename),
+                    draftText = if (filename == draftFilename) draftText else null
+                )
+
+                with(database) {
+                    noteMetadataQueries.insert(metadata)
+                    noteContentsQueries.insert(contents)
+                    crossRefQueries.insert(
+                        CrossRef(
+                            metadataId = noteMetadataQueries.getIndex().executeAsOne(),
+                            contentsId = noteContentsQueries.getIndex().executeAsOne()
+                        )
+                    )
+                }
+
+                File(context.filesDir, filename).delete()
             }
 
-            File(context.filesDir, filename).delete()
-        }
+            context.dataStore.edit {
+                // no-op to force SharedPreferences migration to trigger
+            }
 
-        context.dataStore.edit {
-            // no-op to force SharedPreferences migration to trigger
-        }
-
-        job.complete()
-
-        withContext(Dispatchers.IO) {
+            job.complete()
             migrationComplete.createNewFile()
+            context.showToast(R.string.migration_success)
         }
     }
 

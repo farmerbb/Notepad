@@ -56,7 +56,7 @@ This table will track the features of the app as they are reimplemented in the n
 | Keyboard shortcuts                            |                        |
 | Probably some other things I forgot           |                        |
 
-### ❌ Features that will not be reimplemented (for now)
+### ❌ Features that will not be implemented (for now)
 
 |                                 | Reason                                                                                        |
 |---------------------------------|-----------------------------------------------------------------------------------------------|

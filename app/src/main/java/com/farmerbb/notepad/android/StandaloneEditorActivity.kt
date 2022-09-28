@@ -31,7 +31,7 @@ class StandaloneEditorActivity: ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         when(intent.action) {
-            null -> openEditor()
+            Intent.ACTION_MAIN -> openEditor()
 
             Intent.ACTION_SEND -> checkPlainText {
                 getExternalContent()?.let(::openEditor) ?: externalContentFailed()

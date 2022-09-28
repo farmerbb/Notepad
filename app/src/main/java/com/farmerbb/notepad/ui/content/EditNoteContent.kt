@@ -60,7 +60,9 @@ fun EditNoteContent(
     var value by remember { mutableStateOf(text.toTextFieldValue()) }
 
     LaunchedEffect(text) {
-        value = text.toTextFieldValue()
+        if (text != value.text) {
+            value = text.toTextFieldValue()
+        }
     }
 
     val brush = SolidColor(if (isPrinting) Color.Transparent else Color.Black)

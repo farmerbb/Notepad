@@ -63,7 +63,6 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okio.buffer
 import okio.sink
 import okio.source
@@ -89,6 +88,7 @@ class NotepadViewModel(
     val prefs = dataStoreManager.prefs(viewModelScope)
 
     private val registeredBaseDirs = mutableListOf<Uri>()
+    private val registeredKeyboardShortcuts = mutableMapOf<Int, () -> Unit>()
 
     private var draftText: String = ""
     private var draftId: Long = -1L
@@ -115,7 +115,7 @@ class NotepadViewModel(
         draftText = text
     }
 
-    suspend fun getNote(id: Long?) = withContext(Dispatchers.IO) {
+    fun getNote(id: Long?) = viewModelScope.launch(Dispatchers.IO) {
         id?.let {
             _noteState.value = repo.getNote(it)
         } ?: run {
@@ -172,7 +172,7 @@ class NotepadViewModel(
     fun saveNote(
         id: Long,
         text: String,
-        onSuccess: (Long) -> Unit
+        onSuccess: (Long) -> Unit = {}
     ) = viewModelScope.launch(Dispatchers.IO) {
         text.checkLength {
             repo.saveNote(id, text) {
@@ -422,4 +422,16 @@ class NotepadViewModel(
             }
         } else block()
     }
+
+    fun keyboardShortcutPressed(keyCode: Int) =
+        registeredKeyboardShortcuts[keyCode]?.let { action ->
+            action()
+            true
+        } ?: false
+
+    fun registerKeyboardShortcuts(vararg mappings: Pair<Int, () -> Unit>) =
+        with(registeredKeyboardShortcuts) {
+            clear()
+            putAll(mappings)
+        }
 }

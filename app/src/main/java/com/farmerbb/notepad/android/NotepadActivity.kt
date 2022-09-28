@@ -19,6 +19,7 @@ package com.farmerbb.notepad.android
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.lifecycle.lifecycleScope
@@ -74,5 +75,13 @@ class NotepadActivity: ComponentActivity(), FSAFActivityCallbacks {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         fileChooser.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun dispatchKeyShortcutEvent(event: KeyEvent): Boolean {
+        return if (event.action == KeyEvent.ACTION_DOWN && event.isCtrlPressed) {
+            vm.keyboardShortcutPressed(event.keyCode)
+        } else {
+            super.dispatchKeyShortcutEvent(event)
+        }
     }
 }

@@ -17,6 +17,7 @@
 
 package com.farmerbb.notepad.ui.routes
 
+import android.view.KeyEvent
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -365,6 +366,13 @@ private fun NotepadComposeApp(
                 vm.clearNote()
             }
 
+            vm.registerKeyboardShortcuts(
+                KeyEvent.KEYCODE_N to {
+                    vm.clearSelectedNotes()
+                    navState = Edit()
+                }
+            )
+
             if (multiSelectEnabled) {
                 title = stringResource(
                     id = if (selectedNotes.size == 1) {
@@ -438,6 +446,12 @@ private fun NotepadComposeApp(
                 vm.getNote(state.id)
             }
 
+            vm.registerKeyboardShortcuts(
+                KeyEvent.KEYCODE_E to { navState = Edit(state.id) },
+                KeyEvent.KEYCODE_D to onDeleteClick,
+                KeyEvent.KEYCODE_H to { onShareClick(note.text) }
+            )
+
             title = note.metadata.title
             backButton = { BackButton(onBack) }
             actions = {
@@ -476,6 +490,12 @@ private fun NotepadComposeApp(
             LaunchedEffect(text) {
                 vm.setDraftText(text)
             }
+
+            vm.registerKeyboardShortcuts(
+                KeyEvent.KEYCODE_S to { vm.saveNote(note.id, text, vm::getNote) },
+                KeyEvent.KEYCODE_D to onDeleteClick,
+                KeyEvent.KEYCODE_H to { onShareClick(text) }
+            )
 
             title = note.metadata.title.ifEmpty {
                 stringResource(id = R.string.action_new)

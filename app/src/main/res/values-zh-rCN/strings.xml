@@ -57,7 +57,7 @@
     <string name="first_run">欢迎使用 Notepad！\n\n点击加号以创建新笔记。</string>
     <string name="first_view">要开始编辑，请双击文本或点击小铅笔。</string>
     <string name="import_notes">导入笔记</string>
-    <string name="loading_external_file">不支持导入外部文件</string>
+    <string name="loading_external_file">加载外部内容失败 (或内容类型不受支持)</string>
     <string name="no_notes_found">无笔记</string>
     <string name="note_deleted">已删除笔记</string>
     <string name="note_exported_to">导出笔记成功</string>
@@ -84,7 +84,7 @@
     <string name="no_notes_to_delete">删除：未选择任何笔记</string>
     <string name="check_for_updates">检查更新</string>
     <string name="preview_app_title">Notepad 预览版</string>
-    <string name="preview_app_message">尝试 Notepad 从零写起的未完成的预览版本！&lt;br&gt;&lt;br&gt;切换版本前，请查看 &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; 了解预览版中还缺少哪些功能的详细信息。&lt;br&gt;&lt;br&gt;\"这是你最后的机会，在这之后就没有回头路了\" (没有应用卸载和重新安装)</string>
+    <string name="preview_app_message">尝试 Notepad 从零写起的未完成的预览版本！&lt;br&gt;&lt;br&gt;切换版本前，请查看 &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; 了解预览版中还缺少哪些功能的详细信息。&lt;br&gt;&lt;br&gt;\"在这之后，就没有回头路了\" (没有应用卸载和重新安装)</string>
     <string name="blue_pill">停留在稳定版</string>
     <string name="red_pill">尝试预览版</string>
 

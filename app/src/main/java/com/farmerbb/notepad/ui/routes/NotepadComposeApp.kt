@@ -379,14 +379,31 @@ private fun NotepadComposeApp(
 
                 actions = {
                     SelectAllButton { vm.selectAllNotes(notes) }
-                    ExportButton { vm.exportSelectedNotes(notes, filenameFormat) }
-                    DeleteButton(onMultiDeleteClick)
+
+                    ExportButton {
+                        vm.showToastIf(selectedNotes.isEmpty(), R.string.no_notes_to_export) {
+                            vm.exportSelectedNotes(notes, filenameFormat)
+                        }
+                    }
+
+                    DeleteButton {
+                        vm.showToastIf(
+                            selectedNotes.isEmpty(),
+                            R.string.no_notes_to_delete,
+                            onMultiDeleteClick
+                        )
+                    }
                 }
             } else {
                 title = stringResource(id = R.string.app_name)
                 backButton = null
                 actions = {
-                    MultiSelectButton { multiSelectEnabled = true }
+                    MultiSelectButton {
+                        vm.showToastIf(notes.isEmpty(), R.string.no_notes_to_select) {
+                            multiSelectEnabled = true
+                        }
+                    }
+
                     NoteListMenu(
                         showMenu = showMenu,
                         onDismiss = onDismiss,

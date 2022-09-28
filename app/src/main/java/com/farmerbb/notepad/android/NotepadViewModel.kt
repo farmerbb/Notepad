@@ -21,6 +21,7 @@ import android.app.Application
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.farmerbb.notepad.BuildConfig
@@ -408,5 +409,17 @@ class NotepadViewModel(
         }
 
         return "$filename.txt"
+    }
+
+    fun showToastIf(
+        condition: Boolean,
+        @StringRes text: Int,
+        block: () -> Unit
+    ) {
+        if (condition) {
+            viewModelScope.launch {
+                context.showToast(text)
+            }
+        } else block()
     }
 }

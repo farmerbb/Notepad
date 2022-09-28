@@ -78,8 +78,8 @@ private fun StandaloneEditor(
     }
 
     var showSaveDialog by rememberSaveable { mutableStateOf(false) }
-    var textToSave: String by rememberSaveable { mutableStateOf("") }
-    val onSave: (String) -> Unit = { text ->
+    var text: String by rememberSaveable { mutableStateOf(initialText) }
+    val onSave = {
         vm.saveNote(-1L, text) { onExit() }
     }
 
@@ -87,7 +87,7 @@ private fun StandaloneEditor(
         SaveDialog(
             onConfirm = {
                 showSaveDialog = false
-                onSave(textToSave)
+                onSave()
             },
             onDiscard = {
                 showSaveDialog = false
@@ -103,24 +103,23 @@ private fun StandaloneEditor(
     val onDismiss = { showMenu = false }
     val onMoreClick = { showMenu = true }
 
-    val onSaveClick: (String) -> Unit = { text ->
+    val onSaveClick: () -> Unit = {
         if (showDialogs) {
-            textToSave = text
             showSaveDialog = true
         } else {
-            onSave(text)
+            onSave()
         }
     }
 
     val onDeleteClick: () -> Unit = {
         showDeleteDialog = true
     }
-    val onShareClick: (String) -> Unit = {
+    val onShareClick: () -> Unit = {
         onDismiss()
-        vm.shareNote(it)
+        vm.shareNote(text)
     }
-    val onBack = {
-        // TODO onSaveClick(id, text)
+    val onBack: () -> Unit = {
+        if (text.isNotEmpty()) onSaveClick() else onExit()
     }
 
     BackHandler(onBack = onBack)
@@ -131,8 +130,6 @@ private fun StandaloneEditor(
         fontFamily = fontFamily
     )
 
-    var text by rememberSaveable { mutableStateOf(initialText) }
-
     Scaffold(
         backgroundColor = colorResource(id = backgroundColorRes),
         topBar = {
@@ -141,13 +138,13 @@ private fun StandaloneEditor(
                 title = { AppBarText(stringResource(id = R.string.action_new)) },
                 backgroundColor = colorResource(id = R.color.primary),
                 actions = {
-                    SaveButton { onSaveClick(text) }
-                    DeleteButton { onDeleteClick() }
+                    SaveButton(onSaveClick)
+                    DeleteButton(onDeleteClick)
                     StandaloneEditorMenu(
                         showMenu = showMenu,
                         onDismiss = onDismiss,
                         onMoreClick = onMoreClick,
-                        onShareClick = { onShareClick(text) }
+                        onShareClick = onShareClick
                     )
                 }
             )

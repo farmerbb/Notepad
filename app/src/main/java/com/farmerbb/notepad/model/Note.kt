@@ -30,6 +30,7 @@ data class Note(
         draftText = null
     )
 ) {
+    val id: Long get() = metadata.metadataId
     val text: String get() = contents.text ?: ""
     val draftText: String get() = contents.draftText ?: ""
 }

@@ -182,17 +182,19 @@ class NotepadViewModel(
         }
     }
 
-    fun saveDraft() {
+    fun saveDraft(
+        onSuccess: suspend (Long) -> Unit = { context.showToast(R.string.draft_saved) }
+    ) {
         if (draftText.isEmpty()) return
 
         viewModelScope.launch(Dispatchers.IO) {
             repo.saveNote(
-                id = noteState.value.metadata.metadataId,
+                id = noteState.value.id,
                 text = noteState.value.text,
                 draftText = draftText
             ) {
                 draftId = it
-                context.showToast(R.string.draft_saved)
+                onSuccess(it)
             }
         }
     }
@@ -201,10 +203,10 @@ class NotepadViewModel(
         if (draftText.isEmpty()) return
 
         viewModelScope.launch(Dispatchers.IO) {
-            val savedId = noteState.value.metadata.metadataId
+            val savedId = noteState.value.id
             if (draftId == savedId) {
                 repo.saveNote(
-                    id = noteState.value.metadata.metadataId,
+                    id = noteState.value.id,
                     text = noteState.value.text
                 )
             } else {
@@ -318,10 +320,14 @@ class NotepadViewModel(
         metadata: NoteMetadata,
         text: String,
         filenameFormat: FilenameFormat
-    ) = fileChooser.openCreateFileDialog(
-        fileName = generateFilename(metadata, filenameFormat),
-        fileCreateCallback = exportFileCallback(text)
-    )
+    ) = viewModelScope.launch {
+        text.checkLength {
+            fileChooser.openCreateFileDialog(
+                fileName = generateFilename(metadata, filenameFormat),
+                fileCreateCallback = exportFileCallback(text)
+            )
+        }
+    }
 
     private val importCallback = object: FileMultiSelectChooserCallback() {
         override fun onResult(uris: List<Uri>) {

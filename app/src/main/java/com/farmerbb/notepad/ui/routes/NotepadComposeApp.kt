@@ -143,6 +143,7 @@ private fun NotepadComposeApp(
     LaunchedEffect(Unit) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             isPrinting = false
+            vm.deleteDraft()
         }
     }
 
@@ -253,6 +254,11 @@ private fun NotepadComposeApp(
         vm.saveNote(note.id, text, ::updateNavState)
     }
 
+    val onPrint: (String) -> Unit = { pageTitle ->
+        isPrinting = true
+        printController.print(pageTitle)
+    }
+
     if(showSaveDialog) {
         SaveDialog(
             onConfirm = {
@@ -299,11 +305,21 @@ private fun NotepadComposeApp(
         onDismiss()
         vm.exportNote(metadata, exportedText, filenameFormat)
     }
-    val onPrintClick: (String) -> Unit = { noteTitle ->
+    val onPrintClick: (String) -> Unit = { pageTitle ->
         onDismiss()
 
-        isPrinting = true
-        printController.print(noteTitle)
+        vm.showToastIf(text.isEmpty(), R.string.empty_note) {
+            when(navState) {
+                is Edit -> {
+                    vm.saveDraft { id ->
+                        vm.getNote(id)
+                        onPrint(pageTitle)
+                    }
+                }
+
+                else -> onPrint(pageTitle)
+            }
+        }
     }
     val onMultiDeleteClick = { showMultiDeleteDialog = true }
     val onBack = {

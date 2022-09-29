@@ -69,8 +69,6 @@
     <string name="pref_title_show_dialogs">Vragen alvorens op te slaan</string>
     <string name="send_to">Notitie delen met&#8230;</string>
     <string name="view_note">Notitie bekijken</string>
-    <string name="action_install">Installeren</string>
-    <string name="action_no_thanks">Nee, bedankt</string>
     <string name="pref_title_show_date">Datum/tijd tonen</string>
     <string name="action_theme">Thema</string>
     <string name="pref_title_direct_edit">Notities direct bewerken</string>

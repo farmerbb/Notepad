@@ -67,8 +67,6 @@
     <string name="pref_title_show_dialogs">Nachfrage vor dem Speichern</string>
     <string name="send_to">Teile Notiz mit&#8230;</string>
     <string name="view_note">Notiz ansehen</string>
-    <string name="action_install">Installieren</string>
-    <string name="action_no_thanks">Nein Danke</string>
     <string name="pref_title_show_date">Datum/Zeit anzeigen</string>
     <string name="action_theme">Thema</string>
     <string name="pref_title_direct_edit">Notizen direkt editieren</string>

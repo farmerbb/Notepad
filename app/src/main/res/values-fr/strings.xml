@@ -69,8 +69,6 @@
     <string name="pref_title_show_dialogs">Confirmer avant d\'enregistrer</string>
     <string name="send_to">Envoyer à</string>
     <string name="view_note">Afficher</string>
-    <string name="action_install">Installer</string>
-    <string name="action_no_thanks">Non merci</string>
     <string name="pref_title_show_date">Afficher la date</string>
     <string name="action_theme">Thème</string>
     <string name="pref_title_direct_edit">Editer directement les notes</string>

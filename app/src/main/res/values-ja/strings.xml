@@ -69,8 +69,6 @@
     <string name="pref_title_show_dialogs">保存時に確認する</string>
     <string name="send_to">メモをシェア&#8230;</string>
     <string name="view_note">メモを見る</string>
-    <string name="action_install">インストール</string>
-    <string name="action_no_thanks">いいえ</string>
     <string name="pref_title_show_date">日時を表示</string>
     <string name="action_theme">テーマ</string>
     <string name="pref_title_direct_edit">直接メモを編集</string>

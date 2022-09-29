@@ -69,8 +69,6 @@
     <string name="pref_title_show_dialogs">保存笔记前请求确认</string>
     <string name="send_to">笔记分享方式</string>
     <string name="view_note">查看笔记</string>
-    <string name="action_install">安装</string>
-    <string name="action_no_thanks">不，谢了</string>
     <string name="pref_title_show_date">列表中显示修改时间</string>
     <string name="action_theme">主题</string>
     <string name="pref_title_direct_edit">打开笔记即开始编辑</string>

@@ -69,8 +69,6 @@
     <string name="pref_title_show_dialogs">সংরক্ষণের আগে জিজ্ঞেস করুন</string>
     <string name="send_to">শেয়ার করুন&#8230;</string>
     <string name="view_note">নোট দেখুন</string>
-    <string name="action_install">ইন্সটল করুন</string>
-    <string name="action_no_thanks">না থাক</string>
     <string name="pref_title_show_date">তারিখ/সময় দেখান</string>
     <string name="action_theme">থিম</string>
     <string name="pref_title_direct_edit">সরাসরি নোটগুলো সম্পাদনা করুন</string>

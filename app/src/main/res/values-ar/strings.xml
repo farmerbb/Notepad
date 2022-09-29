@@ -51,8 +51,6 @@
     <string name="pref_title_show_dialogs">اسأل قبل الحفظ</string>
     <string name="send_to">"شارك الملاحظة مع&#8230; "</string>
     <string name="view_note">اعرض الملاحظة</string>
-    <string name="action_install">تثبيت</string>
-    <string name="action_no_thanks">لا شكرًا</string>
     <string name="pref_title_show_date">اعرض التاريخ/الوقت</string>
     <string name="action_theme">النسق المظهريّ</string>
     <string name="pref_title_direct_edit">تعديل الملاحظات مباشرةً</string>

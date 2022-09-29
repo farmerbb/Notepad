@@ -69,8 +69,6 @@
     <string name="pref_title_show_dialogs">Před uložením se zeptat</string>
     <string name="send_to">Sdílet pomocí&#8230;</string>
     <string name="view_note">Zobrazit poznámku</string>
-    <string name="action_install">Instalovat</string>
-    <string name="action_no_thanks">Ne, díky</string>
     <string name="pref_title_show_date">Zobrazit datum/čas</string>
     <string name="action_theme">Barevné téma</string>
     <string name="pref_title_direct_edit">Upravit poznámky přímo</string>

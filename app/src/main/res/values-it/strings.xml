@@ -69,8 +69,6 @@
     <string name="pref_title_show_dialogs">Chiedi prima di salvare</string>
     <string name="send_to">Condividi nota con&#8230;</string>
     <string name="view_note">Visualizza nota</string>
-    <string name="action_install">Installa</string>
-    <string name="action_no_thanks">No grazie</string>
     <string name="pref_title_show_date">Mostra data/ora</string>
     <string name="action_theme">Tema</string>
     <string name="pref_title_direct_edit">Modifica note direttamente</string>

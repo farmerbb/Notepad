@@ -16,8 +16,7 @@
 package com.farmerbb.notepad.ui.content
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -57,8 +56,7 @@ fun ViewNoteContent(
                 horizontal = 16.dp,
                 vertical = 12.dp
             )
-            .fillMaxWidth()
-            .fillMaxHeight()
+            .fillMaxSize()
 
         SelectionContainer {
             if(markdown) {

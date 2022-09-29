@@ -13,9 +13,13 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.ui.widgets
+package com.farmerbb.notepad.ui.components
 
-import androidx.compose.material.*
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog

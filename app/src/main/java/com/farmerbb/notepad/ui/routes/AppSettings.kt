@@ -22,7 +22,10 @@ package com.farmerbb.notepad.ui.routes
 
 import androidx.annotation.ArrayRes
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.material.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
@@ -35,8 +38,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.model.Prefs
-import com.farmerbb.notepad.ui.widgets.AppBarText
-import com.farmerbb.notepad.ui.widgets.BackButton
+import com.farmerbb.notepad.ui.components.AppBarText
+import com.farmerbb.notepad.ui.components.BackButton
 import com.farmerbb.notepad.utils.dataStore
 import de.schnettler.datastore.compose.material.PreferenceScreen
 import de.schnettler.datastore.compose.material.model.Preference.PreferenceItem.ListPreference

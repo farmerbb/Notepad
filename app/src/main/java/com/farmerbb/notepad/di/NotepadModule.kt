@@ -21,37 +21,27 @@ import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.usecase.artVandelayModule
 import com.farmerbb.notepad.usecase.dataMigratorModule
+import com.farmerbb.notepad.usecase.keyboardShortcutsModule
 import com.farmerbb.notepad.usecase.toasterModule
 import com.farmerbb.notepad.utils.dataStore
-import com.farmerbb.notepad.viewmodel.NotepadViewModel
+import com.farmerbb.notepad.viewmodel.viewModelModule
 import com.github.k1rakishou.fsaf.FileChooser
 import com.github.k1rakishou.fsaf.FileManager
 import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import de.schnettler.datastore.manager.DataStoreManager
 import java.util.Date
-import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val notepadModule = module {
     includes(
+        viewModelModule,
         dataMigratorModule,
         toasterModule,
-        artVandelayModule
+        artVandelayModule,
+        keyboardShortcutsModule
     )
-
-    viewModel {
-        NotepadViewModel(
-            context = androidApplication(),
-            repo = get(),
-            dataStoreManager = get(),
-            dataMigrator = get(),
-            toaster = get(),
-            artVandelay = get()
-        )
-    }
 
     single { provideDatabase(context = androidContext()) }
     single { NotepadRepository(database = get()) }

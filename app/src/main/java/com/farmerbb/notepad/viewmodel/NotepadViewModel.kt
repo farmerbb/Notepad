@@ -37,6 +37,7 @@ import com.farmerbb.notepad.model.ReleaseType.PlayStore
 import com.farmerbb.notepad.model.ReleaseType.Unknown
 import com.farmerbb.notepad.usecase.ArtVandelay
 import com.farmerbb.notepad.usecase.DataMigrator
+import com.farmerbb.notepad.usecase.KeyboardShortcuts
 import com.farmerbb.notepad.usecase.Toaster
 import com.farmerbb.notepad.utils.isPlayStoreInstalled
 import com.farmerbb.notepad.utils.releaseType
@@ -56,6 +57,9 @@ import kotlinx.coroutines.launch
 import okio.buffer
 import okio.sink
 import okio.source
+import org.koin.android.ext.koin.androidApplication
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 
 class NotepadViewModel(
     private val context: Application,
@@ -63,7 +67,8 @@ class NotepadViewModel(
     dataStoreManager: DataStoreManager,
     private val dataMigrator: DataMigrator,
     private val toaster: Toaster,
-    private val artVandelay: ArtVandelay
+    private val artVandelay: ArtVandelay,
+    private val keyboardShortcuts: KeyboardShortcuts
 ): ViewModel() {
     private val _noteState = MutableStateFlow(Note())
     val noteState: StateFlow<Note> = _noteState
@@ -80,8 +85,6 @@ class NotepadViewModel(
 
     val noteMetadata get() = prefs.sortOrder.flatMapConcat(repo::noteMetadataFlow)
     val prefs = dataStoreManager.prefs(viewModelScope)
-
-    private val registeredKeyboardShortcuts = mutableMapOf<Int, () -> Unit>()
 
     private val _savedDraftId = MutableStateFlow<Long?>(null)
     val savedDraftId: StateFlow<Long?> = _savedDraftId
@@ -341,23 +344,25 @@ class NotepadViewModel(
         condition: Boolean,
         @StringRes text: Int,
         block: () -> Unit
-    ) {
-        if (condition) {
-            viewModelScope.launch {
-                toaster.toast(text)
-            }
-        } else block()
+    ) = viewModelScope.launch {
+        toaster.toastIf(condition, text, block)
     }
 
-    fun keyboardShortcutPressed(keyCode: Int) =
-        registeredKeyboardShortcuts[keyCode]?.let { action ->
-            action()
-            true
-        } ?: false
-
+    fun keyboardShortcutPressed(keyCode: Int) = keyboardShortcuts.pressed(keyCode)
     fun registerKeyboardShortcuts(vararg mappings: Pair<Int, () -> Unit>) =
-        with(registeredKeyboardShortcuts) {
-            clear()
-            putAll(mappings)
-        }
+        keyboardShortcuts.register(*mappings)
+}
+
+val viewModelModule = module {
+    viewModel {
+        NotepadViewModel(
+            context = androidApplication(),
+            repo = get(),
+            dataStoreManager = get(),
+            dataMigrator = get(),
+            toaster = get(),
+            artVandelay = get(),
+            keyboardShortcuts = get()
+        )
+    }
 }

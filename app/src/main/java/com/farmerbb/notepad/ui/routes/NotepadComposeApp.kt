@@ -149,6 +149,7 @@ private fun NotepadComposeApp(
 
     val notes by vm.noteMetadata.collectAsState(emptyList())
     val note by vm.noteState.collectAsState()
+    val text by vm.text.collectAsState()
     val selectedNotes by vm.selectedNotesFlow.collectAsState(emptyMap())
     var multiSelectEnabled by rememberSaveable { mutableStateOf(false) }
 
@@ -244,7 +245,6 @@ private fun NotepadComposeApp(
 
     var showSaveDialog by rememberSaveable { mutableStateOf(false) }
     var isSaveButton by rememberSaveable { mutableStateOf(false) }
-    var text: String by rememberSaveable { mutableStateOf(note.text) }
 
     fun updateNavState(id: Long) {
         navState = if (directEdit || !isSaveButton) Empty else View(id)
@@ -330,11 +330,7 @@ private fun NotepadComposeApp(
             }
 
             navState is Edit && text.isNotEmpty() -> onSaveClick(false)
-
-            else -> {
-                navState = Empty
-                text = ""
-            }
+            else -> navState = Empty
         }
     }
 
@@ -499,14 +495,6 @@ private fun NotepadComposeApp(
                 vm.getNote(state.id)
             }
 
-            LaunchedEffect(note) {
-                text = note.text
-            }
-
-            LaunchedEffect(text) {
-                vm.setDraftText(text)
-            }
-
             vm.registerKeyboardShortcuts(
                 KeyEvent.KEYCODE_S to { vm.saveNote(note.id, text, vm::getNote) },
                 KeyEvent.KEYCODE_D to onDeleteClick,
@@ -535,8 +523,9 @@ private fun NotepadComposeApp(
                         text = note.draftText.ifEmpty { note.text },
                         baseTextStyle = textStyle,
                         isPrinting = isPrinting,
-                        waitForAnimation = note.id == -1L || directEdit
-                    ) { text = it }
+                        waitForAnimation = note.id == -1L || directEdit,
+                        onTextChanged = vm::setText
+                    )
                 }
             }
         }

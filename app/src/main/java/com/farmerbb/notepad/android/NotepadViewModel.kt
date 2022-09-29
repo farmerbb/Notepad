@@ -77,6 +77,9 @@ class NotepadViewModel(
     private val _noteState = MutableStateFlow(Note())
     val noteState: StateFlow<Note> = _noteState
 
+    private val _text = MutableStateFlow("")
+    val text: StateFlow<String> = _text
+
     private val selectedNotes = mutableMapOf<Long, Boolean>()
     private val _selectedNotesFlow = MutableSharedFlow<Map<Long, Boolean>>(
         replay = 1,
@@ -89,9 +92,6 @@ class NotepadViewModel(
 
     private val registeredBaseDirs = mutableListOf<Uri>()
     private val registeredKeyboardShortcuts = mutableMapOf<Int, () -> Unit>()
-
-    private var draftText: String = ""
-    private var draftId: Long = -1L
 
     private val _savedDraftId = MutableStateFlow<Long?>(null)
     val savedDraftId: StateFlow<Long?> = _savedDraftId
@@ -111,13 +111,14 @@ class NotepadViewModel(
         }
     }
 
-    fun setDraftText(text: String) {
-        draftText = text
+    fun setText(text: String) {
+        _text.value = text
     }
 
     fun getNote(id: Long?) = viewModelScope.launch(Dispatchers.IO) {
         id?.let {
             _noteState.value = repo.getNote(it)
+            _text.value = noteState.value.text
         } ?: run {
             clearNote()
         }
@@ -125,8 +126,7 @@ class NotepadViewModel(
 
     fun clearNote() {
         _noteState.value = Note()
-        draftText = ""
-        draftId = -1L
+        _text.value = ""
     }
 
     fun toggleSelectedNote(id: Long) {
@@ -185,32 +185,36 @@ class NotepadViewModel(
     fun saveDraft(
         onSuccess: suspend (Long) -> Unit = { context.showToast(R.string.draft_saved) }
     ) {
-        if (draftText.isEmpty()) return
+        if (text.value.isEmpty()) return
 
         viewModelScope.launch(Dispatchers.IO) {
             repo.saveNote(
                 id = noteState.value.id,
                 text = noteState.value.text,
-                draftText = draftText
-            ) {
-                draftId = it
-                onSuccess(it)
-            }
+                draftText = text.value,
+                onSuccess = onSuccess
+            )
         }
     }
 
     fun deleteDraft() {
-        if (draftText.isEmpty()) return
+        if (text.value.isEmpty()) return
 
         viewModelScope.launch(Dispatchers.IO) {
-            val savedId = noteState.value.id
-            if (draftId == savedId) {
-                repo.saveNote(
-                    id = noteState.value.id,
-                    text = noteState.value.text
-                )
-            } else {
-                repo.deleteNote(draftId)
+            savedDraftIdJob = viewModelScope.launch(Dispatchers.IO) {
+                repo.savedDraftId.collect { draftId ->
+                    val savedId = noteState.value.id
+                    if (draftId == savedId) {
+                        repo.saveNote(
+                            id = noteState.value.id,
+                            text = noteState.value.text
+                        )
+                    } else {
+                        repo.deleteNote(draftId)
+                    }
+
+                    savedDraftIdJob?.cancel()
+                }
             }
         }
     }

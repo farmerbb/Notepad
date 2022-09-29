@@ -310,13 +310,7 @@ private fun NotepadComposeApp(
 
         vm.showToastIf(text.isEmpty(), R.string.empty_note) {
             when(navState) {
-                is Edit -> {
-                    vm.saveDraft { id ->
-                        vm.getNote(id)
-                        onPrint(pageTitle)
-                    }
-                }
-
+                is Edit -> vm.saveDraft { onPrint(pageTitle) }
                 else -> onPrint(pageTitle)
             }
         }

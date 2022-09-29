@@ -183,7 +183,7 @@ class NotepadViewModel(
     }
 
     fun saveDraft(
-        onSuccess: suspend (Long) -> Unit = { context.showToast(R.string.draft_saved) }
+        onSuccess: suspend () -> Unit = { context.showToast(R.string.draft_saved) }
     ) {
         if (text.value.isEmpty()) return
 
@@ -191,30 +191,20 @@ class NotepadViewModel(
             repo.saveNote(
                 id = noteState.value.id,
                 text = noteState.value.text,
-                draftText = text.value,
-                onSuccess = onSuccess
-            )
+                draftText = text.value
+            ) { id ->
+                getNote(id)
+                onSuccess()
+            }
         }
     }
 
-    fun deleteDraft() {
-        if (text.value.isEmpty()) return
-
-        viewModelScope.launch(Dispatchers.IO) {
-            savedDraftIdJob = viewModelScope.launch(Dispatchers.IO) {
-                repo.savedDraftId.collect { draftId ->
-                    val savedId = noteState.value.id
-                    if (draftId == savedId) {
-                        repo.saveNote(
-                            id = noteState.value.id,
-                            text = noteState.value.text
-                        )
-                    } else {
-                        repo.deleteNote(draftId)
-                    }
-
-                    savedDraftIdJob?.cancel()
-                }
+    fun deleteDraft() = viewModelScope.launch(Dispatchers.IO) {
+        with(noteState.value) {
+            if (text.isEmpty()) {
+                repo.deleteNote(id)
+            } else {
+                repo.saveNote(id, text)
             }
         }
     }

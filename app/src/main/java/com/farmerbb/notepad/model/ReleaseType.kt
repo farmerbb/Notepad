@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.utils
+package com.farmerbb.notepad.model
 
 enum class ReleaseType(val signature: String) {
     PlayStore(signature =

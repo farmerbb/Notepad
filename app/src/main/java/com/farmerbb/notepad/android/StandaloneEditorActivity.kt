@@ -22,6 +22,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.ui.routes.StandaloneEditorRoute
+import com.farmerbb.notepad.viewmodel.NotepadViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StandaloneEditorActivity: ComponentActivity() {

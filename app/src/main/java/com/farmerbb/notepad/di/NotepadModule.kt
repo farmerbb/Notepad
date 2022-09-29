@@ -17,30 +17,47 @@ package com.farmerbb.notepad.di
 
 import android.content.Context
 import com.farmerbb.notepad.Database
-import com.farmerbb.notepad.android.NotepadViewModel
-import com.farmerbb.notepad.data.DataMigrator
 import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.model.NoteMetadata
+import com.farmerbb.notepad.usecase.artVandelayModule
+import com.farmerbb.notepad.usecase.dataMigratorModule
+import com.farmerbb.notepad.usecase.toasterModule
 import com.farmerbb.notepad.utils.dataStore
+import com.farmerbb.notepad.viewmodel.NotepadViewModel
 import com.github.k1rakishou.fsaf.FileChooser
 import com.github.k1rakishou.fsaf.FileManager
 import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import de.schnettler.datastore.manager.DataStoreManager
+import java.util.Date
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import java.util.Date
 
 val notepadModule = module {
-    viewModel { NotepadViewModel(androidApplication(), get(), get(), get(), get()) }
-    single { provideDatabase(androidContext()) }
-    single { NotepadRepository(get()) }
-    single { DataMigrator(androidContext(), get()) }
-    single { DataStoreManager(androidContext().dataStore) }
-    single { FileManager(androidContext()) }
-    single { FileChooser(androidContext()) }
+    includes(
+        dataMigratorModule,
+        toasterModule,
+        artVandelayModule
+    )
+
+    viewModel {
+        NotepadViewModel(
+            context = androidApplication(),
+            repo = get(),
+            dataStoreManager = get(),
+            dataMigrator = get(),
+            toaster = get(),
+            artVandelay = get()
+        )
+    }
+
+    single { provideDatabase(context = androidContext()) }
+    single { NotepadRepository(database = get()) }
+    single { DataStoreManager(dataStore = androidContext().dataStore) }
+    single { FileManager(appContext = androidContext()) }
+    single { FileChooser(appContext = androidContext()) }
 }
 
 private fun provideDatabase(context: Context) = Database(

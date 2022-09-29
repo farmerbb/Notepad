@@ -15,7 +15,7 @@
 
 @file:OptIn(FlowPreview::class)
 
-package com.farmerbb.notepad.android
+package com.farmerbb.notepad.viewmodel
 
 import android.app.Application
 import android.content.ActivityNotFoundException
@@ -28,31 +28,21 @@ import com.farmerbb.notepad.BuildConfig
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.data.PreferenceManager.Companion.prefs
-import com.farmerbb.notepad.model.ExportedNotesDirectory
 import com.farmerbb.notepad.model.FilenameFormat
-import com.farmerbb.notepad.model.FilenameFormat.TimestampAndTitle
-import com.farmerbb.notepad.model.FilenameFormat.TitleAndTimestamp
-import com.farmerbb.notepad.model.FilenameFormat.TitleOnly
 import com.farmerbb.notepad.model.Note
 import com.farmerbb.notepad.model.NoteMetadata
-import com.farmerbb.notepad.utils.ReleaseType.Amazon
-import com.farmerbb.notepad.utils.ReleaseType.FDroid
-import com.farmerbb.notepad.utils.ReleaseType.PlayStore
-import com.farmerbb.notepad.utils.ReleaseType.Unknown
+import com.farmerbb.notepad.model.ReleaseType.Amazon
+import com.farmerbb.notepad.model.ReleaseType.FDroid
+import com.farmerbb.notepad.model.ReleaseType.PlayStore
+import com.farmerbb.notepad.model.ReleaseType.Unknown
+import com.farmerbb.notepad.usecase.ArtVandelay
+import com.farmerbb.notepad.usecase.DataMigrator
+import com.farmerbb.notepad.usecase.Toaster
 import com.farmerbb.notepad.utils.isPlayStoreInstalled
 import com.farmerbb.notepad.utils.releaseType
-import com.farmerbb.notepad.utils.showToast
-import com.github.k1rakishou.fsaf.FileChooser
-import com.github.k1rakishou.fsaf.FileManager
-import com.github.k1rakishou.fsaf.callback.FileCreateCallback
-import com.github.k1rakishou.fsaf.callback.FileMultiSelectChooserCallback
-import com.github.k1rakishou.fsaf.callback.directory.DirectoryChooserCallback
-import com.github.k1rakishou.fsaf.file.FileSegment
 import de.schnettler.datastore.manager.DataStoreManager
 import java.io.InputStream
 import java.io.OutputStream
-import java.text.SimpleDateFormat
-import java.util.Locale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
@@ -71,8 +61,9 @@ class NotepadViewModel(
     private val context: Application,
     private val repo: NotepadRepository,
     dataStoreManager: DataStoreManager,
-    private val fileChooser: FileChooser,
-    private val fileManager: FileManager
+    private val dataMigrator: DataMigrator,
+    private val toaster: Toaster,
+    private val artVandelay: ArtVandelay
 ): ViewModel() {
     private val _noteState = MutableStateFlow(Note())
     val noteState: StateFlow<Note> = _noteState
@@ -90,12 +81,16 @@ class NotepadViewModel(
     val noteMetadata get() = prefs.sortOrder.flatMapConcat(repo::noteMetadataFlow)
     val prefs = dataStoreManager.prefs(viewModelScope)
 
-    private val registeredBaseDirs = mutableListOf<Uri>()
     private val registeredKeyboardShortcuts = mutableMapOf<Int, () -> Unit>()
 
     private val _savedDraftId = MutableStateFlow<Long?>(null)
     val savedDraftId: StateFlow<Long?> = _savedDraftId
     private var savedDraftIdJob: Job? = null
+
+    fun migrateData(onComplete: () -> Unit) = viewModelScope.launch {
+        dataMigrator.migrate()
+        onComplete()
+    }
 
     fun getSavedDraftId() {
         savedDraftIdJob = viewModelScope.launch(Dispatchers.IO) {
@@ -103,7 +98,7 @@ class NotepadViewModel(
                 _savedDraftId.value = id
 
                 if (id != -1L) {
-                    context.showToast(R.string.draft_restored)
+                    toaster.toast(R.string.draft_restored)
                 }
 
                 savedDraftIdJob?.cancel()
@@ -157,17 +152,26 @@ class NotepadViewModel(
                     else -> R.string.notes_deleted
                 }
 
-                context.showToast(toastId)
+                toaster.toast(toastId)
             }
         }
     }
 
-    fun exportSelectedNotes(
-        notes: List<NoteMetadata>,
-        filenameFormat: FilenameFormat
-    ) = fileChooser.openChooseDirectoryDialog(
-        directoryChooserCallback = exportFolderCallback(notes, filenameFormat)
-    )
+    fun deleteNote(
+        id: Long,
+        onSuccess: () -> Unit
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        repo.deleteNote(id) {
+            toaster.toast(R.string.note_deleted)
+            onSuccess()
+        }
+    }
+
+    fun shareNote(text: String) = viewModelScope.launch {
+        text.checkLength {
+            showShareSheet(text)
+        }
+    }
 
     fun saveNote(
         id: Long,
@@ -176,14 +180,14 @@ class NotepadViewModel(
     ) = viewModelScope.launch(Dispatchers.IO) {
         text.checkLength {
             repo.saveNote(id, text) {
-                context.showToast(R.string.note_saved)
+                toaster.toast(R.string.note_saved)
                 onSuccess(it)
             }
         }
     }
 
     fun saveDraft(
-        onSuccess: suspend () -> Unit = { context.showToast(R.string.draft_saved) }
+        onSuccess: suspend () -> Unit = { toaster.toast(R.string.draft_saved) }
     ) {
         if (text.value.isEmpty()) return
 
@@ -209,6 +213,46 @@ class NotepadViewModel(
         }
     }
 
+    fun importNotes() = artVandelay.importNotes(::saveImportedNote) { size ->
+        val toastId = when (size) {
+            1 -> R.string.note_imported_successfully
+            else -> R.string.notes_imported_successfully
+        }
+
+        viewModelScope.launch {
+            toaster.toast(toastId)
+        }
+    }
+
+    fun exportNotes(
+        metadata: List<NoteMetadata>,
+        filenameFormat: FilenameFormat
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        val hydratedNotes = repo.getNotes(
+            metadata.filter {
+                selectedNotes.getOrDefault(it.metadataId, false)
+            }
+        ).also {
+            clearSelectedNotes()
+        }
+
+        artVandelay.exportNotes(hydratedNotes, filenameFormat, ::saveExportedNote, ::clearSelectedNotes)
+    }
+
+    fun exportSingleNote(
+        metadata: NoteMetadata,
+        text: String,
+        filenameFormat: FilenameFormat
+    ) = viewModelScope.launch {
+        text.checkLength {
+            artVandelay.exportSingleNote(metadata, filenameFormat, { saveExportedNote(it, text) }) {
+                viewModelScope.launch {
+                    toaster.toast(R.string.note_exported_to)
+                }
+            }
+        }
+    }
+
     private fun saveImportedNote(
         input: InputStream
     ) = viewModelScope.launch(Dispatchers.IO) {
@@ -217,6 +261,15 @@ class NotepadViewModel(
             if (text.isNotEmpty()) {
                 repo.saveNote(text = text)
             }
+        }
+    }
+
+    private fun saveExportedNote(
+        output: OutputStream,
+        text: String
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        output.sink().buffer().use {
+            it.writeUtf8(text)
         }
     }
 
@@ -234,31 +287,6 @@ class NotepadViewModel(
                 onLoad(it.readUtf8())
             }
         } ?: onLoad(null)
-    }
-
-    private fun saveExportedNote(
-        output: OutputStream,
-        text: String
-    ) = viewModelScope.launch(Dispatchers.IO) {
-        output.sink().buffer().use {
-            it.writeUtf8(text)
-        }
-    }
-
-    fun deleteNote(
-        id: Long,
-        onSuccess: () -> Unit
-    ) = viewModelScope.launch(Dispatchers.IO) {
-        repo.deleteNote(id) {
-            context.showToast(R.string.note_deleted)
-            onSuccess()
-        }
-    }
-
-    fun shareNote(text: String) = viewModelScope.launch {
-        text.checkLength {
-            showShareSheet(text)
-        }
     }
 
     fun checkForUpdates() = with(context) {
@@ -305,110 +333,8 @@ class NotepadViewModel(
     private suspend fun String.checkLength(
         onSuccess: suspend () -> Unit
     ) = when(length) {
-        0 -> context.showToast(R.string.empty_note)
+        0 -> toaster.toast(R.string.empty_note)
         else -> onSuccess()
-    }
-
-    fun importNotes() = fileChooser.openChooseMultiSelectFileDialog(importCallback)
-    fun exportNote(
-        metadata: NoteMetadata,
-        text: String,
-        filenameFormat: FilenameFormat
-    ) = viewModelScope.launch {
-        text.checkLength {
-            fileChooser.openCreateFileDialog(
-                fileName = generateFilename(metadata, filenameFormat),
-                fileCreateCallback = exportFileCallback(text)
-            )
-        }
-    }
-
-    private val importCallback = object: FileMultiSelectChooserCallback() {
-        override fun onResult(uris: List<Uri>) {
-            with(fileManager) {
-                for (uri in uris) {
-                    fromUri(uri)?.let(::getInputStream)?.let(::saveImportedNote)
-                }
-
-                val toastId = when (uris.size) {
-                    1 -> R.string.note_imported_successfully
-                    else -> R.string.notes_imported_successfully
-                }
-
-                viewModelScope.launch {
-                    context.showToast(toastId)
-                }
-            }
-        }
-
-        override fun onCancel(reason: String) = Unit // no-op
-    }
-
-    private fun exportFileCallback(text: String) = object: FileCreateCallback() {
-        override fun onResult(uri: Uri) {
-            with(fileManager) {
-                fromUri(uri)?.let(::getOutputStream)?.let { output ->
-                    saveExportedNote(output, text)
-                }
-
-                viewModelScope.launch {
-                    context.showToast(R.string.note_exported_to)
-                }
-            }
-        }
-        override fun onCancel(reason: String) = Unit // no-op
-    }
-
-    private fun exportFolderCallback(
-        notes: List<NoteMetadata>,
-        filenameFormat: FilenameFormat
-    ) = object: DirectoryChooserCallback() {
-        override fun onResult(uri: Uri) {
-            viewModelScope.launch(Dispatchers.IO) {
-                val hydratedNotes = repo.getNotes(
-                    notes.filter {
-                        selectedNotes.getOrDefault(it.metadataId, false)
-                    }
-                ).also {
-                    clearSelectedNotes()
-                }
-
-                with(fileManager) {
-                    if (!registeredBaseDirs.contains(uri)) {
-                        registerBaseDir<ExportedNotesDirectory>(ExportedNotesDirectory(uri))
-                        registeredBaseDirs.add(uri)
-                    }
-
-                    newBaseDirectoryFile<ExportedNotesDirectory>()?.let { baseDir ->
-                        for (note in hydratedNotes) {
-                            val filename = generateFilename(note.metadata, filenameFormat)
-                            create(baseDir, FileSegment(filename))
-                                ?.let(::getOutputStream)
-                                ?.let { output ->
-                                    saveExportedNote(output, note.text)
-                                }
-                        }
-                    }
-                }
-            }
-        }
-
-        override fun onCancel(reason: String) = clearSelectedNotes()
-    }
-
-    private fun generateFilename(
-        metadata: NoteMetadata,
-        filenameFormat: FilenameFormat
-    ): String {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.getDefault())
-        val timestamp = dateFormat.format(metadata.date)
-        val filename = when(filenameFormat) {
-            TitleOnly -> metadata.title
-            TimestampAndTitle -> "${timestamp}_${metadata.title}"
-            TitleAndTimestamp -> "${metadata.title}_$timestamp"
-        }
-
-        return "$filename.txt"
     }
 
     fun showToastIf(
@@ -418,7 +344,7 @@ class NotepadViewModel(
     ) {
         if (condition) {
             viewModelScope.launch {
-                context.showToast(text)
+                toaster.toast(text)
             }
         } else block()
     }

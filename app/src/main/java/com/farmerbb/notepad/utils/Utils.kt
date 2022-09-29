@@ -19,21 +19,13 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.content.pm.Signature
 import android.util.Base64
-import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.datastore.preferences.preferencesDataStore
 import com.farmerbb.notepad.BuildConfig
-import java.lang.Exception
+import com.farmerbb.notepad.model.ReleaseType
 import java.text.DateFormat
-import java.util.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-
-suspend fun Context.showToast(
-    @StringRes text: Int
-) = withContext(Dispatchers.Main) {
-    Toast.makeText(this@showToast, text, Toast.LENGTH_SHORT).show()
-}
+import java.util.Calendar
+import java.util.Date
+import java.util.TimeZone
 
 val Context.dataStore by preferencesDataStore("settings")
 
@@ -45,6 +37,7 @@ val buildYear: Int get() {
     return calendar.get(Calendar.YEAR)
 }
 
+@Suppress("Deprecation")
 val Context.isPlayStoreInstalled get() = try {
     packageManager.getPackageInfo("com.android.vending", 0)
     true

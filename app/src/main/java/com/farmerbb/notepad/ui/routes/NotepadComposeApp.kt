@@ -67,7 +67,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.model.NavState
 import com.farmerbb.notepad.model.NavState.Companion.EDIT
 import com.farmerbb.notepad.model.NavState.Companion.VIEW
@@ -92,6 +91,7 @@ import com.farmerbb.notepad.ui.widgets.SaveButton
 import com.farmerbb.notepad.ui.widgets.SaveDialog
 import com.farmerbb.notepad.ui.widgets.SelectAllButton
 import com.farmerbb.notepad.ui.widgets.SettingsDialog
+import com.farmerbb.notepad.viewmodel.NotepadViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.zachklipp.richtext.ui.printing.Printable
 import com.zachklipp.richtext.ui.printing.rememberPrintableController
@@ -303,7 +303,7 @@ private fun NotepadComposeApp(
     }
     val onExportClick: (NoteMetadata, String) -> Unit = { metadata, exportedText ->
         onDismiss()
-        vm.exportNote(metadata, exportedText, filenameFormat)
+        vm.exportSingleNote(metadata, exportedText, filenameFormat)
     }
     val onPrintClick: (String) -> Unit = { pageTitle ->
         onDismiss()
@@ -396,7 +396,7 @@ private fun NotepadComposeApp(
 
                     ExportButton {
                         vm.showToastIf(selectedNotes.isEmpty(), R.string.no_notes_to_export) {
-                            vm.exportSelectedNotes(notes, filenameFormat)
+                            vm.exportNotes(notes, filenameFormat)
                         }
                     }
 

@@ -16,7 +16,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.widgets.AppBarText
 import com.farmerbb.notepad.ui.widgets.BackButton
@@ -25,6 +24,7 @@ import com.farmerbb.notepad.ui.widgets.DeleteDialog
 import com.farmerbb.notepad.ui.widgets.SaveButton
 import com.farmerbb.notepad.ui.widgets.SaveDialog
 import com.farmerbb.notepad.ui.widgets.StandaloneEditorMenu
+import com.farmerbb.notepad.viewmodel.NotepadViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.compose.getViewModel
 

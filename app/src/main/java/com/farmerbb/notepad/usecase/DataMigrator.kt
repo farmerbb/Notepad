@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.data
+package com.farmerbb.notepad.usecase
 
 import android.content.Context
 import androidx.core.content.edit
@@ -26,7 +26,6 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.model.CrossRef
 import com.farmerbb.notepad.model.NoteContents
 import com.farmerbb.notepad.model.NoteMetadata
-import com.farmerbb.notepad.utils.showToast
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -35,11 +34,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.withContext
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
-class DataMigrator(
+interface DataMigrator {
+    suspend fun migrate()
+}
+
+private class DataMigratorImpl(
     private val context: Context,
-    private val database: Database
-) {
+    private val database: Database,
+    private val toaster: Toaster
+): DataMigrator {
     private val job = Job()
 
     private val Context.dataStore by preferencesDataStore(
@@ -53,7 +59,7 @@ class DataMigrator(
         scope = CoroutineScope(job)
     )
 
-    suspend fun migrate() {
+    override suspend fun migrate() {
         val migrationComplete = File(context.filesDir, "migration_complete")
         if (migrationComplete.exists() || job.isCompleted) return
 
@@ -96,7 +102,7 @@ class DataMigrator(
 
             job.complete()
             migrationComplete.createNewFile()
-            context.showToast(R.string.migration_success)
+            toaster.toast(R.string.migration_success)
         }
     }
 
@@ -143,5 +149,15 @@ class DataMigrator(
         }
 
         return "$filename" to text
+    }
+}
+
+val dataMigratorModule = module {
+    single<DataMigrator> {
+        DataMigratorImpl(
+            context = androidContext(),
+            database = get(),
+            toaster = get()
+        )
     }
 }

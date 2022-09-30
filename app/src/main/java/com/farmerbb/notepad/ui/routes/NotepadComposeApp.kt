@@ -178,9 +178,9 @@ private fun NotepadComposeApp(
         fontFamily = fontFamily
     )
 
-    val title: String
-    val backButton: @Composable (() -> Unit)?
-    val actions: @Composable RowScope.() -> Unit
+    var title = ""
+    var backButton: @Composable (() -> Unit)? = null
+    var actions: @Composable RowScope.() -> Unit = {}
     val content: @Composable BoxScope.() -> Unit
     
     /*********************** Callbacks ***********************/
@@ -327,6 +327,36 @@ private fun NotepadComposeApp(
     )
 
     @Composable
+    fun HandleMultiSelect(block: @Composable () -> Unit) {
+        if (multiSelectEnabled) {
+            title = stringResource(
+                id = if (selectedNotes.size == 1) {
+                    R.string.cab_note_selected
+                } else {
+                    R.string.cab_notes_selected
+                },
+                selectedNotes.size
+            )
+            backButton = { BackButton(onBack) }
+            actions = {
+                SelectAllButton { vm.selectAllNotes(notes) }
+                ExportButton {
+                    vm.showToastIf(selectedNotes.isEmpty(), R.string.no_notes_to_export) {
+                        vm.exportNotes(notes, filenameFormat)
+                    }
+                }
+                DeleteButton {
+                    vm.showToastIf(
+                        selectedNotes.isEmpty(),
+                        R.string.no_notes_to_delete,
+                        onMultiDeleteClick
+                    )
+                }
+            }
+        } else block()
+    }
+
+    @Composable
     fun NoteListContentShared() = NoteListContent(
         notes = notes,
         selectedNotes = selectedNotes,
@@ -362,36 +392,7 @@ private fun NotepadComposeApp(
                 }
             )
 
-            if (multiSelectEnabled) {
-                title = stringResource(
-                    id = if (selectedNotes.size == 1) {
-                        R.string.cab_note_selected
-                    } else {
-                        R.string.cab_notes_selected
-                    },
-                    selectedNotes.size
-                )
-
-                backButton = { BackButton(onBack) }
-
-                actions = {
-                    SelectAllButton { vm.selectAllNotes(notes) }
-
-                    ExportButton {
-                        vm.showToastIf(selectedNotes.isEmpty(), R.string.no_notes_to_export) {
-                            vm.exportNotes(notes, filenameFormat)
-                        }
-                    }
-
-                    DeleteButton {
-                        vm.showToastIf(
-                            selectedNotes.isEmpty(),
-                            R.string.no_notes_to_delete,
-                            onMultiDeleteClick
-                        )
-                    }
-                }
-            } else {
+            HandleMultiSelect {
                 title = stringResource(id = R.string.app_name)
                 backButton = null
                 actions = {
@@ -443,20 +444,23 @@ private fun NotepadComposeApp(
                 KeyEvent.KEYCODE_H to { onShareClick(note.text) }
             )
 
-            title = note.metadata.title
-            backButton = { BackButton(onBack) }
-            actions = {
-                EditButton { navState = Edit(state.id) }
-                DeleteButton(onDeleteClick)
-                NoteViewEditMenu(
-                    showMenu = showMenu,
-                    onDismiss = onDismiss,
-                    onMoreClick = onMoreClick,
-                    onShareClick = { onShareClick(note.text) },
-                    onExportClick = { onExportClick(note.metadata, note.text) },
-                    onPrintClick = { onPrintClick(title) }
-                )
+            HandleMultiSelect {
+                title = note.metadata.title
+                backButton = { BackButton(onBack) }
+                actions = {
+                    EditButton { navState = Edit(state.id) }
+                    DeleteButton(onDeleteClick)
+                    NoteViewEditMenu(
+                        showMenu = showMenu,
+                        onDismiss = onDismiss,
+                        onMoreClick = onMoreClick,
+                        onShareClick = { onShareClick(note.text) },
+                        onExportClick = { onExportClick(note.metadata, note.text) },
+                        onPrintClick = { onPrintClick(title) }
+                    )
+                }
             }
+
             content = {
                 Printable(printController) {
                     ViewNoteContent(
@@ -482,22 +486,25 @@ private fun NotepadComposeApp(
                 KeyEvent.KEYCODE_H to { onShareClick(text) }
             )
 
-            title = note.metadata.title.ifEmpty {
-                stringResource(id = R.string.action_new)
+            HandleMultiSelect {
+                title = note.metadata.title.ifEmpty {
+                    stringResource(id = R.string.action_new)
+                }
+                backButton = { BackButton(onBack) }
+                actions = {
+                    SaveButton { onSaveClick(true) }
+                    DeleteButton(onDeleteClick)
+                    NoteViewEditMenu(
+                        showMenu = showMenu,
+                        onDismiss = onDismiss,
+                        onMoreClick = onMoreClick,
+                        onShareClick = { onShareClick(text) },
+                        onExportClick = { onExportClick(note.metadata.copy(title = title), text) },
+                        onPrintClick = { onPrintClick(title) }
+                    )
+                }
             }
-            backButton = { BackButton(onBack) }
-            actions = {
-                SaveButton { onSaveClick(true) }
-                DeleteButton(onDeleteClick)
-                NoteViewEditMenu(
-                    showMenu = showMenu,
-                    onDismiss = onDismiss,
-                    onMoreClick = onMoreClick,
-                    onShareClick = { onShareClick(text) },
-                    onExportClick = { onExportClick(note.metadata.copy(title = title), text) },
-                    onPrintClick = { onPrintClick(title) }
-                )
-            }
+
             content = {
                 Printable(printController) {
                     EditNoteContent(

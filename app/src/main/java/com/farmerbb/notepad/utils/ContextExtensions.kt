@@ -15,37 +15,68 @@
 
 package com.farmerbb.notepad.utils
 
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.Signature
+import android.net.Uri
 import android.util.Base64
 import androidx.datastore.preferences.preferencesDataStore
 import com.farmerbb.notepad.BuildConfig
+import com.farmerbb.notepad.R
 import com.farmerbb.notepad.model.ReleaseType
-import java.text.DateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.TimeZone
+
+fun Context.checkForUpdates() {
+    val id = BuildConfig.APPLICATION_ID
+    val url = when(releaseType) {
+        ReleaseType.PlayStore -> {
+            if(isPlayStoreInstalled)
+                "https://play.google.com/store/apps/details?id=$id"
+            else
+                "https://github.com/farmerbb/Notepad/releases"
+        }
+        ReleaseType.Amazon -> "https://www.amazon.com/gp/mas/dl/android?p=$id"
+        ReleaseType.FDroid -> "https://f-droid.org/repository/browse/?fdid=$id"
+        ReleaseType.Unknown -> ""
+    }
+
+    try {
+        startActivity(Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(url)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        })
+    } catch (ignored: ActivityNotFoundException) {}
+}
+
+fun Context.showShareSheet(text: String) = try {
+    startActivity(
+        Intent.createChooser(
+            Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, text)
+            },
+            getString(R.string.send_to)
+        ).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+    )
+} catch (e: Exception) {
+    e.printStackTrace()
+}
 
 val Context.dataStore by preferencesDataStore("settings")
 
-val buildYear: Int get() {
-    val calendar = Calendar.getInstance(TimeZone.getTimeZone("America/Denver")).apply {
-        timeInMillis = BuildConfig.TIMESTAMP
-    }
-
-    return calendar.get(Calendar.YEAR)
-}
-
 @Suppress("Deprecation")
-val Context.isPlayStoreInstalled get() = try {
+private val Context.isPlayStoreInstalled get() = try {
     packageManager.getPackageInfo("com.android.vending", 0)
     true
 } catch(e: PackageManager.NameNotFoundException) {
     false
 }
 
-val Context.releaseType: ReleaseType
+private val Context.releaseType: ReleaseType
     @Suppress("Deprecation", "PackageManagerGetSignatures")
     get() {
         val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
@@ -60,7 +91,3 @@ val Context.releaseType: ReleaseType
 
         return ReleaseType.Unknown
     }
-
-val Date.noteListFormat: String get() = DateFormat
-    .getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
-    .format(this)

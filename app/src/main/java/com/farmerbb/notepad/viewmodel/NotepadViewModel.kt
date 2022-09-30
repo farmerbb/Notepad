@@ -18,29 +18,22 @@
 package com.farmerbb.notepad.viewmodel
 
 import android.app.Application
-import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.farmerbb.notepad.BuildConfig
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.data.NotepadRepository
 import com.farmerbb.notepad.data.PreferenceManager.Companion.prefs
 import com.farmerbb.notepad.model.FilenameFormat
 import com.farmerbb.notepad.model.Note
 import com.farmerbb.notepad.model.NoteMetadata
-import com.farmerbb.notepad.model.ReleaseType.Amazon
-import com.farmerbb.notepad.model.ReleaseType.FDroid
-import com.farmerbb.notepad.model.ReleaseType.PlayStore
-import com.farmerbb.notepad.model.ReleaseType.Unknown
 import com.farmerbb.notepad.usecase.ArtVandelay
 import com.farmerbb.notepad.usecase.DataMigrator
 import com.farmerbb.notepad.usecase.KeyboardShortcuts
 import com.farmerbb.notepad.usecase.Toaster
-import com.farmerbb.notepad.utils.isPlayStoreInstalled
-import com.farmerbb.notepad.utils.releaseType
+import com.farmerbb.notepad.utils.checkForUpdates
+import com.farmerbb.notepad.utils.showShareSheet
 import de.schnettler.datastore.manager.DataStoreManager
 import java.io.InputStream
 import java.io.OutputStream
@@ -70,6 +63,9 @@ class NotepadViewModel(
     private val artVandelay: ArtVandelay,
     private val keyboardShortcuts: KeyboardShortcuts
 ): ViewModel() {
+
+    /*********************** Data ***********************/
+
     private val _noteState = MutableStateFlow(Note())
     val noteState: StateFlow<Note> = _noteState
 
@@ -90,36 +86,10 @@ class NotepadViewModel(
     val savedDraftId: StateFlow<Long?> = _savedDraftId
     private var savedDraftIdJob: Job? = null
 
-    fun migrateData(onComplete: () -> Unit) = viewModelScope.launch {
-        dataMigrator.migrate()
-        onComplete()
-    }
-
-    fun getSavedDraftId() {
-        savedDraftIdJob = viewModelScope.launch(Dispatchers.IO) {
-            repo.savedDraftId.collect { id ->
-                _savedDraftId.value = id
-
-                if (id != -1L) {
-                    toaster.toast(R.string.draft_restored)
-                }
-
-                savedDraftIdJob?.cancel()
-            }
-        }
-    }
+    /*********************** UI Operations ***********************/
 
     fun setText(text: String) {
         _text.value = text
-    }
-
-    fun getNote(id: Long?) = viewModelScope.launch(Dispatchers.IO) {
-        id?.let {
-            _noteState.value = repo.getNote(it)
-            _text.value = noteState.value.text
-        } ?: run {
-            clearNote()
-        }
     }
 
     fun clearNote() {
@@ -144,6 +114,48 @@ class NotepadViewModel(
 
         _selectedNotesFlow.tryEmit(selectedNotes.filterValues { it })
     }
+
+    fun showToastIf(
+        condition: Boolean,
+        @StringRes text: Int,
+        block: () -> Unit
+    ) = viewModelScope.launch {
+        toaster.toastIf(condition, text, block)
+    }
+
+    fun shareNote(text: String) = viewModelScope.launch {
+        text.checkLength {
+            context.showShareSheet(text)
+        }
+    }
+
+    fun checkForUpdates() = context.checkForUpdates()
+
+    /*********************** Database Operations ***********************/
+
+    fun getSavedDraftId() {
+        savedDraftIdJob = viewModelScope.launch(Dispatchers.IO) {
+            repo.savedDraftId.collect { id ->
+                _savedDraftId.value = id
+
+                if (id != -1L) {
+                    toaster.toast(R.string.draft_restored)
+                }
+
+                savedDraftIdJob?.cancel()
+            }
+        }
+    }
+
+    fun getNote(id: Long?) = viewModelScope.launch(Dispatchers.IO) {
+        id?.let {
+            _noteState.value = repo.getNote(it)
+            _text.value = noteState.value.text
+        } ?: run {
+            clearNote()
+        }
+    }
+
 
     fun deleteSelectedNotes(
         onSuccess: () -> Unit
@@ -170,12 +182,6 @@ class NotepadViewModel(
         repo.deleteNote(id) {
             toaster.toast(R.string.note_deleted)
             onSuccess()
-        }
-    }
-
-    fun shareNote(text: String) = viewModelScope.launch {
-        text.checkLength {
-            showShareSheet(text)
         }
     }
 
@@ -218,6 +224,8 @@ class NotepadViewModel(
             }
         }
     }
+
+    /*********************** Import / Export ***********************/
 
     fun importNotes() = artVandelay.importNotes(::saveImportedNote) { size ->
         val toastId = when (size) {
@@ -295,46 +303,7 @@ class NotepadViewModel(
         } ?: onLoad(null)
     }
 
-    fun checkForUpdates() = with(context) {
-        val id = BuildConfig.APPLICATION_ID
-        val url = when(releaseType) {
-            PlayStore -> {
-                if(isPlayStoreInstalled)
-                    "https://play.google.com/store/apps/details?id=$id"
-                else
-                    "https://github.com/farmerbb/Notepad/releases"
-            }
-            Amazon -> "https://www.amazon.com/gp/mas/dl/android?p=$id"
-            FDroid -> "https://f-droid.org/repository/browse/?fdid=$id"
-            Unknown -> ""
-        }
-
-        try {
-            startActivity(Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse(url)
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            })
-        } catch (ignored: ActivityNotFoundException) {}
-    }
-
-    private fun showShareSheet(text: String) = with(context) {
-        try {
-            startActivity(
-                Intent.createChooser(
-                    Intent().apply {
-                        action = Intent.ACTION_SEND
-                        type = "text/plain"
-                        putExtra(Intent.EXTRA_TEXT, text)
-                    },
-                    getString(R.string.send_to)
-                ).apply {
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-            )
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
+    /*********************** Miscellaneous ***********************/
 
     private suspend fun String.checkLength(
         onSuccess: suspend () -> Unit
@@ -343,12 +312,9 @@ class NotepadViewModel(
         else -> onSuccess()
     }
 
-    fun showToastIf(
-        condition: Boolean,
-        @StringRes text: Int,
-        block: () -> Unit
-    ) = viewModelScope.launch {
-        toaster.toastIf(condition, text, block)
+    fun migrateData(onComplete: () -> Unit) = viewModelScope.launch {
+        dataMigrator.migrate()
+        onComplete()
     }
 
     fun keyboardShortcutPressed(keyCode: Int) = keyboardShortcuts.pressed(keyCode)

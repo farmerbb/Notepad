@@ -23,9 +23,19 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
+import com.farmerbb.notepad.BuildConfig
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.ui.routes.NotepadPreferenceScreen
-import com.farmerbb.notepad.utils.buildYear
+import java.util.Calendar
+import java.util.TimeZone
+
+private val buildYear: Int get() {
+    val calendar = Calendar.getInstance(TimeZone.getTimeZone("America/Denver")).apply {
+        timeInMillis = BuildConfig.TIMESTAMP
+    }
+
+    return calendar.get(Calendar.YEAR)
+}
 
 @Composable
 fun DeleteDialog(

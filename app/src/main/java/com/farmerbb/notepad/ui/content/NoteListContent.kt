@@ -43,7 +43,12 @@ import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.ui.previews.NoteListPreview
-import com.farmerbb.notepad.utils.noteListFormat
+import java.text.DateFormat
+import java.util.Date
+
+private val Date.noteListFormat: String get() = DateFormat
+    .getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+    .format(this)
 
 @Composable
 fun NoteListContent(

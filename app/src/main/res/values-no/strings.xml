@@ -69,8 +69,6 @@
     <string name="pref_title_show_dialogs">Spør før lagring</string>
     <string name="send_to">Del notat til&#8230;</string>
     <string name="view_note">Vis notat</string>
-    <string name="action_install">Installer</string>
-    <string name="action_no_thanks">Nei takk</string>
     <string name="pref_title_show_date">Vis dato/tid</string>
     <string name="action_theme">Tema</string>
     <string name="pref_title_direct_edit">Rediger notater direkte</string>

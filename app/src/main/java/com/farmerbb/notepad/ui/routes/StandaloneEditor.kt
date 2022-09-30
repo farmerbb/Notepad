@@ -16,15 +16,15 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.android.NotepadViewModel
+import com.farmerbb.notepad.ui.components.AppBarText
+import com.farmerbb.notepad.ui.components.BackButton
+import com.farmerbb.notepad.ui.components.DeleteButton
+import com.farmerbb.notepad.ui.components.DeleteDialog
+import com.farmerbb.notepad.ui.components.SaveButton
+import com.farmerbb.notepad.ui.components.SaveDialog
+import com.farmerbb.notepad.ui.components.StandaloneEditorMenu
 import com.farmerbb.notepad.ui.content.EditNoteContent
-import com.farmerbb.notepad.ui.widgets.AppBarText
-import com.farmerbb.notepad.ui.widgets.BackButton
-import com.farmerbb.notepad.ui.widgets.DeleteButton
-import com.farmerbb.notepad.ui.widgets.DeleteDialog
-import com.farmerbb.notepad.ui.widgets.SaveButton
-import com.farmerbb.notepad.ui.widgets.SaveDialog
-import com.farmerbb.notepad.ui.widgets.StandaloneEditorMenu
+import com.farmerbb.notepad.viewmodel.NotepadViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import org.koin.androidx.compose.getViewModel
 
@@ -58,13 +58,53 @@ private fun StandaloneEditor(
     initialText: String,
     onExit: () -> Unit
 ) {
+    /*********************** Data ***********************/
+
     val backgroundColorRes by vm.prefs.backgroundColorRes.collectAsState()
     val primaryColorRes by vm.prefs.primaryColorRes.collectAsState()
     val textFontSize by vm.prefs.textFontSize.collectAsState()
     val fontFamily by vm.prefs.fontFamily.collectAsState()
     val showDialogs by vm.prefs.showDialogs.collectAsState()
 
+    var text: String by rememberSaveable { mutableStateOf(initialText) }
+    var showSaveDialog by rememberSaveable { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+    var showMenu by rememberSaveable { mutableStateOf(false) }
+
+    val textStyle = TextStyle(
+        color = colorResource(id = primaryColorRes),
+        fontSize = textFontSize,
+        fontFamily = fontFamily
+    )
+
+    /*********************** Callbacks ***********************/
+
+    val onSave = {
+        vm.saveNote(-1L, text) { onExit() }
+    }
+
+    val onDismiss = { showMenu = false }
+    val onMoreClick = { showMenu = true }
+    val onSaveClick: () -> Unit = {
+        if (showDialogs) {
+            showSaveDialog = true
+        } else {
+            onSave()
+        }
+    }
+    val onDeleteClick: () -> Unit = {
+        showDeleteDialog = true
+    }
+    val onShareClick: () -> Unit = {
+        onDismiss()
+        vm.shareNote(text)
+    }
+    val onBack: () -> Unit = {
+        if (text.isNotEmpty()) onSaveClick() else onExit()
+    }
+
+    /*********************** Dialogs ***********************/
+
     if (showDeleteDialog) {
         DeleteDialog(
             onConfirm = {
@@ -75,12 +115,6 @@ private fun StandaloneEditor(
                 showDeleteDialog = false
             }
         )
-    }
-
-    var showSaveDialog by rememberSaveable { mutableStateOf(false) }
-    var text: String by rememberSaveable { mutableStateOf(initialText) }
-    val onSave = {
-        vm.saveNote(-1L, text) { onExit() }
     }
 
     if(showSaveDialog) {
@@ -99,36 +133,9 @@ private fun StandaloneEditor(
         )
     }
 
-    var showMenu by rememberSaveable { mutableStateOf(false) }
-    val onDismiss = { showMenu = false }
-    val onMoreClick = { showMenu = true }
-
-    val onSaveClick: () -> Unit = {
-        if (showDialogs) {
-            showSaveDialog = true
-        } else {
-            onSave()
-        }
-    }
-
-    val onDeleteClick: () -> Unit = {
-        showDeleteDialog = true
-    }
-    val onShareClick: () -> Unit = {
-        onDismiss()
-        vm.shareNote(text)
-    }
-    val onBack: () -> Unit = {
-        if (text.isNotEmpty()) onSaveClick() else onExit()
-    }
+    /*********************** UI Logic ***********************/
 
     BackHandler(onBack = onBack)
-
-    val textStyle = TextStyle(
-        color = colorResource(id = primaryColorRes),
-        fontSize = textFontSize,
-        fontFamily = fontFamily
-    )
 
     Scaffold(
         backgroundColor = colorResource(id = backgroundColorRes),

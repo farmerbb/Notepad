@@ -19,28 +19,25 @@ package com.farmerbb.notepad.android
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.lifecycle.lifecycleScope
-import com.farmerbb.notepad.data.DataMigrator
 import com.farmerbb.notepad.ui.routes.NotepadComposeAppRoute
+import com.farmerbb.notepad.viewmodel.NotepadViewModel
 import com.github.k1rakishou.fsaf.FileChooser
 import com.github.k1rakishou.fsaf.callback.FSAFActivityCallbacks
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class NotepadActivity: ComponentActivity(), FSAFActivityCallbacks {
     private val vm: NotepadViewModel by viewModel()
-    private val migrator: DataMigrator = get()
     private val fileChooser: FileChooser = get()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         fileChooser.setCallbacks(this)
 
-        lifecycleScope.launch {
-            migrator.migrate()
+        vm.migrateData {
             setContent {
                 NotepadComposeAppRoute()
             }
@@ -74,5 +71,13 @@ class NotepadActivity: ComponentActivity(), FSAFActivityCallbacks {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         fileChooser.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun dispatchKeyShortcutEvent(event: KeyEvent): Boolean {
+        return if (event.action == KeyEvent.ACTION_DOWN && event.isCtrlPressed) {
+            vm.keyboardShortcutPressed(event.keyCode)
+        } else {
+            super.dispatchKeyShortcutEvent(event)
+        }
     }
 }

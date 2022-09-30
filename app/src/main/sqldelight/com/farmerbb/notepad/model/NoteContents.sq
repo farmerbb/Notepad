@@ -22,8 +22,5 @@ SELECT * FROM NoteContents WHERE contentsId = :id;
 getMultiple:
 SELECT * FROM NoteContents WHERE contentsId IN ?;
 
-getDraft:
-SELECT * FROM NoteContents WHERE draftText NOT NULL;
-
 getIndex:
 SELECT last_insert_rowid();

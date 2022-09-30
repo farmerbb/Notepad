@@ -17,6 +17,7 @@
 
 package com.farmerbb.notepad.ui.routes
 
+import android.view.KeyEvent
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -30,7 +31,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Divider
@@ -47,7 +48,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -66,31 +66,30 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.android.NotepadViewModel
 import com.farmerbb.notepad.model.NavState
-import com.farmerbb.notepad.model.NavState.Companion.EDIT
-import com.farmerbb.notepad.model.NavState.Companion.VIEW
 import com.farmerbb.notepad.model.NavState.Edit
 import com.farmerbb.notepad.model.NavState.Empty
 import com.farmerbb.notepad.model.NavState.View
 import com.farmerbb.notepad.model.NoteMetadata
+import com.farmerbb.notepad.model.navStateSaver
+import com.farmerbb.notepad.ui.components.AboutDialog
+import com.farmerbb.notepad.ui.components.AppBarText
+import com.farmerbb.notepad.ui.components.BackButton
+import com.farmerbb.notepad.ui.components.DeleteButton
+import com.farmerbb.notepad.ui.components.DeleteDialog
+import com.farmerbb.notepad.ui.components.EditButton
+import com.farmerbb.notepad.ui.components.ExportButton
+import com.farmerbb.notepad.ui.components.MultiSelectButton
+import com.farmerbb.notepad.ui.components.NoteListMenu
+import com.farmerbb.notepad.ui.components.NoteViewEditMenu
+import com.farmerbb.notepad.ui.components.SaveButton
+import com.farmerbb.notepad.ui.components.SaveDialog
+import com.farmerbb.notepad.ui.components.SelectAllButton
+import com.farmerbb.notepad.ui.components.SettingsDialog
 import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.content.NoteListContent
 import com.farmerbb.notepad.ui.content.ViewNoteContent
-import com.farmerbb.notepad.ui.widgets.AboutDialog
-import com.farmerbb.notepad.ui.widgets.AppBarText
-import com.farmerbb.notepad.ui.widgets.BackButton
-import com.farmerbb.notepad.ui.widgets.DeleteButton
-import com.farmerbb.notepad.ui.widgets.DeleteDialog
-import com.farmerbb.notepad.ui.widgets.EditButton
-import com.farmerbb.notepad.ui.widgets.ExportButton
-import com.farmerbb.notepad.ui.widgets.MultiSelectButton
-import com.farmerbb.notepad.ui.widgets.NoteListMenu
-import com.farmerbb.notepad.ui.widgets.NoteViewEditMenu
-import com.farmerbb.notepad.ui.widgets.SaveButton
-import com.farmerbb.notepad.ui.widgets.SaveDialog
-import com.farmerbb.notepad.ui.widgets.SelectAllButton
-import com.farmerbb.notepad.ui.widgets.SettingsDialog
+import com.farmerbb.notepad.viewmodel.NotepadViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.zachklipp.richtext.ui.printing.Printable
 import com.zachklipp.richtext.ui.printing.rememberPrintableController
@@ -135,26 +134,12 @@ private fun NotepadComposeApp(
     isMultiPane: Boolean = false,
     initState: NavState = Empty
 ) {
-    val printController = rememberPrintableController()
-    var isPrinting by remember { mutableStateOf(false) }
-
-    val lifecycleOwner = LocalLifecycleOwner.current
-    LaunchedEffect(Unit) {
-        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            isPrinting = false
-        }
-    }
+    /*********************** Data ***********************/
 
     val notes by vm.noteMetadata.collectAsState(emptyList())
     val note by vm.noteState.collectAsState()
+    val text by vm.text.collectAsState()
     val selectedNotes by vm.selectedNotesFlow.collectAsState(emptyMap())
-    var multiSelectEnabled by rememberSaveable { mutableStateOf(false) }
-
-    LaunchedEffect(selectedNotes) {
-        if (selectedNotes.filterValues { it }.isEmpty()) {
-            multiSelectEnabled = false
-        }
-    }
 
     val backgroundColorRes by vm.prefs.backgroundColorRes.collectAsState()
     val primaryColorRes by vm.prefs.primaryColorRes.collectAsState()
@@ -168,28 +153,96 @@ private fun NotepadComposeApp(
     val filenameFormat by vm.prefs.filenameFormat.collectAsState()
     val showDialogs by vm.prefs.showDialogs.collectAsState()
 
-    var navState by rememberSaveable(
-        saver = Saver(
-            save = {
-                when(val state = it.value) {
-                    is View -> VIEW to state.id
-                    is Edit -> EDIT to state.id
-                    else -> "" to null
-                }
-            },
-            restore = {
-                mutableStateOf(
-                    when(it.first) {
-                        VIEW -> View(it.second ?: 0)
-                        EDIT -> Edit(it.second)
-                        else -> Empty
-                    }
-                )
-            }
-        )
-    ) { mutableStateOf(initState) }
-
+    var navState by rememberSaveable(saver = navStateSaver) { mutableStateOf(initState) }
+    var isPrinting by remember { mutableStateOf(false) }
+    var isSaveButton by rememberSaveable { mutableStateOf(false) }
+    var multiSelectEnabled by rememberSaveable { mutableStateOf(false) }
     var showAboutDialog by rememberSaveable { mutableStateOf(false) }
+    var showSettingsDialog by rememberSaveable { mutableStateOf(false) }
+    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
+    var showMultiDeleteDialog by rememberSaveable { mutableStateOf(false) }
+    var showSaveDialog by rememberSaveable { mutableStateOf(false) }
+    var showMenu by rememberSaveable { mutableStateOf(false) }
+
+    val printController = rememberPrintableController()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val haptics = LocalHapticFeedback.current
+    val textStyle = TextStyle(
+        color = colorResource(id = primaryColorRes),
+        fontSize = textFontSize,
+        fontFamily = fontFamily
+    )
+    val dateStyle = TextStyle(
+        color = colorResource(id = secondaryColorRes),
+        fontSize = dateFontSize,
+        fontFamily = fontFamily
+    )
+
+    var title = ""
+    var backButton: @Composable (() -> Unit)? = null
+    var actions: @Composable RowScope.() -> Unit = {}
+    val content: @Composable BoxScope.() -> Unit
+    
+    /*********************** Callbacks ***********************/
+
+    fun updateNavState(id: Long) {
+        navState = if (directEdit || !isSaveButton) Empty else View(id)
+    }
+    
+    val onSave: () -> Unit = {
+        vm.saveNote(note.id, text, ::updateNavState)
+    }
+    val onPrint: (String) -> Unit = { pageTitle ->
+        isPrinting = true
+        printController.print(pageTitle)
+    }
+    val onMultiDeleteClick = { showMultiDeleteDialog = true }
+    val onDismiss = { showMenu = false }
+    val onMoreClick = { showMenu = true }
+    val onSaveClick: (Boolean) -> Unit = {
+        isSaveButton = it
+
+        when {
+            text.isNotEmpty() && text == note.text -> updateNavState(note.id)
+            showDialogs -> showSaveDialog = true
+            else -> onSave()
+        }
+    }
+    val onDeleteClick: () -> Unit = {
+        showDeleteDialog = true
+    }
+    val onShareClick: (String) -> Unit = {
+        onDismiss()
+        vm.shareNote(it)
+    }
+    val onExportClick: (NoteMetadata, String) -> Unit = { metadata, exportedText ->
+        onDismiss()
+        vm.exportSingleNote(metadata, exportedText, filenameFormat)
+    }
+    val onPrintClick: (String) -> Unit = { pageTitle ->
+        onDismiss()
+
+        vm.showToastIf(text.isEmpty(), R.string.empty_note) {
+            when(navState) {
+                is Edit -> vm.saveDraft { onPrint(pageTitle) }
+                else -> onPrint(pageTitle)
+            }
+        }
+    }
+    val onBack = {
+        when {
+            multiSelectEnabled -> {
+                multiSelectEnabled = false
+                vm.clearSelectedNotes()
+            }
+
+            navState is Edit && text.isNotEmpty() -> onSaveClick(false)
+            else -> navState = Empty
+        }
+    }
+
+    /*********************** Dialogs ***********************/
+    
     if(showAboutDialog) {
         AboutDialog(
             onDismiss = {
@@ -202,7 +255,6 @@ private fun NotepadComposeApp(
         )
     }
 
-    var showSettingsDialog by rememberSaveable { mutableStateOf(false) }
     if(showSettingsDialog) {
         SettingsDialog(
             onDismiss = {
@@ -211,7 +263,6 @@ private fun NotepadComposeApp(
         )
     }
 
-    var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
     if(showDeleteDialog) {
         DeleteDialog(
             onConfirm = {
@@ -226,30 +277,23 @@ private fun NotepadComposeApp(
         )
     }
 
-    var showMultiDeleteDialog by rememberSaveable { mutableStateOf(false) }
     if(showMultiDeleteDialog) {
         DeleteDialog(
             isMultiple = selectedNotes.size > 1,
             onConfirm = {
                 showMultiDeleteDialog = false
-                vm.deleteSelectedNotes()
+
+                val currentNoteDeleted = selectedNotes.getOrDefault(note.id, false)
+                vm.deleteSelectedNotes {
+                    if (currentNoteDeleted) {
+                        navState = Empty
+                    }
+                }
             },
             onDismiss = {
                 showMultiDeleteDialog = false
             }
         )
-    }
-
-    var showSaveDialog by rememberSaveable { mutableStateOf(false) }
-    var isSaveButton by rememberSaveable { mutableStateOf(false) }
-    var text: String by rememberSaveable { mutableStateOf(note.text) }
-
-    fun updateNavState(id: Long) {
-        navState = if (directEdit || !isSaveButton) Empty else View(id)
-    }
-
-    val onSave: () -> Unit = {
-        vm.saveNote(note.id, text, ::updateNavState)
     }
 
     if(showSaveDialog) {
@@ -268,56 +312,18 @@ private fun NotepadComposeApp(
         )
     }
 
-    val title: String
-    val backButton: @Composable (() -> Unit)?
-    val actions: @Composable RowScope.() -> Unit
-    val content: @Composable BoxScope.() -> Unit
+    /*********************** UI Logic ***********************/
 
-    var showMenu by rememberSaveable { mutableStateOf(false) }
-    val onDismiss = { showMenu = false }
-    val onMoreClick = { showMenu = true }
-
-    val onSaveClick: (Boolean) -> Unit = {
-        isSaveButton = it
-
-        when {
-            text == note.text -> updateNavState(note.id)
-            showDialogs ->  showSaveDialog = true
-            else ->  onSave()
+    LaunchedEffect(Unit) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            isPrinting = false
+            vm.deleteDraft()
         }
     }
 
-    val onDeleteClick: () -> Unit = {
-        showDeleteDialog = true
-    }
-    val onShareClick: (String) -> Unit = {
-        onDismiss()
-        vm.shareNote(it)
-    }
-    val onExportClick: (NoteMetadata, String) -> Unit = { metadata, exportedText ->
-        onDismiss()
-        vm.exportNote(metadata, exportedText, filenameFormat)
-    }
-    val onPrintClick: (String) -> Unit = { noteTitle ->
-        onDismiss()
-
-        isPrinting = true
-        printController.print(noteTitle)
-    }
-    val onMultiDeleteClick = { showMultiDeleteDialog = true }
-    val onBack = {
-        when {
-            multiSelectEnabled -> {
-                multiSelectEnabled = false
-                vm.clearSelectedNotes()
-            }
-
-            navState is Edit && text.isNotEmpty() -> onSaveClick(false)
-
-            else -> {
-                navState = Empty
-                text = ""
-            }
+    LaunchedEffect(selectedNotes) {
+        if (selectedNotes.filterValues { it }.isEmpty()) {
+            multiSelectEnabled = false
         }
     }
 
@@ -325,19 +331,6 @@ private fun NotepadComposeApp(
         enabled = multiSelectEnabled || navState != Empty,
         onBack = onBack
     )
-
-    val textStyle = TextStyle(
-        color = colorResource(id = primaryColorRes),
-        fontSize = textFontSize,
-        fontFamily = fontFamily
-    )
-    val dateStyle = TextStyle(
-        color = colorResource(id = secondaryColorRes),
-        fontSize = dateFontSize,
-        fontFamily = fontFamily
-    )
-
-    val haptics = LocalHapticFeedback.current
 
     @Composable
     fun NoteListContentShared() = NoteListContent(
@@ -360,41 +353,22 @@ private fun NotepadComposeApp(
     }
 
     when(val state = navState) {
+
+        /*********************** Note List ***********************/
+
         Empty -> {
             LaunchedEffect(Unit) {
                 vm.clearNote()
             }
 
-            if (multiSelectEnabled) {
-                title = stringResource(
-                    id = if (selectedNotes.size == 1) {
-                        R.string.cab_note_selected
-                    } else {
-                        R.string.cab_notes_selected
-                    },
-                    selectedNotes.size
-                )
-
-                backButton = { BackButton(onBack) }
-
-                actions = {
-                    SelectAllButton { vm.selectAllNotes(notes) }
-
-                    ExportButton {
-                        vm.showToastIf(selectedNotes.isEmpty(), R.string.no_notes_to_export) {
-                            vm.exportSelectedNotes(notes, filenameFormat)
-                        }
-                    }
-
-                    DeleteButton {
-                        vm.showToastIf(
-                            selectedNotes.isEmpty(),
-                            R.string.no_notes_to_delete,
-                            onMultiDeleteClick
-                        )
-                    }
+            vm.registerKeyboardShortcuts(
+                KeyEvent.KEYCODE_N to {
+                    vm.clearSelectedNotes()
+                    navState = Edit()
                 }
-            } else {
+            )
+
+            if (!multiSelectEnabled) {
                 title = stringResource(id = R.string.app_name)
                 backButton = null
                 actions = {
@@ -425,7 +399,7 @@ private fun NotepadComposeApp(
             }
 
             content = {
-                if(isMultiPane) {
+                if (isMultiPane) {
                     EmptyDetails()
                 } else {
                     NoteListContentShared()
@@ -433,25 +407,36 @@ private fun NotepadComposeApp(
             }
         }
 
+        /*********************** View Note ***********************/
+
         is View -> {
             LaunchedEffect(state.id) {
                 vm.getNote(state.id)
             }
 
-            title = note.metadata.title
-            backButton = { BackButton(onBack) }
-            actions = {
-                EditButton { navState = Edit(state.id) }
-                DeleteButton(onDeleteClick)
-                NoteViewEditMenu(
-                    showMenu = showMenu,
-                    onDismiss = onDismiss,
-                    onMoreClick = onMoreClick,
-                    onShareClick = { onShareClick(note.text) },
-                    onExportClick = { onExportClick(note.metadata, note.text) },
-                    onPrintClick = { onPrintClick(title) }
-                )
+            vm.registerKeyboardShortcuts(
+                KeyEvent.KEYCODE_E to { navState = Edit(state.id) },
+                KeyEvent.KEYCODE_D to onDeleteClick,
+                KeyEvent.KEYCODE_H to { onShareClick(note.text) }
+            )
+
+            if (!multiSelectEnabled) {
+                title = note.title
+                backButton = { BackButton(onBack) }
+                actions = {
+                    EditButton { navState = Edit(state.id) }
+                    DeleteButton(onDeleteClick)
+                    NoteViewEditMenu(
+                        showMenu = showMenu,
+                        onDismiss = onDismiss,
+                        onMoreClick = onMoreClick,
+                        onShareClick = { onShareClick(note.text) },
+                        onExportClick = { onExportClick(note.metadata, note.text) },
+                        onPrintClick = { onPrintClick(title) }
+                    )
+                }
             }
+
             content = {
                 Printable(printController) {
                     ViewNoteContent(
@@ -464,47 +449,80 @@ private fun NotepadComposeApp(
             }
         }
 
+        /*********************** Edit Note ***********************/
+
         is Edit -> {
             LaunchedEffect(state.id) {
                 vm.getNote(state.id)
             }
 
-            LaunchedEffect(note) {
-                text = note.text
+            vm.registerKeyboardShortcuts(
+                KeyEvent.KEYCODE_S to { vm.saveNote(note.id, text, vm::getNote) },
+                KeyEvent.KEYCODE_D to onDeleteClick,
+                KeyEvent.KEYCODE_H to { onShareClick(text) }
+            )
+
+            if (!multiSelectEnabled) {
+                title = note.title.ifEmpty {
+                    stringResource(id = R.string.action_new)
+                }
+                backButton = { BackButton(onBack) }
+                actions = {
+                    SaveButton { onSaveClick(true) }
+                    DeleteButton(onDeleteClick)
+                    NoteViewEditMenu(
+                        showMenu = showMenu,
+                        onDismiss = onDismiss,
+                        onMoreClick = onMoreClick,
+                        onShareClick = { onShareClick(text) },
+                        onExportClick = { onExportClick(note.metadata.copy(title = title), text) },
+                        onPrintClick = { onPrintClick(title) }
+                    )
+                }
             }
 
-            LaunchedEffect(text) {
-                vm.setDraftText(text)
-            }
-
-            title = note.metadata.title.ifEmpty {
-                stringResource(id = R.string.action_new)
-            }
-            backButton = { BackButton(onBack) }
-            actions = {
-                SaveButton { onSaveClick(true) }
-                DeleteButton(onDeleteClick)
-                NoteViewEditMenu(
-                    showMenu = showMenu,
-                    onDismiss = onDismiss,
-                    onMoreClick = onMoreClick,
-                    onShareClick = { onShareClick(text) },
-                    onExportClick = { onExportClick(note.metadata.copy(title = title), text) },
-                    onPrintClick = { onPrintClick(title) }
-                )
-            }
             content = {
                 Printable(printController) {
                     EditNoteContent(
                         text = note.draftText.ifEmpty { note.text },
                         baseTextStyle = textStyle,
                         isPrinting = isPrinting,
-                        waitForAnimation = note.id == -1L || directEdit
-                    ) { text = it }
+                        waitForAnimation = note.id == -1L || directEdit,
+                        onTextChanged = vm::setText
+                    )
                 }
             }
         }
     }
+
+    if (multiSelectEnabled) {
+        title = stringResource(
+            id = if (selectedNotes.size == 1) {
+                R.string.cab_note_selected
+            } else {
+                R.string.cab_notes_selected
+            },
+            selectedNotes.size
+        )
+        backButton = { BackButton(onBack) }
+        actions = {
+            SelectAllButton { vm.selectAllNotes(notes) }
+            ExportButton {
+                vm.showToastIf(selectedNotes.isEmpty(), R.string.no_notes_to_export) {
+                    vm.exportNotes(notes, filenameFormat)
+                }
+            }
+            DeleteButton {
+                vm.showToastIf(
+                    selectedNotes.isEmpty(),
+                    R.string.no_notes_to_delete,
+                    onMultiDeleteClick
+                )
+            }
+        }
+    }
+
+    /*********************** Scaffold ***********************/
 
     Scaffold(
         backgroundColor = colorResource(id = backgroundColorRes),
@@ -563,9 +581,7 @@ private fun NotepadComposeApp(
 @Composable
 private fun EmptyDetails() {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

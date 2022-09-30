@@ -15,7 +15,9 @@
 
 package com.farmerbb.notepad.ui.previews
 
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,9 +25,12 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.model.Note
 import com.farmerbb.notepad.model.NoteContents
 import com.farmerbb.notepad.model.NoteMetadata
+import com.farmerbb.notepad.ui.components.AppBarText
+import com.farmerbb.notepad.ui.components.BackButton
+import com.farmerbb.notepad.ui.components.DeleteButton
+import com.farmerbb.notepad.ui.components.EditButton
+import com.farmerbb.notepad.ui.components.NoteViewEditMenu
 import com.farmerbb.notepad.ui.content.ViewNoteContent
-import com.farmerbb.notepad.ui.widgets.NoteViewEditMenu
-import com.farmerbb.notepad.ui.widgets.*
 import java.util.Date
 
 @Composable
@@ -34,7 +39,7 @@ private fun ViewNote(note: Note) {
         topBar = {
             TopAppBar(
                 navigationIcon = { BackButton() },
-                title = { AppBarText(note.metadata.title) },
+                title = { AppBarText(note.title) },
                 backgroundColor = colorResource(id = R.color.primary),
                 actions = {
                     EditButton()

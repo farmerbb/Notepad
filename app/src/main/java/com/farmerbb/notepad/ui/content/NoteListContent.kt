@@ -22,8 +22,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -44,7 +43,12 @@ import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.ui.previews.NoteListPreview
-import com.farmerbb.notepad.utils.noteListFormat
+import java.text.DateFormat
+import java.util.Date
+
+private val Date.noteListFormat: String get() = DateFormat
+    .getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+    .format(this)
 
 @Composable
 fun NoteListContent(
@@ -58,9 +62,7 @@ fun NoteListContent(
 ) {
     when(notes.size) {
         0 -> Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

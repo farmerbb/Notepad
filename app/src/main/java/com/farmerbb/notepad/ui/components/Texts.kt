@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.notepad.ui.widgets
+package com.farmerbb.notepad.ui.components
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

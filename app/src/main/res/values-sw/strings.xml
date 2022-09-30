@@ -69,8 +69,6 @@
     <string name="pref_title_show_dialogs">Uliza kabla ya kuhifadhi</string>
     <string name="send_to">Sambaza kidokezo kwa&#8230;</string>
     <string name="view_note">Angalia kidokezo</string>
-    <string name="action_install">Jumisha na simu</string>
-    <string name="action_no_thanks">Hapana</string>
     <string name="pref_title_show_date">Onyesha tarehe/wakati</string>
     <string name="action_theme">Mfumo wa rangi</string>
     <string name="pref_title_direct_edit">Hariri vidokezo moja kwa moja</string>

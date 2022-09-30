@@ -69,8 +69,6 @@
     <string name="pref_title_show_dialogs">Preguntar antes de guardar</string>
     <string name="send_to">Compartir nota con&#8230;</string>
     <string name="view_note">Ver Nota</string>
-    <string name="action_install">Instalar</string>
-    <string name="action_no_thanks">No, Gracias</string>
     <string name="pref_title_show_date">Mostrar fecha/hora</string>
     <string name="action_theme">Tema</string>
     <string name="pref_title_direct_edit">Editar notas directamente</string>

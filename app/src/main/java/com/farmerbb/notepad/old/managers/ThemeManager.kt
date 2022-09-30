@@ -144,10 +144,11 @@ object ThemeManager {
             }
 
             webViewClient = object: WebViewClient() {
+                @Deprecated("")
                 override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                     try {
                         activity.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                    } catch (e: Exception) {}
+                    } catch (ignored: Exception) {}
 
                     return true
                 }

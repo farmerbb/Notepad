@@ -8,10 +8,8 @@
 <string name="action_export">Dışa aktar</string>
 <string name="action_export_filename">Dışa aktarılan dosya adı</string>
 <string name="action_font_size">Yazı boyutu</string>
-<string name="action_install">Yükle</string>
-<string name="action_new">Yeni Not</string>
-<string name="action_no_thanks">Hayır, Teşekkürler</string>
-<string name="action_print">Yazdır</string>
+    <string name="action_new">Yeni Not</string>
+    <string name="action_print">Yazdır</string>
 <string name="action_save">Kaydet</string>
 <string name="action_select_all">Hepsini seç</string>
 <string name="action_settings">Ayarlar</string>

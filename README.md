@@ -6,7 +6,7 @@ A simple, bare-bones, no-frills note taking app, currently being [rewritten from
 
 * Quickly create and save plain-text notes
 
-* Optionally create rich-text notes using Markdown or HTML (Android 5.0+)
+* Optionally create rich-text notes using Markdown or HTML
 
 * Beautiful, easy-to-use UI with Material Design elements
 
@@ -22,9 +22,7 @@ A simple, bare-bones, no-frills note taking app, currently being [rewritten from
 
 * Keyboard shortcuts for common actions (see below)
 
-* Integration with Google Now "note to self"
-
-* Import and export notes to external storage (Android 4.4+)
+* Import and export notes to external storage
 
 * Zero permissions and absolutely zero ads
 

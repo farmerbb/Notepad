@@ -7,10 +7,8 @@
 <string name="action_edit">Редактировать</string>
 <string name="action_export">Экспортировать</string>
 <string name="action_font_size">Размер шрифта</string>
-<string name="action_install">Установить</string>
-<string name="action_new">Новая заметка</string>
-<string name="action_no_thanks">Нет, спасибо</string>
-<string name="action_print">Распечатать</string>
+    <string name="action_new">Новая заметка</string>
+    <string name="action_print">Распечатать</string>
 <string name="action_save">Сохранить</string>
 <string name="action_select_all">Выбрать все</string>
 <string name="action_settings">Настройки</string>

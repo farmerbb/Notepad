@@ -53,7 +53,7 @@ This table will track the features of the app as they are reimplemented in the n
 | New Note launcher shortcut                    | ✔                      |
 | Share text to Notepad from other apps         | ✔                      |
 | Open text files in Notepad from file managers | ✔                      |
-| Keyboard shortcuts                            |                        |
+| Keyboard shortcuts                            | ✔                      |
 | Probably some other things I forgot           |                        |
 
 ### ❌ Features that will not be implemented (for now)

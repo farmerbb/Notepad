@@ -67,8 +67,6 @@
     <string name="pref_title_show_dialogs">Ερώτηση πριν την αποθήκευση</string>
     <string name="send_to">Μοίρασμα σημείωσης σε&#8230;</string>
     <string name="view_note">Προβολή σημείωσης</string>
-    <string name="action_install">Εγκατάσταση</string>
-    <string name="action_no_thanks">Όχι, ευχαριστώ</string>
     <string name="pref_title_show_date">Εμφάνιση ημερομηνίας/ώρας</string>
     <string name="action_theme">Θέμα</string>
     <string name="pref_title_direct_edit">Άμεση επεξεργασία σημειώσεων</string>

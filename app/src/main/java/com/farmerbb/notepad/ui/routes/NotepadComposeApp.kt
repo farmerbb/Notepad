@@ -282,7 +282,13 @@ private fun NotepadComposeApp(
             isMultiple = selectedNotes.size > 1,
             onConfirm = {
                 showMultiDeleteDialog = false
-                vm.deleteSelectedNotes()
+
+                val currentNoteDeleted = selectedNotes.getOrDefault(note.id, false)
+                vm.deleteSelectedNotes {
+                    if (currentNoteDeleted) {
+                        navState = Empty
+                    }
+                }
             },
             onDismiss = {
                 showMultiDeleteDialog = false
@@ -327,36 +333,6 @@ private fun NotepadComposeApp(
     )
 
     @Composable
-    fun HandleMultiSelect(block: @Composable () -> Unit) {
-        if (multiSelectEnabled) {
-            title = stringResource(
-                id = if (selectedNotes.size == 1) {
-                    R.string.cab_note_selected
-                } else {
-                    R.string.cab_notes_selected
-                },
-                selectedNotes.size
-            )
-            backButton = { BackButton(onBack) }
-            actions = {
-                SelectAllButton { vm.selectAllNotes(notes) }
-                ExportButton {
-                    vm.showToastIf(selectedNotes.isEmpty(), R.string.no_notes_to_export) {
-                        vm.exportNotes(notes, filenameFormat)
-                    }
-                }
-                DeleteButton {
-                    vm.showToastIf(
-                        selectedNotes.isEmpty(),
-                        R.string.no_notes_to_delete,
-                        onMultiDeleteClick
-                    )
-                }
-            }
-        } else block()
-    }
-
-    @Composable
     fun NoteListContentShared() = NoteListContent(
         notes = notes,
         selectedNotes = selectedNotes,
@@ -392,7 +368,7 @@ private fun NotepadComposeApp(
                 }
             )
 
-            HandleMultiSelect {
+            if (!multiSelectEnabled) {
                 title = stringResource(id = R.string.app_name)
                 backButton = null
                 actions = {
@@ -423,7 +399,7 @@ private fun NotepadComposeApp(
             }
 
             content = {
-                if(isMultiPane) {
+                if (isMultiPane) {
                     EmptyDetails()
                 } else {
                     NoteListContentShared()
@@ -444,8 +420,8 @@ private fun NotepadComposeApp(
                 KeyEvent.KEYCODE_H to { onShareClick(note.text) }
             )
 
-            HandleMultiSelect {
-                title = note.metadata.title
+            if (!multiSelectEnabled) {
+                title = note.title
                 backButton = { BackButton(onBack) }
                 actions = {
                     EditButton { navState = Edit(state.id) }
@@ -486,8 +462,8 @@ private fun NotepadComposeApp(
                 KeyEvent.KEYCODE_H to { onShareClick(text) }
             )
 
-            HandleMultiSelect {
-                title = note.metadata.title.ifEmpty {
+            if (!multiSelectEnabled) {
+                title = note.title.ifEmpty {
                     stringResource(id = R.string.action_new)
                 }
                 backButton = { BackButton(onBack) }
@@ -515,6 +491,33 @@ private fun NotepadComposeApp(
                         onTextChanged = vm::setText
                     )
                 }
+            }
+        }
+    }
+
+    if (multiSelectEnabled) {
+        title = stringResource(
+            id = if (selectedNotes.size == 1) {
+                R.string.cab_note_selected
+            } else {
+                R.string.cab_notes_selected
+            },
+            selectedNotes.size
+        )
+        backButton = { BackButton(onBack) }
+        actions = {
+            SelectAllButton { vm.selectAllNotes(notes) }
+            ExportButton {
+                vm.showToastIf(selectedNotes.isEmpty(), R.string.no_notes_to_export) {
+                    vm.exportNotes(notes, filenameFormat)
+                }
+            }
+            DeleteButton {
+                vm.showToastIf(
+                    selectedNotes.isEmpty(),
+                    R.string.no_notes_to_delete,
+                    onMultiDeleteClick
+                )
             }
         }
     }

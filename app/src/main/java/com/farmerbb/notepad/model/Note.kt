@@ -33,4 +33,5 @@ data class Note(
     val id: Long get() = metadata.metadataId
     val text: String get() = contents.text ?: ""
     val draftText: String get() = contents.draftText ?: ""
+    val title: String get() = metadata.title
 }

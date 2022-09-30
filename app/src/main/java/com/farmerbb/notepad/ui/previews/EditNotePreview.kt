@@ -39,7 +39,7 @@ private fun EditNote(note: Note) {
         topBar = {
             TopAppBar(
                 navigationIcon = { BackButton() },
-                title = { AppBarText(note.metadata.title) },
+                title = { AppBarText(note.title) },
                 backgroundColor = colorResource(id = R.color.primary),
                 actions = {
                     SaveButton()

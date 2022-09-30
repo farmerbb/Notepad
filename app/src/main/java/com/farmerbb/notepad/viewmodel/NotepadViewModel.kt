@@ -145,7 +145,9 @@ class NotepadViewModel(
         _selectedNotesFlow.tryEmit(selectedNotes.filterValues { it })
     }
 
-    fun deleteSelectedNotes() = viewModelScope.launch(Dispatchers.IO) {
+    fun deleteSelectedNotes(
+        onSuccess: () -> Unit
+    ) = viewModelScope.launch(Dispatchers.IO) {
         selectedNotes.filterValues { it }.keys.let { ids ->
             repo.deleteNotes(ids.toList()) {
                 clearSelectedNotes()
@@ -156,6 +158,7 @@ class NotepadViewModel(
                 }
 
                 toaster.toast(toastId)
+                onSuccess()
             }
         }
     }

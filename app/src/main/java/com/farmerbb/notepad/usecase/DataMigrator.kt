@@ -22,7 +22,6 @@ import androidx.datastore.preferences.SharedPreferencesMigration
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.farmerbb.notepad.Database
-import com.farmerbb.notepad.R
 import com.farmerbb.notepad.model.CrossRef
 import com.farmerbb.notepad.model.NoteContents
 import com.farmerbb.notepad.model.NoteMetadata
@@ -43,8 +42,7 @@ interface DataMigrator {
 
 private class DataMigratorImpl(
     private val context: Context,
-    private val database: Database,
-    private val toaster: Toaster
+    private val database: Database
 ): DataMigrator {
     private val job = Job()
 
@@ -102,7 +100,6 @@ private class DataMigratorImpl(
 
             job.complete()
             migrationComplete.createNewFile()
-            toaster.toast(R.string.migration_success)
         }
     }
 
@@ -156,8 +153,7 @@ val dataMigratorModule = module {
     single<DataMigrator> {
         DataMigratorImpl(
             context = androidContext(),
-            database = get(),
-            toaster = get()
+            database = get()
         )
     }
 }

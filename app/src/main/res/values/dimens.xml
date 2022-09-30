@@ -1,20 +1,3 @@
 <resources>
 
-    <dimen name="action_bar_elevation">7.5dp</dimen>
-    <dimen name="note_list_elevation">55dp</dimen>
-    <dimen name="note_view_edit_elevation">45dp</dimen>
-
-    <dimen name="note_list_elevation_land">65dp</dimen>
-    <dimen name="note_view_edit_elevation_land">40dp</dimen>
-
-    <dimen name="padding_top_bottom">12dp</dimen>
-    <dimen name="padding_top_bottom_date">8dp</dimen>
-    <dimen name="padding_left_right">16dp</dimen>
-    <dimen name="padding_top_bottom_print">48dp</dimen>
-    <dimen name="padding_left_right_print">48dp</dimen>
-
-    <dimen name="fab_padding">16dp</dimen>
-
-    <dimen name="main_activity_margins">2dp</dimen>
-
 </resources>

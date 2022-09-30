@@ -46,10 +46,9 @@
         tools:replace="android:label"
         tools:ignore="AppLinkUrlError">
 
-        <!-- Aliases -->
         <activity-alias
             android:name="com.farmerbb.notepad.MainActivity"
-            android:targetActivity="com.farmerbb.notepad.old.activity.MainActivity"
+            android:targetActivity="com.farmerbb.notepad.android.NotepadActivity"
             android:label="${appName}"
             android:exported="true">
             <intent-filter>
@@ -64,7 +63,7 @@
         </activity-alias>
         <activity-alias
             android:name="com.farmerbb.notepad.activity.NoteEditActivity"
-            android:targetActivity="com.farmerbb.notepad.old.activity.NoteEditActivity"
+            android:targetActivity="com.farmerbb.notepad.android.StandaloneEditorActivity"
             android:label="${appName}"
             android:launchMode="singleTop"
             android:exported="true">
@@ -81,7 +80,6 @@
             </intent-filter>
         </activity-alias>
 
-        <!-- Red-pill app -->
         <activity
             android:name="com.farmerbb.notepad.android.NotepadActivity"
             android:exported="true"
@@ -92,21 +90,6 @@
             android:exported="true"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize"/>
-
-        <!-- Blue-pill app -->
-        <activity
-            android:name="com.farmerbb.notepad.old.activity.MainActivity"
-            android:exported="true"
-            android:launchMode="singleTop"/>
-        <activity
-            android:name="com.farmerbb.notepad.old.activity.NoteEditActivity"
-            android:exported="true"
-            android:launchMode="singleTop"/>
-        <activity
-            android:name="com.farmerbb.notepad.old.activity.SettingsActivity"
-            android:label="@string/action_settings"
-            android:theme="@style/Theme.Notepad.Dialog" >
-        </activity>
 
     </application>
 

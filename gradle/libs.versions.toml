@@ -17,7 +17,7 @@ androidx-datastore = "1.0.0"
 androidx-lifecycle = "2.4.1"
 androidx-preference = "1.2.0"
 
-# Other dependencies (red-pill app)
+# Other dependencies
 accompanist = "0.23.0"
 compose = "1.2.1"
 composeCompiler = "1.3.0"
@@ -31,13 +31,6 @@ okio = "3.2.0"
 richtext = "0.14.1"
 sqldelight = "1.5.3"
 versionsPlugin = "0.42.0"
-
-# Other dependencies (blue-pill app)
-appcompat = "1.4.1"
-commonsLang = "3.12.0"
-markdownView = "1.1.0"
-material = "1.5.0"
-supportv4 = "1.0.0"
 
 ##################################################################################################################################
 
@@ -78,20 +71,13 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 richtext-commonmark = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
 richtext-printing = { module = "com.halilibo.compose-richtext:printing", version.ref = "richtext" }
 
-# Other dependencies (red-pill app)
+# Other dependencies
 composePreferences = { module = "com.github.Sh4dowSoul.ComposePreferences:preferences-material", version.ref = "composePreferences" }
 fsaf = { module = "com.github.K1rakishou:Fuck-Storage-Access-Framework", version.ref = "fsaf" }
 linkifyText = { module = "com.github.firefinchdev:linkify-text", version.ref = "linkifyText" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 sqldelight = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
-
-# Other dependencies (blue-pill app)
-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
-commonsLang = { module = "org.apache.commons:commons-lang3", version.ref = "commonsLang" }
-markdownView = { module = "us.feras.mdv:markdownview", version.ref = "markdownView" }
-material = { module = "com.google.android.material:material", version.ref = "material" }
-supportv4 = { module = "androidx.legacy:legacy-support-v4", version.ref = "supportv4" }
 
 ##################################################################################################################################
 

@@ -444,7 +444,7 @@ private fun NotepadComposeApp(
                         baseTextStyle = textStyle,
                         markdown = markdown,
                         isPrinting = isPrinting
-                    )
+                    ) { navState = Edit(note.id) }
                 }
             }
         }

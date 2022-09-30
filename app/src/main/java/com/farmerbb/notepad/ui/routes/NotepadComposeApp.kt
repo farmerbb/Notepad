@@ -79,6 +79,8 @@ import com.farmerbb.notepad.ui.components.DeleteButton
 import com.farmerbb.notepad.ui.components.DeleteDialog
 import com.farmerbb.notepad.ui.components.EditButton
 import com.farmerbb.notepad.ui.components.ExportButton
+import com.farmerbb.notepad.ui.components.FirstRunDialog
+import com.farmerbb.notepad.ui.components.FirstViewDialog
 import com.farmerbb.notepad.ui.components.MultiSelectButton
 import com.farmerbb.notepad.ui.components.NoteListMenu
 import com.farmerbb.notepad.ui.components.NoteViewEditMenu
@@ -152,6 +154,9 @@ private fun NotepadComposeApp(
     val directEdit by vm.prefs.directEdit.collectAsState()
     val filenameFormat by vm.prefs.filenameFormat.collectAsState()
     val showDialogs by vm.prefs.showDialogs.collectAsState()
+    val firstRunComplete by vm.prefs.firstRunComplete.collectAsState()
+    val firstViewComplete by vm.prefs.firstViewComplete.collectAsState()
+    val showDoubleTapMessage by vm.prefs.showDoubleTapMessage.collectAsState()
 
     var navState by rememberSaveable(saver = navStateSaver) { mutableStateOf(initState) }
     var isPrinting by remember { mutableStateOf(false) }
@@ -162,6 +167,8 @@ private fun NotepadComposeApp(
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
     var showMultiDeleteDialog by rememberSaveable { mutableStateOf(false) }
     var showSaveDialog by rememberSaveable { mutableStateOf(false) }
+    var showFirstRunDialog by rememberSaveable { mutableStateOf(false) }
+    var showFirstViewDialog by rememberSaveable { mutableStateOf(false) }
     var showMenu by rememberSaveable { mutableStateOf(false) }
 
     val printController = rememberPrintableController()
@@ -312,6 +319,20 @@ private fun NotepadComposeApp(
         )
     }
 
+    if(showFirstRunDialog) {
+        FirstRunDialog {
+            showFirstRunDialog = false
+            vm.firstRunComplete()
+        }
+    }
+
+    if(showFirstViewDialog) {
+        FirstViewDialog {
+            showFirstViewDialog = false
+            vm.firstViewComplete()
+        }
+    }
+
     /*********************** UI Logic ***********************/
 
     LaunchedEffect(Unit) {
@@ -359,6 +380,10 @@ private fun NotepadComposeApp(
         Empty -> {
             LaunchedEffect(Unit) {
                 vm.clearNote()
+
+                if (!firstRunComplete) {
+                    showFirstRunDialog = true
+                }
             }
 
             vm.registerKeyboardShortcuts(
@@ -412,6 +437,10 @@ private fun NotepadComposeApp(
         is View -> {
             LaunchedEffect(state.id) {
                 vm.getNote(state.id)
+
+                if (!firstViewComplete) {
+                    showFirstViewDialog = true
+                }
             }
 
             vm.registerKeyboardShortcuts(
@@ -443,7 +472,9 @@ private fun NotepadComposeApp(
                         text = note.text,
                         baseTextStyle = textStyle,
                         markdown = markdown,
-                        isPrinting = isPrinting
+                        isPrinting = isPrinting,
+                        showDoubleTapMessage = showDoubleTapMessage,
+                        doubleTapMessageShown = vm::doubleTapMessageShown
                     ) { navState = Edit(note.id) }
                 }
             }

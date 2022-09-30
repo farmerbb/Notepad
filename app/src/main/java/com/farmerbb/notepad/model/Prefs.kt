@@ -19,45 +19,74 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import de.schnettler.datastore.manager.PreferenceRequest
 
+object PrefKeys {
+    val Theme = stringPreferencesKey("theme")
+    val FontSize = stringPreferencesKey("font_size")
+    val SortBy = stringPreferencesKey("sort_by")
+    val ExportFilename = stringPreferencesKey("export_filename")
+    val ShowDialogs = booleanPreferencesKey("show_dialogs")
+    val ShowDate = booleanPreferencesKey("show_date")
+    val DirectEdit = booleanPreferencesKey("direct_edit")
+    val Markdown = booleanPreferencesKey("markdown")
+    val FirstRun = booleanPreferencesKey("first-run")
+    val FirstLoad = booleanPreferencesKey("first-load")
+    val ShowDoubleTapMessage = booleanPreferencesKey("show_double_tap_message")
+}
+
 object Prefs {
     object Theme: PreferenceRequest<String>(
-        key = stringPreferencesKey("theme"),
+        key = PrefKeys.Theme,
         defaultValue = "light-sans"
     )
 
     object FontSize: PreferenceRequest<String>(
-        key = stringPreferencesKey("font_size"),
+        key = PrefKeys.FontSize,
         defaultValue = "normal"
     )
 
     object SortBy: PreferenceRequest<String>(
-        key = stringPreferencesKey("sort_by"),
+        key = PrefKeys.SortBy,
         defaultValue = "date"
     )
 
     object ExportFilename: PreferenceRequest<String>(
-        key = stringPreferencesKey("export_filename"),
+        key = PrefKeys.ExportFilename,
         defaultValue = "text-only"
     )
 
     object ShowDialogs: PreferenceRequest<Boolean>(
-        key = booleanPreferencesKey("show_dialogs"),
+        key = PrefKeys.ShowDialogs,
         defaultValue = false
     )
 
     object ShowDate: PreferenceRequest<Boolean>(
-        key = booleanPreferencesKey("show_date"),
+        key = PrefKeys.ShowDate,
         defaultValue = false
     )
 
     object DirectEdit: PreferenceRequest<Boolean>(
-        key = booleanPreferencesKey("direct_edit"),
+        key = PrefKeys.DirectEdit,
         defaultValue = false
     )
 
     object Markdown: PreferenceRequest<Boolean>(
-        key = booleanPreferencesKey("markdown"),
+        key = PrefKeys.Markdown,
         defaultValue = false
+    )
+
+    object FirstRun: PreferenceRequest<Boolean>(
+        key = PrefKeys.FirstRun,
+        defaultValue = false
+    )
+
+    object FirstLoad: PreferenceRequest<Boolean>(
+        key = PrefKeys.FirstLoad,
+        defaultValue = false
+    )
+
+    object ShowDoubleTapMessage: PreferenceRequest<Boolean>(
+        key = PrefKeys.ShowDoubleTapMessage,
+        defaultValue = true
     )
 }
 

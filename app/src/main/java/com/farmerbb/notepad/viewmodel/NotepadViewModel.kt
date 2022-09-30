@@ -28,6 +28,7 @@ import com.farmerbb.notepad.data.PreferenceManager.Companion.prefs
 import com.farmerbb.notepad.model.FilenameFormat
 import com.farmerbb.notepad.model.Note
 import com.farmerbb.notepad.model.NoteMetadata
+import com.farmerbb.notepad.model.PrefKeys
 import com.farmerbb.notepad.usecase.ArtVandelay
 import com.farmerbb.notepad.usecase.DataMigrator
 import com.farmerbb.notepad.usecase.KeyboardShortcuts
@@ -57,7 +58,7 @@ import org.koin.dsl.module
 class NotepadViewModel(
     private val context: Application,
     private val repo: NotepadRepository,
-    dataStoreManager: DataStoreManager,
+    private val dataStoreManager: DataStoreManager,
     private val dataMigrator: DataMigrator,
     private val toaster: Toaster,
     private val artVandelay: ArtVandelay,
@@ -223,6 +224,31 @@ class NotepadViewModel(
                 repo.saveNote(id, text)
             }
         }
+    }
+
+    /*********************** Preference Operations ***********************/
+
+    fun firstRunComplete() = viewModelScope.launch(Dispatchers.IO) {
+        dataStoreManager.editPreference(
+            key = PrefKeys.FirstRun,
+            newValue = true
+        )
+    }
+
+    fun firstViewComplete() = viewModelScope.launch(Dispatchers.IO) {
+        dataStoreManager.editPreference(
+            key = PrefKeys.FirstLoad,
+            newValue = true
+        )
+    }
+
+    fun doubleTapMessageShown() = viewModelScope.launch(Dispatchers.IO) {
+        toaster.toast(R.string.double_tap)
+
+        dataStoreManager.editPreference(
+            key = PrefKeys.ShowDoubleTapMessage,
+            newValue = false
+        )
     }
 
     /*********************** Import / Export ***********************/

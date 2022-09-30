@@ -89,6 +89,9 @@ class PreferenceManager private constructor(
     val showDate get() = Prefs.ShowDate.asFlow
     val directEdit get() = Prefs.DirectEdit.asFlow
     val markdown get() = Prefs.Markdown.asFlow
+    val firstRunComplete get() = Prefs.FirstRun.asFlow
+    val firstViewComplete get() = Prefs.FirstLoad.asFlow
+    val showDoubleTapMessage get() = Prefs.ShowDoubleTapMessage.asFlow
 
     private fun <T, R> PreferenceRequest<T>.mapToFlow(transform: (value: T) -> R) =
         dataStoreManager.getPreferenceFlow(this).map(transform).stateIn(

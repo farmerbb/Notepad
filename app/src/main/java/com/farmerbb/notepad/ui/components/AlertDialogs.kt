@@ -23,6 +23,7 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import com.farmerbb.notepad.BuildConfig
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.ui.routes.NotepadPreferenceScreen
@@ -115,6 +116,42 @@ fun SaveDialog(
         dismissButton = {
             TextButton(onClick = onDiscard) {
                 Text(text = stringResource(id = R.string.action_discard).uppercase())
+            }
+        }
+    )
+}
+
+@Composable
+fun FirstRunDialog(
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(text = stringResource(id = R.string.app_name)) },
+        text = { Text(text = stringResource(id = R.string.first_run)) },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = R.string.action_close).uppercase())
+            }
+        },
+        properties = DialogProperties(
+            dismissOnBackPress = false,
+            dismissOnClickOutside = false
+        )
+    )
+}
+
+@Composable
+fun FirstViewDialog(
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(text = stringResource(id = R.string.app_name)) },
+        text = { Text(text = stringResource(id = R.string.first_view)) },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(id = R.string.action_close).uppercase())
             }
         }
     )

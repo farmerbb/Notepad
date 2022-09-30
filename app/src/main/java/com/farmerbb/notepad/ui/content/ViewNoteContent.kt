@@ -51,6 +51,8 @@ fun ViewNoteContent(
     baseTextStyle: TextStyle = TextStyle(),
     markdown: Boolean = false,
     isPrinting: Boolean = false,
+    showDoubleTapMessage: Boolean = false,
+    doubleTapMessageShown: () -> Unit = {},
     onDoubleTap: () -> Unit = {}
 ) {
     val textStyle = if (isPrinting) {
@@ -65,8 +67,9 @@ fun ViewNoteContent(
             .pointerInteropFilter {
                 val now = System.currentTimeMillis()
 
-                if (doubleTapTime > now) {
-                    onDoubleTap()
+                when {
+                    doubleTapTime > now -> onDoubleTap()
+                    showDoubleTapMessage -> doubleTapMessageShown()
                 }
 
                 doubleTapTime = now + 300

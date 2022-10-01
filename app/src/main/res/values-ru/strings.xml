@@ -33,15 +33,9 @@ Russian translation by Vladimir Kosolapov"</string>
 <string name="double_tap">Подсказка: дважды нажмите на текст для перехода в режим редактирования</string>
 <string name="draft_restored">Черновик восстановлен</string>
 <string name="draft_saved">Черновик сохранен</string>
-<string name="edit_note">Редактировать заметку</string>
-<string name="edit_text">Введите текст</string>
+    <string name="edit_text">Введите текст</string>
 <string name="empty_note">Пожалуйста, введите текст!</string>
-<string name="error_exporting_notes">Ошибка при экспорте заметок!</string>
-<string name="error_importing_notes">Ошибка при импорте заметок!</string>
-<string name="error_loading_list">Ошибка при загрузке списка заметок!</string>
-<string name="error_loading_note">Ошибка при загрузке заметки!</string>
-<string name="failed_to_save">Невозможно сохранить заметку!</string>
-<string name="first_run">"Добро пожаловать в Notepad!
+    <string name="first_run">"Добро пожаловать в Notepad!
 
 Для начала нажмите на кнопку создания новой заметки."</string>
 <string name="first_view">Для изменения сохраненной заметки дважды нажмите на текст или воспользуйтесь кнопкой редактирования.</string>
@@ -63,17 +57,10 @@ Russian translation by Vladimir Kosolapov"</string>
 <string name="pref_title_show_date">Показывать дату и время</string>
 <string name="pref_title_show_dialogs">Спрашивать перед сохранением</string>
 <string name="send_to">Поделиться заметкой с…</string>
-<string name="view_note">Просмотреть заметку</string>
-<string name="check_for_updates">Check for Updates</string>
+    <string name="check_for_updates">Check for Updates</string>
 
     <string name="action_export_filename">Exported filename</string>
     <string name="cab_note_selected">%d note selected</string>
     <string name="cab_notes_selected">%d notes selected</string>
-    <string name="document">%1$s Document</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
 </resources>

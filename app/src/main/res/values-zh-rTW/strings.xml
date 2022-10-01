@@ -46,14 +46,8 @@
     <string name="draft_restored">已恢復草稿</string>
     <string name="draft_saved">已存儲草稿</string>
     <string name="double_tap">提示：連按兩次文字以進入編輯模式</string>
-    <string name="edit_note">編輯筆記</string>
     <string name="edit_text">請輸入文字</string>
     <string name="empty_note">筆記是空的！</string>
-    <string name="error_exporting_notes">匯出筆記時發生錯誤！</string>
-    <string name="error_importing_notes">匯入筆記時發生錯誤！</string>
-    <string name="error_loading_list">載入筆記清單時發生錯誤！</string>
-    <string name="error_loading_note">載入筆記時發生錯誤！</string>
-    <string name="failed_to_save">存儲筆記失敗！</string>
     <string name="first_run">歡迎使用 Notepad！\n\n點擊加號以建立新筆記。</string>
     <string name="first_view">要開始編輯，請按兩下文字或點擊小鉛筆。</string>
     <string name="import_notes">匯入筆記</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">匯入筆記成功</string>
     <string name="pref_title_show_dialogs">請確定是否存儲筆記</string>
     <string name="send_to">筆記分享方式</string>
-    <string name="view_note">檢視筆記</string>
     <string name="pref_title_show_date">在清單中顯示修改時間</string>
     <string name="action_theme">主題</string>
     <string name="pref_title_direct_edit">打開筆記即可編輯</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">批次選取筆記</string>
     <string name="action_select_all">全選</string>
     <string name="no_notes_to_select">無筆記可選</string>
-    <string name="document">%1$s 個文件</string>
     <string name="no_notes_to_export">匯出：未選取任何筆記</string>
     <string name="no_notes_to_delete">移除：未選取任何筆記</string>
     <string name="check_for_updates">檢查更新</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>由新至舊</item>

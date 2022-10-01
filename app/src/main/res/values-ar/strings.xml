@@ -28,14 +28,8 @@
     <string name="draft_restored">تم استرجاع المسودة</string>
     <string name="draft_saved">تم حفظ المسودة</string>
     <string name="double_tap">معلومة: المس الكلام لمستين للانتقال إلى وضع التعديل</string>
-    <string name="edit_note">تعديل الملحوظة</string>
     <string name="edit_text">اكتب لإضافة نصّ</string>
     <string name="empty_note">ملاحظةٌ فارغة … فضلًا أدخل نصًّا!</string>
-    <string name="error_exporting_notes">حدث خطأٌ أثناء تصدير الملاحظات</string>
-    <string name="error_importing_notes">حدث خطأٌ أثناء استيراد الملاحظات</string>
-    <string name="error_loading_list">حدث خطأٌ أثناء تحميل قائمة الملاحظات!</string>
-    <string name="error_loading_note">حدث خطأٌ أثناء تحميل الملاحظة!</string>
-    <string name="failed_to_save">خطأ: فشلت محاولة حفظ الملاحظة!</string>
     <string name="first_run">أهلًا بك في تطبيق (الدفتر)!\n\nلفتح ملاحظةٍ جديدة، اضغط زرّ (ملاحظة جديدة) - إشارة الإضافة.</string>
     <string name="first_view">لتعديل ملاحظةٍ محفوظة، اضغط مرتين على نصّها أو اضغط زرّ التعديل (القلم).</string>
     <string name="import_notes">استيراد الملاحظات</string>
@@ -50,7 +44,6 @@
     <string name="notes_imported_successfully">تم استيراد الملاحظات</string>
     <string name="pref_title_show_dialogs">اسأل قبل الحفظ</string>
     <string name="send_to">"شارك الملاحظة مع&#8230; "</string>
-    <string name="view_note">اعرض الملاحظة</string>
     <string name="pref_title_show_date">اعرض التاريخ/الوقت</string>
     <string name="action_theme">النسق المظهريّ</string>
     <string name="pref_title_direct_edit">تعديل الملاحظات مباشرةً</string>
@@ -59,13 +52,7 @@
     <string name="action_start_selection">حدّد الملاحظات</string>
     <string name="action_select_all">حدّد الكل</string>
     <string name="no_notes_to_select">لا توجد ملاحظاتٌ ليتم تحديدها</string>
-    <string name="document">مستند %1$s</string>
     <string name="no_notes_to_export">لم تُحَدَّد ملاحظاتٌ لتصديرها</string>
     <string name="no_notes_to_delete">لم تُحَدَّد ملاحظاتٌ لحذفها</string>
     <string name="check_for_updates">تحقّق من التحديثات</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 </resources>

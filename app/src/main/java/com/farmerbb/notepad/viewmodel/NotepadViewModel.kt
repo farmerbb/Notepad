@@ -116,6 +116,10 @@ class NotepadViewModel(
         _selectedNotesFlow.tryEmit(selectedNotes.filterValues { it })
     }
 
+    fun showToast(@StringRes text: Int) = viewModelScope.launch {
+        toaster.toast(text)
+    }
+
     fun showToastIf(
         condition: Boolean,
         @StringRes text: Int,
@@ -276,7 +280,16 @@ class NotepadViewModel(
             clearSelectedNotes()
         }
 
-        artVandelay.exportNotes(hydratedNotes, filenameFormat, ::saveExportedNote, ::clearSelectedNotes)
+        artVandelay.exportNotes(
+            hydratedNotes,
+            filenameFormat,
+            ::saveExportedNote,
+            ::clearSelectedNotes
+        ) {
+            viewModelScope.launch {
+                toaster.toast(R.string.notes_exported_to)
+            }
+        }
     }
 
     fun exportSingleNote(
@@ -285,7 +298,11 @@ class NotepadViewModel(
         filenameFormat: FilenameFormat
     ) = viewModelScope.launch {
         text.checkLength {
-            artVandelay.exportSingleNote(metadata, filenameFormat, { saveExportedNote(it, text) }) {
+            artVandelay.exportSingleNote(
+                metadata,
+                filenameFormat,
+                { saveExportedNote(it, text) }
+            ) {
                 viewModelScope.launch {
                     toaster.toast(R.string.note_exported_to)
                 }

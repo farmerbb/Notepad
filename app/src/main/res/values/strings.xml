@@ -46,14 +46,8 @@
     <string name="draft_restored">Draft restored</string>
     <string name="draft_saved">Draft saved</string>
     <string name="double_tap">Tip: double-tap text to switch to Edit mode</string>
-    <string name="edit_note">Edit Note</string>
     <string name="edit_text">Type to add text</string>
     <string name="empty_note">Please enter some text!</string>
-    <string name="error_exporting_notes">Error exporting notes!</string>
-    <string name="error_importing_notes">Error importing notes!</string>
-    <string name="error_loading_list">Error loading list of notes!</string>
-    <string name="error_loading_note">Error loading note!</string>
-    <string name="failed_to_save">Error: Failed to save note!</string>
     <string name="first_run">Welcome to Notepad!\n\nTo create a note, click the New Note button (plus sign).</string>
     <string name="first_view">To edit a saved note, double-tap the text or click the Edit button (pencil).</string>
     <string name="import_notes">Import notes</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">Notes imported successfully</string>
     <string name="pref_title_show_dialogs">Ask before saving</string>
     <string name="send_to">Share note to&#8230;</string>
-    <string name="view_note">View Note</string>
     <string name="pref_title_show_date">Show date/time</string>
     <string name="action_theme">Theme</string>
     <string name="pref_title_direct_edit">Edit notes directly</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">Select notes</string>
     <string name="action_select_all">Select all</string>
     <string name="no_notes_to_select">No notes to select</string>
-    <string name="document">%1$s Document</string>
     <string name="no_notes_to_export">No notes selected to export</string>
     <string name="no_notes_to_delete">No notes selected to delete</string>
     <string name="check_for_updates">Check for Updates</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>Date (newest first)</item>

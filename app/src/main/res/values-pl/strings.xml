@@ -46,14 +46,8 @@
     <string name="draft_restored">Wersja robocza przywrócona</string>
     <string name="draft_saved">Wersja robocza zapisana</string>
     <string name="double_tap">Wskazówka: dotknij dwa razy, by przełączyć się do trybu edycji</string>
-    <string name="edit_note">Edytuj notatkę</string>
     <string name="edit_text">Napisz, by wprowadzić tekst</string>
     <string name="empty_note">Wprowadź jakiś tekst!</string>
-    <string name="error_exporting_notes">Błąd podczas eksportowania notatek!</string>
-    <string name="error_importing_notes">Błąd podczas importowania notatek!</string>
-    <string name="error_loading_list">Błąd podczas wczytywania listy notatek!</string>
-    <string name="error_loading_note">Błąd podczas wczytywania notatki!</string>
-    <string name="failed_to_save">Błąd: nie udało się zapisać notatki!</string>
     <string name="first_run">Witamy w Notatniku!\n\nAby stworzyć notatkę, dotknij przycisku "Nowa Notatka" (znak plus).</string>
     <string name="first_view">Aby zmienić zapisaną notatkę, dotknij dwa razy tekstu albo przycisku "Edytuj" (symbol ołówka).</string>
     <string name="import_notes">Zaimportuj notatki</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">Notatki zaimportowane pomyślnie</string>
     <string name="pref_title_show_dialogs">Pytaj przed zapisaniem</string>
     <string name="send_to">Udostępnij za pomocą&#8230;</string>
-    <string name="view_note">Wyświetl notatkę</string>
     <string name="pref_title_show_date">Pokazuj datę/czas</string>
     <string name="action_theme">Motyw</string>
     <string name="pref_title_direct_edit">Edytuj notatki od razu</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">Zaznacz notatki</string>
     <string name="action_select_all">Zaznacz wszystkie</string>
     <string name="no_notes_to_select">Nie zaznaczono żadnych notatek</string>
-    <string name="document">%1$s dokument</string>
     <string name="no_notes_to_export">Nie zaznaczono notatek do wyeksportowania</string>
     <string name="no_notes_to_delete">Nie zaznaczono notatek do usunięcia</string>
     <string name="check_for_updates">Sprawdź aktualizacje</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>Daty (najnowsze na początku)</item>

@@ -47,14 +47,8 @@
     <string name="draft_restored">임시 복구됨</string>
     <string name="draft_saved">임시 저장됨</string>
     <string name="double_tap">팁: 문장 더블-탭으로 편집하기</string>
-    <string name="edit_note">노트 편집</string>
     <string name="edit_text">여기에 메모 내용을 입력하세요</string>
     <string name="empty_note">메모 내용이 없습니다</string>
-    <string name="error_exporting_notes">노트 내보니기 실패</string>
-    <string name="error_importing_notes">노트 불러오기 실패</string>
-    <string name="error_loading_list">노트 목록 읽기 실패</string>
-    <string name="error_loading_note">노트 읽기 실패</string>
-    <string name="failed_to_save">오류: 노트 저장 실패</string>
     <string name="first_run">노트패드입니다!\n\n새 노트를 생성하려면 + 기호를 탭 하세요</string>
     <string name="first_view">메모를 수정하려면 본문을 더블-탭 하거나 연필을 탭 하세요</string>
     <string name="import_notes">노트 가져오기</string>
@@ -69,7 +63,6 @@
     <string name="notes_imported_successfully">노트 불러오기 성공</string>
     <string name="pref_title_show_dialogs">저장전에 물어보기</string>
     <string name="send_to">노트 공유하기&#8230;</string>
-    <string name="view_note">노트 보기</string>
     <string name="pref_title_show_date">날짜/시간 보이기</string>
     <string name="action_theme">Theme</string>
     <string name="pref_title_direct_edit">Edit notes directly</string>
@@ -78,15 +71,9 @@
     <string name="action_start_selection">Select notes</string>
     <string name="action_select_all">Select all</string>
     <string name="no_notes_to_select">No notes to select</string>
-    <string name="document">%1$s Document</string>
     <string name="no_notes_to_export">No notes selected to export</string>
     <string name="no_notes_to_delete">No notes selected to delete</string>
     <string name="check_for_updates">Check for Updates</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>날짜 (내림차순)</item>

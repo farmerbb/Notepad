@@ -44,14 +44,8 @@
     <string name="draft_restored">Entwurf wiederhergestellt</string>
     <string name="draft_saved">Entwurf gespeichert</string>
     <string name="double_tap">Hinweis: Doppeltippen auf Text für den Wechsel in den Editiermodus</string>
-    <string name="edit_note">Notiz editieren</string>
     <string name="edit_text">Tippen um Text zu ergänzen</string>
     <string name="empty_note">Bitte Text eingeben!</string>
-    <string name="error_exporting_notes">Fehler beim Exportieren der Notizen!</string>
-    <string name="error_importing_notes">Fehler beim Importieren der Notizen!</string>
-    <string name="error_loading_list">Fehler beim Laden der Notizenliste!</string>
-    <string name="error_loading_note">Fehler beim Laden der Notiz!</string>
-    <string name="failed_to_save">Fehler: Notiz wurde nicht gespeichert!</string>
     <string name="first_run">Willkommen bei Notepad!\n\nUm eine neue Notiz zu erstellen, auf den neue-Notiz-Knopf drücken (plus Zeichen).</string>
     <string name="first_view">Um eine gespeicherte Notiz zu editieren, doppeltippen auf den Text oder den Editierknopf (Stift) drücken.</string>
     <string name="import_notes">Notizen importieren</string>
@@ -66,7 +60,6 @@
     <string name="notes_imported_successfully">Notizen erfolgreich importiert</string>
     <string name="pref_title_show_dialogs">Nachfrage vor dem Speichern</string>
     <string name="send_to">Teile Notiz mit&#8230;</string>
-    <string name="view_note">Notiz ansehen</string>
     <string name="pref_title_show_date">Datum/Zeit anzeigen</string>
     <string name="action_theme">Thema</string>
     <string name="pref_title_direct_edit">Notizen direkt editieren</string>
@@ -75,15 +68,9 @@
     <string name="action_start_selection">Notizen auswählen</string>
     <string name="action_select_all">Alles auswählen</string>
     <string name="no_notes_to_select">Keine Notizen zur Auswahl</string>
-    <string name="document">%1$s Dokument</string>
     <string name="no_notes_to_export">Keine Notizen ausgewählt für Export</string>
     <string name="no_notes_to_delete">Keine Notizen zum Löschen ausgewählt</string>
     <string name="check_for_updates">Nach Updates suchen</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>Datum (Neueste zuerst)</item>

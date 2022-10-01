@@ -44,14 +44,8 @@
     <string name="draft_restored">Ανακτήθηκε το πρόχειρο</string>
     <string name="draft_saved">Αποθηκεύτηκε το πρόχειρο</string>
     <string name="double_tap">Συμβουλή: εναλλαγή σε κατάσταση επεξεργασίας με διπλό πάτημα στο κείμενο</string>
-    <string name="edit_note">Επεξεργασία σημείωσης</string>
     <string name="edit_text">Πληκτρολογήστε για προσθήκη κειμένου</string>
     <string name="empty_note">Παρακαλώ βάλτε κάποιο κείμενο!</string>
-    <string name="error_exporting_notes">Σφάλμα εξαγωγής σημειώσεων!</string>
-    <string name="error_importing_notes">Σφάλμα εισαγωγής σημειώσεων!</string>
-    <string name="error_loading_list">Σφάλμα φόρτωσης λίστας σημειώσεων!</string>
-    <string name="error_loading_note">Σφάλμα φόρτωσης σημείωσης!</string>
-    <string name="failed_to_save">Σφάλμα: Αποτυχία αποθήκευσης σημείωσης!</string>
     <string name="first_run">Καλώς ήλθατε στο Σημειώσεις!\n\nΓια δημιουργία σημείωσης, κάντε κλικ στο κουμπί νέας σημείωσης (σύμβολο συν).</string>
     <string name="first_view">Για επεξεργασία μιας αποθηκευμένης σημείωσης, κάντε διπλό κλικ στο κείμενο ή κάντε κλικ στο κουμπί επεξεργασίας (μολύβι).</string>
     <string name="import_notes">Εισαγωγή σημειώσεων</string>
@@ -66,7 +60,6 @@
     <string name="notes_imported_successfully">Οι σημειώσεις εισήχθηκαν με επιτυχία</string>
     <string name="pref_title_show_dialogs">Ερώτηση πριν την αποθήκευση</string>
     <string name="send_to">Μοίρασμα σημείωσης σε&#8230;</string>
-    <string name="view_note">Προβολή σημείωσης</string>
     <string name="pref_title_show_date">Εμφάνιση ημερομηνίας/ώρας</string>
     <string name="action_theme">Θέμα</string>
     <string name="pref_title_direct_edit">Άμεση επεξεργασία σημειώσεων</string>
@@ -75,15 +68,9 @@
     <string name="action_start_selection">Επιλογή σημειώσεων</string>
     <string name="action_select_all">Επιλογή όλων</string>
     <string name="no_notes_to_select">Δεν υπάρχουν σημειώσεις για επιλογή</string>
-    <string name="document">%1$s έγγραφο</string>
     <string name="no_notes_to_export">Δεν επιλέχθηκαν σημειώσεις για εξαγωγή</string>
     <string name="no_notes_to_delete">Δεν επιλέχθηκαν σημειώσεις για διαγραφή</string>
     <string name="check_for_updates">Έλεγχος για ενημερώσεις</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>Ημερομηνία (νεότερη πρώτα)</item>

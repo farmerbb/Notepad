@@ -46,14 +46,8 @@
     <string name="draft_restored">Koncept obnoven</string>
     <string name="draft_saved">Koncept uložen</string>
     <string name="double_tap">Tip: dvojím klepnutím na text jej můžete upravit</string>
-    <string name="edit_note">Upravit poznámku</string>
     <string name="edit_text">Pro zadání textu začněte psát</string>
     <string name="empty_note">Něco prosím napište!</string>
-    <string name="error_exporting_notes">Chyba při exportu poznámek!</string>
-    <string name="error_importing_notes">Chyba při importu poznámek!</string>
-    <string name="error_loading_list">Chyba při načítání poznámek!</string>
-    <string name="error_loading_note">Chyba při načítání poznámky!</string>
-    <string name="failed_to_save">Chyba: Uložení poznámky selhalo!</string>
     <string name="first_run">Vítejte v Notepadu!\n\nNovou poznámku vytvoříte klepnutím na tlačítko vpravo dole (znak plus).</string>
     <string name="first_view">Poznámku upravíte buďto dvojím klepnutím nebo klepnutím na tlačítko Upravit (ikona tužky).</string>
     <string name="import_notes">Importovat poznámky</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">Poznámky úspěšně importovány</string>
     <string name="pref_title_show_dialogs">Před uložením se zeptat</string>
     <string name="send_to">Sdílet pomocí&#8230;</string>
-    <string name="view_note">Zobrazit poznámku</string>
     <string name="pref_title_show_date">Zobrazit datum/čas</string>
     <string name="action_theme">Barevné téma</string>
     <string name="pref_title_direct_edit">Upravit poznámky přímo</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">Vybrat poznámky</string>
     <string name="action_select_all">Vybrat všechny</string>
     <string name="no_notes_to_select">Nic k vybrání</string>
-    <string name="document">%1$s Dokument</string>
     <string name="no_notes_to_export">Nejsou vybrány žádné poznámky pro export</string>
     <string name="no_notes_to_delete">Nejsou vybrány žádné poznámky ke smazání</string>
     <string name="check_for_updates">Check for Updates</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>Data (nejnovější nejdříve)</item>

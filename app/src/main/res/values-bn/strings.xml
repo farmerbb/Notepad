@@ -46,14 +46,8 @@
     <string name="draft_restored">খসড়া পুনরুদ্ধার করুন</string>
     <string name="draft_saved">খসড়া সংরক্ষিত হয়েছে</string>
     <string name="double_tap">টিপ: লেখায় দুবার ট্যাপ করে সম্পাদনা মুডে যান</string>
-    <string name="edit_note">নোট সম্পাদনা করুন</string>
     <string name="edit_text">লেখা যুক্ত করতে টাইপ করুন</string>
     <string name="empty_note">কিছু লেখা যোগ করুন!</string>
-    <string name="error_exporting_notes">নোট এক্সপোর্ট ব্যর্থ হয়েছে!</string>
-    <string name="error_importing_notes">নোট ইমপোর্ট ব্যর্থ হয়েছে!</string>
-    <string name="error_loading_list">নোটের তালিকা লোড হতে ব্যর্থ হয়েছে!</string>
-    <string name="error_loading_note">নোট লোড হতে ব্যর্থ হয়েছে!</string>
-    <string name="failed_to_save">নোট সংরক্ষণ করতে ব্যর্থ হয়েছে!</string>
     <string name="first_run">নোটপ্যাডে স্বাগতম!\n\nনোট তৈরী করতে, নিউ নোট বাটনে ক্লিক করুন (প্লাস চিহ্ন)।</string>
     <string name="first_view">সংরক্ষিত নোট সম্পাদনা করতে, লেখাতে দুইবার ট্যাপ করুন (পেন্সিল চিহ্ন)।</string>
     <string name="import_notes"> নোটগুলো ইমপোর্ট করুন</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">নোটগুলো সফলভাবে এক্সপোর্ট করা হয়েছে</string>
     <string name="pref_title_show_dialogs">সংরক্ষণের আগে জিজ্ঞেস করুন</string>
     <string name="send_to">শেয়ার করুন&#8230;</string>
-    <string name="view_note">নোট দেখুন</string>
     <string name="pref_title_show_date">তারিখ/সময় দেখান</string>
     <string name="action_theme">থিম</string>
     <string name="pref_title_direct_edit">সরাসরি নোটগুলো সম্পাদনা করুন</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">নোটগুলো নির্বাচন করুন</string>
     <string name="action_select_all">সবগুলো নির্বাচন করুন</string>
     <string name="no_notes_to_select">নির্বাচনের জন্য কোন নোট নেই</string>
-    <string name="document">%1$s ডকুমেন্ট</string>
     <string name="no_notes_to_export">এক্সপোর্ট করার জন্য কোন নোট নির্বাচন করা হয়নি</string>
     <string name="no_notes_to_delete">মুছে ফেলার জন্য কোন নোট নির্বাচন করা হয়নি</string>
     <string name="check_for_updates">হালনাগাদ আছে কি না দেখুন</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>তারিখ (একদম নতুন)</item>

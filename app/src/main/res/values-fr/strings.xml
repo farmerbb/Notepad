@@ -46,14 +46,8 @@
     <string name="draft_restored">Brouillon restauré</string>
     <string name="draft_saved">Brouillon enregistré</string>
     <string name="double_tap">Astuce : double cliquer sur la note pour l\'éditer</string>
-    <string name="edit_note">Editer la note</string>
     <string name="edit_text">Saisissez votre texte</string>
     <string name="empty_note">Note vide&#160;!</string>
-    <string name="error_exporting_notes">Erreur d\'exportation des notes!</string>
-    <string name="error_importing_notes">Erreur d\'importation des notes!</string>
-    <string name="error_loading_list">Erreur lors du chargement de la liste&#160;!</string>
-    <string name="error_loading_note">Erreur lors du chargement de la note&#160;!</string>
-    <string name="failed_to_save">Erreur&#160;: impossible d\'enregistrer la note&#160;!</string>
     <string name="first_run">Bienvenue dans Bloc-Notes&#160;!\n\nPour créer une note, appuyez sur le bouton Ajouter&#160;(+) en haut.</string>
     <string name="first_view">Pour modifier une note, appuyez sur l\'écran ou appuyez sur le bouton Editer&#160;(Crayon) en haut.</string>
     <string name="import_notes">Importer des notes</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">Notes importées avec succès</string>
     <string name="pref_title_show_dialogs">Confirmer avant d\'enregistrer</string>
     <string name="send_to">Envoyer à</string>
-    <string name="view_note">Afficher</string>
     <string name="pref_title_show_date">Afficher la date</string>
     <string name="action_theme">Thème</string>
     <string name="pref_title_direct_edit">Editer directement les notes</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">Sélectionner les notes</string>
     <string name="action_select_all">Sélectionner tout</string>
     <string name="no_notes_to_select">Pas de note à sélectionner</string>
-    <string name="document">%1$s Document</string>
     <string name="no_notes_to_export">Pas de note à exporter</string>
     <string name="no_notes_to_delete">Pas de note à supprimer</string>
     <string name="check_for_updates">Vérifier les mises à jour</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>Date (la plus récente en premier)</item>

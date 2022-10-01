@@ -46,14 +46,8 @@
     <string name="draft_restored">Bozza riaperta</string>
     <string name="draft_saved">Bozza salvata</string>
     <string name="double_tap">Consiglio: doppio tocco per passare in modalit&#225; Modifica</string>
-    <string name="edit_note">Modifica nota</string>
     <string name="edit_text">Scrivi per aggiungere il testo</string>
     <string name="empty_note">Per favore, inserisci un testo!</string>
-    <string name="error_exporting_notes">Errore durante l\'esportazione delle note!</string>
-    <string name="error_importing_notes">Errore durante l\'importazione delle note!</string>
-    <string name="error_loading_list">Errore nel caricamento della lista delle note!</string>
-    <string name="error_loading_note">Errore nel caricamento della nota!</string>
-    <string name="failed_to_save">Errore: Il salvataggio della nota &#232; fallito!</string>
     <string name="first_run">Benvenuto in Notepad!\n\nPer creare una nota, clicca sul pulsante Nuova nota (segno pi&#249;).</string>
     <string name="first_view">Per modificare una nota salvata, fai doppio-tocco sul testo o clicca il pulsante Modifica (matita).</string>
     <string name="import_notes">Importa note</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">Note importate con successo</string>
     <string name="pref_title_show_dialogs">Chiedi prima di salvare</string>
     <string name="send_to">Condividi nota con&#8230;</string>
-    <string name="view_note">Visualizza nota</string>
     <string name="pref_title_show_date">Mostra data/ora</string>
     <string name="action_theme">Tema</string>
     <string name="pref_title_direct_edit">Modifica note direttamente</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">Seleziona note</string>
     <string name="action_select_all">Seleziona tutte</string>
     <string name="no_notes_to_select">Nessuna nota da selezionare</string>
-    <string name="document">%1$s Documento</string>
     <string name="no_notes_to_export">Nessuna nota selezionata da esportare</string>
     <string name="no_notes_to_delete">Nessuna nota selezionata da cancellare</string>
     <string name="check_for_updates">Controlla aggiornamenti</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>Data (prima le pi&#249; recenti)</item>

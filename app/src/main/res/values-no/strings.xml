@@ -46,14 +46,8 @@
     <string name="draft_restored">Utkast gjenopprettet</string>
     <string name="draft_saved">Utkast lagret</string>
     <string name="double_tap">Tips: dobbeltrykk på teksten for å bytte til redigeringsmodus</string>
-    <string name="edit_note">Endre notat</string>
     <string name="edit_text">Skriv for å legge til tekst</string>
     <string name="empty_note">Vennligst skriv noe tekst!</string>
-    <string name="error_exporting_notes">En feil oppstod under eksportering av notater!</string>
-    <string name="error_importing_notes">En feil oppstod under importering av notater!</string>
-    <string name="error_loading_list">En feil oppstod under lasting av notatlisten!</string>
-    <string name="error_loading_note">En feil oppstod under lasting av notat!</string>
-    <string name="failed_to_save">Feil: Klarte ikke å lagre notat!</string>
     <string name="first_run">Velkommen til Notatblokk!\n\nFor å lage et notat, klikk på Nytt notat-knappen (plusstegnet).</string>
     <string name="first_view">For å redigere et lagret notat, dobbelklikk teksten eller klikk på rediger-knappen (blyanten).</string>
     <string name="import_notes">Importer notater</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">Importering av notater vellykket</string>
     <string name="pref_title_show_dialogs">Spør før lagring</string>
     <string name="send_to">Del notat til&#8230;</string>
-    <string name="view_note">Vis notat</string>
     <string name="pref_title_show_date">Vis dato/tid</string>
     <string name="action_theme">Tema</string>
     <string name="pref_title_direct_edit">Rediger notater direkte</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">Marker notater</string>
     <string name="action_select_all">Marker alle</string>
     <string name="no_notes_to_select">Ingen notater å markere</string>
-    <string name="document">%1$s dokument</string>
     <string name="no_notes_to_export">Ingen notater markert for eksportering</string>
     <string name="no_notes_to_delete">Ingen notater markert for sletting</string>
     <string name="check_for_updates">Se etter oppdateringer</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>Dato (nyeste first)</item>

@@ -46,14 +46,8 @@
     <string name="draft_restored">Rasimu imerejeshwa</string>
     <string name="draft_saved">Rasimu imehifadhiwa</string>
     <string name="double_tap">Nasaha: finya matini mara mbili ili uweze kuhariri</string>
-    <string name="edit_note">Hariri kidokezo</string>
     <string name="edit_text">Tumia kiibodi kuongeza matini</string>
     <string name="empty_note">Tafadhali ongeza matini!</string>
-    <string name="error_exporting_notes">Tatizo katika kuhamisha vidokezo!</string>
-    <string name="error_importing_notes">Tatizo katika kuingiza vidokezo!</string>
-    <string name="error_loading_list">Tatizo katika mchakato wa kuingiza orodha ya vidokezo!</string>
-    <string name="error_loading_note">Tatizo katika mchakato wa kufungua vidokezo!</string>
-    <string name="failed_to_save">Tatizo: matini hayakuhifadhiwa!</string>
     <string name="first_run">Karibu katika Kichukua Matini!\n\nKuunda kidokezo, bonyeza kibonyezo cha kidokezo kipya (ishara ya kuongeza).</string>
     <string name="first_view">Kuhariri kidokezo kilichohifadhiwa, finya matini mara mbili au bonyeza kibonyezo cha Kuhariri (penseli).</string>
     <string name="import_notes">Ingiza vidokezo</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">Vidokezo vimeingizwa kwa mafanikio</string>
     <string name="pref_title_show_dialogs">Uliza kabla ya kuhifadhi</string>
     <string name="send_to">Sambaza kidokezo kwa&#8230;</string>
-    <string name="view_note">Angalia kidokezo</string>
     <string name="pref_title_show_date">Onyesha tarehe/wakati</string>
     <string name="action_theme">Mfumo wa rangi</string>
     <string name="pref_title_direct_edit">Hariri vidokezo moja kwa moja</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">Chagua Vidokezo</string>
     <string name="action_select_all">Chagua vyote</string>
     <string name="no_notes_to_select">Hakuna vidokezo vya kuchagua</string>
-    <string name="document">%1$s Hati</string>
     <string name="no_notes_to_export">Hakuna vidokezo vilivyochaguliwa vya kuhamisha</string>
     <string name="no_notes_to_delete">Hakuna vidokezo vilivyochaguliwa vya kufuta</string>
     <string name="check_for_updates">Angalia kama kuna Toleo Jipya</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>Date (vipya kwanza)</item>

@@ -46,14 +46,8 @@
     <string name="draft_restored">Borrador restaurado</string>
     <string name="draft_saved">Borrador guardado</string>
     <string name="double_tap">Consejo: toca dos veces en el texto para cambiar al modo edición</string>
-    <string name="edit_note">Editar Nota</string>
     <string name="edit_text">Digita para añadir texto</string>
     <string name="empty_note">¡Por favor, pon texto!</string>
-    <string name="error_exporting_notes">¡Error exportando notas!</string>
-    <string name="error_importing_notes">¡Error importando notas!</string>
-    <string name="error_loading_list">¡Error cargando lista de notas!</string>
-    <string name="error_loading_note">¡Error cargando nota!</string>
-    <string name="failed_to_save">¡Error: no se ha podido guardar la nota!</string>
     <string name="first_run">Bienvenido al Notepad!\n\nPara crear una nota, clica en el botón Nota Nueva (signo de más).</string>
     <string name="first_view">Para editar una nota guardada, toca dos veces en el texto o clica en el botón Editar (lápiz).</string>
     <string name="import_notes">Importar notas</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">Notas importadas exitosamente</string>
     <string name="pref_title_show_dialogs">Preguntar antes de guardar</string>
     <string name="send_to">Compartir nota con&#8230;</string>
-    <string name="view_note">Ver Nota</string>
     <string name="pref_title_show_date">Mostrar fecha/hora</string>
     <string name="action_theme">Tema</string>
     <string name="pref_title_direct_edit">Editar notas directamente</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">Seleccionar notas</string>
     <string name="action_select_all">Seleccionar todo</string>
     <string name="no_notes_to_select">Ninguna nota que seleccionar</string>
-    <string name="document">%1$s Documento</string>
     <string name="no_notes_to_export">Ninguna nota seleccionada para exportar</string>
     <string name="no_notes_to_delete">Ninguna nota seleccionada para eliminar</string>
     <string name="check_for_updates">Comprobar actualizaciones</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>Fecha (más reciente primero)</item>

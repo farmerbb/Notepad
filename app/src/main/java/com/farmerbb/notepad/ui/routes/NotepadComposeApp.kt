@@ -311,6 +311,7 @@ private fun NotepadComposeApp(
             },
             onDiscard = {
                 showSaveDialog = false
+                vm.showToast(R.string.changes_discarded)
                 updateNavState(note.id)
             },
             onDismiss = {
@@ -525,6 +526,8 @@ private fun NotepadComposeApp(
             }
         }
     }
+
+    /*********************** Multi-Select ***********************/
 
     if (multiSelectEnabled) {
         title = stringResource(

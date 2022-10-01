@@ -45,7 +45,8 @@ interface ArtVandelay {
         hydratedNotes: List<Note>,
         filenameFormat: FilenameFormat,
         saveExportedNote: (OutputStream, String) -> Unit,
-        onCancel: () -> Unit
+        onCancel: () -> Unit,
+        onComplete: () -> Unit
     )
 
     fun exportSingleNote(
@@ -71,9 +72,16 @@ private class ArtVandelayImpl(
         hydratedNotes: List<Note>,
         filenameFormat: FilenameFormat,
         saveExportedNote: (OutputStream, String) -> Unit,
-        onCancel: () -> Unit
+        onCancel: () -> Unit,
+        onComplete: () -> Unit
     ) = fileChooser.openChooseDirectoryDialog(
-        directoryChooserCallback = exportFolderCallback(hydratedNotes, filenameFormat, saveExportedNote, onCancel)
+        directoryChooserCallback = exportFolderCallback(
+            hydratedNotes,
+            filenameFormat,
+            saveExportedNote,
+            onCancel,
+            onComplete
+        )
     )
 
     override fun exportSingleNote(
@@ -109,7 +117,8 @@ private class ArtVandelayImpl(
         hydratedNotes: List<Note>,
         filenameFormat: FilenameFormat,
         saveExportedNote: (OutputStream, String) -> Unit,
-        onCancel: () -> Unit
+        onCancel: () -> Unit,
+        onComplete: () -> Unit
     ) = object: DirectoryChooserCallback() {
         override fun onResult(uri: Uri) {
             with(fileManager) {
@@ -128,6 +137,8 @@ private class ArtVandelayImpl(
                             }
                     }
                 }
+
+                onComplete()
             }
         }
 

@@ -46,14 +46,8 @@
     <string name="draft_restored">下書きを再編集</string>
     <string name="draft_saved">下書きを保存</string>
     <string name="double_tap">テキストをダブルタップで編集します</string>
-    <string name="edit_note">メモを開く</string>
     <string name="edit_text">入力すると本文に追加します</string>
     <string name="empty_note">空欄です。何か入力して下さい</string>
-    <string name="error_exporting_notes">出力時にエラー発生</string>
-    <string name="error_importing_notes">取り込み時にエラー発生</string>
-    <string name="error_loading_list">メモの一覧の読み込み時にエラー発生</string>
-    <string name="error_loading_note">メモの読み込み時にエラー発生</string>
-    <string name="failed_to_save">エラー発生。保存できませんでした</string>
     <string name="first_run">始めまして!\n\nメモを作成するには、プラスマークをクリックして下さい</string>
     <string name="first_view">既存メモの再編集には、本文をダブルタップするか、鉛筆アイコンをクリックして下さい</string>
     <string name="import_notes">アプリ外のファイルを読み込む</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">読み込みました</string>
     <string name="pref_title_show_dialogs">保存時に確認する</string>
     <string name="send_to">メモをシェア&#8230;</string>
-    <string name="view_note">メモを見る</string>
     <string name="pref_title_show_date">日時を表示</string>
     <string name="action_theme">テーマ</string>
     <string name="pref_title_direct_edit">直接メモを編集</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">メモを選択</string>
     <string name="action_select_all">すべてを選択</string>
     <string name="no_notes_to_select">選択の対象がありません</string>
-    <string name="document">%1$s 文書</string>
     <string name="no_notes_to_export">選択されていません</string>
     <string name="no_notes_to_delete">選択されていません</string>
     <string name="check_for_updates">アプデを確認</string>
-    <string name="preview_app_title">メモ帳アプリのプレビュー</string>
-    <string name="preview_app_message">テスト版に切り替えますか? 元に戻すには再インストールが必要です</string>
-    <string name="blue_pill">安定版に安住</string>
-    <string name="red_pill">危険を承知で試す</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>日付順 (最新が先頭)</item>

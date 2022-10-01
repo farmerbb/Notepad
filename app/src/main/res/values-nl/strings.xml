@@ -46,14 +46,8 @@
     <string name="draft_restored">Concept hersteld</string>
     <string name="draft_saved">Concept opgeslagen</string>
     <string name="double_tap">Tip: dubbeltik op de tekst om de bewerkmodus te openen</string>
-    <string name="edit_note">Notitie bewerken</string>
     <string name="edit_text">Typ om tekst in te voeren</string>
     <string name="empty_note">Voer tekst in!</string>
-    <string name="error_exporting_notes">Kan notities niet exporteren!</string>
-    <string name="error_importing_notes">Kan notities niet importeren!</string>
-    <string name="error_loading_list">Kan notitielijst niet laden</string>
-    <string name="error_loading_note">Kan notitie niet laden!</string>
-    <string name="failed_to_save">Fout: kan notitie niet opslaan!</string>
     <string name="first_run">Welkom bij Notitieblok!\n\nVoeg een notitie toe door op de knop Nieuwe Notite (plus-teken) te drukken.</string>
     <string name="first_view">Dubbeltik op een tekst om deze te bewerken of druk op de bewerkknop (potlood).</string>
     <string name="import_notes">Notities importeren</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">Notities geïmporteerd</string>
     <string name="pref_title_show_dialogs">Vragen alvorens op te slaan</string>
     <string name="send_to">Notitie delen met&#8230;</string>
-    <string name="view_note">Notitie bekijken</string>
     <string name="pref_title_show_date">Datum/tijd tonen</string>
     <string name="action_theme">Thema</string>
     <string name="pref_title_direct_edit">Notities direct bewerken</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">Notities selecteren</string>
     <string name="action_select_all">Alles selecteren</string>
     <string name="no_notes_to_select">Geen te selecteren notities</string>
-    <string name="document">%1$s document</string>
     <string name="no_notes_to_export">Geen te exporteren notities geselecteerd</string>
     <string name="no_notes_to_delete">Geen te verwijderen notities geselecteerd</string>
     <string name="check_for_updates">Check for Updates</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>Datum (recentst eerst)</item>

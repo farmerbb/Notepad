@@ -46,14 +46,8 @@
     <string name="draft_restored">已恢复草稿</string>
     <string name="draft_saved">已保存草稿</string>
     <string name="double_tap">提示：双击文本以进入编辑模式</string>
-    <string name="edit_note">编辑笔记</string>
     <string name="edit_text">请键入文字</string>
     <string name="empty_note">文本为空！</string>
-    <string name="error_exporting_notes">导出笔记时出错！</string>
-    <string name="error_importing_notes">导入笔记时出错！</string>
-    <string name="error_loading_list">加载笔记列表时出错！</string>
-    <string name="error_loading_note">加载笔记时出错！</string>
-    <string name="failed_to_save">保存笔记失败！</string>
     <string name="first_run">欢迎使用 Notepad！\n\n点击加号以创建新笔记。</string>
     <string name="first_view">要开始编辑，请双击文本或点击小铅笔。</string>
     <string name="import_notes">导入笔记</string>
@@ -68,7 +62,6 @@
     <string name="notes_imported_successfully">导入笔记成功</string>
     <string name="pref_title_show_dialogs">保存笔记前请求确认</string>
     <string name="send_to">笔记分享方式</string>
-    <string name="view_note">查看笔记</string>
     <string name="pref_title_show_date">列表中显示修改时间</string>
     <string name="action_theme">主题</string>
     <string name="pref_title_direct_edit">打开笔记即开始编辑</string>
@@ -77,15 +70,9 @@
     <string name="action_start_selection">批量选择笔记</string>
     <string name="action_select_all">全选</string>
     <string name="no_notes_to_select">无笔记可选</string>
-    <string name="document">%1$s 个文档</string>
     <string name="no_notes_to_export">导出：未选择任何笔记</string>
     <string name="no_notes_to_delete">删除：未选择任何笔记</string>
     <string name="check_for_updates">检查更新</string>
-    <string name="preview_app_title">Notepad 预览版</string>
-    <string name="preview_app_message">尝试 Notepad 从零写起的未完成的预览版本！&lt;br&gt;&lt;br&gt;切换版本前，请查看 &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; 了解预览版中还缺少哪些功能的详细信息。&lt;br&gt;&lt;br&gt;\"这是你最后的机会，在这之后就没有回头路了\" (没有应用卸载和重新安装)</string>
-    <string name="blue_pill">停留在稳定版</string>
-    <string name="red_pill">尝试预览版</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>由新至旧</item>

@@ -33,19 +33,12 @@ App logo by Tobaloidee"</string>
 <string name="dialog_delete_button_title_plural">Notları sil</string>
 <string name="dialog_save_button_title">Değişiklikleri kaydet</string>
 <string name="dialog_save_changes">Değişikliklerinizi kaydetmek istiyor musunuz?</string>
-<string name="document">%1$s Belge</string>
-<string name="double_tap">İpucu: Düzenleme moduna geçmek için metne iki kez dokunun</string>
+    <string name="double_tap">İpucu: Düzenleme moduna geçmek için metne iki kez dokunun</string>
 <string name="draft_restored">Taslak geri yüklendi</string>
 <string name="draft_saved">Taslak kaydedildi</string>
-<string name="edit_note">Notu düzenle</string>
-<string name="edit_text">Metin eklemek için yazın</string>
+    <string name="edit_text">Metin eklemek için yazın</string>
 <string name="empty_note">Lütfen bir metin girin!</string>
-<string name="error_exporting_notes">Notlar dışa aktarılırken hata oluştu!</string>
-<string name="error_importing_notes">Notlar içe aktarılırken hata oluştu!</string>
-<string name="error_loading_list">Not listesi yüklenirken hata oluştu!</string>
-<string name="error_loading_note">Not yüklenirken hata oluştu!</string>
-<string name="failed_to_save">Hata: Not kaydedilemedi!</string>
-<string name="first_run">"Not Defterine Hoş Geldiniz!
+    <string name="first_run">"Not Defterine Hoş Geldiniz!
 
 Bir not oluşturmak için Yeni Not düğmesine (artı işareti) tıklayın."</string>
 <string name="first_view">Kaydedilmiş bir notu düzenlemek için metne çift dokunun veya Düzenle düğmesini (kalem) tıklayın</string>
@@ -67,12 +60,6 @@ Bir not oluşturmak için Yeni Not düğmesine (artı işareti) tıklayın."</st
 <string name="pref_title_show_date">Tarih / Saat göster</string>
 <string name="pref_title_show_dialogs">Kaydetmeden önce sor</string>
 <string name="send_to">Notu paylaş…</string>
-<string name="view_note">Notu görüntüle</string>
-    <string name="preview_app_title">Notepad app preview</string>
-    <string name="preview_app_message">Try a work-in-progress, preview version of the Notepad app, which is being rewritten from the ground up!&lt;br&gt;&lt;br&gt;Before switching, please see the &lt;a href=\"https://github.com/farmerbb/Notepad/blob/%d/README-NEW.md#features\"&gt;Features list&lt;/a&gt; for details on what features are still missing from the preview.&lt;br&gt;&lt;br&gt;\"After this, there is no turning back\" (without an uninstall and reinstall of the app)</string>
-    <string name="blue_pill">Take the blue pill</string>
-    <string name="red_pill">Take the red pill</string>
-    <string name="migration_success">Welcome to the Notepad app preview!</string>
 
     <string-array name="sort_by_list">
         <item>Date (newest first)</item>

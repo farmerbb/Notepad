@@ -43,7 +43,6 @@
         android:icon="@mipmap/ic_launcher"
         android:label="${appName}"
         android:theme="@style/Theme.Notepad"
-        tools:replace="android:label"
         tools:ignore="AppLinkUrlError">
 
         <activity-alias

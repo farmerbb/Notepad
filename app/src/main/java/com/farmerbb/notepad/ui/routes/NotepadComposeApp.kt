@@ -87,7 +87,6 @@ import com.farmerbb.notepad.ui.components.NoteViewEditMenu
 import com.farmerbb.notepad.ui.components.SaveButton
 import com.farmerbb.notepad.ui.components.SaveDialog
 import com.farmerbb.notepad.ui.components.SelectAllButton
-import com.farmerbb.notepad.ui.components.SettingsDialog
 import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.content.NoteListContent
 import com.farmerbb.notepad.ui.content.ViewNoteContent

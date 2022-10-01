@@ -16,17 +16,10 @@
 package com.farmerbb.notepad.ui.components
 
 import androidx.compose.material.AlertDialog
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.farmerbb.notepad.BuildConfig
 import com.farmerbb.notepad.R
-import com.farmerbb.notepad.ui.routes.NotepadPreferenceScreen
 import java.util.Calendar
 import java.util.TimeZone
 
@@ -52,28 +45,21 @@ fun DeleteDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = stringResource(id = title)) },
-        text = { Text(text = stringResource(id = R.string.dialog_are_you_sure)) },
+        title = { DialogTitle(id = title) },
+        text = { DialogText(id = R.string.dialog_are_you_sure) },
         confirmButton = {
-            TextButton(onClick = onConfirm) {
-                Text(text = stringResource(id = R.string.action_delete).uppercase())
-            }
+            DialogButton(
+                onClick = onConfirm,
+                id = R.string.action_delete
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = R.string.action_cancel).uppercase())
-            }
+            DialogButton(
+                onClick = onDismiss,
+                id = R.string.action_cancel
+            )
         }
     )
-}
-
-@Composable
-fun SettingsDialog(onDismiss: () -> Unit) {
-    Dialog(onDismissRequest = onDismiss) {
-        Surface(shape = MaterialTheme.shapes.medium) {
-            NotepadPreferenceScreen()
-        }
-    }
 }
 
 @Composable
@@ -83,17 +69,19 @@ fun AboutDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = stringResource(id = R.string.dialog_about_title)) },
-        text = { Text(text = stringResource(id = R.string.dialog_about_message, buildYear)) },
+        title = { DialogTitle(id = R.string.dialog_about_title) },
+        text = { DialogText(id = R.string.dialog_about_message, buildYear) },
         confirmButton = {
-            TextButton(onClick = onDismiss) { // dismissing the dialog is the primary action
-                Text(text = stringResource(id = R.string.action_close).uppercase())
-            }
+            DialogButton(
+                onClick = onDismiss, // dismissing the dialog is the primary action
+                id = R.string.action_close
+            )
         },
         dismissButton = {
-            TextButton(onClick = checkForUpdates) {
-                Text(text = stringResource(id = R.string.check_for_updates).uppercase())
-            }
+            DialogButton(
+                onClick = checkForUpdates,
+                id = R.string.check_for_updates
+            )
         }
     )
 }
@@ -106,17 +94,19 @@ fun SaveDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = stringResource(id = R.string.dialog_save_button_title)) },
-        text = { Text(text = stringResource(id = R.string.dialog_save_changes)) },
+        title = { DialogTitle(id = R.string.dialog_save_button_title) },
+        text = { DialogText(id = R.string.dialog_save_changes) },
         confirmButton = {
-            TextButton(onClick = onConfirm) {
-                Text(text = stringResource(id = R.string.action_save).uppercase())
-            }
+            DialogButton(
+                onClick = onConfirm,
+                id = R.string.action_save
+            )
         },
         dismissButton = {
-            TextButton(onClick = onDiscard) {
-                Text(text = stringResource(id = R.string.action_discard).uppercase())
-            }
+            DialogButton(
+                onClick = onDiscard,
+                id = R.string.action_discard
+            )
         }
     )
 }
@@ -127,12 +117,13 @@ fun FirstRunDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = stringResource(id = R.string.app_name)) },
-        text = { Text(text = stringResource(id = R.string.first_run)) },
+        title = { DialogTitle(id = R.string.app_name) },
+        text = { DialogText(id = R.string.first_run) },
         confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = R.string.action_close).uppercase())
-            }
+            DialogButton(
+                onClick = onDismiss,
+                id = R.string.action_close
+            )
         },
         properties = DialogProperties(
             dismissOnBackPress = false,
@@ -147,12 +138,13 @@ fun FirstViewDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(text = stringResource(id = R.string.app_name)) },
-        text = { Text(text = stringResource(id = R.string.first_view)) },
+        title = { DialogTitle(id = R.string.app_name) },
+        text = { DialogText(id = R.string.first_view) },
         confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = R.string.action_close).uppercase())
-            }
+            DialogButton(
+                onClick = onDismiss,
+                id = R.string.action_close
+            )
         }
     )
 }

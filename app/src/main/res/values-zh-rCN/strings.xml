@@ -51,7 +51,7 @@
     <string name="first_run">欢迎使用 Notepad！\n\n点击加号以创建新笔记。</string>
     <string name="first_view">要开始编辑，请双击文本或点击小铅笔。</string>
     <string name="import_notes">导入笔记</string>
-    <string name="loading_external_file">不支持导入外部文件</string>
+    <string name="loading_external_file">加载外部内容失败 (或内容类型不受支持)</string>
     <string name="no_notes_found">无笔记</string>
     <string name="note_deleted">已删除笔记</string>
     <string name="note_exported_to">导出笔记成功</string>

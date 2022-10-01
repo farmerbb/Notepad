@@ -515,7 +515,7 @@ private fun NotepadComposeApp(
             content = {
                 Printable(printController) {
                     EditNoteContent(
-                        text = note.draftText.ifEmpty { note.text },
+                        text = text,
                         baseTextStyle = textStyle,
                         isPrinting = isPrinting,
                         waitForAnimation = note.id == -1L || directEdit,

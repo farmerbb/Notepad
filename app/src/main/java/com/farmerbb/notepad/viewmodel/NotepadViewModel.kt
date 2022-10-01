@@ -155,11 +155,14 @@ class NotepadViewModel(
     fun getNote(id: Long?) = viewModelScope.launch(Dispatchers.IO) {
         id?.let {
             _noteState.value = repo.getNote(it)
-            _text.value = with(noteState.value) {
-                draftText.ifEmpty { text }
+
+            if (text.value.isEmpty()) {
+                _text.value = with(noteState.value) {
+                    draftText.ifEmpty { text }
+                }
             }
         } ?: run {
-            clearNote()
+            _noteState.value = Note()
         }
     }
 

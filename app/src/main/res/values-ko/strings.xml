@@ -71,6 +71,7 @@
     <string name="action_start_selection">Select notes</string>
     <string name="action_select_all">Select all</string>
     <string name="no_notes_to_select">No notes to select</string>
+    <string name="document">%1$s Document</string>
     <string name="no_notes_to_export">No notes selected to export</string>
     <string name="no_notes_to_delete">No notes selected to delete</string>
     <string name="check_for_updates">Check for Updates</string>

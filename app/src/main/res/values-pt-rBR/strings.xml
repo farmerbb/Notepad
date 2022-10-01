@@ -70,6 +70,7 @@
     <string name="action_start_selection">Selecionar notas</string>
     <string name="action_select_all">Selecionar tudo</string>
     <string name="no_notes_to_select">Nenhuma nota para selecionar</string>
+    <string name="document">%1$s Documento</string>
     <string name="no_notes_to_export">Nenhuma nota selecionada para exportar</string>
     <string name="no_notes_to_delete">Nenhuma nota selecionada para apagar</string>
     <string name="check_for_updates">Verificar se há atualizações</string>

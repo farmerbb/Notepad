@@ -70,6 +70,7 @@
     <string name="action_start_selection">Marker notater</string>
     <string name="action_select_all">Marker alle</string>
     <string name="no_notes_to_select">Ingen notater å markere</string>
+    <string name="document">%1$s dokument</string>
     <string name="no_notes_to_export">Ingen notater markert for eksportering</string>
     <string name="no_notes_to_delete">Ingen notater markert for sletting</string>
     <string name="check_for_updates">Se etter oppdateringer</string>

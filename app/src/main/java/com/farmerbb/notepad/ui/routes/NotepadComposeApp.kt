@@ -183,6 +183,10 @@ private fun NotepadComposeApp(
         fontSize = dateFontSize,
         fontFamily = fontFamily
     )
+    val printJobTitle = stringResource(
+        id = R.string.document,
+        stringResource(id = R.string.app_name)
+    )
 
     var title = ""
     var backButton: @Composable (() -> Unit)? = null
@@ -198,9 +202,9 @@ private fun NotepadComposeApp(
     val onSave: () -> Unit = {
         vm.saveNote(note.id, text, ::updateNavState)
     }
-    val onPrint: (String) -> Unit = { pageTitle ->
+    val onPrint: () -> Unit = {
         isPrinting = true
-        printController.print(pageTitle)
+        printController.print(printJobTitle)
     }
     val onMultiDeleteClick = { showMultiDeleteDialog = true }
     val onDismiss = { showMenu = false }
@@ -225,13 +229,13 @@ private fun NotepadComposeApp(
         onDismiss()
         vm.exportSingleNote(metadata, exportedText, filenameFormat)
     }
-    val onPrintClick: (String) -> Unit = { pageTitle ->
+    val onPrintClick: () -> Unit = {
         onDismiss()
 
         vm.showToastIf(text.isEmpty(), R.string.empty_note) {
             when(navState) {
-                is Edit -> vm.saveDraft { onPrint(pageTitle) }
-                else -> onPrint(pageTitle)
+                is Edit -> vm.saveDraft { onPrint() }
+                else -> onPrint()
             }
         }
     }
@@ -461,7 +465,7 @@ private fun NotepadComposeApp(
                         onMoreClick = onMoreClick,
                         onShareClick = { onShareClick(note.text) },
                         onExportClick = { onExportClick(note.metadata, note.text) },
-                        onPrintClick = { onPrintClick(title) }
+                        onPrintClick = onPrintClick
                     )
                 }
             }
@@ -507,7 +511,7 @@ private fun NotepadComposeApp(
                         onMoreClick = onMoreClick,
                         onShareClick = { onShareClick(text) },
                         onExportClick = { onExportClick(note.metadata.copy(title = title), text) },
-                        onPrintClick = { onPrintClick(title) }
+                        onPrintClick = onPrintClick
                     )
                 }
             }

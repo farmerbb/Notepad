@@ -33,7 +33,8 @@ App logo by Tobaloidee"</string>
 <string name="dialog_delete_button_title_plural">Notları sil</string>
 <string name="dialog_save_button_title">Değişiklikleri kaydet</string>
 <string name="dialog_save_changes">Değişikliklerinizi kaydetmek istiyor musunuz?</string>
-    <string name="double_tap">İpucu: Düzenleme moduna geçmek için metne iki kez dokunun</string>
+<string name="document">%1$s Belge</string>
+<string name="double_tap">İpucu: Düzenleme moduna geçmek için metne iki kez dokunun</string>
 <string name="draft_restored">Taslak geri yüklendi</string>
 <string name="draft_saved">Taslak kaydedildi</string>
     <string name="edit_text">Metin eklemek için yazın</string>

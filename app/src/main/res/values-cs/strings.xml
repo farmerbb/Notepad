@@ -70,6 +70,7 @@
     <string name="action_start_selection">Vybrat poznámky</string>
     <string name="action_select_all">Vybrat všechny</string>
     <string name="no_notes_to_select">Nic k vybrání</string>
+    <string name="document">%1$s Dokument</string>
     <string name="no_notes_to_export">Nejsou vybrány žádné poznámky pro export</string>
     <string name="no_notes_to_delete">Nejsou vybrány žádné poznámky ke smazání</string>
     <string name="check_for_updates">Check for Updates</string>

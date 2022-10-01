@@ -70,6 +70,7 @@
     <string name="action_start_selection">Notities selecteren</string>
     <string name="action_select_all">Alles selecteren</string>
     <string name="no_notes_to_select">Geen te selecteren notities</string>
+    <string name="document">%1$s document</string>
     <string name="no_notes_to_export">Geen te exporteren notities geselecteerd</string>
     <string name="no_notes_to_delete">Geen te verwijderen notities geselecteerd</string>
     <string name="check_for_updates">Check for Updates</string>

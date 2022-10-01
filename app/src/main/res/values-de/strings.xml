@@ -68,6 +68,7 @@
     <string name="action_start_selection">Notizen auswählen</string>
     <string name="action_select_all">Alles auswählen</string>
     <string name="no_notes_to_select">Keine Notizen zur Auswahl</string>
+    <string name="document">%1$s Dokument</string>
     <string name="no_notes_to_export">Keine Notizen ausgewählt für Export</string>
     <string name="no_notes_to_delete">Keine Notizen zum Löschen ausgewählt</string>
     <string name="check_for_updates">Nach Updates suchen</string>

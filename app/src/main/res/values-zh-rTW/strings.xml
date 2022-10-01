@@ -70,6 +70,7 @@
     <string name="action_start_selection">批次選取筆記</string>
     <string name="action_select_all">全選</string>
     <string name="no_notes_to_select">無筆記可選</string>
+    <string name="document">%1$s 個文件</string>
     <string name="no_notes_to_export">匯出：未選取任何筆記</string>
     <string name="no_notes_to_delete">移除：未選取任何筆記</string>
     <string name="check_for_updates">檢查更新</string>

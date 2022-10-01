@@ -70,6 +70,7 @@
     <string name="action_start_selection">নোটগুলো নির্বাচন করুন</string>
     <string name="action_select_all">সবগুলো নির্বাচন করুন</string>
     <string name="no_notes_to_select">নির্বাচনের জন্য কোন নোট নেই</string>
+    <string name="document">%1$s ডকুমেন্ট</string>
     <string name="no_notes_to_export">এক্সপোর্ট করার জন্য কোন নোট নির্বাচন করা হয়নি</string>
     <string name="no_notes_to_delete">মুছে ফেলার জন্য কোন নোট নির্বাচন করা হয়নি</string>
     <string name="check_for_updates">হালনাগাদ আছে কি না দেখুন</string>

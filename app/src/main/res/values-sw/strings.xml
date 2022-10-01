@@ -70,6 +70,7 @@
     <string name="action_start_selection">Chagua Vidokezo</string>
     <string name="action_select_all">Chagua vyote</string>
     <string name="no_notes_to_select">Hakuna vidokezo vya kuchagua</string>
+    <string name="document">%1$s Hati</string>
     <string name="no_notes_to_export">Hakuna vidokezo vilivyochaguliwa vya kuhamisha</string>
     <string name="no_notes_to_delete">Hakuna vidokezo vilivyochaguliwa vya kufuta</string>
     <string name="check_for_updates">Angalia kama kuna Toleo Jipya</string>

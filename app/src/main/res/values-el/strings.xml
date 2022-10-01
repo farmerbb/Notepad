@@ -68,6 +68,7 @@
     <string name="action_start_selection">Επιλογή σημειώσεων</string>
     <string name="action_select_all">Επιλογή όλων</string>
     <string name="no_notes_to_select">Δεν υπάρχουν σημειώσεις για επιλογή</string>
+    <string name="document">%1$s έγγραφο</string>
     <string name="no_notes_to_export">Δεν επιλέχθηκαν σημειώσεις για εξαγωγή</string>
     <string name="no_notes_to_delete">Δεν επιλέχθηκαν σημειώσεις για διαγραφή</string>
     <string name="check_for_updates">Έλεγχος για ενημερώσεις</string>

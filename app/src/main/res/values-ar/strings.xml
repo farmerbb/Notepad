@@ -52,6 +52,7 @@
     <string name="action_start_selection">حدّد الملاحظات</string>
     <string name="action_select_all">حدّد الكل</string>
     <string name="no_notes_to_select">لا توجد ملاحظاتٌ ليتم تحديدها</string>
+    <string name="document">مستند %1$s</string>
     <string name="no_notes_to_export">لم تُحَدَّد ملاحظاتٌ لتصديرها</string>
     <string name="no_notes_to_delete">لم تُحَدَّد ملاحظاتٌ لحذفها</string>
     <string name="check_for_updates">تحقّق من التحديثات</string>

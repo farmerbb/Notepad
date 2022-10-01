@@ -58,7 +58,7 @@ import org.koin.dsl.module
 class NotepadViewModel(
     private val context: Application,
     private val repo: NotepadRepository,
-    private val dataStoreManager: DataStoreManager,
+    val dataStoreManager: DataStoreManager,
     private val dataMigrator: DataMigrator,
     private val toaster: Toaster,
     private val artVandelay: ArtVandelay,

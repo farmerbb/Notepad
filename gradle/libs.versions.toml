@@ -21,7 +21,7 @@ androidx-preference = "1.2.0"
 accompanist = "0.23.0"
 compose = "1.2.1"
 composeCompiler = "1.3.0"
-composePreferences = "0.1.4"
+composePreferences = "0.1.5-3"
 coroutines = "1.6.0"
 fsaf = "v1.1.3"
 koin = "3.2.0"
@@ -72,7 +72,7 @@ richtext-commonmark = { module = "com.halilibo.compose-richtext:richtext-commonm
 richtext-printing = { module = "com.halilibo.compose-richtext:printing", version.ref = "richtext" }
 
 # Other dependencies
-composePreferences = { module = "com.github.Sh4dowSoul.ComposePreferences:preferences-material", version.ref = "composePreferences" }
+composePreferences = { module = "com.github.NoelChew.ComposePreferences:preferences-material", version.ref = "composePreferences" }
 fsaf = { module = "com.github.K1rakishou:Fuck-Storage-Access-Framework", version.ref = "fsaf" }
 linkifyText = { module = "com.github.firefinchdev:linkify-text", version.ref = "linkifyText" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }

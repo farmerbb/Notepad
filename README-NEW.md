@@ -1,6 +1,6 @@
 ![notepad readme](https://user-images.githubusercontent.com/36028424/39695245-83b15cfc-521c-11e8-935c-c4a9cdcfbe90.png)
 
-Notepad is currently being rewritten from the ground up!  The app's 8-year old codebase is being replaced with one that is fully modernized and aims to follow Android development's best practices for 2022.
+Notepad has been rewritten from the ground up!  The app's 8-year old codebase has been replaced with one that is fully modernized and aims to follow Android development's best practices for 2022.
 
 This README is meant to track the progress of the rewrite, and also give a general overview of the architecture of the app in comparison to the old one.
 
@@ -54,15 +54,5 @@ This table will track the features of the app as they are reimplemented in the n
 | Share text to Notepad from other apps         | ✔                      |
 | Open text files in Notepad from file managers | ✔                      |
 | Keyboard shortcuts                            | ✔                      |
+| Double-tap to edit                            | ✔                      |
 | Probably some other things I forgot           |                        |
-
-### ❌ Features that will not be implemented (for now)
-
-|                                 | Reason                                                                                        |
-|---------------------------------|-----------------------------------------------------------------------------------------------|
-| Double-tap to edit              | Limitations with Compose. Double-tap detection does not seem to work with `Text` composables. |
-| Google Assistant "Note to self" | Third-party note apps are no longer supported by the Google Assistant                         |
-
-## How do I try out the new app?
-
-[Follow the white rabbit.](https://i.imgflip.com/57yweh.jpg)

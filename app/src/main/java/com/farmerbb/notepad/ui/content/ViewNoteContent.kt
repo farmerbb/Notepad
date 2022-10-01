@@ -113,7 +113,12 @@ fun ViewNoteContent(
                         }
                     ) {
                         RichText(modifier = modifier) {
-                            Markdown(text)
+                            Markdown(
+                                // Replace markdown images with links
+                                text.replace(Regex("!\\[([^\\[]+)](\\(.*\\))")) {
+                                    it.value.replaceFirst("![", "[")
+                                }
+                            )
                         }
                     }
                 } else {

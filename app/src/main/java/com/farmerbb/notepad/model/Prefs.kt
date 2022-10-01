@@ -16,6 +16,7 @@
 package com.farmerbb.notepad.model
 
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import de.schnettler.datastore.manager.PreferenceRequest
 
@@ -28,9 +29,9 @@ object PrefKeys {
     val ShowDate = booleanPreferencesKey("show_date")
     val DirectEdit = booleanPreferencesKey("direct_edit")
     val Markdown = booleanPreferencesKey("markdown")
-    val FirstRun = booleanPreferencesKey("first-run")
-    val FirstLoad = booleanPreferencesKey("first-load")
     val ShowDoubleTapMessage = booleanPreferencesKey("show_double_tap_message")
+    val FirstRun = intPreferencesKey("first-run")
+    val FirstLoad = intPreferencesKey("first-load")
 }
 
 object Prefs {
@@ -74,19 +75,19 @@ object Prefs {
         defaultValue = false
     )
 
-    object FirstRun: PreferenceRequest<Boolean>(
-        key = PrefKeys.FirstRun,
-        defaultValue = false
-    )
-
-    object FirstLoad: PreferenceRequest<Boolean>(
-        key = PrefKeys.FirstLoad,
-        defaultValue = false
-    )
-
     object ShowDoubleTapMessage: PreferenceRequest<Boolean>(
         key = PrefKeys.ShowDoubleTapMessage,
         defaultValue = true
+    )
+
+    object FirstRun: PreferenceRequest<Int>(
+        key = PrefKeys.FirstRun,
+        defaultValue = 0
+    )
+
+    object FirstLoad: PreferenceRequest<Int>(
+        key = PrefKeys.FirstLoad,
+        defaultValue = 0
     )
 }
 

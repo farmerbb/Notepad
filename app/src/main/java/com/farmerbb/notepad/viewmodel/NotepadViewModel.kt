@@ -235,14 +235,14 @@ class NotepadViewModel(
     fun firstRunComplete() = viewModelScope.launch(Dispatchers.IO) {
         dataStoreManager.editPreference(
             key = PrefKeys.FirstRun,
-            newValue = true
+            newValue = 1
         )
     }
 
     fun firstViewComplete() = viewModelScope.launch(Dispatchers.IO) {
         dataStoreManager.editPreference(
             key = PrefKeys.FirstLoad,
-            newValue = true
+            newValue = 1
         )
     }
 

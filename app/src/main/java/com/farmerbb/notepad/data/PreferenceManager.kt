@@ -89,8 +89,8 @@ class PreferenceManager private constructor(
     val showDate get() = Prefs.ShowDate.asFlow
     val directEdit get() = Prefs.DirectEdit.asFlow
     val markdown get() = Prefs.Markdown.asFlow
-    val firstRunComplete get() = Prefs.FirstRun.asFlow
-    val firstViewComplete get() = Prefs.FirstLoad.asFlow
+    val firstRunComplete get() = Prefs.FirstRun.mapToFlow(::toBoolean)
+    val firstViewComplete get() = Prefs.FirstLoad.mapToFlow(::toBoolean)
     val showDoubleTapMessage get() = Prefs.ShowDoubleTapMessage.asFlow
 
     private fun <T, R> PreferenceRequest<T>.mapToFlow(transform: (value: T) -> R) =
@@ -109,6 +109,8 @@ class PreferenceManager private constructor(
     private fun toFilenameFormat(value: String) = FilenameFormat.values().first {
         it.stringValue == value
     }
+
+    private fun toBoolean(value: Int) = value > 0
 
     companion object {
         fun DataStoreManager.prefs(scope: CoroutineScope) = PreferenceManager(

@@ -51,7 +51,9 @@ class NotepadActivity: ComponentActivity(), FSAFActivityCallbacks {
 
     override fun onStop() {
         super.onStop()
-        vm.saveDraft()
+        if (!isChangingConfigurations) {
+            vm.saveDraft()
+        }
     }
 
     override fun onDestroy() {

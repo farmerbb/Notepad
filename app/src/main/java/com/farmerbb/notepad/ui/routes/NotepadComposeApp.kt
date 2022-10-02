@@ -370,6 +370,10 @@ private fun NotepadComposeApp(
             vm.toggleSelectedNote(id)
         }
     ) { id ->
+        if (isMultiPane && !multiSelectEnabled && id != note.id) {
+            vm.clearNote()
+        }
+
         when {
             multiSelectEnabled -> vm.toggleSelectedNote(id)
             directEdit -> navState = Edit(id)

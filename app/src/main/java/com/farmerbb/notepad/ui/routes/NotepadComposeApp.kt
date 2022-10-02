@@ -160,6 +160,7 @@ private fun NotepadComposeApp(
     var navState by rememberSaveable(saver = navStateSaver) { mutableStateOf(initState) }
     var isPrinting by remember { mutableStateOf(false) }
     var isSaveButton by rememberSaveable { mutableStateOf(false) }
+    var onSaveComplete by remember { mutableStateOf({ _: Long -> }) }
     var multiSelectEnabled by rememberSaveable { mutableStateOf(false) }
     var showAboutDialog by rememberSaveable { mutableStateOf(false) }
     var showSettingsDialog by rememberSaveable { mutableStateOf(false) }
@@ -195,12 +196,11 @@ private fun NotepadComposeApp(
     
     /*********************** Callbacks ***********************/
 
-    fun updateNavState(id: Long) {
+    val updateNavState: (id: Long) -> Unit = { id ->
         navState = if (directEdit || !isSaveButton) Empty else View(id)
     }
-    
     val onSave: () -> Unit = {
-        vm.saveNote(note.id, text, ::updateNavState)
+        vm.saveNote(note.id, text, onSaveComplete)
     }
     val onPrint: () -> Unit = {
         isPrinting = true
@@ -209,11 +209,15 @@ private fun NotepadComposeApp(
     val onMultiDeleteClick = { showMultiDeleteDialog = true }
     val onDismiss = { showMenu = false }
     val onMoreClick = { showMenu = true }
-    val onSaveClick: (Boolean) -> Unit = {
-        isSaveButton = it
+    val onSaveClick: (
+        fromSaveButton: Boolean,
+        onComplete: (Long) -> Unit
+    ) -> Unit = { fromSaveButton, onComplete ->
+        isSaveButton = fromSaveButton
+        onSaveComplete = onComplete
 
         when {
-            text.isNotEmpty() && text == note.text -> updateNavState(note.id)
+            text.isNotEmpty() && text == note.text -> onComplete(note.id)
             showDialogs -> showSaveDialog = true
             else -> onSave()
         }
@@ -245,8 +249,9 @@ private fun NotepadComposeApp(
                 multiSelectEnabled = false
                 vm.clearSelectedNotes()
             }
-
-            navState is Edit && text.isNotEmpty() -> onSaveClick(false)
+            navState is Edit && text.isNotEmpty() -> {
+                onSaveClick(false, updateNavState)
+            }
             else -> navState = Empty
         }
     }
@@ -315,7 +320,7 @@ private fun NotepadComposeApp(
             onDiscard = {
                 showSaveDialog = false
                 vm.showToast(R.string.changes_discarded)
-                updateNavState(note.id)
+                onSaveComplete(note.id)
             },
             onDismiss = {
                 showSaveDialog = false
@@ -370,14 +375,30 @@ private fun NotepadComposeApp(
             vm.toggleSelectedNote(id)
         }
     ) { id ->
-        if (isMultiPane && !multiSelectEnabled && id != note.id) {
-            vm.clearNote()
+        val updateNavStateNoteList = {
+            navState = if (directEdit) Edit(id) else View(id)
+        }
+
+        val handleMultiPaneNav = {
+            when {
+                id != note.id -> vm.clearNote()
+                directEdit -> vm.getNote(id)
+            }
+
+            updateNavStateNoteList()
         }
 
         when {
             multiSelectEnabled -> vm.toggleSelectedNote(id)
-            directEdit -> navState = Edit(id)
-            else -> navState = View(id)
+            isMultiPane -> {
+                if (navState is Edit && text.isNotEmpty()) {
+                    onSaveClick(false) { handleMultiPaneNav() }
+                } else {
+                    handleMultiPaneNav()
+                }
+            }
+
+            else -> updateNavStateNoteList()
         }
     }
 
@@ -507,7 +528,7 @@ private fun NotepadComposeApp(
                 }
                 backButton = { BackButton(onBack) }
                 actions = {
-                    SaveButton { onSaveClick(true) }
+                    SaveButton { onSaveClick(true, updateNavState) }
                     DeleteButton(onDeleteClick)
                     NoteViewEditMenu(
                         showMenu = showMenu,

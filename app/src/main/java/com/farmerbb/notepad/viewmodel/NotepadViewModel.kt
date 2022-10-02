@@ -216,26 +216,24 @@ class NotepadViewModel(
     fun saveDraft(
         onSuccess: suspend () -> Unit = { toaster.toast(R.string.draft_saved) }
     ) {
-        if (!isEditing || text.value.isEmpty()) return
+        val draftText = text.value
+        if (!isEditing || draftText.isEmpty()) return
 
         viewModelScope.launch(Dispatchers.IO) {
-            repo.saveNote(
-                id = noteState.value.id,
-                text = noteState.value.text,
-                draftText = text.value
-            ) { id ->
-                getNote(id)
-                onSuccess()
+            with(noteState.value) {
+                repo.saveNote(id, text, date, draftText) { newId ->
+                    getNote(newId)
+                    onSuccess()
+                }
             }
         }
     }
 
     fun deleteDraft() = viewModelScope.launch(Dispatchers.IO) {
         with(noteState.value) {
-            if (text.isEmpty()) {
-                repo.deleteNote(id)
-            } else {
-                repo.saveNote(id, text)
+            when {
+                text.isEmpty() -> repo.deleteNote(id)
+                !isEditing -> repo.saveNote(id, text, date)
             }
         }
     }

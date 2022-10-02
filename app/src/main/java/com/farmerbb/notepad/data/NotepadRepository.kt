@@ -76,6 +76,7 @@ class NotepadRepository(
     suspend fun saveNote(
         id: Long = -1,
         text: String,
+        date: Date = Date(),
         draftText: String? = null,
         onSuccess: suspend (Long) -> Unit = {}
     ) = try {
@@ -84,7 +85,7 @@ class NotepadRepository(
         val metadata = NoteMetadata(
             metadataId = crossRef?.metadataId ?: -1,
             title = text.substringBefore("\n"),
-            date = Date(),
+            date = date,
             hasDraft = draftText != null
         )
 

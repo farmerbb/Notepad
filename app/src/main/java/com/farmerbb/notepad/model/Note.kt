@@ -34,4 +34,5 @@ data class Note(
     val text: String get() = contents.text ?: ""
     val draftText: String get() = contents.draftText ?: ""
     val title: String get() = metadata.title
+    val date: Date get() = metadata.date
 }

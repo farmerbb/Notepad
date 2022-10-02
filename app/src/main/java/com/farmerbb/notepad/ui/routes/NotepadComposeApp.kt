@@ -166,7 +166,7 @@ private fun NotepadComposeApp(
     var showSettingsDialog by rememberSaveable { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
     var showMultiDeleteDialog by rememberSaveable { mutableStateOf(false) }
-    var showSaveDialog by rememberSaveable { mutableStateOf(false) }
+    var showSaveDialog by remember { mutableStateOf(false) }
     var showFirstRunDialog by rememberSaveable { mutableStateOf(false) }
     var showFirstViewDialog by rememberSaveable { mutableStateOf(false) }
     var showMenu by rememberSaveable { mutableStateOf(false) }

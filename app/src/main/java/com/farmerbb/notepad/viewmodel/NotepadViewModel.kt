@@ -210,7 +210,7 @@ class NotepadViewModel(
     fun saveDraft(
         onSuccess: suspend () -> Unit = { toaster.toast(R.string.draft_saved) }
     ) {
-        if (text.value.isEmpty()) return
+        if (text.value.isEmpty() || text.value == noteState.value.text) return
 
         viewModelScope.launch(Dispatchers.IO) {
             repo.saveNote(

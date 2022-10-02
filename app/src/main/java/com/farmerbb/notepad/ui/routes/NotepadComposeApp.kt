@@ -351,6 +351,10 @@ private fun NotepadComposeApp(
         }
     }
 
+    LaunchedEffect(navState) {
+        vm.setIsEditing(navState is Edit)
+    }
+
     LaunchedEffect(selectedNotes) {
         if (selectedNotes.filterValues { it }.isEmpty()) {
             multiSelectEnabled = false

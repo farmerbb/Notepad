@@ -87,6 +87,8 @@ class NotepadViewModel(
     val savedDraftId: StateFlow<Long?> = _savedDraftId
     private var savedDraftIdJob: Job? = null
 
+    private var isEditing = false
+
     /*********************** UI Operations ***********************/
 
     fun setText(text: String) {
@@ -135,6 +137,10 @@ class NotepadViewModel(
     }
 
     fun checkForUpdates() = context.checkForUpdates()
+
+    fun setIsEditing(value: Boolean) {
+        isEditing = value
+    }
 
     /*********************** Database Operations ***********************/
 
@@ -210,7 +216,7 @@ class NotepadViewModel(
     fun saveDraft(
         onSuccess: suspend () -> Unit = { toaster.toast(R.string.draft_saved) }
     ) {
-        if (text.value.isEmpty()) return
+        if (!isEditing || text.value.isEmpty()) return
 
         viewModelScope.launch(Dispatchers.IO) {
             repo.saveNote(

@@ -25,14 +25,14 @@ import com.farmerbb.notepad.Database
 import com.farmerbb.notepad.model.CrossRef
 import com.farmerbb.notepad.model.NoteContents
 import com.farmerbb.notepad.model.NoteMetadata
-import java.io.BufferedReader
 import java.io.File
-import java.io.InputStreamReader
 import java.util.Date
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.withContext
+import okio.buffer
+import okio.source
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -67,16 +67,18 @@ private class DataMigratorImpl(
             for (filename in context.filesDir.list().orEmpty()) {
                 if (!filename.isDigitsOnly() && filename != "draft") continue
 
+                val text = loadNote(filename)
+
                 val metadata = NoteMetadata(
                     metadataId = -1,
-                    title = loadNoteTitle(filename),
+                    title = text.lines().first(),
                     date = Date(filename.toLong()),
                     hasDraft = false
                 )
 
                 val contents = NoteContents(
                     contentsId = -1,
-                    text = loadNote(filename),
+                    text = text,
                     draftText = if (filename == draftFilename) draftText else null
                 )
 
@@ -103,34 +105,11 @@ private class DataMigratorImpl(
         }
     }
 
-    private fun loadNoteTitle(filename: String): String {
-        val input = context.openFileInput(filename)
-        val reader = InputStreamReader(input)
-        val buffer = BufferedReader(reader)
-
-        val line = buffer.readLine()
-        reader.close()
-
-        return line
-    }
-
     private fun loadNote(filename: String): String {
-        val note = StringBuilder()
-
         val input = context.openFileInput(filename)
-        val reader = InputStreamReader(input)
-        val buffer = BufferedReader(reader)
-
-        var line = buffer.readLine()
-        while(line != null) {
-            note.append(line)
-            line = buffer.readLine()
-            if(line != null) note.append("\n")
+        input.source().buffer().use {
+            return it.readUtf8()
         }
-
-        reader.close()
-
-        return note.toString()
     }
 
     private fun loadDraft(): Pair<String?, String?> {

@@ -27,13 +27,18 @@ import com.farmerbb.notepad.model.SortOrder.TitleAscending
 import com.farmerbb.notepad.model.SortOrder.TitleDescending
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import com.squareup.sqldelight.runtime.coroutines.mapToOneOrDefault
 import java.util.Date
+import kotlinx.coroutines.flow.map
 
 class NotepadRepository(
     private val database: Database
 ) {
-    val savedDraftId get() = database.noteMetadataQueries.getDraftId().asFlow().mapToOneOrDefault(-1L)
+    val savedDraftId get() = database.noteMetadataQueries.getDraftId()
+        .asFlow()
+        .mapToList()
+        .map {
+            it.firstOrNull() ?: -1L
+        }
 
     fun noteMetadataFlow(order: SortOrder) = with(database.noteMetadataQueries) {
         when(order) {

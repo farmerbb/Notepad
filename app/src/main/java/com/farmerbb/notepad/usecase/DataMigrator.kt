@@ -68,18 +68,19 @@ private class DataMigratorImpl(
                 if (!filename.isDigitsOnly() && filename != "draft") continue
 
                 val text = loadNote(filename)
+                val hasDraft = filename == draftFilename
 
                 val metadata = NoteMetadata(
                     metadataId = -1,
                     title = text.lines().first(),
                     date = Date(filename.toLong()),
-                    hasDraft = false
+                    hasDraft = hasDraft
                 )
 
                 val contents = NoteContents(
                     contentsId = -1,
                     text = text,
-                    draftText = if (filename == draftFilename) draftText else null
+                    draftText = if (hasDraft) draftText else null
                 )
 
                 with(database) {

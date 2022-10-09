@@ -62,9 +62,9 @@ class NotepadActivity: ComponentActivity(), FSAFActivityCallbacks {
     }
 
     override fun fsafStartActivityForResult(intent: Intent, requestCode: Int) {
-        if (intent.action == Intent.ACTION_OPEN_DOCUMENT) {
-            // Override type to plaintext only
-            intent.type = "text/plain"
+        when(intent.action) {
+            Intent.ACTION_OPEN_DOCUMENT -> intent.type = "text/plain"
+            Intent.ACTION_OPEN_DOCUMENT_TREE -> intent.removeExtra(Intent.EXTRA_LOCAL_ONLY)
         }
 
         startActivityForResult(intent, requestCode)

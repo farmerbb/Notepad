@@ -290,6 +290,12 @@ class NotepadViewModel(
             clearSelectedNotes()
         }
 
+        if (hydratedNotes.size == 1) {
+            val note = hydratedNotes.first()
+            exportSingleNote(note.metadata, note.text, filenameFormat)
+            return@launch
+        }
+
         artVandelay.exportNotes(
             hydratedNotes,
             filenameFormat,

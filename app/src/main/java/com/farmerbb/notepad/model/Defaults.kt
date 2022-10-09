@@ -1,4 +1,4 @@
-/* Copyright 2021 Braden Farmer
+/* Copyright 2022 Braden Farmer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,22 @@ package com.farmerbb.notepad.model
 
 import java.util.Date
 
-data class Note(
-    val metadata: NoteMetadata = Defaults.metadata,
-    private val contents: NoteContents = Defaults.contents
-) {
-    val id: Long get() = metadata.metadataId
-    val text: String get() = contents.text ?: ""
-    val draftText: String get() = contents.draftText ?: ""
-    val title: String get() = metadata.title
-    val date: Date get() = metadata.date
+object Defaults {
+    val metadata = NoteMetadata(
+        metadataId = -1,
+        title = "",
+        date = Date(),
+        hasDraft = false
+    )
+
+    val contents = NoteContents(
+        contentsId = -1,
+        text = null,
+        draftText = null
+    )
+
+    val crossRef = CrossRef(
+        metadataId = -1,
+        contentsId = -1
+    )
 }

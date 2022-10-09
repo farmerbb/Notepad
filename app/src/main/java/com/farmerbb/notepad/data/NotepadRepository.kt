@@ -17,6 +17,7 @@ package com.farmerbb.notepad.data
 
 import com.farmerbb.notepad.Database
 import com.farmerbb.notepad.model.CrossRef
+import com.farmerbb.notepad.model.Defaults
 import com.farmerbb.notepad.model.Note
 import com.farmerbb.notepad.model.NoteContents
 import com.farmerbb.notepad.model.NoteMetadata
@@ -51,9 +52,9 @@ class NotepadRepository(
 
     fun getNote(id: Long): Note = with(database) {
         transactionWithResult {
-            val metadata = noteMetadataQueries.get(id).executeAsOne()
-            val crossRef = crossRefQueries.get(metadata.metadataId).executeAsOne()
-            val contents = noteContentsQueries.get(crossRef.contentsId).executeAsOne()
+            val metadata = noteMetadataQueries.get(id).executeAsList().lastOrNull() ?: Defaults.metadata
+            val crossRef = crossRefQueries.get(metadata.metadataId).executeAsList().lastOrNull() ?: Defaults.crossRef
+            val contents = noteContentsQueries.get(crossRef.contentsId).executeAsList().lastOrNull() ?: Defaults.contents
 
             Note(
                 metadata = metadata,
@@ -67,13 +68,15 @@ class NotepadRepository(
             val crossRefList = crossRefQueries.getMultiple(metadataList.map { it.metadataId }).executeAsList()
             val contentsList = noteContentsQueries.getMultiple(crossRefList.map { it.contentsId }).executeAsList()
 
-            buildList {
-                metadataList.sortedBy { it.metadataId }.forEachIndexed { index, metadata ->
-                    Note(
-                        metadata = metadata,
-                        contents = contentsList[index]
-                    ).also(::add)
-                }
+            crossRefList.map { crossRef ->
+                Note(
+                    metadata = metadataList.find {
+                        it.metadataId == crossRef.metadataId
+                    } ?: Defaults.metadata,
+                    contents = contentsList.find {
+                        it.contentsId == crossRef.contentsId
+                    } ?: Defaults.contents
+                )
             }
         }
     }

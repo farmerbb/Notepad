@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.ui.previews.NoteListPreview
+import com.farmerbb.notepad.utils.safeGetOrDefault
 import java.text.DateFormat
 import java.util.Date
 
@@ -76,7 +77,7 @@ fun NoteListContent(
 
         else -> LazyColumn {
             itemsIndexed(notes) { _, note ->
-                val isSelected = selectedNotes.getOrDefault(note.metadataId, false)
+                val isSelected = selectedNotes.safeGetOrDefault(note.metadataId, false)
                 Column(modifier = Modifier
                     .then(
                         if (isSelected) {

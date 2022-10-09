@@ -34,6 +34,7 @@ import com.farmerbb.notepad.usecase.DataMigrator
 import com.farmerbb.notepad.usecase.KeyboardShortcuts
 import com.farmerbb.notepad.usecase.Toaster
 import com.farmerbb.notepad.utils.checkForUpdates
+import com.farmerbb.notepad.utils.safeGetOrDefault
 import com.farmerbb.notepad.utils.showShareSheet
 import de.schnettler.datastore.manager.DataStoreManager
 import java.io.InputStream
@@ -102,7 +103,7 @@ class NotepadViewModel(
     }
 
     fun toggleSelectedNote(id: Long) {
-        selectedNotes[id] = !selectedNotes.getOrDefault(id, false)
+        selectedNotes[id] = !selectedNotes.safeGetOrDefault(id, false)
         _selectedNotesFlow.tryEmit(selectedNotes.filterValues { it })
     }
 
@@ -283,7 +284,7 @@ class NotepadViewModel(
     ) = viewModelScope.launch(Dispatchers.IO) {
         val hydratedNotes = repo.getNotes(
             metadata.filter {
-                selectedNotes.getOrDefault(it.metadataId, false)
+                selectedNotes.safeGetOrDefault(it.metadataId, false)
             }
         ).also {
             clearSelectedNotes()

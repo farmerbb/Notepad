@@ -90,6 +90,7 @@ import com.farmerbb.notepad.ui.components.SelectAllButton
 import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.content.NoteListContent
 import com.farmerbb.notepad.ui.content.ViewNoteContent
+import com.farmerbb.notepad.utils.safeGetOrDefault
 import com.farmerbb.notepad.viewmodel.NotepadViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.zachklipp.richtext.ui.printing.Printable
@@ -298,7 +299,7 @@ private fun NotepadComposeApp(
             onConfirm = {
                 showMultiDeleteDialog = false
 
-                val currentNoteDeleted = selectedNotes.getOrDefault(note.id, false)
+                val currentNoteDeleted = selectedNotes.safeGetOrDefault(note.id, false)
                 vm.deleteSelectedNotes {
                     if (currentNoteDeleted) {
                         navState = Empty

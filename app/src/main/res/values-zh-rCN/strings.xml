@@ -70,11 +70,11 @@
     <string name="action_start_selection">批量选择笔记</string>
     <string name="action_select_all">全选</string>
     <string name="no_notes_to_select">无笔记可选</string>
-    <string name="document">%1$s 个文档</string>
+    <string name="document">%1$s 个文档 </string>
     <string name="no_notes_to_export">导出：未选择任何笔记</string>
     <string name="no_notes_to_delete">删除：未选择任何笔记</string>
     <string name="check_for_updates">检查更新</string>
-    <string name="rtl_support">Right-to-left support</string>
+    <string name="rtl_support">从右至左 (RTL) 文本支持</string>
 
     <string-array name="sort_by_list">
         <item>由新至旧</item>

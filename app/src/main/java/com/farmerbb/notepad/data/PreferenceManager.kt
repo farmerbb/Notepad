@@ -89,6 +89,7 @@ class PreferenceManager private constructor(
     val showDate get() = Prefs.ShowDate.asFlow
     val directEdit get() = Prefs.DirectEdit.asFlow
     val markdown get() = Prefs.Markdown.asFlow
+    val rtlSupport get() = Prefs.RtlSupport.asFlow
     val firstRunComplete get() = Prefs.FirstRun.mapToFlow(::toBoolean)
     val firstViewComplete get() = Prefs.FirstLoad.mapToFlow(::toBoolean)
     val showDoubleTapMessage get() = Prefs.ShowDoubleTapMessage.asFlow

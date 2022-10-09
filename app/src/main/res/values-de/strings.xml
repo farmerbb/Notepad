@@ -72,6 +72,7 @@
     <string name="no_notes_to_export">Keine Notizen ausgewählt für Export</string>
     <string name="no_notes_to_delete">Keine Notizen zum Löschen ausgewählt</string>
     <string name="check_for_updates">Nach Updates suchen</string>
+    <string name="rtl_support">Right-to-left support</string>
 
     <string-array name="sort_by_list">
         <item>Datum (Neueste zuerst)</item>

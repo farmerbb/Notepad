@@ -1,7 +1,6 @@
 package com.farmerbb.notepad.ui.routes
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
@@ -20,6 +19,7 @@ import com.farmerbb.notepad.ui.components.AppBarText
 import com.farmerbb.notepad.ui.components.BackButton
 import com.farmerbb.notepad.ui.components.DeleteButton
 import com.farmerbb.notepad.ui.components.DeleteDialog
+import com.farmerbb.notepad.ui.components.NotepadTheme
 import com.farmerbb.notepad.ui.components.SaveButton
 import com.farmerbb.notepad.ui.components.SaveDialog
 import com.farmerbb.notepad.ui.components.StandaloneEditorMenu
@@ -36,8 +36,9 @@ fun StandaloneEditorRoute(
     val vm: NotepadViewModel = getViewModel()
     val systemUiController = rememberSystemUiController()
     val isLightTheme by vm.prefs.isLightTheme.collectAsState()
+    val rtlSupport by vm.prefs.rtlSupport.collectAsState()
 
-    MaterialTheme {
+    NotepadTheme(rtlSupport) {
         StandaloneEditor(
             vm = vm,
             initialText = initialText,

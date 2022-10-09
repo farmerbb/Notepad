@@ -63,5 +63,6 @@ Russian translation by Vladimir Kosolapov"</string>
     <string name="cab_note_selected">%d note selected</string>
     <string name="cab_notes_selected">%d notes selected</string>
     <string name="document">%1$s Document</string>
+    <string name="rtl_support">Right-to-left support</string>
 
 </resources>

@@ -37,7 +37,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -84,6 +83,7 @@ import com.farmerbb.notepad.ui.components.FirstViewDialog
 import com.farmerbb.notepad.ui.components.MultiSelectButton
 import com.farmerbb.notepad.ui.components.NoteListMenu
 import com.farmerbb.notepad.ui.components.NoteViewEditMenu
+import com.farmerbb.notepad.ui.components.NotepadTheme
 import com.farmerbb.notepad.ui.components.SaveButton
 import com.farmerbb.notepad.ui.components.SaveDialog
 import com.farmerbb.notepad.ui.components.SelectAllButton
@@ -104,6 +104,7 @@ fun NotepadComposeAppRoute() {
     val configuration = LocalConfiguration.current
 
     val isLightTheme by vm.prefs.isLightTheme.collectAsState()
+    val rtlSupport by vm.prefs.rtlSupport.collectAsState()
     val draftId by vm.savedDraftId.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -112,7 +113,7 @@ fun NotepadComposeAppRoute() {
 
     if (draftId == null) return
 
-    MaterialTheme {
+    NotepadTheme(rtlSupport) {
         NotepadComposeApp(
             vm = vm,
             isMultiPane = configuration.screenWidthDp >= 600,

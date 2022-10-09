@@ -117,6 +117,11 @@ fun NotepadPreferenceScreen(
                 title = stringResource(id = R.string.pref_title_markdown),
                 singleLineTitle = false,
                 enabled = !directEdit
+            ),
+            SwitchPreference(
+                request = Prefs.RtlSupport,
+                title = stringResource(id = R.string.rtl_support),
+                singleLineTitle = false
             )
         ),
         contentPadding = PaddingValues(8.dp),

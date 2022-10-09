@@ -72,6 +72,7 @@
     <string name="no_notes_to_export">Δεν επιλέχθηκαν σημειώσεις για εξαγωγή</string>
     <string name="no_notes_to_delete">Δεν επιλέχθηκαν σημειώσεις για διαγραφή</string>
     <string name="check_for_updates">Έλεγχος για ενημερώσεις</string>
+    <string name="rtl_support">Right-to-left support</string>
 
     <string-array name="sort_by_list">
         <item>Ημερομηνία (νεότερη πρώτα)</item>

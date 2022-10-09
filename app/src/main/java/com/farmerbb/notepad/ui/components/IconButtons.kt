@@ -19,6 +19,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
@@ -28,14 +29,21 @@ import androidx.compose.material.icons.filled.SdCard
 import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.LayoutDirection
 import com.farmerbb.notepad.R
 
 @Composable
 fun BackButton(onClick: () -> Unit = {}) {
+    val imageVector = when(LocalLayoutDirection.current) {
+        LayoutDirection.Rtl -> Icons.Filled.ArrowForward
+        else -> Icons.Filled.ArrowBack
+    }
+
     IconButton(onClick = onClick) {
         Icon(
-            imageVector = Icons.Filled.ArrowBack,
+            imageVector = imageVector,
             contentDescription = null,
             tint = Color.White
         )

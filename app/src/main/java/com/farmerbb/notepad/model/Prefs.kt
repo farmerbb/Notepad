@@ -29,6 +29,7 @@ object PrefKeys {
     val ShowDate = booleanPreferencesKey("show_date")
     val DirectEdit = booleanPreferencesKey("direct_edit")
     val Markdown = booleanPreferencesKey("markdown")
+    val RtlSupport = booleanPreferencesKey("rtl_support")
     val ShowDoubleTapMessage = booleanPreferencesKey("show_double_tap_message")
     val FirstRun = intPreferencesKey("first-run")
     val FirstLoad = intPreferencesKey("first-load")
@@ -72,6 +73,11 @@ object Prefs {
 
     object Markdown: PreferenceRequest<Boolean>(
         key = PrefKeys.Markdown,
+        defaultValue = false
+    )
+
+    object RtlSupport: PreferenceRequest<Boolean>(
+        key = PrefKeys.RtlSupport,
         defaultValue = false
     )
 

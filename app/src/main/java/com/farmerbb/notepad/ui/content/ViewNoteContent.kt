@@ -36,9 +36,11 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.farmerbb.notepad.R
 import com.farmerbb.notepad.ui.previews.ViewNotePreview
 import com.halilibo.richtext.markdown.Markdown
 import com.halilibo.richtext.ui.RichText
@@ -125,6 +127,7 @@ fun ViewNoteContent(
                     LinkifyText(
                         text = text,
                         style = textStyle,
+                        linkColor = colorResource(id = R.color.primary),
                         modifier = modifier
                     )
                 }

@@ -15,6 +15,7 @@ repositories {
 
 android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+    namespace = "com.farmerbb.notepad"
 
     defaultConfig {
         applicationId = "com.farmerbb.notepad"

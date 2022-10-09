@@ -48,6 +48,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okio.buffer
 import okio.sink
 import okio.source
@@ -349,7 +350,10 @@ class NotepadViewModel(
             }
 
             input.source().buffer().use {
-                onLoad(it.readUtf8())
+                val text = it.readUtf8()
+                withContext(Dispatchers.Main) {
+                    onLoad(text)
+                }
             }
         } ?: onLoad(null)
     }

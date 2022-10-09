@@ -1,8 +1,8 @@
 [versions]
 
 # Notepad
-notepad-versionCode = "114"
-notepad-versionName = "3.0"
+notepad-versionCode = "115"
+notepad-versionName = "3.0.1"
 
 # Android SDK
 android-compileSdk = "33"

@@ -28,5 +28,4 @@
     <color name="ic_launcher_adaptive_bg">#00B5E6</color>
     <color name="app_shortcut_bg">#F5F5F5</color>
     <color name="navbar_color_light">#FFFFFF</color>
-    <color name="navbar_divider_color_light">#DCDCDC</color>
 </resources>

@@ -124,10 +124,12 @@ fun NotepadComposeAppRoute() {
         )
     }
 
+    val navbarColor = colorResource(
+        id = if (isLightTheme) R.color.window_background else R.color.window_background_dark
+    )
+
     LaunchedEffect(isLightTheme) {
-        systemUiController.setNavigationBarColor(
-            color = if (isLightTheme) Color.White else Color.Black
-        )
+        systemUiController.setNavigationBarColor(color = navbarColor)
     }
 }
 

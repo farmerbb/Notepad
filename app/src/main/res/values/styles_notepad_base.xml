@@ -18,15 +18,11 @@
 
 <resources>
 
-    <style name="Theme.Notepad.Base" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/primary_dark</item>
+    <style name="Theme.Notepad.Base" parent="@android:style/Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/primary_dark</item>
         <item name="android:windowBackground">@color/window_background</item>
         <item name="android:textColorPrimary">@color/text_color_primary</item>
         <item name="android:navigationBarColor">@color/text_color_primary</item>
-        <item name="actionModeBackground">@color/primary</item>
     </style>
 
 </resources>

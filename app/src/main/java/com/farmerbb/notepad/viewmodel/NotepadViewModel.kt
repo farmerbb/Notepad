@@ -221,6 +221,11 @@ class NotepadViewModel(
         val draftText = text.value
         if (!isEditing || draftText.isEmpty()) return
 
+        if (noteState.value.text == draftText) {
+            viewModelScope.launch { onSuccess() }
+            return
+        }
+
         viewModelScope.launch(Dispatchers.IO) {
             with(noteState.value) {
                 repo.saveNote(id, text, date, draftText) { newId ->

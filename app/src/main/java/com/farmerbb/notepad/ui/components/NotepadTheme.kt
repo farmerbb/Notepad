@@ -15,11 +15,15 @@
 
 package com.farmerbb.notepad.ui.components
 
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.LayoutDirection
+import com.farmerbb.notepad.R
 
 @Composable
 fun NotepadTheme(
@@ -31,9 +35,16 @@ fun NotepadTheme(
         false -> LayoutDirection.Ltr
     }
 
+    val colorPrimary = colorResource(id = R.color.primary)
+    val textSelectionColors = TextSelectionColors(
+        handleColor = colorPrimary,
+        backgroundColor = colorPrimary.copy(alpha = 0.4f)
+    )
+
     MaterialTheme {
         CompositionLocalProvider(
             LocalLayoutDirection provides layoutDirection,
+            LocalTextSelectionColors provides textSelectionColors,
             content = content
         )
     }

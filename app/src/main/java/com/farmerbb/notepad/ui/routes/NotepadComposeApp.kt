@@ -92,7 +92,6 @@ import com.farmerbb.notepad.ui.content.NoteListContent
 import com.farmerbb.notepad.ui.content.ViewNoteContent
 import com.farmerbb.notepad.utils.safeGetOrDefault
 import com.farmerbb.notepad.viewmodel.NotepadViewModel
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.zachklipp.richtext.ui.printing.Printable
 import com.zachklipp.richtext.ui.printing.rememberPrintableController
 import org.koin.androidx.compose.getViewModel
@@ -100,7 +99,6 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun NotepadComposeAppRoute() {
     val vm: NotepadViewModel = getViewModel()
-    val systemUiController = rememberSystemUiController()
     val configuration = LocalConfiguration.current
 
     val isLightTheme by vm.prefs.isLightTheme.collectAsState()
@@ -113,7 +111,7 @@ fun NotepadComposeAppRoute() {
 
     if (draftId == null) return
 
-    NotepadTheme(rtlSupport) {
+    NotepadTheme(isLightTheme, rtlSupport) {
         NotepadComposeApp(
             vm = vm,
             isMultiPane = configuration.screenWidthDp >= 600,
@@ -122,14 +120,6 @@ fun NotepadComposeAppRoute() {
                 else -> Edit(draftId)
             }
         )
-    }
-
-    val navbarColor = colorResource(
-        id = if (isLightTheme) R.color.window_background else R.color.window_background_dark
-    )
-
-    LaunchedEffect(isLightTheme) {
-        systemUiController.setNavigationBarColor(color = navbarColor)
     }
 }
 

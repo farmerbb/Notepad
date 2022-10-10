@@ -20,16 +20,21 @@ import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.LayoutDirection
 import com.farmerbb.notepad.R
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun NotepadTheme(
+    isLightTheme: Boolean,
     rtlSupport: Boolean,
     content: @Composable () -> Unit
 ) {
+    val systemUiController = rememberSystemUiController()
+
     val layoutDirection = when(rtlSupport) {
         true -> LayoutDirection.Rtl
         false -> LayoutDirection.Ltr
@@ -47,5 +52,13 @@ fun NotepadTheme(
             LocalTextSelectionColors provides textSelectionColors,
             content = content
         )
+    }
+
+    val navbarColor = colorResource(
+        id = if (isLightTheme) R.color.window_background else R.color.window_background_dark
+    )
+
+    LaunchedEffect(isLightTheme) {
+        systemUiController.setNavigationBarColor(color = navbarColor)
     }
 }

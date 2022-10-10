@@ -47,8 +47,7 @@ fun DialogTitle(@StringRes id: Int) {
 @Composable
 fun DialogText(@StringRes id: Int, vararg formatArgs: Any) {
     Text(
-        text = stringResource(id, *formatArgs),
-        color = Color.Black
+        text = stringResource(id, *formatArgs)
     )
 }
 

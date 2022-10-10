@@ -18,6 +18,8 @@ package com.farmerbb.notepad.ui.components
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -46,7 +48,9 @@ fun NotepadTheme(
         backgroundColor = colorPrimary.copy(alpha = 0.4f)
     )
 
-    MaterialTheme {
+    MaterialTheme(
+        colors = if (isLightTheme) lightColors() else darkColors()
+    ) {
         CompositionLocalProvider(
             LocalLayoutDirection provides layoutDirection,
             LocalTextSelectionColors provides textSelectionColors,

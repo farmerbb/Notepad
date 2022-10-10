@@ -72,7 +72,7 @@ private class DataMigratorImpl(
 
                 val metadata = NoteMetadata(
                     metadataId = -1,
-                    title = text.lines().first(),
+                    title = text.substringBefore("\n"),
                     date = Date(filename.toLong()),
                     hasDraft = hasDraft
                 )

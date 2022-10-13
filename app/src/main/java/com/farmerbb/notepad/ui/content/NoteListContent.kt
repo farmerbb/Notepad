@@ -81,7 +81,7 @@ fun NoteListContent(
                 Column(modifier = Modifier
                     .then(
                         if (isSelected) {
-                            Modifier.background(color = colorResource(id = R.color.primary))
+                            Modifier.background(color = colorResource(id = R.color.praise_duarte))
                         } else Modifier
                     )
                     .combinedClickable(

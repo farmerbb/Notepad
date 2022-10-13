@@ -102,6 +102,7 @@ fun NotepadComposeAppRoute() {
     val configuration = LocalConfiguration.current
 
     val isLightTheme by vm.prefs.isLightTheme.collectAsState()
+    val backgroundColorRes by vm.prefs.backgroundColorRes.collectAsState()
     val rtlSupport by vm.prefs.rtlSupport.collectAsState()
     val draftId by vm.savedDraftId.collectAsState()
 
@@ -111,7 +112,7 @@ fun NotepadComposeAppRoute() {
 
     if (draftId == null) return
 
-    NotepadTheme(isLightTheme, rtlSupport) {
+    NotepadTheme(isLightTheme, backgroundColorRes, rtlSupport) {
         NotepadComposeApp(
             vm = vm,
             isMultiPane = configuration.screenWidthDp >= 600,
@@ -136,6 +137,7 @@ private fun NotepadComposeApp(
     val text by vm.text.collectAsState()
     val selectedNotes by vm.selectedNotesFlow.collectAsState(emptyMap())
 
+    val isLightTheme by vm.prefs.isLightTheme.collectAsState()
     val backgroundColorRes by vm.prefs.backgroundColorRes.collectAsState()
     val primaryColorRes by vm.prefs.primaryColorRes.collectAsState()
     val secondaryColorRes by vm.prefs.secondaryColorRes.collectAsState()
@@ -544,6 +546,7 @@ private fun NotepadComposeApp(
                     EditNoteContent(
                         text = text,
                         baseTextStyle = textStyle,
+                        isLightTheme = isLightTheme,
                         isPrinting = isPrinting,
                         waitForAnimation = note.id == -1L || directEdit,
                         onTextChanged = vm::setText
@@ -602,7 +605,7 @@ private fun NotepadComposeApp(
             ) {
                 FloatingActionButton(
                     onClick = { navState = Edit() },
-                    backgroundColor = colorResource(id = R.color.primary),
+                    backgroundColor = colorResource(id = R.color.primary_dark),
                     content = {
                         Icon(
                             imageVector = Icons.Filled.Add,

@@ -32,6 +32,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 @Composable
 fun NotepadTheme(
     isLightTheme: Boolean,
+    backgroundColorRes: Int,
     rtlSupport: Boolean,
     content: @Composable () -> Unit
 ) {
@@ -58,9 +59,7 @@ fun NotepadTheme(
         )
     }
 
-    val navbarColor = colorResource(
-        id = if (isLightTheme) R.color.window_background else R.color.window_background_dark
-    )
+    val navbarColor = colorResource(id = backgroundColorRes)
 
     LaunchedEffect(isLightTheme) {
         systemUiController.setNavigationBarColor(color = navbarColor)

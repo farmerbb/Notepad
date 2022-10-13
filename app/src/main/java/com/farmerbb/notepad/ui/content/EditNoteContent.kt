@@ -52,6 +52,7 @@ private fun String.toTextFieldValue() = TextFieldValue(
 fun EditNoteContent(
     text: String,
     baseTextStyle: TextStyle = TextStyle(),
+    isLightTheme: Boolean = true,
     isPrinting: Boolean = false,
     waitForAnimation: Boolean = false,
     onTextChanged: (String) -> Unit = {}
@@ -69,7 +70,13 @@ fun EditNoteContent(
         }
     }
 
-    val brush = SolidColor(if (isPrinting) Color.Transparent else Color.Black)
+    val brush = SolidColor(
+        value = when {
+            isPrinting -> Color.Transparent
+            isLightTheme -> Color.Black
+            else -> Color.White
+        }
+    )
 
     BasicTextField(
         value = value,

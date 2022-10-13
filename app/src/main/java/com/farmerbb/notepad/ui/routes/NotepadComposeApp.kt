@@ -103,7 +103,7 @@ fun NotepadComposeAppRoute() {
 
     val isLightTheme by vm.prefs.isLightTheme.collectAsState()
     val backgroundColorRes by vm.prefs.backgroundColorRes.collectAsState()
-    val rtlSupport by vm.prefs.rtlSupport.collectAsState()
+    val rtlLayout by vm.prefs.rtlLayout.collectAsState()
     val draftId by vm.savedDraftId.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -112,7 +112,7 @@ fun NotepadComposeAppRoute() {
 
     if (draftId == null) return
 
-    NotepadTheme(isLightTheme, backgroundColorRes, rtlSupport) {
+    NotepadTheme(isLightTheme, backgroundColorRes, rtlLayout) {
         NotepadComposeApp(
             vm = vm,
             isMultiPane = configuration.screenWidthDp >= 600,
@@ -149,6 +149,7 @@ private fun NotepadComposeApp(
     val directEdit by vm.prefs.directEdit.collectAsState()
     val filenameFormat by vm.prefs.filenameFormat.collectAsState()
     val showDialogs by vm.prefs.showDialogs.collectAsState()
+    val rtlLayout by vm.prefs.rtlLayout.collectAsState()
     val firstRunComplete by vm.prefs.firstRunComplete.collectAsState()
     val firstViewComplete by vm.prefs.firstViewComplete.collectAsState()
     val showDoubleTapMessage by vm.prefs.showDoubleTapMessage.collectAsState()
@@ -369,6 +370,7 @@ private fun NotepadComposeApp(
         textStyle = textStyle,
         dateStyle = dateStyle,
         showDate = showDate,
+        rtlLayout = rtlLayout,
         onNoteLongClick = { id ->
             haptics.performHapticFeedback(HapticFeedbackType.LongPress)
             multiSelectEnabled = true
@@ -501,6 +503,7 @@ private fun NotepadComposeApp(
                         text = note.text,
                         baseTextStyle = textStyle,
                         markdown = markdown,
+                        rtlLayout = rtlLayout,
                         isPrinting = isPrinting,
                         showDoubleTapMessage = showDoubleTapMessage,
                         doubleTapMessageShown = vm::doubleTapMessageShown
@@ -549,6 +552,7 @@ private fun NotepadComposeApp(
                         isLightTheme = isLightTheme,
                         isPrinting = isPrinting,
                         waitForAnimation = note.id == -1L || directEdit,
+                        rtlLayout = rtlLayout,
                         onTextChanged = vm::setText
                     )
                 }

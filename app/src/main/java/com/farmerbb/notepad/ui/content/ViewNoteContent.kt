@@ -41,6 +41,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.farmerbb.notepad.R
+import com.farmerbb.notepad.ui.components.RtlTextWrapper
 import com.farmerbb.notepad.ui.previews.ViewNotePreview
 import com.halilibo.richtext.markdown.Markdown
 import com.halilibo.richtext.ui.RichText
@@ -52,6 +53,7 @@ fun ViewNoteContent(
     text: String,
     baseTextStyle: TextStyle = TextStyle(),
     markdown: Boolean = false,
+    rtlLayout: Boolean = false,
     isPrinting: Boolean = false,
     showDoubleTapMessage: Boolean = false,
     doubleTapMessageShown: () -> Unit = {},
@@ -89,47 +91,49 @@ fun ViewNoteContent(
                 )
                 .fillMaxWidth()
 
-            SelectionContainer {
-                if (markdown) {
-                    val localTextStyle = compositionLocalOf {
-                        textStyle.copy(color = Color.Unspecified)
-                    }
-                    val localContentColor = compositionLocalOf {
-                        textStyle.color
-                    }
+            RtlTextWrapper(text, rtlLayout) {
+                SelectionContainer {
+                    if (markdown) {
+                        val localTextStyle = compositionLocalOf {
+                            textStyle.copy(color = Color.Unspecified)
+                        }
+                        val localContentColor = compositionLocalOf {
+                            textStyle.color
+                        }
 
-                    RichTextThemeIntegration(
-                        textStyle = { localTextStyle.current },
-                        contentColor = { localContentColor.current },
-                        ProvideTextStyle = { textStyle, content ->
-                            CompositionLocalProvider(
-                                localTextStyle provides textStyle,
-                                content = content
-                            )
-                        },
-                        ProvideContentColor = { color, content ->
-                            CompositionLocalProvider(
-                                localContentColor provides color,
-                                content = content
-                            )
+                        RichTextThemeIntegration(
+                            textStyle = { localTextStyle.current },
+                            contentColor = { localContentColor.current },
+                            ProvideTextStyle = { textStyle, content ->
+                                CompositionLocalProvider(
+                                    localTextStyle provides textStyle,
+                                    content = content
+                                )
+                            },
+                            ProvideContentColor = { color, content ->
+                                CompositionLocalProvider(
+                                    localContentColor provides color,
+                                    content = content
+                                )
+                            }
+                        ) {
+                            RichText(modifier = modifier) {
+                                Markdown(
+                                    // Replace markdown images with links
+                                    text.replace(Regex("!\\[([^\\[]+)](\\(.*\\))")) {
+                                        it.value.replaceFirst("![", "[")
+                                    }
+                                )
+                            }
                         }
-                    ) {
-                        RichText(modifier = modifier) {
-                            Markdown(
-                                // Replace markdown images with links
-                                text.replace(Regex("!\\[([^\\[]+)](\\(.*\\))")) {
-                                    it.value.replaceFirst("![", "[")
-                                }
-                            )
-                        }
+                    } else {
+                        LinkifyText(
+                            text = text,
+                            style = textStyle,
+                            linkColor = colorResource(id = R.color.primary),
+                            modifier = modifier
+                        )
                     }
-                } else {
-                    LinkifyText(
-                        text = text,
-                        style = textStyle,
-                        linkColor = colorResource(id = R.color.primary),
-                        modifier = modifier
-                    )
                 }
             }
         }

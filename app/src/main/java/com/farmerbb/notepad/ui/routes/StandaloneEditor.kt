@@ -33,9 +33,9 @@ fun StandaloneEditorRoute(
     val vm: NotepadViewModel = getViewModel()
     val isLightTheme by vm.prefs.isLightTheme.collectAsState()
     val backgroundColorRes by vm.prefs.backgroundColorRes.collectAsState()
-    val rtlSupport by vm.prefs.rtlSupport.collectAsState()
+    val rtlLayout by vm.prefs.rtlLayout.collectAsState()
 
-    NotepadTheme(isLightTheme, backgroundColorRes, rtlSupport) {
+    NotepadTheme(isLightTheme, backgroundColorRes, rtlLayout) {
         StandaloneEditor(
             vm = vm,
             initialText = initialText,
@@ -58,6 +58,7 @@ private fun StandaloneEditor(
     val textFontSize by vm.prefs.textFontSize.collectAsState()
     val fontFamily by vm.prefs.fontFamily.collectAsState()
     val showDialogs by vm.prefs.showDialogs.collectAsState()
+    val rtlLayout by vm.prefs.rtlLayout.collectAsState()
 
     var text: String by rememberSaveable { mutableStateOf(initialText) }
     var showSaveDialog by rememberSaveable { mutableStateOf(false) }
@@ -153,7 +154,8 @@ private fun StandaloneEditor(
             EditNoteContent(
                 text = initialText,
                 baseTextStyle = textStyle,
-                isLightTheme = isLightTheme
+                isLightTheme = isLightTheme,
+                rtlLayout = rtlLayout
             ) { text = it }
         }
     )

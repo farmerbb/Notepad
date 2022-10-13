@@ -74,7 +74,7 @@
     <string name="no_notes_to_export">Pas de note à exporter</string>
     <string name="no_notes_to_delete">Pas de note à supprimer</string>
     <string name="check_for_updates">Vérifier les mises à jour</string>
-    <string name="rtl_support">Right-to-left support</string>
+    <string name="rtl_layout">Right-to-left layout</string>
 
     <string-array name="sort_by_list">
         <item>Date (la plus récente en premier)</item>

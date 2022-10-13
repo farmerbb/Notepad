@@ -40,6 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
+import com.farmerbb.notepad.ui.components.RtlTextWrapper
 import com.farmerbb.notepad.ui.previews.EditNotePreview
 import kotlinx.coroutines.delay
 
@@ -55,6 +56,7 @@ fun EditNoteContent(
     isLightTheme: Boolean = true,
     isPrinting: Boolean = false,
     waitForAnimation: Boolean = false,
+    rtlLayout: Boolean = false,
     onTextChanged: (String) -> Unit = {}
 ) {
     val textStyle = if (isPrinting) {
@@ -78,25 +80,27 @@ fun EditNoteContent(
         }
     )
 
-    BasicTextField(
-        value = value,
-        onValueChange = {
-            value = it
-            onTextChanged(it.text)
-        },
-        textStyle = textStyle,
-        cursorBrush = brush,
-        keyboardOptions = KeyboardOptions(
-            capitalization = KeyboardCapitalization.Sentences
-        ),
-        modifier = Modifier
-            .padding(
-                horizontal = 16.dp,
-                vertical = 12.dp
-            )
-            .fillMaxSize()
-            .focusRequester(focusRequester)
-    )
+    RtlTextWrapper(text, rtlLayout) {
+        BasicTextField(
+            value = value,
+            onValueChange = {
+                value = it
+                onTextChanged(it.text)
+            },
+            textStyle = textStyle,
+            cursorBrush = brush,
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Sentences
+            ),
+            modifier = Modifier
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 12.dp
+                )
+                .fillMaxSize()
+                .focusRequester(focusRequester)
+        )
+    }
 
     if(value.text.isEmpty()) {
         BasicText(

@@ -29,7 +29,7 @@ object PrefKeys {
     val ShowDate = booleanPreferencesKey("show_date")
     val DirectEdit = booleanPreferencesKey("direct_edit")
     val Markdown = booleanPreferencesKey("markdown")
-    val RtlSupport = booleanPreferencesKey("rtl_support")
+    val RtlSupport = booleanPreferencesKey("rtl_layout")
     val ShowDoubleTapMessage = booleanPreferencesKey("show_double_tap_message")
     val FirstRun = intPreferencesKey("first-run")
     val FirstLoad = intPreferencesKey("first-load")

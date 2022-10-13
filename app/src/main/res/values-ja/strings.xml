@@ -74,7 +74,7 @@
     <string name="no_notes_to_export">選択されていません</string>
     <string name="no_notes_to_delete">選択されていません</string>
     <string name="check_for_updates">アプデを確認</string>
-    <string name="rtl_support">Right-to-left support</string>
+    <string name="rtl_layout">Right-to-left layout</string>
 
     <string-array name="sort_by_list">
         <item>日付順 (最新が先頭)</item>

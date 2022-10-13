@@ -61,7 +61,7 @@ Bir not oluşturmak için Yeni Not düğmesine (artı işareti) tıklayın."</st
 <string name="pref_title_show_date">Tarih / Saat göster</string>
 <string name="pref_title_show_dialogs">Kaydetmeden önce sor</string>
 <string name="send_to">Notu paylaş…</string>
-    <string name="rtl_support">Right-to-left support</string>
+    <string name="rtl_layout">Right-to-left layout</string>
 
     <string-array name="sort_by_list">
         <item>Date (newest first)</item>

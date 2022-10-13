@@ -23,6 +23,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -42,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farmerbb.notepad.R
 import com.farmerbb.notepad.model.NoteMetadata
+import com.farmerbb.notepad.ui.components.RtlTextWrapper
 import com.farmerbb.notepad.ui.previews.NoteListPreview
 import com.farmerbb.notepad.utils.safeGetOrDefault
 import java.text.DateFormat
@@ -58,10 +60,11 @@ fun NoteListContent(
     textStyle: TextStyle = TextStyle(),
     dateStyle: TextStyle = TextStyle(),
     showDate: Boolean = false,
+    rtlLayout: Boolean = false,
     onNoteLongClick: (Long) -> Unit = {},
     onNoteClick: (Long) -> Unit = {}
 ) {
-    when(notes.size) {
+    when (notes.size) {
         0 -> Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -89,21 +92,24 @@ fun NoteListContent(
                         onLongClick = { onNoteLongClick(note.metadataId) }
                     )
                 ) {
-                    BasicText(
-                        text = note.title,
-                        style = textStyle,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                top = if(showDate) 8.dp else 12.dp,
-                                bottom = if(showDate) 0.dp else 12.dp
-                            )
-                    )
+                    RtlTextWrapper(note.title, rtlLayout) {
+                        BasicText(
+                            text = note.title,
+                            style = textStyle,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    top = if (showDate) 8.dp else 12.dp,
+                                    bottom = if (showDate) 0.dp else 12.dp
+                                )
+                        )
+                    }
 
-                    if(showDate) {
+                    if (showDate) {
                         BasicText(
                             text = note.date.noteListFormat,
                             style = dateStyle,

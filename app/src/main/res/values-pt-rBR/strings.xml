@@ -74,7 +74,7 @@
     <string name="no_notes_to_export">Nenhuma nota selecionada para exportar</string>
     <string name="no_notes_to_delete">Nenhuma nota selecionada para apagar</string>
     <string name="check_for_updates">Verificar se há atualizações</string>
-    <string name="rtl_support">Right-to-left support</string>
+    <string name="rtl_layout">Right-to-left layout</string>
 
     <string-array name="sort_by_list">
         <item>Data (mais recente primeiro)</item>

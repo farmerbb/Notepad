@@ -56,5 +56,5 @@
     <string name="no_notes_to_export">لم تُحَدَّد ملاحظاتٌ لتصديرها</string>
     <string name="no_notes_to_delete">لم تُحَدَّد ملاحظاتٌ لحذفها</string>
     <string name="check_for_updates">تحقّق من التحديثات</string>
-    <string name="rtl_support">Right-to-left support</string>
+    <string name="rtl_layout">Right-to-left layout</string>
 </resources>

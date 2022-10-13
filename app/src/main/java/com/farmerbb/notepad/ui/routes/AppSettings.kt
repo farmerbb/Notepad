@@ -120,7 +120,7 @@ fun NotepadPreferenceScreen(
             ),
             SwitchPreference(
                 request = Prefs.RtlSupport,
-                title = stringResource(id = R.string.rtl_support),
+                title = stringResource(id = R.string.rtl_layout),
                 singleLineTitle = false
             )
         ),

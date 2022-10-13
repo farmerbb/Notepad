@@ -74,7 +74,7 @@
     <string name="no_notes_to_export">এক্সপোর্ট করার জন্য কোন নোট নির্বাচন করা হয়নি</string>
     <string name="no_notes_to_delete">মুছে ফেলার জন্য কোন নোট নির্বাচন করা হয়নি</string>
     <string name="check_for_updates">হালনাগাদ আছে কি না দেখুন</string>
-    <string name="rtl_support">Right-to-left support</string>
+    <string name="rtl_layout">Right-to-left layout</string>
 
     <string-array name="sort_by_list">
         <item>তারিখ (একদম নতুন)</item>

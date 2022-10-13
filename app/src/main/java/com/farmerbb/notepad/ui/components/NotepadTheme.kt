@@ -33,12 +33,12 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 fun NotepadTheme(
     isLightTheme: Boolean,
     backgroundColorRes: Int,
-    rtlSupport: Boolean,
+    rtlLayout: Boolean,
     content: @Composable () -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
 
-    val layoutDirection = when(rtlSupport) {
+    val layoutDirection = when (rtlLayout) {
         true -> LayoutDirection.Rtl
         false -> LayoutDirection.Ltr
     }

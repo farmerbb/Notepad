@@ -75,6 +75,7 @@
     <string name="no_notes_to_delete">Nie zaznaczono notatek do usunięcia</string>
     <string name="check_for_updates">Sprawdź aktualizacje</string>
     <string name="rtl_layout">Right-to-left layout</string>
+    <string name="pref_title_font_type">Font type</string>
 
     <string-array name="sort_by_list">
         <item>Daty (najnowsze na początku)</item>
@@ -83,12 +84,14 @@
         <item>Nazwy (Od Z do A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Jasny / Sans Serif</item>
-        <item>Jasny / Serif</item>
-        <item>Jasny / Monospace</item>
-        <item>Ciemny / Sans Serif</item>
-        <item>Ciemny / Serif</item>
-        <item>Ciemny / Monospace</item>
+        <item>System</item>
+        <item>Jasny</item>
+        <item>Ciemny</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>Sans Serif</item>
+        <item>Serif</item>
+        <item>Monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Najmniejsza</item>

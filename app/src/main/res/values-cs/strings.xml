@@ -75,6 +75,7 @@
     <string name="no_notes_to_delete">Nejsou vybrány žádné poznámky ke smazání</string>
     <string name="check_for_updates">Check for Updates</string>
     <string name="rtl_layout">Right-to-left layout</string>
+    <string name="pref_title_font_type">Font type</string>
 
     <string-array name="sort_by_list">
         <item>Data (nejnovější nejdříve)</item>
@@ -83,12 +84,14 @@
         <item>Názvu (Z do A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Světlé / sans serif</item>
-        <item>Světlé / serif</item>
-        <item>Světlé / monospace</item>
-        <item>Tmavé / sans serif</item>
-        <item>Tmavé / serif</item>
-        <item>Tmavé / monospace</item>
+        <item>System</item>
+        <item>Světlé</item>
+        <item>Tmavé</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>Sans serif</item>
+        <item>Serif</item>
+        <item>Monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Nejmenší</item>

@@ -75,6 +75,7 @@
     <string name="no_notes_to_delete">Ingen notater markert for sletting</string>
     <string name="check_for_updates">Se etter oppdateringer</string>
     <string name="rtl_layout">Right-to-left layout</string>
+    <string name="pref_title_font_type">Font type</string>
 
     <string-array name="sort_by_list">
         <item>Dato (nyeste first)</item>
@@ -83,12 +84,14 @@
         <item>Navn (Å to A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Lyst / grotesk</item>
-        <item>Lyst / seriffer</item>
-        <item>Lyst / monospace</item>
-        <item>Mørkt / grotesk</item>
-        <item>Mørkt / seriffer</item>
-        <item>Mørkt / monospace</item>
+        <item>System</item>
+        <item>Lyst</item>
+        <item>Mørkt</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>Grotesk</item>
+        <item>Seriffer</item>
+        <item>Monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Minst</item>

@@ -25,6 +25,7 @@ import com.farmerbb.notepad.Database
 import com.farmerbb.notepad.model.CrossRef
 import com.farmerbb.notepad.model.NoteContents
 import com.farmerbb.notepad.model.NoteMetadata
+import com.farmerbb.notepad.model.Prefs
 import java.io.File
 import java.util.Date
 import kotlinx.coroutines.CoroutineScope
@@ -58,52 +59,62 @@ private class DataMigratorImpl(
     )
 
     override suspend fun migrate() {
-        val migrationComplete = File(context.filesDir, "migration_complete")
-        if (migrationComplete.exists() || job.isCompleted) return
+        if (job.isCompleted) return
 
         withContext(Dispatchers.IO) {
-            val (draftFilename, draftText) = loadDraft()
+            val notesMigrationComplete = File(context.filesDir, "migration_complete")
+            if (!notesMigrationComplete.exists()) {
+                val (draftFilename, draftText) = loadDraft()
 
-            for (filename in context.filesDir.list().orEmpty()) {
-                if (!filename.isDigitsOnly() && filename != "draft") continue
+                for (filename in context.filesDir.list().orEmpty()) {
+                    if (!filename.isDigitsOnly() && filename != "draft") continue
 
-                val text = loadNote(filename)
-                val hasDraft = filename == draftFilename
+                    val text = loadNote(filename)
+                    val hasDraft = filename == draftFilename
 
-                val metadata = NoteMetadata(
-                    metadataId = -1,
-                    title = text.substringBefore("\n"),
-                    date = Date(filename.toLong()),
-                    hasDraft = hasDraft
-                )
-
-                val contents = NoteContents(
-                    contentsId = -1,
-                    text = text,
-                    draftText = if (hasDraft) draftText else null
-                )
-
-                with(database) {
-                    noteMetadataQueries.insert(metadata)
-                    noteContentsQueries.insert(contents)
-                    crossRefQueries.insert(
-                        CrossRef(
-                            metadataId = noteMetadataQueries.getIndex().executeAsOne(),
-                            contentsId = noteContentsQueries.getIndex().executeAsOne()
-                        )
+                    val metadata = NoteMetadata(
+                        metadataId = -1,
+                        title = text.substringBefore("\n"),
+                        date = Date(filename.toLong()),
+                        hasDraft = hasDraft
                     )
+
+                    val contents = NoteContents(
+                        contentsId = -1,
+                        text = text,
+                        draftText = if (hasDraft) draftText else null
+                    )
+
+                    with(database) {
+                        noteMetadataQueries.insert(metadata)
+                        noteContentsQueries.insert(contents)
+                        crossRefQueries.insert(
+                            CrossRef(
+                                metadataId = noteMetadataQueries.getIndex().executeAsOne(),
+                                contentsId = noteContentsQueries.getIndex().executeAsOne()
+                            )
+                        )
+                    }
+
+                    File(context.filesDir, filename).delete()
                 }
 
-                File(context.filesDir, filename).delete()
+                notesMigrationComplete.createNewFile()
             }
 
-            context.dataStore.edit {
-                // no-op to force SharedPreferences migration to trigger
-            }
-
+            migratePreferences()
             job.complete()
-            migrationComplete.createNewFile()
         }
+    }
+
+    @Suppress("DEPRECATION")
+    private suspend fun migratePreferences() = context.dataStore.edit { prefs ->
+        val theme = prefs[Prefs.Theme.key]
+        theme?.let {
+            prefs[Prefs.ColorScheme.key] = it.split("-").first()
+            prefs[Prefs.FontType.key] = it.split("-").last()
+            prefs.remove(Prefs.Theme.key)
+        } ?: return@edit
     }
 
     private fun loadNote(filename: String): String {

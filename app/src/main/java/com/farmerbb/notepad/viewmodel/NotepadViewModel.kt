@@ -32,6 +32,7 @@ import com.farmerbb.notepad.model.PrefKeys
 import com.farmerbb.notepad.usecase.ArtVandelay
 import com.farmerbb.notepad.usecase.DataMigrator
 import com.farmerbb.notepad.usecase.KeyboardShortcuts
+import com.farmerbb.notepad.usecase.SystemTheme
 import com.farmerbb.notepad.usecase.Toaster
 import com.farmerbb.notepad.utils.checkForUpdates
 import com.farmerbb.notepad.utils.safeGetOrDefault
@@ -64,7 +65,8 @@ class NotepadViewModel(
     private val dataMigrator: DataMigrator,
     private val toaster: Toaster,
     private val artVandelay: ArtVandelay,
-    private val keyboardShortcuts: KeyboardShortcuts
+    private val keyboardShortcuts: KeyboardShortcuts,
+    systemTheme: SystemTheme
 ): ViewModel() {
 
     /*********************** Data ***********************/
@@ -83,7 +85,7 @@ class NotepadViewModel(
     val selectedNotesFlow: SharedFlow<Map<Long, Boolean>> = _selectedNotesFlow
 
     val noteMetadata get() = prefs.sortOrder.flatMapConcat(repo::noteMetadataFlow)
-    val prefs = dataStoreManager.prefs(viewModelScope)
+    val prefs = dataStoreManager.prefs(viewModelScope, systemTheme)
 
     private val _savedDraftId = MutableStateFlow<Long?>(null)
     val savedDraftId: StateFlow<Long?> = _savedDraftId
@@ -398,7 +400,8 @@ val viewModelModule = module {
             dataMigrator = get(),
             toaster = get(),
             artVandelay = get(),
-            keyboardShortcuts = get()
+            keyboardShortcuts = get(),
+            systemTheme = get()
         )
     }
 }

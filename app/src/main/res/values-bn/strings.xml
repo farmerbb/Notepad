@@ -75,6 +75,7 @@
     <string name="no_notes_to_delete">মুছে ফেলার জন্য কোন নোট নির্বাচন করা হয়নি</string>
     <string name="check_for_updates">হালনাগাদ আছে কি না দেখুন</string>
     <string name="rtl_layout">Right-to-left layout</string>
+    <string name="pref_title_font_type">Font type</string>
 
     <string-array name="sort_by_list">
         <item>তারিখ (একদম নতুন)</item>
@@ -83,12 +84,14 @@
         <item>নাম (চন্দ্রবিন্দু থেকে অ)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>উজ্জ্বল / সানস সিরিফ</item>
-        <item>উজ্জ্বল / সেরিফ</item>
-        <item>উজ্জ্বল / মনোস্পেস</item>
-        <item>কৃষ্ণাভ / সানস সিরিফ</item>
-        <item>কৃষ্ণাভ / সেরিফ</item>
-        <item>কৃষ্ণাভ / মনোস্পেস</item>
+        <item>System</item>
+        <item>উজ্জ্বল</item>
+        <item>কৃষ্ণাভ</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>সানস সিরিফ</item>
+        <item>সেরিফ</item>
+        <item>মনোস্পেস</item>
     </string-array>
     <string-array name="font_size_list">
         <item>একদম ছোট</item>

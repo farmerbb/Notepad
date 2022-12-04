@@ -61,12 +61,21 @@ fun NotepadPreferenceScreen(
     PreferenceScreen(
         items = listOf(
             ListPreference(
-                request = Prefs.Theme,
+                request = Prefs.ColorScheme,
                 title = stringResource(id = R.string.action_theme),
                 singleLineTitle = false,
                 entries = listPrefEntries(
                     keyRes = R.array.theme_list_values,
                     valueRes = R.array.theme_list
+                ),
+            ),
+            ListPreference(
+                request = Prefs.FontType,
+                title = stringResource(id = R.string.pref_title_font_type),
+                singleLineTitle = false,
+                entries = listPrefEntries(
+                    keyRes = R.array.font_type_list_values,
+                    valueRes = R.array.font_type_list
                 ),
             ),
             ListPreference(

@@ -21,6 +21,7 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.model.FilenameFormat
 import com.farmerbb.notepad.model.Prefs
 import com.farmerbb.notepad.model.SortOrder
+import com.farmerbb.notepad.usecase.SystemTheme
 import de.schnettler.datastore.manager.DataStoreManager
 import de.schnettler.datastore.manager.PreferenceRequest
 import kotlinx.coroutines.CoroutineScope
@@ -30,27 +31,28 @@ import kotlinx.coroutines.flow.stateIn
 
 class PreferenceManager private constructor(
     private val dataStoreManager: DataStoreManager,
-    private val scope: CoroutineScope
+    private val scope: CoroutineScope,
+    private val systemTheme: SystemTheme
 ) {
-    val isLightTheme get() = Prefs.Theme.mapToFlow { theme -> theme.contains("light") }
+    val isLightTheme get() = Prefs.ColorScheme.mapToFlow { theme -> theme == "light" }
 
-    val backgroundColorRes get() = Prefs.Theme.mapToFlow { theme ->
-        when {
-            theme.contains("light") -> R.color.window_background
+    val backgroundColorRes get() = Prefs.ColorScheme.mapToFlow { theme ->
+        when(theme) {
+            "light" -> R.color.window_background
             else -> R.color.window_background_dark
         }
     }
 
-    val primaryColorRes get() = Prefs.Theme.mapToFlow { theme ->
-        when {
-            theme.contains("light") -> R.color.text_color_primary
+    val primaryColorRes get() = Prefs.ColorScheme.mapToFlow { theme ->
+        when(theme) {
+            "light" -> R.color.text_color_primary
             else -> R.color.text_color_primary_dark
         }
     }
 
-    val secondaryColorRes get() = Prefs.Theme.mapToFlow { theme ->
-        when {
-            theme.contains("light") -> R.color.text_color_secondary
+    val secondaryColorRes get() = Prefs.ColorScheme.mapToFlow { theme ->
+        when(theme) {
+            "light" -> R.color.text_color_secondary
             else -> R.color.text_color_secondary_dark
         }
     }
@@ -75,10 +77,10 @@ class PreferenceManager private constructor(
         }
     }
 
-    val fontFamily get() = Prefs.Theme.mapToFlow { theme ->
-        when {
-            theme.contains("sans") -> FontFamily.SansSerif
-            theme.contains("serif") -> FontFamily.Serif
+    val fontFamily get() = Prefs.FontType.mapToFlow { theme ->
+        when(theme) {
+            "sans" -> FontFamily.SansSerif
+            "serif" -> FontFamily.Serif
             else -> FontFamily.Monospace
         }
     }
@@ -94,12 +96,20 @@ class PreferenceManager private constructor(
     val firstViewComplete get() = Prefs.FirstLoad.mapToFlow(::toBoolean)
     val showDoubleTapMessage get() = Prefs.ShowDoubleTapMessage.asFlow
 
+    @Suppress("UNCHECKED_CAST")
     private fun <T, R> PreferenceRequest<T>.mapToFlow(transform: (value: T) -> R) =
-        dataStoreManager.getPreferenceFlow(this).map(transform).stateIn(
-            scope = scope,
-            started = SharingStarted.Lazily,
-            initialValue = transform(defaultValue)
-        )
+        dataStoreManager.getPreferenceFlow(this)
+            .map {
+                if (this is Prefs.ColorScheme && it is String && it == "system") {
+                    systemTheme.colorScheme.stringValue as T
+                } else it
+            }
+            .map(transform)
+            .stateIn(
+                scope = scope,
+                started = SharingStarted.Lazily,
+                initialValue = transform(defaultValue)
+            )
 
     private val <T> PreferenceRequest<T>.asFlow get() = mapToFlow { it }
 
@@ -114,9 +124,13 @@ class PreferenceManager private constructor(
     private fun toBoolean(value: Int) = value > 0
 
     companion object {
-        fun DataStoreManager.prefs(scope: CoroutineScope) = PreferenceManager(
+        fun DataStoreManager.prefs(
+            scope: CoroutineScope,
+            systemTheme: SystemTheme
+        ) = PreferenceManager(
             dataStoreManager = this,
-            scope = scope
+            scope = scope,
+            systemTheme = systemTheme
         )
     }
 }

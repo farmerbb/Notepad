@@ -75,6 +75,7 @@
     <string name="no_notes_to_delete">移除：未選取任何筆記</string>
     <string name="check_for_updates">檢查更新</string>
     <string name="rtl_layout">Right-to-left layout</string>
+    <string name="pref_title_font_type">Font type</string>
 
     <string-array name="sort_by_list">
         <item>由新至舊</item>
@@ -83,12 +84,14 @@
         <item>名字（Z 到 A）</item>
     </string-array>
     <string-array name="theme_list">
-        <item>淺色無襯線體</item>
-        <item>淺色襯線體</item>
-        <item>淺色等寬</item>
-        <item>深色無襯線體</item>
-        <item>深色襯線體</item>
-        <item>深色等寬</item>
+        <item>System</item>
+        <item>淺色</item>
+        <item>深色</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>無襯線體</item>
+        <item>襯線體</item>
+        <item>等寬</item>
     </string-array>
     <string-array name="font_size_list">
         <item>極小</item>

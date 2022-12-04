@@ -64,5 +64,35 @@ Russian translation by Vladimir Kosolapov"</string>
     <string name="cab_notes_selected">%d notes selected</string>
     <string name="document">%1$s Document</string>
     <string name="rtl_layout">Right-to-left layout</string>
+    <string name="pref_title_font_type">Font type</string>
+
+    <string-array name="sort_by_list">
+        <item>Дата (сначала недавние)</item>
+        <item>Дата (oldest first)</item>
+        <item>Наименование (А – Я)</item>
+        <item>Наименование (Я – А)</item>
+    </string-array>
+    <string-array name="theme_list">
+        <item>System</item>
+        <item>Светлая</item>
+        <item>Темная</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>Sans serif</item>
+        <item>Serif</item>
+        <item>Monospace</item>
+    </string-array>
+    <string-array name="font_size_list">
+        <item>Наименьший</item>
+        <item>Мелкий</item>
+        <item>Нормальный</item>
+        <item>Большой</item>
+        <item>Наибольший</item>
+    </string-array>
+    <string-array name="exported_filename_list">
+        <item>First line of text</item>
+        <item>First line + timestamp</item>
+        <item>Timestamp + first line</item>
+    </string-array>
 
 </resources>

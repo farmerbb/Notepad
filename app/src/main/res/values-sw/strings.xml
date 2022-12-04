@@ -75,6 +75,7 @@
     <string name="no_notes_to_delete">Hakuna vidokezo vilivyochaguliwa vya kufuta</string>
     <string name="check_for_updates">Angalia kama kuna Toleo Jipya</string>
     <string name="rtl_layout">Right-to-left layout</string>
+    <string name="pref_title_font_type">Font type</string>
 
     <string-array name="sort_by_list">
         <item>Date (vipya kwanza)</item>
@@ -83,12 +84,14 @@
         <item>Name (Z hadi A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Jepesi / sans serif</item>
-        <item>Jepesi / serif</item>
-        <item>Jepesi / monospace</item>
-        <item>Nyeusi / sans serif</item>
-        <item>Nyeusi / serif</item>
-        <item>Nyeusi / monospace</item>
+        <item>System</item>
+        <item>Jepesi</item>
+        <item>Nyeusi</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>Sans serif</item>
+        <item>Serif</item>
+        <item>Monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Ndogo zaidi</item>

@@ -22,6 +22,7 @@ import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.usecase.artVandelayModule
 import com.farmerbb.notepad.usecase.dataMigratorModule
 import com.farmerbb.notepad.usecase.keyboardShortcutsModule
+import com.farmerbb.notepad.usecase.systemThemeModule
 import com.farmerbb.notepad.usecase.toasterModule
 import com.farmerbb.notepad.utils.dataStore
 import com.farmerbb.notepad.viewmodel.viewModelModule
@@ -40,7 +41,8 @@ val notepadModule = module {
         dataMigratorModule,
         toasterModule,
         artVandelayModule,
-        keyboardShortcutsModule
+        keyboardShortcutsModule,
+        systemThemeModule
     )
 
     single { provideDatabase(context = androidContext()) }

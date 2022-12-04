@@ -73,6 +73,7 @@
     <string name="no_notes_to_delete">Δεν επιλέχθηκαν σημειώσεις για διαγραφή</string>
     <string name="check_for_updates">Έλεγχος για ενημερώσεις</string>
     <string name="rtl_layout">Right-to-left layout</string>
+    <string name="pref_title_font_type">Font type</string>
 
     <string-array name="sort_by_list">
         <item>Ημερομηνία (νεότερη πρώτα)</item>
@@ -81,12 +82,14 @@
         <item>Όνομα (Ω-Α)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Ανοιχτό / sans serif</item>
-        <item>Ανοιχτό / serif</item>
-        <item>Ανοιχτό / monospace</item>
-        <item>Σκούρο / sans serif</item>
-        <item>Σκούρο / serif</item>
-        <item>Σκούρο / monospace</item>
+        <item>System</item>
+        <item>Ανοιχτό</item>
+        <item>Σκούρο</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>Sans serif</item>
+        <item>Serif</item>
+        <item>Monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Μικρότερα</item>

@@ -75,6 +75,7 @@
     <string name="no_notes_to_delete">選択されていません</string>
     <string name="check_for_updates">アプデを確認</string>
     <string name="rtl_layout">Right-to-left layout</string>
+    <string name="pref_title_font_type">Font type</string>
 
     <string-array name="sort_by_list">
         <item>日付順 (最新が先頭)</item>
@@ -83,12 +84,14 @@
         <item>名前順 (Z - A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>明テーマ / サンセリフ</item>
-        <item>明テーマ / セリフ</item>
-        <item>明テーマ / 固定幅</item>
-        <item>暗テーマ / サンセリフ</item>
-        <item>暗テーマ / セリフ</item>
-        <item>暗テーマ / 固定幅</item>
+        <item>System</item>
+        <item>明テーマ</item>
+        <item>暗テーマ</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>サンセリフ</item>
+        <item>セリフ</item>
+        <item>固定幅</item>
     </string-array>
     <string-array name="font_size_list">
         <item>極小</item>

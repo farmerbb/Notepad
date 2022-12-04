@@ -75,6 +75,7 @@
     <string name="no_notes_to_delete">Geen te verwijderen notities geselecteerd</string>
     <string name="check_for_updates">Check for Updates</string>
     <string name="rtl_layout">Right-to-left layout</string>
+    <string name="pref_title_font_type">Font type</string>
 
     <string-array name="sort_by_list">
         <item>Datum (recentst eerst)</item>
@@ -83,12 +84,14 @@
         <item>Naam (Z-A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Licht / schreefloos</item>
-        <item>Licht / met schreef</item>
-        <item>Licht / vaste breedte</item>
-        <item>Donker / schreefloos</item>
-        <item>Donker / met schreef</item>
-        <item>Donker / vaste breedte</item>
+        <item>System</item>
+        <item>Licht</item>
+        <item>Donker</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>Schreefloos</item>
+        <item>Met schreef</item>
+        <item>Vaste breedte</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Kleinst</item>

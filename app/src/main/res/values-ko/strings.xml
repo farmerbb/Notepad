@@ -76,6 +76,7 @@
     <string name="no_notes_to_delete">No notes selected to delete</string>
     <string name="check_for_updates">Check for Updates</string>
     <string name="rtl_layout">Right-to-left layout</string>
+    <string name="pref_title_font_type">Font type</string>
 
     <string-array name="sort_by_list">
         <item>날짜 (내림차순)</item>
@@ -84,12 +85,14 @@
         <item>Name (Z to A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Light / sans serif</item>
-        <item>Light / serif</item>
-        <item>Light / monospace</item>
-        <item>Dark / sans serif</item>
-        <item>Dark / serif</item>
-        <item>Dark / monospace</item>
+        <item>System</item>
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>Sans serif</item>
+        <item>Serif</item>
+        <item>Monospace</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Smallest</item>

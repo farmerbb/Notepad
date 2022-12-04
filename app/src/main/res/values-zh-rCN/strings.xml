@@ -75,6 +75,7 @@
     <string name="no_notes_to_delete">删除：未选择任何笔记</string>
     <string name="check_for_updates">检查更新</string>
     <string name="rtl_layout">从右至左 (RTL) 文本支持</string>
+    <string name="pref_title_font_type">Font type</string>
 
     <string-array name="sort_by_list">
         <item>由新至旧</item>
@@ -83,12 +84,14 @@
         <item>标题逆序</item>
     </string-array>
     <string-array name="theme_list">
-        <item>浅色无衬线体</item>
-        <item>浅色衬线体</item>
-        <item>浅色等宽字体</item>
-        <item>深色无衬线体</item>
-        <item>深色衬线体</item>
-        <item>深色等宽字体</item>
+        <item>System</item>
+        <item>浅色</item>
+        <item>深色</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>无衬线体</item>
+        <item>衬线体</item>
+        <item>等宽字体</item>
     </string-array>
     <string-array name="font_size_list">
         <item>极小</item>

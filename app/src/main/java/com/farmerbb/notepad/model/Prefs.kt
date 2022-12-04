@@ -22,6 +22,8 @@ import de.schnettler.datastore.manager.PreferenceRequest
 
 object PrefKeys {
     val Theme = stringPreferencesKey("theme")
+    val ColorScheme = stringPreferencesKey("color_scheme")
+    val FontType = stringPreferencesKey("font_type")
     val FontSize = stringPreferencesKey("font_size")
     val SortBy = stringPreferencesKey("sort_by")
     val ExportFilename = stringPreferencesKey("export_filename")
@@ -36,9 +38,20 @@ object PrefKeys {
 }
 
 object Prefs {
+    @Deprecated("Use ColorScheme or FontType instead")
     object Theme: PreferenceRequest<String>(
         key = PrefKeys.Theme,
         defaultValue = "light-sans"
+    )
+
+    object ColorScheme: PreferenceRequest<String>(
+        key = PrefKeys.ColorScheme,
+        defaultValue = "system"
+    )
+
+    object FontType: PreferenceRequest<String>(
+        key = PrefKeys.FontType,
+        defaultValue = "sans"
     )
 
     object FontSize: PreferenceRequest<String>(

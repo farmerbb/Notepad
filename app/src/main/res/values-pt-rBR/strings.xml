@@ -75,6 +75,7 @@
     <string name="no_notes_to_delete">Nenhuma nota selecionada para apagar</string>
     <string name="check_for_updates">Verificar se há atualizações</string>
     <string name="rtl_layout">Right-to-left layout</string>
+    <string name="pref_title_font_type">Font type</string>
 
     <string-array name="sort_by_list">
         <item>Data (mais recente primeiro)</item>
@@ -83,12 +84,14 @@
         <item>Nome (Z a A)</item>
     </string-array>
     <string-array name="theme_list">
-        <item>Claro / sem serifa</item>
-        <item>Claro / com serifa</item>
-        <item>Claro / mono-espaçada</item>
-        <item>Escuro / sem serifa</item>
-        <item>Escuro / com serifa</item>
-        <item>Escuro / mono-espaçada</item>
+        <item>System</item>
+        <item>Claro</item>
+        <item>Escuro</item>
+    </string-array>
+    <string-array name="font_type_list">
+        <item>Sem serifa</item>
+        <item>Com serifa</item>
+        <item>Mono-espaçada</item>
     </string-array>
     <string-array name="font_size_list">
         <item>Menor</item>

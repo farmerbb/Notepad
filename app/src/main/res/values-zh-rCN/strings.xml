@@ -84,14 +84,14 @@
         <item>标题逆序</item>
     </string-array>
     <string-array name="theme_list">
-        <item>系统</item>
+        <item>跟随系统</item>
         <item>浅色</item>
         <item>深色</item>
     </string-array>
     <string-array name="font_type_list">
-        <item>无衬线</item>
-        <item>衬线</item>
-        <item>等宽</item>
+        <item>无衬线体</item>
+        <item>衬线体</item>
+        <item>等宽体</item>
     </string-array>
     <string-array name="font_size_list">
         <item>极小</item>

@@ -91,7 +91,7 @@
     <string-array name="font_type_list">
         <item>无衬线体</item>
         <item>衬线体</item>
-        <item>等宽体</item>
+        <item>等宽字体</item>
     </string-array>
     <string-array name="font_size_list">
         <item>极小</item>

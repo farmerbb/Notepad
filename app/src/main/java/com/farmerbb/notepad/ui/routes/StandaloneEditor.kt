@@ -152,7 +152,7 @@ private fun StandaloneEditor(
         },
         content = {
             EditNoteContent(
-                text = initialText,
+                text = text,
                 baseTextStyle = textStyle,
                 isLightTheme = isLightTheme,
                 rtlLayout = rtlLayout

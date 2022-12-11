@@ -74,8 +74,8 @@
     <string name="no_notes_to_export">导出：未选择任何笔记</string>
     <string name="no_notes_to_delete">删除：未选择任何笔记</string>
     <string name="check_for_updates">检查更新</string>
-    <string name="rtl_layout">从右至左 (RTL) 文本支持</string>
-    <string name="pref_title_font_type">Font type</string>
+    <string name="rtl_layout"> 从右至左 (RTL) 文本布局 </string>
+    <string name="pref_title_font_type">字体类型</string>
 
     <string-array name="sort_by_list">
         <item>由新至旧</item>
@@ -84,7 +84,7 @@
         <item>标题逆序</item>
     </string-array>
     <string-array name="theme_list">
-        <item>System</item>
+        <item>跟随系统</item>
         <item>浅色</item>
         <item>深色</item>
     </string-array>

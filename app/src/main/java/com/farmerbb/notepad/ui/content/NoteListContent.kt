@@ -26,11 +26,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -52,6 +55,32 @@ import java.util.Date
 private val Date.noteListFormat: String get() = DateFormat
     .getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
     .format(this)
+
+private data class ListParams(
+    val index: Int,
+    val scrollOffset: Int
+)
+
+private var listParams = ListParams(0, 0)
+
+@Composable
+fun RememberNoteListScrollState(
+): LazyListState {
+    val scrollState = rememberSaveable(saver = LazyListState.Saver) {
+        LazyListState(
+            listParams.index,
+            listParams.scrollOffset
+        )
+    }
+    DisposableEffect(Unit) {
+        onDispose {
+            val lastIndex = scrollState.firstVisibleItemIndex
+            val lastOffset = scrollState.firstVisibleItemScrollOffset
+            listParams = ListParams(lastIndex, lastOffset)
+        }
+    }
+    return scrollState
+}
 
 @Composable
 fun NoteListContent(
@@ -78,7 +107,7 @@ fun NoteListContent(
             )
         }
 
-        else -> LazyColumn {
+        else -> LazyColumn(state = RememberNoteListScrollState()) {
             itemsIndexed(notes) { _, note ->
                 val isSelected = selectedNotes.safeGetOrDefault(note.metadataId, false)
                 Column(modifier = Modifier

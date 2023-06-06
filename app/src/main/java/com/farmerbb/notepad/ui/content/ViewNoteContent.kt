@@ -17,6 +17,7 @@
 
 package com.farmerbb.notepad.ui.content
 
+import android.view.MotionEvent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,8 +35,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -64,19 +68,27 @@ fun ViewNoteContent(
     } else baseTextStyle
 
     var doubleTapTime by remember { mutableStateOf(0L) }
+    var lastOffset by remember { mutableStateOf(Offset(0f, 0f)) }
+    val radius = with(LocalDensity.current) { 48.dp.toPx() }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .pointerInteropFilter {
-                val now = System.currentTimeMillis()
+            .pointerInteropFilter { motionEvent ->
+                if (motionEvent.action == MotionEvent.ACTION_DOWN) {
+                    val now = System.currentTimeMillis()
+                    val offset = Offset(motionEvent.x, motionEvent.y)
+                    val rect = Rect(center = lastOffset, radius = radius)
 
-                when {
-                    doubleTapTime > now -> onDoubleTap()
-                    showDoubleTapMessage -> doubleTapMessageShown()
+                    when {
+                        doubleTapTime > now && rect.contains(offset) -> onDoubleTap()
+                        showDoubleTapMessage -> doubleTapMessageShown()
+                    }
+
+                    doubleTapTime = now + 300
+                    lastOffset = offset
                 }
 
-                doubleTapTime = now + 300
                 false
             }
     ) {

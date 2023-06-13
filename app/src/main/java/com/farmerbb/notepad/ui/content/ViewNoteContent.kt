@@ -17,6 +17,7 @@
 
 package com.farmerbb.notepad.ui.content
 
+import android.content.ActivityNotFoundException
 import android.view.MotionEvent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -130,12 +132,24 @@ fun ViewNoteContent(
                             }
                         ) {
                             RichText(modifier = modifier) {
+                                val uriHandler = LocalUriHandler.current
+
                                 Markdown(
                                     // Replace markdown images with links
                                     text.replace(Regex("!\\[([^\\[]+)](\\(.*\\))")) {
                                         it.value.replaceFirst("![", "[")
                                     }
-                                )
+                                ) { uri ->
+                                    val sanitizedUri = when {
+                                        uri.startsWith("http://") -> uri
+                                        uri.startsWith("https://") -> uri
+                                        else -> "http://$uri"
+                                    }
+
+                                    try {
+                                        uriHandler.openUri(sanitizedUri)
+                                    } catch (ignored: ActivityNotFoundException) {}
+                                }
                             }
                         }
                     } else {

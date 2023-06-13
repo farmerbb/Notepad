@@ -69,7 +69,7 @@ fun ViewNoteContent(
 
     var doubleTapTime by remember { mutableStateOf(0L) }
     var lastOffset by remember { mutableStateOf(Offset(0f, 0f)) }
-    val radius = with(LocalDensity.current) { 48.dp.toPx() }
+    val radius = with(LocalDensity.current) { 24.dp.toPx() }
 
     Column(
         modifier = Modifier
@@ -85,7 +85,7 @@ fun ViewNoteContent(
                         showDoubleTapMessage -> doubleTapMessageShown()
                     }
 
-                    doubleTapTime = now + 300
+                    doubleTapTime = now + 200
                     lastOffset = offset
                 }
 

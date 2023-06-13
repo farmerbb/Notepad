@@ -136,7 +136,7 @@ fun ViewNoteContent(
 
                                 Markdown(
                                     // Replace markdown images with links
-                                    text.replace(Regex("!\\[([^\\[]+)](\\(.*\\))")) {
+                                    text.replace(Regex("!\\[([^\\[]*)](\\(.*\\))")) {
                                         it.value.replaceFirst("![", "[")
                                     }
                                 ) { uri ->

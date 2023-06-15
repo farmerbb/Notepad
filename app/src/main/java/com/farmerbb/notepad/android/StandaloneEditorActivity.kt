@@ -58,7 +58,7 @@ class StandaloneEditorActivity: ComponentActivity() {
     private fun getExternalContent(): String? {
         val text = intent.getStringExtra(Intent.EXTRA_TEXT) ?: return null
         val subject = intent.getStringExtra(Intent.EXTRA_SUBJECT) ?: return text
-        return "$subject\n\n$text"
+        return "$subject\n\n$text".trim()
     }
 
     private fun externalContentFailed() = run {

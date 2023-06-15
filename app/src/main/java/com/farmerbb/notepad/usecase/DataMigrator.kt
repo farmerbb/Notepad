@@ -59,7 +59,7 @@ private class DataMigratorImpl(
     )
 
     override suspend fun migrate() {
-        if (job.isCompleted) return
+        if (job.isCancelled) return
 
         withContext(Dispatchers.IO) {
             val notesMigrationComplete = File(context.filesDir, "migration_complete")
@@ -103,7 +103,7 @@ private class DataMigratorImpl(
             }
 
             migratePreferences()
-            job.complete()
+            job.cancel()
         }
     }
 

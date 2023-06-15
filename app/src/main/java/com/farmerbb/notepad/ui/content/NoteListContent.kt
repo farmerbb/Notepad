@@ -48,7 +48,6 @@ import com.farmerbb.notepad.R
 import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.ui.components.RtlTextWrapper
 import com.farmerbb.notepad.ui.previews.NoteListPreview
-import com.farmerbb.notepad.utils.safeGetOrDefault
 import java.text.DateFormat
 import java.util.Date
 
@@ -109,7 +108,7 @@ fun NoteListContent(
 
         else -> LazyColumn(state = RememberNoteListScrollState()) {
             itemsIndexed(notes) { _, note ->
-                val isSelected = selectedNotes.safeGetOrDefault(note.metadataId, false)
+                val isSelected = selectedNotes.getOrDefault(note.metadataId, false)
                 Column(modifier = Modifier
                     .then(
                         if (isSelected) {

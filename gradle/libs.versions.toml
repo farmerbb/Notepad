@@ -6,12 +6,13 @@ notepad-versionName = "3.0.3"
 
 # Android SDK
 android-compileSdk = "33"
-android-gradlePlugin = "7.3.1"
+android-coreLibraryDesugaring = "2.0.3"
+android-gradlePlugin = "8.0.2"
 android-minSdk = "21"
 android-targetSdk = "31"
 
 # AndroidX / Jetpack
-androidx-activity = "1.7.1"
+androidx-activity = "1.7.2"
 androidx-core = "1.10.1"
 androidx-datastore = "1.0.0"
 androidx-lifecycle = "2.6.1"
@@ -73,6 +74,7 @@ richtext-commonmark = { module = "com.halilibo.compose-richtext:richtext-commonm
 richtext-printing = { module = "com.halilibo.compose-richtext:printing", version.ref = "richtext" }
 
 # Other dependencies
+android-coreLibraryDesugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "android-coreLibraryDesugaring" }
 composePreferences = { module = "com.github.farmerbb.ComposePreferences:preferences-material", version.ref = "composePreferences" }
 fsaf = { module = "com.github.K1rakishou:Fuck-Storage-Access-Framework", version.ref = "fsaf" }
 linkifyText = { module = "com.github.firefinchdev:linkify-text", version.ref = "linkifyText" }

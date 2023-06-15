@@ -41,12 +41,14 @@ android {
     }
 
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        isCoreLibraryDesugaringEnabled = true
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
@@ -80,8 +82,8 @@ android {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles.add(getDefaultProguardFile("proguard-android.txt"))
-            proguardFiles.add(File("proguard-rules.pro"))
+            proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
+            proguardFiles.add(file("proguard-rules.pro"))
             signingConfig = signingConfigs.getByName("release")
             manifestPlaceholders["appName"] = "@string/app_name"
 
@@ -113,4 +115,5 @@ dependencies {
     implementation(libs.sqldelight)
     implementation(libs.systemuicontroller)
     debugImplementation(libs.compose.ui.tooling)
+    coreLibraryDesugaring(libs.android.coreLibraryDesugaring)
 }

@@ -1,7 +1,7 @@
 [versions]
 
 # Notepad
-notepad-versionCode = "118"
+notepad-versionCode = "119"
 notepad-versionName = "3.0.4"
 
 # Android SDK
@@ -30,7 +30,7 @@ koin-compose = "3.4.1"
 kotlin = "1.8.21"
 linkifyText = "0a45dbcf9b"
 okio = "3.2.0"
-richtext = "0.14.1"
+richtext = "0.15.0"
 sqldelight = "1.5.4"
 versionsPlugin = "0.42.0"
 

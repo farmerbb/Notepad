@@ -15,8 +15,12 @@
 
 package com.farmerbb.notepad.ui.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
@@ -26,11 +30,21 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PlaylistAddCheck
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.SdCard
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.LayoutDirection
 import com.farmerbb.notepad.R
 
@@ -122,6 +136,61 @@ fun ExportButton(onClick: () -> Unit = {}) {
         Icon(
             imageVector = Icons.Filled.SdCard,
             contentDescription = stringResource(R.string.action_export),
+            tint = Color.White
+        )
+    }
+}
+
+
+var searchTerm by mutableStateOf("")
+
+@Composable
+fun SearchTextField() {
+    SearchTextFieldChild(searchTerm) { newSearchTerm ->
+        searchTerm = newSearchTerm
+    }
+}
+
+@Composable
+fun SearchTextFieldChild(searchTerm: String,
+                         onSearchTermChanged: (String) -> Unit) {
+    val focusRequester = remember { FocusRequester() }
+    TextField(
+        value = searchTerm,
+        onValueChange = { newSearchTerm ->
+            onSearchTermChanged(newSearchTerm) },
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Filled.Search,
+                contentDescription = stringResource(R.string.action_search_notes),
+                tint = Color.White
+            )
+        },
+        label = { Text(stringResource(R.string.action_search_notes)) },
+        singleLine = true,
+        maxLines = 1,
+        modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Color.White,
+            unfocusedBorderColor = Color.White,
+            textColor = Color.White,
+            placeholderColor = Color.White,
+            cursorColor = Color.White,
+            focusedLabelColor = Color.White,
+            unfocusedLabelColor = Color.White
+        )
+    )
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+}
+
+@Composable
+fun SearchNotesButton(onClick: () -> Unit = {}) {
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = Icons.Filled.Search,
+            contentDescription = stringResource(R.string.action_search_notes),
             tint = Color.White
         )
     }

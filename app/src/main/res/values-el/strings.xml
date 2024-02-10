@@ -103,5 +103,7 @@
         <item>Πρώτη σειρά + χρονοσήμανση</item>
         <item>Χρονοσήμανση + πρώτη σειρά</item>
     </string-array>
+    <string name="action_search_notes">Search notes</string>
+    <string name="no_notes_to_search">No notes to search</string>
 
 </resources>

@@ -85,6 +85,7 @@ fun RememberNoteListScrollState(
 fun NoteListContent(
     notes: List<NoteMetadata>,
     selectedNotes: Map<Long, Boolean> = emptyMap(),
+    foundNotes: Map<Long, Boolean> = emptyMap(),
     textStyle: TextStyle = TextStyle(),
     dateStyle: TextStyle = TextStyle(),
     showDate: Boolean = false,
@@ -92,7 +93,10 @@ fun NoteListContent(
     onNoteLongClick: (Long) -> Unit = {},
     onNoteClick: (Long) -> Unit = {}
 ) {
-    when (notes.size) {
+    val filteredNotes = notes.filter {
+        foundNotes.getOrDefault(it.metadataId, false)
+    }
+    when (filteredNotes.size) {
         0 -> Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -107,7 +111,7 @@ fun NoteListContent(
         }
 
         else -> LazyColumn(state = RememberNoteListScrollState()) {
-            itemsIndexed(notes) { _, note ->
+            itemsIndexed(filteredNotes) { _, note ->
                 val isSelected = selectedNotes.getOrDefault(note.metadataId, false)
                 Column(modifier = Modifier
                     .then(

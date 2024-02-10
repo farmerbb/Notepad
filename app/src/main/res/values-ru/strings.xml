@@ -94,5 +94,7 @@ Russian translation by Vladimir Kosolapov"</string>
         <item>First line + timestamp</item>
         <item>Timestamp + first line</item>
     </string-array>
+    <string name="action_search_notes">Search notes</string>
+    <string name="no_notes_to_search">No notes to search</string>
 
 </resources>

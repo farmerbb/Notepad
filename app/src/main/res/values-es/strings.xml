@@ -105,5 +105,7 @@
         <item>Primera línea + marca de tiempo</item>
         <item>Marca de tiempo + primera línea</item>
     </string-array>
+    <string name="action_search_notes">Search notes</string>
+    <string name="no_notes_to_search">No notes to search</string>
 
 </resources>

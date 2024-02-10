@@ -103,5 +103,7 @@
         <item>Erste Textzeile + Datum</item>
         <item>Datum + Erste Textzeile</item>
     </string-array>
+    <string name="action_search_notes">Search notes</string>
+    <string name="no_notes_to_search">No notes to search</string>
 
 </resources>

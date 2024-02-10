@@ -105,5 +105,7 @@
         <item>প্রথম বাক্য + টাইমস্ট্যাম্প</item>
         <item>টাইমস্ট্যাম্প + প্রথম বাক্য</item>
     </string-array>
+    <string name="action_search_notes">Search notes</string>
+    <string name="no_notes_to_search">No notes to search</string>
 
 </resources>

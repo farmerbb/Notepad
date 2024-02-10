@@ -105,5 +105,7 @@
         <item>第1行+日付</item>
         <item>日付+第1行</item>
     </string-array>
+    <string name="action_search_notes">Search notes</string>
+    <string name="no_notes_to_search">No notes to search</string>
 
 </resources>

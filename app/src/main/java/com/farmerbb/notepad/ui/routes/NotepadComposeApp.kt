@@ -86,7 +86,10 @@ import com.farmerbb.notepad.ui.components.NoteViewEditMenu
 import com.farmerbb.notepad.ui.components.NotepadTheme
 import com.farmerbb.notepad.ui.components.SaveButton
 import com.farmerbb.notepad.ui.components.SaveDialog
+import com.farmerbb.notepad.ui.components.SearchNotesButton
+import com.farmerbb.notepad.ui.components.SearchTextField
 import com.farmerbb.notepad.ui.components.SelectAllButton
+import com.farmerbb.notepad.ui.components.searchTerm
 import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.content.NoteListContent
 import com.farmerbb.notepad.ui.content.ViewNoteContent
@@ -135,6 +138,7 @@ private fun NotepadComposeApp(
     val note by vm.noteState.collectAsState()
     val text by vm.text.collectAsState()
     val selectedNotes by vm.selectedNotesFlow.collectAsState(emptyMap())
+    val foundNotes by vm.foundNotesFlow.collectAsState(emptyMap())
 
     val isLightTheme by vm.prefs.isLightTheme.collectAsState()
     val backgroundColorRes by vm.prefs.backgroundColorRes.collectAsState()
@@ -158,6 +162,7 @@ private fun NotepadComposeApp(
     var isSaveButton by rememberSaveable { mutableStateOf(false) }
     var onSaveComplete by remember { mutableStateOf({ _: Long -> }) }
     var multiSelectEnabled by rememberSaveable { mutableStateOf(false) }
+    var searchNotesEnabled by rememberSaveable { mutableStateOf(false) }
     var showAboutDialog by rememberSaveable { mutableStateOf(false) }
     var showSettingsDialog by rememberSaveable { mutableStateOf(false) }
     var showDeleteDialog by rememberSaveable { mutableStateOf(false) }
@@ -244,6 +249,11 @@ private fun NotepadComposeApp(
             multiSelectEnabled -> {
                 multiSelectEnabled = false
                 vm.clearSelectedNotes()
+            }
+            searchNotesEnabled -> {
+                searchNotesEnabled = false
+                vm.setAllNotesAsFound(notes)
+                searchTerm = "";
             }
             navState is Edit && text.isNotEmpty() -> {
                 onSaveClick(false, updateNavState)
@@ -358,7 +368,7 @@ private fun NotepadComposeApp(
     }
 
     BackHandler(
-        enabled = multiSelectEnabled || navState != Empty,
+        enabled = multiSelectEnabled || navState != Empty || searchNotesEnabled,
         onBack = onBack
     )
 
@@ -366,6 +376,7 @@ private fun NotepadComposeApp(
     fun NoteListContentShared() = NoteListContent(
         notes = notes,
         selectedNotes = selectedNotes,
+        foundNotes = foundNotes,
         textStyle = textStyle,
         dateStyle = dateStyle,
         showDate = showDate,
@@ -427,6 +438,12 @@ private fun NotepadComposeApp(
                 title = stringResource(id = R.string.app_name)
                 backButton = null
                 actions = {
+                    SearchNotesButton {
+                        vm.showToastIf(notes.isEmpty(), R.string.no_notes_to_search) {
+                            searchNotesEnabled = true
+                            searchTerm = "";
+                        }
+                    }
                     MultiSelectButton {
                         vm.showToastIf(notes.isEmpty(), R.string.no_notes_to_select) {
                             multiSelectEnabled = true
@@ -451,6 +468,9 @@ private fun NotepadComposeApp(
                         }
                     )
                 }
+            }
+            if(!searchNotesEnabled){
+                vm.setAllNotesAsFound(notes)
             }
 
             content = {
@@ -495,6 +515,9 @@ private fun NotepadComposeApp(
                     )
                 }
             }
+
+            if(searchNotesEnabled)
+                searchNotesEnabled = false;
 
             content = {
                 Printable(printController) {
@@ -543,6 +566,9 @@ private fun NotepadComposeApp(
                 }
             }
 
+            if(searchNotesEnabled)
+                searchNotesEnabled = false;
+
             content = {
                 Printable(printController) {
                     EditNoteContent(
@@ -588,6 +614,18 @@ private fun NotepadComposeApp(
         }
     }
 
+    /*********************** Search-Notes ***********************/
+
+    if (searchNotesEnabled) {
+        title = ""
+        backButton = { BackButton(onBack) }
+        actions = {
+            SearchTextField()
+        }
+        vm.setSomeNotesAsNotFound(notes)
+    }
+
+
     /*********************** Scaffold ***********************/
 
     Scaffold(
@@ -602,7 +640,7 @@ private fun NotepadComposeApp(
         },
         floatingActionButton = {
             AnimatedVisibility(
-                visible = navState == Empty && !multiSelectEnabled,
+                visible = navState == Empty && !multiSelectEnabled && !searchNotesEnabled,
                 enter = scaleIn(),
                 exit = scaleOut()
             ) {

@@ -105,5 +105,7 @@
         <item>Mshororo wa kwanza + wakati</item>
         <item>Wakati + mshororo wa kwanza</item>
     </string-array>
+    <string name="action_search_notes">Search notes</string>
+    <string name="no_notes_to_search">No notes to search</string>
 
 </resources>

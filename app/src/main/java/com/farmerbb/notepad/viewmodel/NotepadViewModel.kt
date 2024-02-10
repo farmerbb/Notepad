@@ -29,6 +29,7 @@ import com.farmerbb.notepad.model.FilenameFormat
 import com.farmerbb.notepad.model.Note
 import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.model.PrefKeys
+import com.farmerbb.notepad.ui.components.searchTerm
 import com.farmerbb.notepad.usecase.ArtVandelay
 import com.farmerbb.notepad.usecase.DataMigrator
 import com.farmerbb.notepad.usecase.KeyboardShortcuts
@@ -83,6 +84,15 @@ class NotepadViewModel(
     )
     val selectedNotesFlow: SharedFlow<Map<Long, Boolean>> = _selectedNotesFlow
 
+    private val foundNotes = mutableMapOf<Long, Boolean>()
+    private val _foundNotesFlow = MutableSharedFlow<Map<Long, Boolean>>(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+    val foundNotesFlow: SharedFlow<Map<Long, Boolean>> = _foundNotesFlow
+
+
+
     val noteMetadata get() = prefs.sortOrder.flatMapConcat(repo::noteMetadataFlow)
     val prefs = dataStoreManager.prefs(viewModelScope, systemTheme)
 
@@ -120,6 +130,32 @@ class NotepadViewModel(
 
         _selectedNotesFlow.tryEmit(selectedNotes.filterValues { it })
     }
+
+    fun toggleFoundNote(id: Long) {
+        foundNotes[id] = !foundNotes.getOrDefault(id, false)
+        _foundNotesFlow.tryEmit(foundNotes.filterValues { it })
+    }
+
+    fun setAllNotesAsFound(notes: List<NoteMetadata>) {
+        notes.forEach {
+            foundNotes[it.metadataId] = true
+        }
+
+        _foundNotesFlow.tryEmit(foundNotes.filterValues { it })
+    }
+
+    fun setSomeNotesAsNotFound(notes: List<NoteMetadata>) {
+        //This is where the actual search is done.
+        setAllNotesAsFound(notes);
+        repo.getNotes(notes).forEach {
+            if(!it.text.contains(searchTerm, ignoreCase = true)){
+                foundNotes[it.id] = false
+            }
+        }
+
+        _foundNotesFlow.tryEmit(foundNotes.filterValues { it })
+    }
+
 
     fun showToast(@StringRes text: Int) = viewModelScope.launch {
         toaster.toast(text)

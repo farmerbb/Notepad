@@ -56,6 +56,9 @@ import okio.source
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.Date
 
 class NotepadViewModel(
     private val context: Application,
@@ -332,13 +335,36 @@ class NotepadViewModel(
         }
     }
 
+
+    private fun parseDateFromFileName(filePath: String): Date? {
+        // Extracting the filename from the full path
+        val fileName = filePath.substring(filePath.lastIndexOf('/') + 1)
+
+        // Pattern to match the date in the filename
+        val datePattern = Regex("\\d{4}-\\d{2}-\\d{2}-\\d{2}-\\d{2}")
+
+        // Trying to find the date in the filename
+        val matchResult = datePattern.find(fileName)
+        return matchResult?.value?.let { dateString ->
+            try {
+                SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.getDefault()).parse(dateString)
+            } catch (e: Exception) {
+                null // Return null if the date cannot be parsed
+            }
+        }
+    }
+
     private fun saveImportedNote(
-        input: InputStream
+        input: InputStream,
+        filePath: String = ""
     ) = viewModelScope.launch(Dispatchers.IO) {
         input.source().buffer().use {
             val text = it.readUtf8()
             if (text.isNotEmpty()) {
-                repo.saveNote(text = text)
+                val modifiedDate = parseDateFromFileName(filePath)
+                //if the modifiedDate couldn't be parsed, use current date
+                val nonNullModifiedDate: Date = modifiedDate ?: Date()
+                repo.saveNote(text = text, date = nonNullModifiedDate)
             }
         }
     }

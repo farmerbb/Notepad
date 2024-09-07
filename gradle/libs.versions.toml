@@ -5,33 +5,31 @@ notepad-versionCode = "119"
 notepad-versionName = "3.0.4"
 
 # Android SDK
-android-compileSdk = "33"
-android-coreLibraryDesugaring = "2.0.3"
-android-gradlePlugin = "8.0.2"
+android-compileSdk = "34"
+android-coreLibraryDesugaring = "2.1.2"
+android-gradlePlugin = "8.5.2"
 android-minSdk = "21"
-android-targetSdk = "31"
+android-targetSdk = "34" # TODO need to properly handle window insets before bumping to 35
 
 # AndroidX / Jetpack
-androidx-activity = "1.7.2"
-androidx-core = "1.10.1"
-androidx-datastore = "1.0.0"
-androidx-lifecycle = "2.6.1"
-androidx-preference = "1.2.0"
+androidx-activity = "1.9.2"
+androidx-core = "1.13.1"
+androidx-datastore = "1.0.0" # TODO newer versions make the app flash between light/dark mode
+androidx-lifecycle = "2.8.5"
+androidx-preference = "1.2.1"
 
 # Other dependencies
-accompanist = "0.25.1"
-compose = "1.4.3"
-composeCompiler = "1.4.7"
+accompanist = "0.36.0"
+compose = "1.7.0"
 composePreferences = "0.1.5-6"
-coroutines = "1.6.4"
+coroutines = "1.8.0"
 fsaf = "v1.1.3"
-koin = "3.3.2"
-koin-compose = "3.4.1"
-kotlin = "1.8.21"
+koin = "3.5.3"
+kotlin = "2.0.20"
 linkifyText = "0a45dbcf9b"
-okio = "3.2.0"
+okio = "3.9.0"
 richtext = "0.15.0"
-sqldelight = "1.5.4"
+sqldelight = "1.5.5"
 versionsPlugin = "0.42.0"
 
 ##################################################################################################################################
@@ -52,7 +50,7 @@ androidx-preference = { module = "androidx.preference:preference-ktx", version.r
 # Compose
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
-compose-koin = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin-compose" }
+compose-koin = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 compose-material-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }

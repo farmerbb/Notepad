@@ -93,11 +93,11 @@ import com.farmerbb.notepad.ui.content.ViewNoteContent
 import com.farmerbb.notepad.viewmodel.NotepadViewModel
 import com.zachklipp.richtext.ui.printing.Printable
 import com.zachklipp.richtext.ui.printing.rememberPrintableController
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun NotepadComposeAppRoute() {
-    val vm: NotepadViewModel = getViewModel()
+    val vm: NotepadViewModel = koinViewModel()
     val configuration = LocalConfiguration.current
 
     val isLightTheme by vm.prefs.isLightTheme.collectAsState()
@@ -125,7 +125,7 @@ fun NotepadComposeAppRoute() {
 
 @Composable
 private fun NotepadComposeApp(
-    vm: NotepadViewModel = getViewModel(),
+    vm: NotepadViewModel = koinViewModel(),
     isMultiPane: Boolean = false,
     initState: NavState = Empty
 ) {

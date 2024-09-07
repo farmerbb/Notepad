@@ -23,14 +23,14 @@ import com.farmerbb.notepad.ui.components.SaveDialog
 import com.farmerbb.notepad.ui.components.StandaloneEditorMenu
 import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.viewmodel.NotepadViewModel
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun StandaloneEditorRoute(
     initialText: String,
     onExit: () -> Unit
 ) {
-    val vm: NotepadViewModel = getViewModel()
+    val vm: NotepadViewModel = koinViewModel()
     val isLightTheme by vm.prefs.isLightTheme.collectAsState()
     val backgroundColorRes by vm.prefs.backgroundColorRes.collectAsState()
     val rtlLayout by vm.prefs.rtlLayout.collectAsState()
@@ -46,7 +46,7 @@ fun StandaloneEditorRoute(
 
 @Composable
 private fun StandaloneEditor(
-    vm: NotepadViewModel = getViewModel(),
+    vm: NotepadViewModel = koinViewModel(),
     initialText: String,
     onExit: () -> Unit
 ) {

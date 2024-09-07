@@ -113,11 +113,11 @@ class PreferenceManager private constructor(
 
     private val <T> PreferenceRequest<T>.asFlow get() = mapToFlow { it }
 
-    private fun toSortOrder(value: String) = SortOrder.values().first {
+    private fun toSortOrder(value: String) = SortOrder.entries.first {
         it.stringValue == value
     }
 
-    private fun toFilenameFormat(value: String) = FilenameFormat.values().first {
+    private fun toFilenameFormat(value: String) = FilenameFormat.entries.first {
         it.stringValue == value
     }
 

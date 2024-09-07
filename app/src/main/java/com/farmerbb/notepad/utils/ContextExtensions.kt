@@ -80,11 +80,13 @@ private val Context.releaseType: ReleaseType
     @Suppress("Deprecation", "PackageManagerGetSignatures")
     get() {
         val info = packageManager.getPackageInfo(packageName, PackageManager.GET_SIGNATURES)
-        for(enum in ReleaseType.values()) {
+        for(enum in ReleaseType.entries) {
             try {
                 val enumSignature = Signature(Base64.decode(enum.signature, Base64.DEFAULT))
-                for(signature in info.signatures) {
-                    if(signature == enumSignature) return enum
+                info.signatures?.let { signatures ->
+                    for(signature in signatures) {
+                        if(signature == enumSignature) return enum
+                    }
                 }
             } catch (ignored: Exception) {}
         }

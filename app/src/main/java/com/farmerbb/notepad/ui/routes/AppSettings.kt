@@ -40,7 +40,7 @@ import com.farmerbb.notepad.viewmodel.NotepadViewModel
 import de.schnettler.datastore.compose.material.PreferenceScreen
 import de.schnettler.datastore.compose.material.model.Preference.PreferenceItem.ListPreference
 import de.schnettler.datastore.compose.material.model.Preference.PreferenceItem.SwitchPreference
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SettingsDialog(onDismiss: () -> Unit) {
@@ -53,7 +53,7 @@ fun SettingsDialog(onDismiss: () -> Unit) {
 
 @Composable
 fun NotepadPreferenceScreen(
-    vm: NotepadViewModel = getViewModel()
+    vm: NotepadViewModel = koinViewModel()
 ) {
     val markdown by vm.prefs.markdown.collectAsState()
     val directEdit by vm.prefs.directEdit.collectAsState()

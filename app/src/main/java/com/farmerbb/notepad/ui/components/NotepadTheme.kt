@@ -36,6 +36,7 @@ fun NotepadTheme(
     rtlLayout: Boolean,
     content: @Composable () -> Unit
 ) {
+    @Suppress("DEPRECATION")
     val systemUiController = rememberSystemUiController()
 
     val layoutDirection = when (rtlLayout) {

@@ -13,7 +13,10 @@
  * limitations under the License.
  */
 
-@file:OptIn(FlowPreview::class)
+@file:OptIn(
+    ExperimentalCoroutinesApi::class,
+    FlowPreview::class,
+)
 
 package com.farmerbb.notepad.viewmodel
 
@@ -40,6 +43,7 @@ import de.schnettler.datastore.manager.DataStoreManager
 import java.io.InputStream
 import java.io.OutputStream
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.BufferOverflow

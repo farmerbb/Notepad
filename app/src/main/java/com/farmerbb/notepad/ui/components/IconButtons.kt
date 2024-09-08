@@ -18,12 +18,12 @@ package com.farmerbb.notepad.ui.components
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.PlaylistAddCheck
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.PlaylistAddCheck
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.SdCard
 import androidx.compose.material.icons.filled.SelectAll
@@ -37,8 +37,8 @@ import com.farmerbb.notepad.R
 @Composable
 fun BackButton(onClick: () -> Unit = {}) {
     val imageVector = when(LocalLayoutDirection.current) {
-        LayoutDirection.Rtl -> Icons.Filled.ArrowForward
-        else -> Icons.Filled.ArrowBack
+        LayoutDirection.Rtl -> Icons.AutoMirrored.Filled.ArrowForward
+        else -> Icons.AutoMirrored.Filled.ArrowBack
     }
 
     IconButton(onClick = onClick) {
@@ -98,7 +98,7 @@ fun MoreButton(onClick: () -> Unit = {}) {
 fun MultiSelectButton(onClick: () -> Unit = {}) {
     IconButton(onClick = onClick) {
         Icon(
-            imageVector = Icons.Filled.PlaylistAddCheck,
+            imageVector = Icons.AutoMirrored.Filled.PlaylistAddCheck,
             contentDescription = stringResource(R.string.action_start_selection),
             tint = Color.White
         )

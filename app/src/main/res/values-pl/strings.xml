@@ -30,7 +30,7 @@
     <string name="action_settings">Ustawienia</string>
     <string name="action_share">Udostępnij</string>
     <string name="action_sort_by">Sortuj notatki według</string>
-    <string name="action_export_filename">Exported filename</string>
+    <string name="action_export_filename">Nazwa wyeksportowanego pliku</string>
     <string name="app_name">Notatnik</string>
     <string name="app_name_debug">Notatnik (debugowanie)</string>
     <string name="cab_note_selected">%d notatka zaznaczona</string>
@@ -74,8 +74,8 @@
     <string name="no_notes_to_export">Nie zaznaczono notatek do wyeksportowania</string>
     <string name="no_notes_to_delete">Nie zaznaczono notatek do usunięcia</string>
     <string name="check_for_updates">Sprawdź aktualizacje</string>
-    <string name="rtl_layout">Right-to-left layout</string>
-    <string name="pref_title_font_type">Font type</string>
+    <string name="rtl_layout">Układ "Od prawej do lewej"</string>
+    <string name="pref_title_font_type">Typ czcionki</string>
 
     <string-array name="sort_by_list">
         <item>Daty (najnowsze na początku)</item>
@@ -101,9 +101,9 @@
         <item>Największa</item>
     </string-array>
     <string-array name="exported_filename_list">
-        <item>First line of text</item>
-        <item>First line + timestamp</item>
-        <item>Timestamp + first line</item>
+        <item>Pierwsza linijka tekstu</item>
+        <item>Pierwsza linijka + data</item>
+        <item>Data + pierwsza linijka</item>
     </string-array>
 
 </resources>

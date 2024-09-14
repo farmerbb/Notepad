@@ -37,7 +37,7 @@ import org.koin.dsl.module
 
 interface ArtVandelay {
     fun importNotes(
-        saveImportedNote: (InputStream) -> Unit,
+        saveImportedNote: (InputStream, String) -> Unit,
         onComplete: (Int) -> Unit
     )
 
@@ -62,7 +62,7 @@ private class ArtVandelayImpl(
     private val fileManager: FileManager
 ): ArtVandelay {
     override fun importNotes(
-        saveImportedNote: (InputStream) -> Unit,
+        saveImportedNote: (InputStream, String) -> Unit,
         onComplete: (Int) -> Unit
     ) = fileChooser.openChooseMultiSelectFileDialog(
         importCallback(saveImportedNote, onComplete)
@@ -97,13 +97,19 @@ private class ArtVandelayImpl(
     private val registeredBaseDirs = mutableListOf<Uri>()
 
     private fun importCallback(
-        saveImportedNote: (InputStream) -> Unit,
+        saveImportedNote: (InputStream, String) -> Unit,
         onComplete: (Int) -> Unit
-    ) = object: FileMultiSelectChooserCallback() {
+    ) = object : FileMultiSelectChooserCallback() {
         override fun onResult(uris: List<Uri>) {
             with(fileManager) {
                 for (uri in uris) {
-                    fromUri(uri)?.let(::getInputStream)?.let(saveImportedNote)
+                    fromUri(uri)?.let { file ->
+                        val inputStream = getInputStream(file)
+                        val filename = file.getFullPath() // Extract filename from the file
+                        if (inputStream != null) {
+                            saveImportedNote(inputStream, filename)
+                        }
+                    }
                 }
 
                 onComplete(uris.size)
@@ -112,6 +118,7 @@ private class ArtVandelayImpl(
 
         override fun onCancel(reason: String) = Unit // no-op
     }
+
 
     private fun exportFolderCallback(
         hydratedNotes: List<Note>,

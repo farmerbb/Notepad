@@ -89,7 +89,6 @@ import com.farmerbb.notepad.ui.components.SaveDialog
 import com.farmerbb.notepad.ui.components.SearchNotesButton
 import com.farmerbb.notepad.ui.components.SearchTextField
 import com.farmerbb.notepad.ui.components.SelectAllButton
-import com.farmerbb.notepad.ui.components.searchTerm
 import com.farmerbb.notepad.ui.content.EditNoteContent
 import com.farmerbb.notepad.ui.content.NoteListContent
 import com.farmerbb.notepad.ui.content.ViewNoteContent
@@ -199,6 +198,8 @@ private fun NotepadComposeApp(
     var backButton: @Composable (() -> Unit)? = null
     var actions: @Composable RowScope.() -> Unit = {}
     val content: @Composable BoxScope.() -> Unit
+
+    val (searchTerm, onSearchTermChanged) = rememberSaveable { mutableStateOf("") }
     
     /*********************** Callbacks ***********************/
 
@@ -258,7 +259,7 @@ private fun NotepadComposeApp(
             searchNotesEnabled -> {
                 searchNotesEnabled = false
                 vm.setAllNotesAsFound(notes)
-                searchTerm = "";
+                onSearchTermChanged("")
             }
             navState is Edit && text.isNotEmpty() -> {
                 onSaveClick(false, updateNavState)
@@ -458,7 +459,7 @@ private fun NotepadComposeApp(
                     SearchNotesButton {
                         vm.showToastIf(notes.isEmpty(), R.string.no_notes_to_search) {
                             searchNotesEnabled = true
-                            searchTerm = "";
+                            onSearchTermChanged("")
                         }
                     }
                     MultiSelectButton {
@@ -486,7 +487,8 @@ private fun NotepadComposeApp(
                     )
                 }
             }
-            if(!searchNotesEnabled){
+
+            if (!searchNotesEnabled) {
                 vm.setAllNotesAsFound(notes)
             }
 
@@ -533,8 +535,9 @@ private fun NotepadComposeApp(
                 }
             }
 
-            if(searchNotesEnabled)
-                searchNotesEnabled = false;
+            if (searchNotesEnabled) {
+                searchNotesEnabled = false
+            }
 
             content = {
                 Printable(printController) {
@@ -583,8 +586,9 @@ private fun NotepadComposeApp(
                 }
             }
 
-            if(searchNotesEnabled)
-                searchNotesEnabled = false;
+            if (searchNotesEnabled) {
+                searchNotesEnabled = false
+            }
 
             content = {
                 Printable(printController) {
@@ -631,17 +635,14 @@ private fun NotepadComposeApp(
         }
     }
 
-    /*********************** Search-Notes ***********************/
+    /*********************** Search ***********************/
 
     if (searchNotesEnabled) {
         title = ""
         backButton = { BackButton(onBack) }
-        actions = {
-            SearchTextField()
-        }
-        vm.setSomeNotesAsNotFound(notes)
+        actions = { SearchTextField(searchTerm, onSearchTermChanged) }
+        vm.setSomeNotesAsNotFound(notes, searchTerm)
     }
-
 
     /*********************** Scaffold ***********************/
 

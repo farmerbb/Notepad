@@ -34,17 +34,13 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.LayoutDirection
 import com.farmerbb.notepad.R
 
@@ -141,24 +137,16 @@ fun ExportButton(onClick: () -> Unit = {}) {
     }
 }
 
-
-var searchTerm by mutableStateOf("")
-
 @Composable
-fun SearchTextField() {
-    SearchTextFieldChild(searchTerm) { newSearchTerm ->
-        searchTerm = newSearchTerm
-    }
-}
-
-@Composable
-fun SearchTextFieldChild(searchTerm: String,
-                         onSearchTermChanged: (String) -> Unit) {
+fun SearchTextField(
+    searchTerm: String,
+    onSearchTermChanged: (String) -> Unit,
+) {
     val focusRequester = remember { FocusRequester() }
+
     TextField(
         value = searchTerm,
-        onValueChange = { newSearchTerm ->
-            onSearchTermChanged(newSearchTerm) },
+        onValueChange = { newSearchTerm -> onSearchTermChanged(newSearchTerm) },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Filled.Search,
@@ -180,6 +168,7 @@ fun SearchTextFieldChild(searchTerm: String,
             unfocusedLabelColor = Color.White
         )
     )
+
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }

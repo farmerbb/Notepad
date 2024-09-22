@@ -15,12 +15,12 @@ android-targetSdk = "34" # TODO need to properly handle window insets before bum
 androidx-activity = "1.9.2"
 androidx-core = "1.13.1"
 androidx-datastore = "1.0.0" # TODO newer versions make the app flash between light/dark mode
-androidx-lifecycle = "2.8.5"
+androidx-lifecycle = "2.8.6"
 androidx-preference = "1.2.1"
 
 # Other dependencies
 accompanist = "0.36.0"
-compose = "1.7.0"
+compose = "1.7.2"
 composePreferences = "0.1.5-9"
 coroutines = "1.8.1"
 fsaf = "v1.1.3"

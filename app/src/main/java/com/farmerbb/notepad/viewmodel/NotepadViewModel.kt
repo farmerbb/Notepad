@@ -32,7 +32,6 @@ import com.farmerbb.notepad.model.FilenameFormat
 import com.farmerbb.notepad.model.Note
 import com.farmerbb.notepad.model.NoteMetadata
 import com.farmerbb.notepad.model.PrefKeys
-import com.farmerbb.notepad.ui.components.searchTerm
 import com.farmerbb.notepad.usecase.ArtVandelay
 import com.farmerbb.notepad.usecase.DataMigrator
 import com.farmerbb.notepad.usecase.KeyboardShortcuts
@@ -98,8 +97,6 @@ class NotepadViewModel(
     )
     val foundNotesFlow: SharedFlow<Map<Long, Boolean>> = _foundNotesFlow
 
-
-
     val noteMetadata get() = prefs.sortOrder.flatMapConcat(repo::noteMetadataFlow)
     val prefs = dataStoreManager.prefs(viewModelScope, systemTheme)
 
@@ -138,11 +135,6 @@ class NotepadViewModel(
         _selectedNotesFlow.tryEmit(selectedNotes.filterValues { it })
     }
 
-    fun toggleFoundNote(id: Long) {
-        foundNotes[id] = !foundNotes.getOrDefault(id, false)
-        _foundNotesFlow.tryEmit(foundNotes.filterValues { it })
-    }
-
     fun setAllNotesAsFound(notes: List<NoteMetadata>) {
         notes.forEach {
             foundNotes[it.metadataId] = true
@@ -151,11 +143,14 @@ class NotepadViewModel(
         _foundNotesFlow.tryEmit(foundNotes.filterValues { it })
     }
 
-    fun setSomeNotesAsNotFound(notes: List<NoteMetadata>) {
-        //This is where the actual search is done.
-        setAllNotesAsFound(notes);
+    fun setSomeNotesAsNotFound(
+        notes: List<NoteMetadata>,
+        searchTerm: String,
+    ) {
+        // This is where the actual search is done
+        setAllNotesAsFound(notes)
         repo.getNotes(notes).forEach {
-            if(!it.text.contains(searchTerm, ignoreCase = true)){
+            if(!it.text.contains(searchTerm, ignoreCase = true)) {
                 foundNotes[it.id] = false
             }
         }
@@ -375,7 +370,6 @@ class NotepadViewModel(
         }
     }
 
-
     private fun parseDateFromFileName(filePath: String): Date? {
         // Extracting the filename from the full path
         val fileName = filePath.substring(filePath.lastIndexOf('/') + 1)
@@ -388,7 +382,7 @@ class NotepadViewModel(
         return matchResult?.value?.let { dateString ->
             try {
                 SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.getDefault()).parse(dateString)
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 null // Return null if the date cannot be parsed
             }
         }
@@ -402,7 +396,7 @@ class NotepadViewModel(
             val text = it.readUtf8()
             if (text.isNotEmpty()) {
                 val modifiedDate = parseDateFromFileName(filePath)
-                //if the modifiedDate couldn't be parsed, use current date
+                // If the modified date couldn't be parsed, use current date
                 val nonNullModifiedDate: Date = modifiedDate ?: Date()
                 repo.saveNote(text = text, date = nonNullModifiedDate)
             }

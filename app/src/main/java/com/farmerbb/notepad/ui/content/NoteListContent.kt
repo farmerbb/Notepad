@@ -96,6 +96,7 @@ fun NoteListContent(
     val filteredNotes = notes.filter {
         foundNotes.getOrDefault(it.metadataId, false)
     }
+
     when (filteredNotes.size) {
         0 -> Column(
             modifier = Modifier.fillMaxSize(),

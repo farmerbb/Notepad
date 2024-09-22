@@ -36,11 +36,11 @@ val navStateSaver = Saver<MutableState<NavState>, Pair<String, Long?>>(
             else -> "" to null
         }
     },
-    restore = {
+    restore = { (key, id) ->
         mutableStateOf(
-            when(it.first) {
-                VIEW -> NavState.View(it.second ?: 0)
-                EDIT -> NavState.Edit(it.second)
+            when(key) {
+                VIEW -> NavState.View(id ?: 0)
+                EDIT -> NavState.Edit(id)
                 else -> NavState.Empty
             }
         )

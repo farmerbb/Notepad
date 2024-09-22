@@ -39,7 +39,9 @@ class NotepadActivity: ComponentActivity(), FSAFActivityCallbacks {
 
         vm.migrateData {
             setContent {
-                NotepadComposeAppRoute()
+                NotepadComposeAppRoute(
+                    restoredFromState = savedInstanceState != null,
+                )
             }
         }
     }

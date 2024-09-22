@@ -99,7 +99,9 @@ import com.zachklipp.richtext.ui.printing.rememberPrintableController
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun NotepadComposeAppRoute() {
+fun NotepadComposeAppRoute(
+    restoredFromState: Boolean,
+) {
     val vm: NotepadViewModel = koinViewModel()
     val configuration = LocalConfiguration.current
 
@@ -117,6 +119,7 @@ fun NotepadComposeAppRoute() {
     NotepadTheme(isLightTheme, backgroundColorRes, rtlLayout) {
         NotepadComposeApp(
             vm = vm,
+            restoredFromState = restoredFromState,
             isMultiPane = configuration.screenWidthDp >= 600,
             initState = when (draftId) {
                 -1L -> Empty
@@ -129,6 +132,7 @@ fun NotepadComposeAppRoute() {
 @Composable
 private fun NotepadComposeApp(
     vm: NotepadViewModel = koinViewModel(),
+    restoredFromState: Boolean,
     isMultiPane: Boolean = false,
     initState: NavState = Empty
 ) {
@@ -158,6 +162,7 @@ private fun NotepadComposeApp(
     val showDoubleTapMessage by vm.prefs.showDoubleTapMessage.collectAsState()
 
     var navState by rememberSaveable(saver = navStateSaver) { mutableStateOf(initState) }
+    var shouldRestoreDraftId by remember { mutableStateOf(restoredFromState) }
     var isPrinting by remember { mutableStateOf(false) }
     var isSaveButton by rememberSaveable { mutableStateOf(false) }
     var onSaveComplete by remember { mutableStateOf({ _: Long -> }) }
@@ -364,6 +369,18 @@ private fun NotepadComposeApp(
     LaunchedEffect(selectedNotes) {
         if (selectedNotes.filterValues { it }.isEmpty()) {
             multiSelectEnabled = false
+        }
+    }
+
+    LaunchedEffect(shouldRestoreDraftId, navState, initState) {
+        if (shouldRestoreDraftId
+            && navState is Edit
+            && initState is Edit
+            && (navState as Edit).id == null) {
+            // Overwrite the navState restored from savedInstanceState
+            // in the case of a saved draft of a new note
+            navState = initState
+            shouldRestoreDraftId = false
         }
     }
 

@@ -31,6 +31,7 @@ okio = "3.9.0"
 richtext = "0.15.0"
 sqldelight = "1.5.5"
 versionsPlugin = "0.42.0"
+kotlinjson = "1.7.3"
 
 ##################################################################################################################################
 
@@ -79,6 +80,8 @@ linkifyText = { module = "com.github.firefinchdev:linkify-text", version.ref = "
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 sqldelight = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
+kotlinjson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinjson"}
+
 
 ##################################################################################################################################
 

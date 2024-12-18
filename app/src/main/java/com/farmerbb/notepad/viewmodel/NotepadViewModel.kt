@@ -38,6 +38,7 @@ import com.farmerbb.notepad.usecase.KeyboardShortcuts
 import com.farmerbb.notepad.usecase.SystemTheme
 import com.farmerbb.notepad.usecase.Toaster
 import com.farmerbb.notepad.utils.checkForUpdates
+import com.farmerbb.notepad.utils.deserializeNoteJson
 import com.farmerbb.notepad.utils.serializeNotes
 import com.farmerbb.notepad.utils.showShareSheet
 import de.schnettler.datastore.manager.DataStoreManager
@@ -324,6 +325,12 @@ class NotepadViewModel(
         }
     }
 
+    fun importAllNotes() = artVandelay.importAllNotes(::saveImportedNotes) {
+        viewModelScope.launch {
+            toaster.toast(R.string.notes_imported_successfully)
+        }
+    }
+
     fun exportAllNotes() = viewModelScope.launch(Dispatchers.IO) {
         val allNoteMetadata = noteMetadata.first()
         val hydratedNotes = repo.getNotes(
@@ -419,6 +426,20 @@ class NotepadViewModel(
                 // If the modified date couldn't be parsed, use current date
                 val nonNullModifiedDate: Date = modifiedDate ?: Date()
                 repo.saveNote(text = text, date = nonNullModifiedDate)
+            }
+        }
+    }
+
+    private fun saveImportedNotes(
+        input: InputStream,
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        input.source().buffer().use {
+            val text = it.readUtf8()
+            if (text.isNotEmpty()) {
+                val deserializedNotes = deserializeNoteJson(text)
+                deserializedNotes.forEach { note ->
+                    repo.saveNote(text = note.text, date = note.date)
+                }
             }
         }
     }

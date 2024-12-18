@@ -25,6 +25,7 @@ import com.farmerbb.notepad.model.Note
 import com.farmerbb.notepad.model.NoteMetadata
 import com.github.k1rakishou.fsaf.FileChooser
 import com.github.k1rakishou.fsaf.FileManager
+import com.github.k1rakishou.fsaf.callback.FileChooserCallback
 import com.github.k1rakishou.fsaf.callback.FileCreateCallback
 import com.github.k1rakishou.fsaf.callback.FileMultiSelectChooserCallback
 import com.github.k1rakishou.fsaf.callback.directory.DirectoryChooserCallback
@@ -47,6 +48,11 @@ interface ArtVandelay {
         filenameFormat: FilenameFormat,
         saveExportedNote: (OutputStream, String) -> Unit,
         onCancel: () -> Unit,
+        onComplete: () -> Unit
+    )
+
+    fun importAllNotes(
+        saveImportedNotes: (InputStream) -> Unit,
         onComplete: () -> Unit
     )
 
@@ -74,6 +80,13 @@ private class ArtVandelayImpl(
         onComplete: (Int) -> Unit
     ) = fileChooser.openChooseMultiSelectFileDialog(
         importCallback(saveImportedNote, onComplete)
+    )
+
+    override fun importAllNotes(
+        saveImportedNotes: (InputStream) -> Unit,
+        onComplete: () -> Unit
+    ) = fileChooser.openChooseFileDialog(
+        importAllCallback(saveImportedNotes, onComplete)
     )
 
     override fun exportAllNotes(
@@ -135,6 +148,26 @@ private class ArtVandelayImpl(
                 }
 
                 onComplete(uris.size)
+            }
+        }
+
+        override fun onCancel(reason: String) = Unit // no-op
+    }
+
+    private fun importAllCallback(
+        saveImportedNotes: (InputStream) -> Unit,
+        onComplete: () -> Unit
+    ) = object : FileChooserCallback() {
+        override fun onResult(uri: Uri) {
+            with(fileManager) {
+                fromUri(uri)?.let { file ->
+                    val inputStream = getInputStream(file)
+                    if (inputStream != null) {
+                        saveImportedNotes(inputStream)
+                    }
+                }
+
+                onComplete()
             }
         }
 

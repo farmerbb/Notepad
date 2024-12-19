@@ -549,7 +549,7 @@ private fun NotepadComposeApp(
                         isPrinting = isPrinting,
                         showDoubleTapMessage = showDoubleTapMessage,
                         doubleTapMessageShown = vm::doubleTapMessageShown
-                    ) { navState = Edit(note.id) }
+                    ) { offset -> navState = Edit(note.id, offset) }
                 }
             }
         }
@@ -599,7 +599,8 @@ private fun NotepadComposeApp(
                         isPrinting = isPrinting,
                         waitForAnimation = note.id == -1L || directEdit,
                         rtlLayout = rtlLayout,
-                        onTextChanged = vm::setText
+                        onTextChanged = vm::setText,
+                        offset = state.offset
                     )
                 }
             }

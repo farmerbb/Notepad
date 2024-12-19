@@ -155,7 +155,8 @@ private fun StandaloneEditor(
                 text = text,
                 baseTextStyle = textStyle,
                 isLightTheme = isLightTheme,
-                rtlLayout = rtlLayout
+                rtlLayout = rtlLayout,
+                offset = null
             ) { text = it }
         }
     )

@@ -63,7 +63,7 @@ fun ViewNoteContent(
     isPrinting: Boolean = false,
     showDoubleTapMessage: Boolean = false,
     doubleTapMessageShown: () -> Unit = {},
-    onDoubleTap: () -> Unit = {}
+    onDoubleTap: (Offset?) -> Unit = {}
 ) {
     val textStyle = if (isPrinting) {
         baseTextStyle.copy(color = Color.Black)
@@ -76,23 +76,6 @@ fun ViewNoteContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .pointerInteropFilter { motionEvent ->
-                if (motionEvent.action == MotionEvent.ACTION_DOWN) {
-                    val now = System.currentTimeMillis()
-                    val offset = Offset(motionEvent.x, motionEvent.y)
-                    val rect = Rect(center = lastOffset, radius = radius)
-
-                    when {
-                        doubleTapTime > now && rect.contains(offset) -> onDoubleTap()
-                        showDoubleTapMessage -> doubleTapMessageShown()
-                    }
-
-                    doubleTapTime = now + 200
-                    lastOffset = offset
-                }
-
-                false
-            }
     ) {
         Box(
             modifier = if (isPrinting) Modifier else Modifier
@@ -104,6 +87,24 @@ fun ViewNoteContent(
                     vertical = 12.dp
                 )
                 .fillMaxWidth()
+                .pointerInteropFilter { motionEvent ->
+                    if (motionEvent.action == MotionEvent.ACTION_DOWN) {
+                        val now = System.currentTimeMillis()
+                        val offset = Offset(motionEvent.x, motionEvent.y)
+                        val rect = Rect(center = lastOffset, radius = radius)
+
+                        val cursorAtOffset: Offset? = if (!markdown) offset else null
+                        when {
+                            doubleTapTime > now && rect.contains(offset) -> onDoubleTap(cursorAtOffset)
+                            showDoubleTapMessage -> doubleTapMessageShown()
+                        }
+
+                        doubleTapTime = now + 200
+                        lastOffset = offset
+                    }
+
+                    false
+                }
 
             RtlTextWrapper(text, rtlLayout) {
                 SelectionContainer {

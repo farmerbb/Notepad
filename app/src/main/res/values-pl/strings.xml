@@ -105,7 +105,7 @@
         <item>Pierwsza linijka + data</item>
         <item>Data + pierwsza linijka</item>
     </string-array>
-    <string name="action_search_notes">Search notes</string>
-    <string name="no_notes_to_search">No notes to search</string>
+    <string name="action_search_notes">Szukaj notatek</string>
+    <string name="no_notes_to_search">Brak notatek do przeszukania</string>
 
 </resources>

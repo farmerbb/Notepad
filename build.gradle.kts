@@ -13,7 +13,6 @@ buildscript {
     }
 }
 
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     id("com.github.ben-manes.versions") version libs.versions.versionsPlugin.get()
 }

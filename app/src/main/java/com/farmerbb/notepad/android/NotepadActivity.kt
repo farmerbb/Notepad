@@ -17,6 +17,7 @@
 
 package com.farmerbb.notepad.android
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
@@ -77,6 +78,7 @@ class NotepadActivity: ComponentActivity(), FSAFActivityCallbacks {
         fileChooser.onActivityResult(requestCode, resultCode, data)
     }
 
+    @SuppressLint("RestrictedApi")
     override fun dispatchKeyShortcutEvent(event: KeyEvent): Boolean {
         return if (event.action == KeyEvent.ACTION_DOWN && event.isCtrlPressed) {
             vm.keyboardShortcutPressed(event.keyCode)

@@ -25,6 +25,7 @@ import com.farmerbb.notepad.model.Note
 import com.farmerbb.notepad.model.NoteMetadata
 import com.github.k1rakishou.fsaf.FileChooser
 import com.github.k1rakishou.fsaf.FileManager
+import com.github.k1rakishou.fsaf.callback.FileChooserCallback
 import com.github.k1rakishou.fsaf.callback.FileCreateCallback
 import com.github.k1rakishou.fsaf.callback.FileMultiSelectChooserCallback
 import com.github.k1rakishou.fsaf.callback.directory.DirectoryChooserCallback
@@ -33,6 +34,7 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.Date
 import org.koin.dsl.module
 
 interface ArtVandelay {
@@ -45,6 +47,18 @@ interface ArtVandelay {
         hydratedNotes: List<Note>,
         filenameFormat: FilenameFormat,
         saveExportedNote: (OutputStream, String) -> Unit,
+        onCancel: () -> Unit,
+        onComplete: () -> Unit
+    )
+
+    fun importAllNotes(
+        saveImportedNotes: (InputStream) -> Unit,
+        onComplete: () -> Unit
+    )
+
+    fun exportAllNotes(
+        hydratedNotes: List<Note>,
+        saveExportedNotes: (OutputStream, List<Note>) -> Unit,
         onCancel: () -> Unit,
         onComplete: () -> Unit
     )
@@ -66,6 +80,27 @@ private class ArtVandelayImpl(
         onComplete: (Int) -> Unit
     ) = fileChooser.openChooseMultiSelectFileDialog(
         importCallback(saveImportedNote, onComplete)
+    )
+
+    override fun importAllNotes(
+        saveImportedNotes: (InputStream) -> Unit,
+        onComplete: () -> Unit
+    ) = fileChooser.openChooseFileDialog(
+        importAllCallback(saveImportedNotes, onComplete)
+    )
+
+    override fun exportAllNotes(
+        hydratedNotes: List<Note>,
+        saveExportedNotes: (OutputStream, List<Note>) -> Unit,
+        onCancel: () -> Unit,
+        onComplete: () -> Unit,
+    ) = fileChooser.openCreateFileDialog(
+        fileName = generateExportFilename(),
+        fileCreateCallback = exportAllCallback(
+            hydratedNotes,
+            saveExportedNotes,
+            onCancel,
+            onComplete)
     )
 
     override fun exportNotes(
@@ -119,6 +154,43 @@ private class ArtVandelayImpl(
         override fun onCancel(reason: String) = Unit // no-op
     }
 
+    private fun importAllCallback(
+        saveImportedNotes: (InputStream) -> Unit,
+        onComplete: () -> Unit
+    ) = object : FileChooserCallback() {
+        override fun onResult(uri: Uri) {
+            with(fileManager) {
+                fromUri(uri)?.let { file ->
+                    val inputStream = getInputStream(file)
+                    if (inputStream != null) {
+                        saveImportedNotes(inputStream)
+                    }
+                }
+
+                onComplete()
+            }
+        }
+
+        override fun onCancel(reason: String) = Unit // no-op
+    }
+
+    private fun exportAllCallback(
+        hydratedNotes: List<Note>,
+        saveExportedNotes: (OutputStream, List<Note>) -> Unit,
+        onCancel: () -> Unit,
+        onComplete: () -> Unit
+    ) = object: FileCreateCallback() {
+
+        override fun onResult(uri: Uri) {
+            with(fileManager) {
+                fromUri(uri)?.let(::getOutputStream)?.let{ output -> saveExportedNotes(output, hydratedNotes) }
+                onComplete()
+            }
+        }
+
+        override fun onCancel(reason: String) = onCancel()
+    }
+
 
     private fun exportFolderCallback(
         hydratedNotes: List<Note>,
@@ -164,6 +236,15 @@ private class ArtVandelayImpl(
         }
 
         override fun onCancel(reason: String) = Unit // no-op
+    }
+
+    private fun generateExportFilename(): String {
+        val title = "notepad_export"
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.getDefault())
+        val timestamp = dateFormat.format(Date())
+        val filename = "${title}_$timestamp"
+
+        return "$filename.json.txt"
     }
 
     private fun generateFilename(

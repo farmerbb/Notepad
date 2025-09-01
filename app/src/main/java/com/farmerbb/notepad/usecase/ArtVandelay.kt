@@ -40,6 +40,7 @@ import org.koin.dsl.module
 
 interface ArtVandelay {
     fun importNotes(
+        onNotesSelected: (Int) -> Unit,
         saveImportedNote: (InputStream, String) -> Unit,
     )
 
@@ -55,8 +56,7 @@ interface ArtVandelay {
     )
 
     fun exportAllNotes(
-        hydratedNotes: List<Note>,
-        saveExportedNotes: (OutputStream, List<Note>) -> Unit,
+        saveExportedNotes: (OutputStream) -> Unit,
     )
 
     fun exportSingleNote(
@@ -71,9 +71,10 @@ private class ArtVandelayImpl(
     private val fileManager: FileManager
 ): ArtVandelay {
     override fun importNotes(
+        onNotesSelected: (Int) -> Unit,
         saveImportedNote: (InputStream, String) -> Unit,
     ) = fileChooser.openChooseMultiSelectFileDialog(
-        importCallback(saveImportedNote)
+        importCallback(onNotesSelected, saveImportedNote)
     )
 
     override fun importAllNotes(
@@ -83,11 +84,10 @@ private class ArtVandelayImpl(
     )
 
     override fun exportAllNotes(
-        hydratedNotes: List<Note>,
-        saveExportedNotes: (OutputStream, List<Note>) -> Unit,
+        saveExportedNotes: (OutputStream) -> Unit,
     ) = fileChooser.openCreateFileDialog(
         fileName = generateExportFilename(),
-        fileCreateCallback = exportAllCallback(hydratedNotes, saveExportedNotes)
+        fileCreateCallback = exportAllCallback(saveExportedNotes)
     )
 
     override fun exportNotes(
@@ -116,9 +116,11 @@ private class ArtVandelayImpl(
     private val registeredBaseDirs = mutableListOf<Uri>()
 
     private fun importCallback(
+        onNotesSelected: (Int) -> Unit,
         saveImportedNote: (InputStream, String) -> Unit,
     ) = object : FileMultiSelectChooserCallback() {
         override fun onResult(uris: List<Uri>) {
+            onNotesSelected(uris.size)
             with(fileManager) {
                 for (uri in uris) {
                     fromUri(uri)?.let { file ->
@@ -150,13 +152,12 @@ private class ArtVandelayImpl(
     }
 
     private fun exportAllCallback(
-        hydratedNotes: List<Note>,
-        saveExportedNotes: (OutputStream, List<Note>) -> Unit,
+        saveExportedNotes: (OutputStream) -> Unit,
     ) = object : FileCreateCallback() {
         override fun onResult(uri: Uri) {
             with(fileManager) {
                 fromUri(uri)?.let(::getOutputStream)?.let { output ->
-                    saveExportedNotes(output, hydratedNotes)
+                    saveExportedNotes(output)
                 }
             }
         }

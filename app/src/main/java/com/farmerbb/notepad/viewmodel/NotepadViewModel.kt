@@ -113,14 +113,6 @@ class NotepadViewModel(
 
     /*********************** UI Operations ***********************/
 
-    private fun withArtVandelay(
-        mimeType: String,
-        callback: ArtVandelay.() -> Unit,
-    ) {
-        currentMimeType = mimeType
-        with(artVandelay, callback)
-    }
-
     fun setText(text: String) {
         _text.value = text
     }
@@ -170,7 +162,6 @@ class NotepadViewModel(
 
         _foundNotesFlow.tryEmit(foundNotes.filterValues { it })
     }
-
 
     fun showToast(@StringRes text: Int) = viewModelScope.launch {
         toaster.toast(text)
@@ -325,19 +316,19 @@ class NotepadViewModel(
     /*********************** Import / Export ***********************/
 
     fun importNotes() = withArtVandelay(PLAIN_TEXT) {
-        importNotes { input, filePath ->
+        var notesToImport = -1
+
+        importNotes(
+            onNotesSelected = { size -> notesToImport = size }
+        ) { input, filePath ->
             saveImportedNote(
                 input = input,
                 filePath = filePath,
-                onError = {
-                    viewModelScope.launch {
-                        toaster.toast(R.string.error_importing_notes)
-                    }
-                },
+                onError = { showToast(R.string.error_importing_notes) },
                 onComplete = {
-                    viewModelScope.launch {
-                        // TODO this causes one toast to appear for each note
-                        toaster.toast(R.string.note_imported_successfully)
+                    notesToImport--
+                    if (notesToImport == 0) {
+                        showToast(R.string.notes_imported_successfully)
                     }
                 },
             )
@@ -348,16 +339,8 @@ class NotepadViewModel(
         importAllNotes { input ->
             saveImportedNotes(
                 input = input,
-                onError = {
-                    viewModelScope.launch {
-                        toaster.toast(R.string.error_importing_notes)
-                    }
-                },
-                onComplete = {
-                    viewModelScope.launch {
-                        toaster.toast(R.string.notes_imported_successfully)
-                    }
-                },
+                onError = { showToast(R.string.error_importing_notes) },
+                onComplete = { showToast(R.string.notes_imported_successfully) },
             )
         }
     }
@@ -369,22 +352,12 @@ class NotepadViewModel(
         )
 
         withArtVandelay(JSON) {
-            exportAllNotes(
-                hydratedNotes = hydratedNotes,
-            ) { output, notes ->
+            exportAllNotes { output ->
                 saveExportedNotes(
                     output = output,
-                    notes = notes,
-                    onError = {
-                        viewModelScope.launch {
-                            toaster.toast(R.string.error_exporting_notes)
-                        }
-                    },
-                    onComplete = {
-                        viewModelScope.launch {
-                            toaster.toast(R.string.notes_exported_to)
-                        }
-                    },
+                    notes = hydratedNotes,
+                    onError = { showToast(R.string.error_exporting_notes) },
+                    onComplete = { showToast(R.string.notes_exported_to) },
                 )
             }
         }
@@ -408,20 +381,18 @@ class NotepadViewModel(
             return@launch
         }
 
+        var notesToImport = hydratedNotes.size
+
         withArtVandelay(PLAIN_TEXT) {
             exportNotes(hydratedNotes, filenameFormat, ::clearSelectedNotes) { output, text ->
                 saveExportedNote(
                     output = output,
                     text = text,
-                    onError = {
-                        viewModelScope.launch {
-                            toaster.toast(R.string.error_exporting_notes)
-                        }
-                    },
+                    onError = { showToast(R.string.error_exporting_notes) },
                     onComplete = {
-                        viewModelScope.launch {
-                            // TODO this causes one toast to appear for each note
-                            toaster.toast(R.string.note_exported_to)
+                        notesToImport--
+                        if (notesToImport == 0) {
+                            showToast(R.string.notes_exported_to)
                         }
                     },
                 )
@@ -440,16 +411,8 @@ class NotepadViewModel(
                     saveExportedNote(
                         output = output,
                         text = text,
-                        onError = {
-                            viewModelScope.launch {
-                                toaster.toast(R.string.error_exporting_notes)
-                            }
-                        },
-                        onComplete = {
-                            viewModelScope.launch {
-                                toaster.toast(R.string.note_exported_to)
-                            }
-                        },
+                        onError = { showToast(R.string.error_exporting_notes) },
+                        onComplete = { showToast(R.string.note_exported_to) },
                     )
                 }
             }
@@ -575,6 +538,14 @@ class NotepadViewModel(
     }
 
     /*********************** Miscellaneous ***********************/
+
+    private fun withArtVandelay(
+        mimeType: String,
+        callback: ArtVandelay.() -> Unit,
+    ) {
+        currentMimeType = mimeType
+        with(artVandelay, callback)
+    }
 
     private suspend fun String.checkLength(
         onSuccess: suspend () -> Unit

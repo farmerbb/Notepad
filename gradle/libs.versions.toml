@@ -9,7 +9,7 @@ android-compileSdk = "35"
 android-coreLibraryDesugaring = "2.1.5"
 android-gradlePlugin = "8.7.3"
 android-minSdk = "21"
-android-targetSdk = "34" # TODO need to properly handle window insets before bumping to 35
+android-targetSdk = "35" # TODO need to properly handle window insets before bumping to 36
 
 # AndroidX / Jetpack
 androidx-activity = "1.10.1"

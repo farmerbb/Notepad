@@ -53,15 +53,11 @@ interface ArtVandelay {
 
     fun importAllNotes(
         saveImportedNotes: (InputStream) -> Unit,
-        onError: () -> Unit,
-        onComplete: () -> Unit
     )
 
     fun exportAllNotes(
         hydratedNotes: List<Note>,
         saveExportedNotes: (OutputStream, List<Note>) -> Unit,
-        onError: () -> Unit,
-        onComplete: () -> Unit
     )
 
     fun exportSingleNote(
@@ -85,29 +81,16 @@ private class ArtVandelayImpl(
 
     override fun importAllNotes(
         saveImportedNotes: (InputStream) -> Unit,
-        onError: () -> Unit,
-        onComplete: () -> Unit
     ) = fileChooser.openChooseFileDialog(
-        importAllCallback(
-            saveImportedNotes,
-            onError,
-            onComplete,
-        )
+        importAllCallback(saveImportedNotes)
     )
 
     override fun exportAllNotes(
         hydratedNotes: List<Note>,
         saveExportedNotes: (OutputStream, List<Note>) -> Unit,
-        onError: () -> Unit,
-        onComplete: () -> Unit,
     ) = fileChooser.openCreateFileDialog(
         fileName = generateExportFilename(),
-        fileCreateCallback = exportAllCallback(
-            hydratedNotes,
-            saveExportedNotes,
-            onError,
-            onComplete,
-        )
+        fileCreateCallback = exportAllCallback(hydratedNotes, saveExportedNotes)
     )
 
     override fun exportNotes(
@@ -163,18 +146,11 @@ private class ArtVandelayImpl(
 
     private fun importAllCallback(
         saveImportedNotes: (InputStream) -> Unit,
-        onError: () -> Unit,
-        onComplete: () -> Unit
     ) = object : FileChooserCallback() {
         override fun onResult(uri: Uri) {
             with(fileManager) {
                 fromUri(uri)?.let(::getInputStream)?.let { input ->
-                    try {
-                        saveImportedNotes(input)
-                        onComplete()
-                    } catch (_: Throwable) {
-                        onError()
-                    }
+                    saveImportedNotes(input)
                 }
             }
         }
@@ -185,18 +161,11 @@ private class ArtVandelayImpl(
     private fun exportAllCallback(
         hydratedNotes: List<Note>,
         saveExportedNotes: (OutputStream, List<Note>) -> Unit,
-        onError: () -> Unit,
-        onComplete: () -> Unit
     ) = object : FileCreateCallback() {
         override fun onResult(uri: Uri) {
             with(fileManager) {
                 fromUri(uri)?.let(::getOutputStream)?.let { output ->
-                    try {
-                        saveExportedNotes(output, hydratedNotes)
-                        onComplete()
-                    } catch (_: Throwable) {
-                        onError()
-                    }
+                    saveExportedNotes(output, hydratedNotes)
                 }
             }
         }

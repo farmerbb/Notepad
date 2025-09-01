@@ -338,19 +338,21 @@ class NotepadViewModel(
     }
 
     fun importAllNotes() = withArtVandelay(JSON) {
-        importAllNotes(
-            saveImportedNotes = ::saveImportedNotes,
-            onError = {
-                viewModelScope.launch {
-                    toaster.toast(R.string.error_importing_notes)
-                }
-            },
-            onComplete = {
-                viewModelScope.launch {
-                    toaster.toast(R.string.notes_imported_successfully)
-                }
-            },
-        )
+        importAllNotes { input ->
+            saveImportedNotes(
+                input = input,
+                onError = {
+                    viewModelScope.launch {
+                        toaster.toast(R.string.error_importing_notes)
+                    }
+                },
+                onComplete = {
+                    viewModelScope.launch {
+                        toaster.toast(R.string.notes_imported_successfully)
+                    }
+                },
+            )
+        }
     }
 
     fun exportAllNotes() = viewModelScope.launch(Dispatchers.IO) {
@@ -362,18 +364,22 @@ class NotepadViewModel(
         withArtVandelay(JSON) {
             exportAllNotes(
                 hydratedNotes = hydratedNotes,
-                saveExportedNotes = ::saveExportedNotes,
-                onError = {
-                    viewModelScope.launch {
-                        toaster.toast(R.string.error_exporting_notes)
-                    }
-                },
-                onComplete = {
-                    viewModelScope.launch {
-                        toaster.toast(R.string.notes_exported_to)
-                    }
-                },
-            )
+            ) { output, notes ->
+                saveExportedNotes(
+                    output = output,
+                    notes = notes,
+                    onError = {
+                        viewModelScope.launch {
+                            toaster.toast(R.string.error_exporting_notes)
+                        }
+                    },
+                    onComplete = {
+                        viewModelScope.launch {
+                            toaster.toast(R.string.notes_exported_to)
+                        }
+                    },
+                )
+            }
         }
     }
 
@@ -464,24 +470,39 @@ class NotepadViewModel(
 
     private fun saveImportedNotes(
         input: InputStream,
+        onError: () -> Unit,
+        onComplete: () -> Unit,
     ) = viewModelScope.launch(Dispatchers.IO) {
         input.source().buffer().use {
-            val text = it.readUtf8()
-            if (text.isNotEmpty()) {
-                val deserializedNotes = deserializeNoteJson(text)
-                deserializedNotes.forEach { note ->
-                    repo.saveNote(text = note.text, date = note.date)
+            try {
+                val text = it.readUtf8()
+                if (text.isNotEmpty()) {
+                    val deserializedNotes = deserializeNoteJson(text)
+                    deserializedNotes.forEach { note ->
+                        repo.saveNote(text = note.text, date = note.date)
+                    }
                 }
+
+                onComplete()
+            } catch (_: Throwable) {
+                onError()
             }
         }
     }
 
     private fun saveExportedNotes(
         output: OutputStream,
-        notes: List<Note>
+        notes: List<Note>,
+        onError: () -> Unit,
+        onComplete: () -> Unit,
     ) = viewModelScope.launch(Dispatchers.IO) {
         output.sink().buffer().use {
-            it.writeUtf8(serializeNotes(notes))
+            try {
+                it.writeUtf8(serializeNotes(notes))
+                onComplete()
+            } catch (_: Throwable) {
+                onError()
+            }
         }
     }
 

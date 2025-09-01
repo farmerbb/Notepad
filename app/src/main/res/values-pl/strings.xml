@@ -79,7 +79,7 @@
     <string name="export_all_notes">Zrób kopię zapasową wszystkich notatek</string>
     <string name="import_all_notes">Przywróć notatki z kopii zapasowej</string>
     <string name="error_exporting_notes">Wystąpił błąd przy próbie eksportowania notatek do pliku JSON!</string>
-    <string name="error_importing_notes">Wystąpił błąd przy próbie importowania notatek do pliku JSON!</string>
+    <string name="error_importing_notes">Wystąpił błąd przy próbie importowania notatek z pliku JSON!</string>
 
     <string-array name="sort_by_list">
         <item>Daty (najnowsze na początku)</item>

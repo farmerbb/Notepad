@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.OutputTransformation
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,9 +31,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -44,9 +48,9 @@ import com.farmerbb.notepad.ui.components.RtlTextWrapper
 import com.farmerbb.notepad.ui.previews.EditNotePreview
 import kotlinx.coroutines.delay
 
-private fun String.toTextFieldValue() = TextFieldValue(
-    text = this,
-    selection = TextRange(length)
+private fun String.toTextFieldState() = TextFieldState(
+    initialText = this,
+    initialSelection = TextRange(length)
 )
 
 @Composable
@@ -57,18 +61,20 @@ fun EditNoteContent(
     isPrinting: Boolean = false,
     waitForAnimation: Boolean = false,
     rtlLayout: Boolean = false,
-    onTextChanged: (String) -> Unit = {}
+    offset: Offset? = null,
+    onTextChanged: (String) -> Unit = {},
 ) {
     val textStyle = if (isPrinting) {
         baseTextStyle.copy(color = Color.Black)
     } else baseTextStyle
 
     val focusRequester = remember { FocusRequester() }
-    var value by remember { mutableStateOf(text.toTextFieldValue()) }
+    var value by remember { mutableStateOf(text.toTextFieldState()) }
+
 
     LaunchedEffect(text) {
         if (text != value.text) {
-            value = text.toTextFieldValue()
+            value = text.toTextFieldState()
         }
     }
 
@@ -80,18 +86,20 @@ fun EditNoteContent(
         }
     )
 
+    val layoutResult = remember { mutableStateOf<TextLayoutResult?>(null) }
+
     RtlTextWrapper(text, rtlLayout) {
         BasicTextField(
-            value = value,
-            onValueChange = {
-                value = it
-                onTextChanged(it.text)
-            },
+            state = value,
+            outputTransformation = OutputTransformation { onTextChanged(value.text.toString()) },
             textStyle = textStyle,
             cursorBrush = brush,
             keyboardOptions = KeyboardOptions(
                 capitalization = KeyboardCapitalization.Sentences
             ),
+            onTextLayout = {
+                layoutResult.value = it()
+            },
             modifier = Modifier
                 .padding(
                     horizontal = 16.dp,
@@ -120,6 +128,13 @@ fun EditNoteContent(
     LaunchedEffect(Unit) {
         if (waitForAnimation) {
             delay(200)
+        }
+
+        offset?.let { offset ->
+            layoutResult.value?.let { layoutResult ->
+                val position = layoutResult.getOffsetForPosition(offset)
+                value.edit { selection = TextRange(position) }
+            }
         }
 
         focusRequester.requestFocus()

@@ -76,6 +76,10 @@
     <string name="check_for_updates">检查更新</string>
     <string name="rtl_layout"> 从右至左 (RTL) 文本布局 </string>
     <string name="pref_title_font_type">字体类型</string>
+    <string name="export_all_notes">Backup all notes</string>
+    <string name="import_all_notes">Restore from backup</string>
+    <string name="error_exporting_notes">Error exporting notes to JSON!</string>
+    <string name="error_importing_notes">Error importing notes from JSON!</string>
 
     <string-array name="sort_by_list">
         <item>由新至旧</item>

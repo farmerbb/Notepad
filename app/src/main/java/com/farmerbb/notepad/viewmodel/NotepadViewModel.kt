@@ -60,7 +60,7 @@ import kotlinx.coroutines.withContext
 import okio.buffer
 import okio.sink
 import okio.source
-import org.koin.android.ext.koin.androidApplication
+import org.koin.core.module.dsl.new
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import java.text.SimpleDateFormat
@@ -109,7 +109,17 @@ class NotepadViewModel(
 
     private var isEditing = false
 
+    var currentMimeType: String = ""
+
     /*********************** UI Operations ***********************/
+
+    private fun withArtVandelay(
+        mimeType: String,
+        callback: ArtVandelay.() -> Unit,
+    ) {
+        currentMimeType = mimeType
+        with(artVandelay, callback)
+    }
 
     fun setText(text: String) {
         _text.value = text
@@ -314,21 +324,33 @@ class NotepadViewModel(
 
     /*********************** Import / Export ***********************/
 
-    fun importNotes() = artVandelay.importNotes(::saveImportedNote) { size ->
-        val toastId = when (size) {
-            1 -> R.string.note_imported_successfully
-            else -> R.string.notes_imported_successfully
-        }
+    fun importNotes() = withArtVandelay(PLAIN_TEXT) {
+        importNotes(::saveImportedNote) { size ->
+            val toastId = when (size) {
+                1 -> R.string.note_imported_successfully
+                else -> R.string.notes_imported_successfully
+            }
 
-        viewModelScope.launch {
-            toaster.toast(toastId)
+            viewModelScope.launch {
+                toaster.toast(toastId)
+            }
         }
     }
 
-    fun importAllNotes() = artVandelay.importAllNotes(::saveImportedNotes) {
-        viewModelScope.launch {
-            toaster.toast(R.string.notes_imported_successfully)
-        }
+    fun importAllNotes() = withArtVandelay(JSON) {
+        importAllNotes(
+            saveImportedNotes = ::saveImportedNotes,
+            onError = {
+                viewModelScope.launch {
+                    toaster.toast(R.string.error_importing_notes)
+                }
+            },
+            onComplete = {
+                viewModelScope.launch {
+                    toaster.toast(R.string.notes_imported_successfully)
+                }
+            },
+        )
     }
 
     fun exportAllNotes() = viewModelScope.launch(Dispatchers.IO) {
@@ -337,16 +359,22 @@ class NotepadViewModel(
             allNoteMetadata
         )
 
-        artVandelay.exportAllNotes(
-            hydratedNotes,
-            ::saveExportedNotes,
-            {}
-        ) {
-            viewModelScope.launch {
-                toaster.toast(R.string.notes_exported_to)
-            }
+        withArtVandelay(JSON) {
+            exportAllNotes(
+                hydratedNotes = hydratedNotes,
+                saveExportedNotes = ::saveExportedNotes,
+                onError = {
+                    viewModelScope.launch {
+                        toaster.toast(R.string.error_exporting_notes)
+                    }
+                },
+                onComplete = {
+                    viewModelScope.launch {
+                        toaster.toast(R.string.notes_exported_to)
+                    }
+                },
+            )
         }
-
     }
 
     fun exportNotes(
@@ -367,14 +395,16 @@ class NotepadViewModel(
             return@launch
         }
 
-        artVandelay.exportNotes(
-            hydratedNotes,
-            filenameFormat,
-            ::saveExportedNote,
-            ::clearSelectedNotes
-        ) {
-            viewModelScope.launch {
-                toaster.toast(R.string.notes_exported_to)
+        withArtVandelay(PLAIN_TEXT) {
+            exportNotes(
+                hydratedNotes,
+                filenameFormat,
+                ::saveExportedNote,
+                ::clearSelectedNotes
+            ) {
+                viewModelScope.launch {
+                    toaster.toast(R.string.notes_exported_to)
+                }
             }
         }
     }
@@ -385,13 +415,15 @@ class NotepadViewModel(
         filenameFormat: FilenameFormat
     ) = viewModelScope.launch {
         text.checkLength {
-            artVandelay.exportSingleNote(
-                metadata,
-                filenameFormat,
-                { saveExportedNote(it, text) }
-            ) {
-                viewModelScope.launch {
-                    toaster.toast(R.string.note_exported_to)
+            withArtVandelay(PLAIN_TEXT) {
+                exportSingleNote(
+                    metadata,
+                    filenameFormat,
+                    { saveExportedNote(it, text) }
+                ) {
+                    viewModelScope.launch {
+                        toaster.toast(R.string.note_exported_to)
+                    }
                 }
             }
         }
@@ -498,19 +530,13 @@ class NotepadViewModel(
     fun keyboardShortcutPressed(keyCode: Int) = keyboardShortcuts.pressed(keyCode)
     fun registerKeyboardShortcuts(vararg mappings: Pair<Int, () -> Unit>) =
         keyboardShortcuts.register(*mappings)
+
+    private companion object {
+        const val PLAIN_TEXT = "text/plain"
+        const val JSON = "application/json"
+    }
 }
 
 val viewModelModule = module {
-    viewModel {
-        NotepadViewModel(
-            context = androidApplication(),
-            repo = get(),
-            dataStoreManager = get(),
-            dataMigrator = get(),
-            toaster = get(),
-            artVandelay = get(),
-            keyboardShortcuts = get(),
-            systemTheme = get()
-        )
-    }
+    viewModel { new(::NotepadViewModel) }
 }

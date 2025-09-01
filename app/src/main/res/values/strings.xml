@@ -50,9 +50,7 @@
     <string name="empty_note">Please enter some text!</string>
     <string name="first_run">Welcome to Notepad!\n\nTo create a note, click the New Note button (plus sign).</string>
     <string name="first_view">To edit a saved note, double-tap the text or click the Edit button (pencil).</string>
-    <string name="import_notes">Import notes</string>
-    <string name="import_all_notes">Import all notes</string>
-    <string name="export_all_notes">Export all notes</string>
+    <string name="import_notes">Import text files</string>
     <string name="loading_external_file">Failed loading external content (or content type not supported)</string>
     <string name="no_notes_found">No notes found</string>
     <string name="note_deleted">Note deleted</string>
@@ -80,6 +78,10 @@
     <string name="pref_title_font_type">Font type</string>
     <string name="action_search_notes">Search notes</string>
     <string name="no_notes_to_search">No notes to search</string>
+    <string name="export_all_notes">Backup all notes</string>
+    <string name="import_all_notes">Restore from backup</string>
+    <string name="error_exporting_notes">Error exporting notes to JSON!</string>
+    <string name="error_importing_notes">Error importing notes from JSON!</string>
 
     <string-array name="sort_by_list">
         <item>Date (newest first)</item>

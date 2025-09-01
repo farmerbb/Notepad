@@ -43,8 +43,8 @@ fun NoteListMenu(
         ) {
             MenuItem(R.string.action_settings, onSettingsClick)
             MenuItem(R.string.import_notes, onImportClick)
-            MenuItem(R.string.import_all_notes, onImportAllClick)
             MenuItem(R.string.export_all_notes, onExportAllClick)
+            MenuItem(R.string.import_all_notes, onImportAllClick)
             MenuItem(R.string.dialog_about_title, onAboutClick)
         }
     }

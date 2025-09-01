@@ -65,6 +65,10 @@ Russian translation by Vladimir Kosolapov"</string>
     <string name="document">%1$s Document</string>
     <string name="rtl_layout">Right-to-left layout</string>
     <string name="pref_title_font_type">Font type</string>
+    <string name="export_all_notes">Backup all notes</string>
+    <string name="import_all_notes">Restore from backup</string>
+    <string name="error_exporting_notes">Error exporting notes to JSON!</string>
+    <string name="error_importing_notes">Error importing notes from JSON!</string>
 
     <string-array name="sort_by_list">
         <item>Дата (сначала недавние)</item>

@@ -66,7 +66,7 @@ class NotepadActivity: ComponentActivity(), FSAFActivityCallbacks {
 
     override fun fsafStartActivityForResult(intent: Intent, requestCode: Int) {
         when(intent.action) {
-            Intent.ACTION_OPEN_DOCUMENT -> intent.type = "text/plain"
+            Intent.ACTION_OPEN_DOCUMENT -> intent.type = vm.currentMimeType
             Intent.ACTION_OPEN_DOCUMENT_TREE -> intent.removeExtra(Intent.EXTRA_LOCAL_ONLY)
         }
 

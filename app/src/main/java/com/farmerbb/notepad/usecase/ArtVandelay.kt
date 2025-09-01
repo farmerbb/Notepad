@@ -53,13 +53,14 @@ interface ArtVandelay {
 
     fun importAllNotes(
         saveImportedNotes: (InputStream) -> Unit,
+        onError: () -> Unit,
         onComplete: () -> Unit
     )
 
     fun exportAllNotes(
         hydratedNotes: List<Note>,
         saveExportedNotes: (OutputStream, List<Note>) -> Unit,
-        onCancel: () -> Unit,
+        onError: () -> Unit,
         onComplete: () -> Unit
     )
 
@@ -84,23 +85,29 @@ private class ArtVandelayImpl(
 
     override fun importAllNotes(
         saveImportedNotes: (InputStream) -> Unit,
+        onError: () -> Unit,
         onComplete: () -> Unit
     ) = fileChooser.openChooseFileDialog(
-        importAllCallback(saveImportedNotes, onComplete)
+        importAllCallback(
+            saveImportedNotes,
+            onError,
+            onComplete,
+        )
     )
 
     override fun exportAllNotes(
         hydratedNotes: List<Note>,
         saveExportedNotes: (OutputStream, List<Note>) -> Unit,
-        onCancel: () -> Unit,
+        onError: () -> Unit,
         onComplete: () -> Unit,
     ) = fileChooser.openCreateFileDialog(
         fileName = generateExportFilename(),
         fileCreateCallback = exportAllCallback(
             hydratedNotes,
             saveExportedNotes,
-            onCancel,
-            onComplete)
+            onError,
+            onComplete,
+        )
     )
 
     override fun exportNotes(
@@ -156,18 +163,19 @@ private class ArtVandelayImpl(
 
     private fun importAllCallback(
         saveImportedNotes: (InputStream) -> Unit,
+        onError: () -> Unit,
         onComplete: () -> Unit
     ) = object : FileChooserCallback() {
         override fun onResult(uri: Uri) {
             with(fileManager) {
-                fromUri(uri)?.let { file ->
-                    val inputStream = getInputStream(file)
-                    if (inputStream != null) {
-                        saveImportedNotes(inputStream)
+                fromUri(uri)?.let(::getInputStream)?.let { input ->
+                    try {
+                        saveImportedNotes(input)
+                        onComplete()
+                    } catch (_: Throwable) {
+                        onError()
                     }
                 }
-
-                onComplete()
             }
         }
 
@@ -177,18 +185,23 @@ private class ArtVandelayImpl(
     private fun exportAllCallback(
         hydratedNotes: List<Note>,
         saveExportedNotes: (OutputStream, List<Note>) -> Unit,
-        onCancel: () -> Unit,
+        onError: () -> Unit,
         onComplete: () -> Unit
-    ) = object: FileCreateCallback() {
-
+    ) = object : FileCreateCallback() {
         override fun onResult(uri: Uri) {
             with(fileManager) {
-                fromUri(uri)?.let(::getOutputStream)?.let{ output -> saveExportedNotes(output, hydratedNotes) }
-                onComplete()
+                fromUri(uri)?.let(::getOutputStream)?.let { output ->
+                    try {
+                        saveExportedNotes(output, hydratedNotes)
+                        onComplete()
+                    } catch (_: Throwable) {
+                        onError()
+                    }
+                }
             }
         }
 
-        override fun onCancel(reason: String) = onCancel()
+        override fun onCancel(reason: String) = Unit // no-op
     }
 
 
@@ -239,12 +252,12 @@ private class ArtVandelayImpl(
     }
 
     private fun generateExportFilename(): String {
-        val title = "notepad_export"
+        val title = "notepad_backup"
         val dateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.getDefault())
         val timestamp = dateFormat.format(Date())
         val filename = "${title}_$timestamp"
 
-        return "$filename.json.txt"
+        return "$filename.json"
     }
 
     private fun generateFilename(

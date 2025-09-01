@@ -5,6 +5,7 @@ plugins {
     id("kotlin-android")
     id("org.jetbrains.kotlin.plugin.compose") version libs.versions.kotlin.get()
     id("com.squareup.sqldelight")
+    kotlin("plugin.serialization") version "2.1.0"
 }
 
 repositories {
@@ -111,6 +112,7 @@ dependencies {
     implementation(libs.okio)
     implementation(libs.sqldelight)
     implementation(libs.systemuicontroller)
+    implementation(libs.kotlinjson)
     debugImplementation(libs.compose.ui.tooling)
     coreLibraryDesugaring(libs.android.coreLibraryDesugaring)
 }

@@ -480,6 +480,14 @@ private fun NotepadComposeApp(
                             onDismiss()
                             vm.importNotes()
                         },
+                        onImportAllClick = {
+                            onDismiss()
+                            vm.importAllNotes()
+                        },
+                        onExportAllClick = {
+                            onDismiss()
+                            vm.exportAllNotes()
+                        },
                         onAboutClick = {
                             onDismiss()
                             showAboutDialog = true

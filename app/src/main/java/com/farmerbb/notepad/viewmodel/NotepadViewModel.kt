@@ -38,6 +38,8 @@ import com.farmerbb.notepad.usecase.KeyboardShortcuts
 import com.farmerbb.notepad.usecase.SystemTheme
 import com.farmerbb.notepad.usecase.Toaster
 import com.farmerbb.notepad.utils.checkForUpdates
+import com.farmerbb.notepad.utils.deserializeNoteJson
+import com.farmerbb.notepad.utils.serializeNotes
 import com.farmerbb.notepad.utils.showShareSheet
 import de.schnettler.datastore.manager.DataStoreManager
 import java.io.InputStream
@@ -52,6 +54,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okio.buffer
@@ -322,6 +325,30 @@ class NotepadViewModel(
         }
     }
 
+    fun importAllNotes() = artVandelay.importAllNotes(::saveImportedNotes) {
+        viewModelScope.launch {
+            toaster.toast(R.string.notes_imported_successfully)
+        }
+    }
+
+    fun exportAllNotes() = viewModelScope.launch(Dispatchers.IO) {
+        val allNoteMetadata = noteMetadata.first()
+        val hydratedNotes = repo.getNotes(
+            allNoteMetadata
+        )
+
+        artVandelay.exportAllNotes(
+            hydratedNotes,
+            ::saveExportedNotes,
+            {}
+        ) {
+            viewModelScope.launch {
+                toaster.toast(R.string.notes_exported_to)
+            }
+        }
+
+    }
+
     fun exportNotes(
         metadata: List<NoteMetadata>,
         filenameFormat: FilenameFormat
@@ -400,6 +427,29 @@ class NotepadViewModel(
                 val nonNullModifiedDate: Date = modifiedDate ?: Date()
                 repo.saveNote(text = text, date = nonNullModifiedDate)
             }
+        }
+    }
+
+    private fun saveImportedNotes(
+        input: InputStream,
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        input.source().buffer().use {
+            val text = it.readUtf8()
+            if (text.isNotEmpty()) {
+                val deserializedNotes = deserializeNoteJson(text)
+                deserializedNotes.forEach { note ->
+                    repo.saveNote(text = note.text, date = note.date)
+                }
+            }
+        }
+    }
+
+    private fun saveExportedNotes(
+        output: OutputStream,
+        notes: List<Note>
+    ) = viewModelScope.launch(Dispatchers.IO) {
+        output.sink().buffer().use {
+            it.writeUtf8(serializeNotes(notes))
         }
     }
 

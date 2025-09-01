@@ -30,6 +30,7 @@ import com.github.k1rakishou.fsaf.callback.FileCreateCallback
 import com.github.k1rakishou.fsaf.callback.FileMultiSelectChooserCallback
 import com.github.k1rakishou.fsaf.callback.directory.DirectoryChooserCallback
 import com.github.k1rakishou.fsaf.file.FileSegment
+import org.koin.core.module.dsl.new
 import java.io.InputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
@@ -40,15 +41,13 @@ import org.koin.dsl.module
 interface ArtVandelay {
     fun importNotes(
         saveImportedNote: (InputStream, String) -> Unit,
-        onComplete: (Int) -> Unit
     )
 
     fun exportNotes(
         hydratedNotes: List<Note>,
         filenameFormat: FilenameFormat,
-        saveExportedNote: (OutputStream, String) -> Unit,
         onCancel: () -> Unit,
-        onComplete: () -> Unit
+        saveExportedNote: (OutputStream, String) -> Unit,
     )
 
     fun importAllNotes(
@@ -64,7 +63,6 @@ interface ArtVandelay {
         metadata: NoteMetadata,
         filenameFormat: FilenameFormat,
         saveExportedNote: (OutputStream) -> Unit,
-        onComplete: () -> Unit
     )
 }
 
@@ -74,9 +72,8 @@ private class ArtVandelayImpl(
 ): ArtVandelay {
     override fun importNotes(
         saveImportedNote: (InputStream, String) -> Unit,
-        onComplete: (Int) -> Unit
     ) = fileChooser.openChooseMultiSelectFileDialog(
-        importCallback(saveImportedNote, onComplete)
+        importCallback(saveImportedNote)
     )
 
     override fun importAllNotes(
@@ -96,16 +93,14 @@ private class ArtVandelayImpl(
     override fun exportNotes(
         hydratedNotes: List<Note>,
         filenameFormat: FilenameFormat,
-        saveExportedNote: (OutputStream, String) -> Unit,
         onCancel: () -> Unit,
-        onComplete: () -> Unit
+        saveExportedNote: (OutputStream, String) -> Unit,
     ) = fileChooser.openChooseDirectoryDialog(
         directoryChooserCallback = exportFolderCallback(
             hydratedNotes,
             filenameFormat,
-            saveExportedNote,
             onCancel,
-            onComplete
+            saveExportedNote,
         )
     )
 
@@ -113,31 +108,27 @@ private class ArtVandelayImpl(
         metadata: NoteMetadata,
         filenameFormat: FilenameFormat,
         saveExportedNote: (OutputStream) -> Unit,
-        onComplete: () -> Unit
     ) = fileChooser.openCreateFileDialog(
         fileName = generateFilename(metadata, filenameFormat),
-        fileCreateCallback = exportFileCallback(saveExportedNote, onComplete)
+        fileCreateCallback = exportFileCallback(saveExportedNote)
     )
 
     private val registeredBaseDirs = mutableListOf<Uri>()
 
     private fun importCallback(
         saveImportedNote: (InputStream, String) -> Unit,
-        onComplete: (Int) -> Unit
     ) = object : FileMultiSelectChooserCallback() {
         override fun onResult(uris: List<Uri>) {
             with(fileManager) {
                 for (uri in uris) {
                     fromUri(uri)?.let { file ->
-                        val inputStream = getInputStream(file)
                         val filename = file.getFullPath() // Extract filename from the file
-                        if (inputStream != null) {
-                            saveImportedNote(inputStream, filename)
+
+                        getInputStream(file)?.let { input ->
+                            saveImportedNote(input, filename)
                         }
                     }
                 }
-
-                onComplete(uris.size)
             }
         }
 
@@ -177,9 +168,8 @@ private class ArtVandelayImpl(
     private fun exportFolderCallback(
         hydratedNotes: List<Note>,
         filenameFormat: FilenameFormat,
-        saveExportedNote: (OutputStream, String) -> Unit,
         onCancel: () -> Unit,
-        onComplete: () -> Unit
+        saveExportedNote: (OutputStream, String) -> Unit,
     ) = object: DirectoryChooserCallback() {
         override fun onResult(uri: Uri) {
             with(fileManager) {
@@ -198,8 +188,6 @@ private class ArtVandelayImpl(
                             }
                     }
                 }
-
-                onComplete()
             }
         }
 
@@ -208,12 +196,10 @@ private class ArtVandelayImpl(
 
     private fun exportFileCallback(
         saveExportedNote: (OutputStream) -> Unit,
-        onComplete: () -> Unit
     ) = object: FileCreateCallback() {
         override fun onResult(uri: Uri) {
             with(fileManager) {
                 fromUri(uri)?.let(::getOutputStream)?.let(saveExportedNote)
-                onComplete()
             }
         }
 
@@ -236,9 +222,9 @@ private class ArtVandelayImpl(
         val dateFormat = SimpleDateFormat("yyyy-MM-dd-HH-mm", Locale.getDefault())
         val timestamp = dateFormat.format(metadata.date)
         val filename = when(filenameFormat) {
-            TitleOnly -> metadata.title
-            TimestampAndTitle -> "${timestamp}_${metadata.title}"
-            TitleAndTimestamp -> "${metadata.title}_$timestamp"
+            TitleOnly -> metadata.title.take(245)
+            TimestampAndTitle -> "${timestamp}_${metadata.title.take(245 - (timestamp.length + 1))}"
+            TitleAndTimestamp -> "${metadata.title.take(245 - (timestamp.length + 1))}_$timestamp"
         }
 
         return "$filename.txt"
@@ -246,10 +232,5 @@ private class ArtVandelayImpl(
 }
 
 val artVandelayModule = module {
-    single<ArtVandelay> {
-        ArtVandelayImpl(
-            fileChooser = get(),
-            fileManager = get()
-        )
-    }
+    single<ArtVandelay> { new(::ArtVandelayImpl) }
 }

@@ -325,15 +325,22 @@ class NotepadViewModel(
     /*********************** Import / Export ***********************/
 
     fun importNotes() = withArtVandelay(PLAIN_TEXT) {
-        importNotes(::saveImportedNote) { size ->
-            val toastId = when (size) {
-                1 -> R.string.note_imported_successfully
-                else -> R.string.notes_imported_successfully
-            }
-
-            viewModelScope.launch {
-                toaster.toast(toastId)
-            }
+        importNotes { input, filePath ->
+            saveImportedNote(
+                input = input,
+                filePath = filePath,
+                onError = {
+                    viewModelScope.launch {
+                        toaster.toast(R.string.error_importing_notes)
+                    }
+                },
+                onComplete = {
+                    viewModelScope.launch {
+                        // TODO this causes one toast to appear for each note
+                        toaster.toast(R.string.note_imported_successfully)
+                    }
+                },
+            )
         }
     }
 
@@ -402,15 +409,22 @@ class NotepadViewModel(
         }
 
         withArtVandelay(PLAIN_TEXT) {
-            exportNotes(
-                hydratedNotes,
-                filenameFormat,
-                ::saveExportedNote,
-                ::clearSelectedNotes
-            ) {
-                viewModelScope.launch {
-                    toaster.toast(R.string.notes_exported_to)
-                }
+            exportNotes(hydratedNotes, filenameFormat, ::clearSelectedNotes) { output, text ->
+                saveExportedNote(
+                    output = output,
+                    text = text,
+                    onError = {
+                        viewModelScope.launch {
+                            toaster.toast(R.string.error_exporting_notes)
+                        }
+                    },
+                    onComplete = {
+                        viewModelScope.launch {
+                            // TODO this causes one toast to appear for each note
+                            toaster.toast(R.string.note_exported_to)
+                        }
+                    },
+                )
             }
         }
     }
@@ -422,14 +436,21 @@ class NotepadViewModel(
     ) = viewModelScope.launch {
         text.checkLength {
             withArtVandelay(PLAIN_TEXT) {
-                exportSingleNote(
-                    metadata,
-                    filenameFormat,
-                    { saveExportedNote(it, text) }
-                ) {
-                    viewModelScope.launch {
-                        toaster.toast(R.string.note_exported_to)
-                    }
+                exportSingleNote(metadata, filenameFormat) { output->
+                    saveExportedNote(
+                        output = output,
+                        text = text,
+                        onError = {
+                            viewModelScope.launch {
+                                toaster.toast(R.string.error_exporting_notes)
+                            }
+                        },
+                        onComplete = {
+                            viewModelScope.launch {
+                                toaster.toast(R.string.note_exported_to)
+                            }
+                        },
+                    )
                 }
             }
         }
@@ -455,15 +476,23 @@ class NotepadViewModel(
 
     private fun saveImportedNote(
         input: InputStream,
-        filePath: String = ""
+        filePath: String,
+        onError: () -> Unit,
+        onComplete: () -> Unit,
     ) = viewModelScope.launch(Dispatchers.IO) {
         input.source().buffer().use {
-            val text = it.readUtf8()
-            if (text.isNotEmpty()) {
-                val modifiedDate = parseDateFromFileName(filePath)
-                // If the modified date couldn't be parsed, use current date
-                val nonNullModifiedDate: Date = modifiedDate ?: Date()
-                repo.saveNote(text = text, date = nonNullModifiedDate)
+            try {
+                val text = it.readUtf8()
+                if (text.isNotEmpty()) {
+                    val modifiedDate = parseDateFromFileName(filePath)
+                    // If the modified date couldn't be parsed, use current date
+                    val nonNullModifiedDate: Date = modifiedDate ?: Date()
+                    repo.saveNote(text = text, date = nonNullModifiedDate)
+                }
+
+                onComplete()
+            } catch (_: Throwable) {
+                onError()
             }
         }
     }
@@ -508,10 +537,17 @@ class NotepadViewModel(
 
     private fun saveExportedNote(
         output: OutputStream,
-        text: String
+        text: String,
+        onError: () -> Unit,
+        onComplete: () -> Unit,
     ) = viewModelScope.launch(Dispatchers.IO) {
         output.sink().buffer().use {
-            it.writeUtf8(text)
+            try {
+                it.writeUtf8(text)
+                onComplete()
+            } catch (_: Throwable) {
+                onError()
+            }
         }
     }
 
@@ -526,9 +562,13 @@ class NotepadViewModel(
             }
 
             input.source().buffer().use {
-                val text = it.readUtf8()
-                withContext(Dispatchers.Main) {
-                    onLoad(text)
+                try {
+                    val text = it.readUtf8()
+                    withContext(Dispatchers.Main) {
+                        onLoad(text)
+                    }
+                } catch (_: Throwable) {
+                    onLoad(null)
                 }
             }
         } ?: onLoad(null)

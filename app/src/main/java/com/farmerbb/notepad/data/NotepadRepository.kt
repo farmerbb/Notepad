@@ -28,6 +28,7 @@ import com.farmerbb.notepad.model.SortOrder.TitleAscending
 import com.farmerbb.notepad.model.SortOrder.TitleDescending
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import java.text.Collator
 import java.util.Date
 import kotlinx.coroutines.flow.map
 
@@ -43,12 +44,20 @@ class NotepadRepository(
 
     fun noteMetadataFlow(order: SortOrder) = with(database.noteMetadataQueries) {
         when(order) {
-            DateDescending -> getSortedByDateDescending()
-            DateAscending -> getSortedByDateAscending()
-            TitleDescending -> getSortedByTitleDescending()
-            TitleAscending -> getSortedByTitleAscending()
+            DateDescending -> getSortedByDateDescending().asFlow().mapToList()
+            DateAscending -> getSortedByDateAscending().asFlow().mapToList()
+            TitleDescending, TitleAscending -> {
+                // Use collator for locale-aware, case-insensitive sorting
+                val collator = Collator.getInstance()
+                getUnsorted().asFlow().mapToList().map { notes ->
+                    val sortedNotes = notes.sortedWith { a, b ->
+                        collator.compare(a.title, b.title)
+                    }
+                    if (order == TitleDescending) sortedNotes.reversed() else sortedNotes
+                }
+            }
         }
-    }.asFlow().mapToList()
+    }
 
     fun getNote(id: Long): Note = with(database) {
         transactionWithResult {

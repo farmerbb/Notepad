@@ -19,11 +19,8 @@ DELETE FROM NoteMetadata WHERE metadataId = :id;
 deleteMultiple:
 DELETE FROM NoteMetadata WHERE metadataId IN ?;
 
-getSortedByTitleDescending:
-SELECT * FROM NoteMetadata ORDER BY title DESC;
-
-getSortedByTitleAscending:
-SELECT * FROM NoteMetadata ORDER BY title ASC;
+getUnsorted:
+SELECT * FROM NoteMetadata;
 
 getSortedByDateDescending:
 SELECT * FROM NoteMetadata ORDER BY date DESC;
